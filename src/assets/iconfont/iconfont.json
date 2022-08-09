@@ -1,0 +1,23 @@
+{
+  "id": "3576888",
+  "name": "mallManager",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "12754142",
+      "name": "右箭头",
+      "font_class": "youjiantou_huaban",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "16001757",
+      "name": "放大镜2",
+      "font_class": "fangdajing2",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    }
+  ]
+}
