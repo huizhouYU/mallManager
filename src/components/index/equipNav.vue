@@ -16,6 +16,20 @@
       </el-submenu>
       <el-menu-item index="3">消息中心</el-menu-item>
       <el-menu-item index="4">订单管理</el-menu-item>
+      <el-submenu index="5">
+        <template slot="title">我的工作台</template>
+        <el-menu-item index="5-1">选项1</el-menu-item>
+        <el-menu-item index="5-2">选项2</el-menu-item>
+        <el-menu-item index="5-3">选项3</el-menu-item>
+        <el-submenu index="5-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="5-4-1">选项1</el-menu-item>
+          <el-menu-item index="5-4-2">选项2</el-menu-item>
+          <el-menu-item index="5-4-3">选项3</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-menu-item index="6">消息中心</el-menu-item>
+      <el-menu-item index="7">订单管理</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -26,6 +40,13 @@
 <style scoped lang="less">
   .equipNav-box {
     height: 100%;
+
+  }
+  .el-menu{
+    background-color:  #f5f5f5;
+  }
+  .el-menu.el-menu--horizontal{
+    border: none;
   }
 
   .el-menu.el-menu--horizontal {

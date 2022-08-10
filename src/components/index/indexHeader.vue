@@ -39,6 +39,7 @@
 
 <style scoped>
   .content {
+    padding: 0.625rem 3.125rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
