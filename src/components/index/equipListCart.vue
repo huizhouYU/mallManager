@@ -76,24 +76,24 @@
 <style scoped lang="less">
   .listicarts {
     box-sizing: border-box;
-    height: 37.3125rem;
+    height: 740px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 0 0.625rem;
+    // padding: 0 0.625rem;
   }
 
   .item-cart {
-    width: 30%;
+    width: 230px;
+    height: 190px;
+    box-sizing: border-box;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding: 0.3125rem;
-    margin: 0.625rem;
-    margin-bottom: 0;
-    border-radius: 0.625rem;
+    padding: 5px 20px 20px 20px;
+    border-radius: 5px;
 
     img {
       height: 100px;
@@ -101,12 +101,13 @@
     }
 
     .name {
-      font-size: 0.875rem;
+      font-size: 16px;
+      color: #333;
     }
 
     .remark {
-      color: #b6b6b6;
-      font-size: 0.75rem;
+      color: #b0b0b0;
+      font-size: 14px;
     }
   }
 </style>

@@ -58,7 +58,6 @@
 
 <style scoped lang="less">
   .brand-nav-box {
-    margin-top: -10px;
     width: 100%;
     display: flex;
     flex-direction: column;

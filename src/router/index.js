@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       name: 'index',
-      path: '/index',
+      path: '/',
       component: Index
     },
     {

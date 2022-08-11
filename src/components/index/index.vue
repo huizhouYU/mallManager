@@ -103,7 +103,7 @@
         </div>
         <img src="../../assets/images/index/majorRepair.png" alt="">
       </div>
-      <service-item-page></service-item-page>
+      <service-item4-page></service-item4-page>
     </div>
 
 
@@ -118,16 +118,14 @@
   import equipNav from '../../components/index/equipNav.vue'
   import brandNav from '../../components/index/brandNav.vue'
   import equipListCart from '../../components/index/equipListCart.vue'
-  import serviceItemPage from '../../components/index/serviceItemPage.vue'
-
-
+  import serviceItem4Page from '../../components/index/serviceItem4Page.vue'
   export default {
     components: {
       indexHeader,
       equipNav,
       brandNav,
       equipListCart,
-      serviceItemPage
+      serviceItem4Page
     },
     data() {
       return {
@@ -163,7 +161,6 @@
       }
     },
     methods: {
-
     }
   }
 </script>
@@ -175,13 +172,11 @@
     // padding: 0.625rem 3.125rem;
     // height: 100%;
   }
-
   .index-content {
     padding: 0.625rem 3.125rem;
     padding-top: 1.25rem;
     height: 100%;
   }
-
   /* 清除浮动 */
   .clearfix:after {
     content: "";
@@ -189,66 +184,52 @@
     visibility: hidden;
     clear: both;
   }
-
   /* 模块一 头部 */
   .module0-header {
     .el-header {
       padding: 0;
     }
   }
-
   .index-header {
     height: 3.75rem;
     background-color: #fff;
   }
-
   // 主体
   .index-main {
     background-color: #f5f5f5;
   }
-
   .main-aside {
     display: flex;
     flex-direction: column;
-
     img {
       width: 100%;
       height: 5rem;
     }
-
     .brand-nav-box {
       flex: 1;
     }
-
   }
-
   .el-main {
     padding: 0;
     display: flex;
     flex-direction: column;
   }
-
   .main-header-nav {
     height: 5rem;
   }
-
   .main-content {
     flex: 1;
     display: flex;
-
     .main-content-left {
       flex: 1;
-
       .equipListCart-box {
         height: 100%;
       }
     }
-
     .main-content-right {
       width: 12.5rem;
       display: flex;
       flex-direction: column;
-
       // 发布需求
       .release-demand {
         height: 200px;
@@ -257,14 +238,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
         i {
           height: 5.9375rem;
           font-size: 3.125rem;
           line-height: 5.9375rem;
           color: #8dcfff;
         }
-
         .titles {
           flex: 1;
           display: flex;
@@ -272,19 +251,16 @@
           justify-content: space-between;
           align-items: center;
           padding-bottom: 1.25rem;
-
           // background-color: aquamarine;
           .title1 {
             font-size: 1rem;
             margin-bottom: 0.625rem;
           }
-
           .title2 {
             font-size: 0.75rem;
             color: #bebebe;
             margin-bottom: 0.625rem;
           }
-
           .btn {
             padding: 0.3125rem 1.25rem;
             background-color: #ffd571;
@@ -294,44 +270,36 @@
           }
         }
       }
-
       // 热门求购
       .hot-shop-box {
         display: flex;
         flex-direction: column;
         background-color: #fff;
         flex: 1;
-
         .hot-title {
           height: 3.75rem;
           display: flex;
-
           i {
             width: 50px;
             font-size: 2rem;
             color: #ff8349;
             line-height: 3.75rem;
           }
-
           .hot-text {
             padding: 0.3125rem;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: flex-start;
-
             .text1 {
               font-size: 1rem;
             }
-
             .text2 {
               font-size: 0.75rem;
               color: #bebebe;
-
             }
           }
         }
-
         .hot-list {
           flex: 1;
           display: flex;
@@ -339,11 +307,9 @@
           justify-content: space-between;
           align-items: flex-start;
           padding: 0.3125rem;
-
           li {
             font-size: 0.875rem;
           }
-
           i {
             color: #8dcfff;
             font-size: 0.375rem;
@@ -355,23 +321,19 @@
       }
     }
   }
-
   // 模块三 四张大图
   .modle3-picture {
     display: flex;
     justify-content: space-between;
     padding: 0.625rem 3.125rem;
     height: 180px;
-
     .picture-item {
       position: relative;
       width: 23%;
-
       img {
         width: 100%;
         height: 100%;
       }
-
       .name {
         width: 100%;
         height: 30%;
@@ -385,7 +347,6 @@
       }
     }
   }
-
   //模块四 企业服务
   .modle4-enter-service {
     margin: 0.625rem 3.125rem;
@@ -395,12 +356,9 @@
       justify-content: space-between;
       align-items: center;
     }
-
-
     .service-choose {
       display: flex;
       align-items: flex-end;
-
       .modle-title {
         background-color: #8dcfff;
         color: #fff;
@@ -410,23 +368,19 @@
         text-align: center;
         line-height: 3.125rem;
       }
-
       .service-choose-item {
         margin-left: 1.25rem;
         width: 7.5rem;
         height: 2.8125rem;
-
         .el-input__inner,
         .el-select .el-input .el-select__caret {
           color: #000;
         }
       }
-
       .area-type {
         width: 10.625rem;
       }
     }
-
     img {
       width: 10.375rem;
       height: 1.625rem;
