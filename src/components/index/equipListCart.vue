@@ -80,7 +80,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    // padding: 0 0.625rem;
   }
 
   .item-cart {

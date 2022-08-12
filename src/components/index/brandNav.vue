@@ -59,27 +59,22 @@
 <style scoped lang="less">
   .brand-nav-box {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    // ul {
-    //   width: 100%;
-    //   // height: 100%;
-    //   padding: 0;
-    // }
 
     li {
-      list-style: none;
-      // height: 3.125rem;
       height: calc((100%)/10);
       box-sizing: border-box;
       background-color: #fff;
-      padding: 0rem 1.25rem;
+      padding: 0px 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.875rem;
-      border: 1px solid #e0e0e0;
+      font-size: 14px;
+      color: #333;
+      border-bottom: 1px solid #eee;
       cursor: pointer;
     }
      li:hover{

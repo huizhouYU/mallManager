@@ -71,7 +71,6 @@
     width: 100%;
     margin-top: 0.625rem;
     padding: 10px 0;
-    border-top: 1px solid #eee;
     // display: flex;
     // justify-content: space-around;
     // flex-wrap: wrap;
