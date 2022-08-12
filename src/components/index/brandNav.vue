@@ -1,7 +1,8 @@
 <template>
-    <ul class="brand-nav-box">
-      <li v-for="(item,index) in brandList" :key="item.id">{{item.name}}<i class="iconfont">&#xe63c;</i></li>
-    </ul>
+  <ul class="brand-nav-box">
+    <li v-for="(item,index) in brandList" :key="item.id">{{item.name}}<i class="iconfont">&#xe63c;</i></li>
+    <div class="more-classification"></div>
+  </ul>
 </template>
 
 <script>
@@ -63,6 +64,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 
     li {
       height: calc((100%)/10);
@@ -77,8 +79,18 @@
       border-bottom: 1px solid #eee;
       cursor: pointer;
     }
-     li:hover{
-      background-color: #e0e0e0;
+
+    li:hover {
+      background-color: #E6F7FF;
+      color: #40A9FF;
     }
+    .more-classification{
+      width: 100px;
+      height: 50px;
+      background-color: #333;
+      position: absolute;top: 0px;
+      right:-100%;
+    }
+
   }
 </style>

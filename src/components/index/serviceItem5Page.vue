@@ -66,8 +66,8 @@
 <style lang="less" scoped>
   .list-item-pages {
     width: 100%;
-    margin-top: 0.625rem;
-    padding: 10px 0;
+    margin-top: 10px;
+    padding: 10px 20px 25px;
     // display: flex;
     // justify-content: space-around;
     // flex-wrap: wrap;
@@ -75,6 +75,7 @@
     grid-template-columns: repeat(auto-fill, 275px);
     justify-content: space-around;
     grid-row-gap: 10px;
+    box-sizing: border-box;
 
     .item {
       width: 275px;
@@ -82,13 +83,16 @@
       display: flex;
       // flex-direction: column;
       border: 1px solid #eee;
-      border-radius: 0.3125rem;
+      border-radius: 5px;
       align-items: center;
+      box-sizing: border-box;
 
       img {
         width: 130px;
         height: 130px;
-        border-radius: 0.3125rem;
+        border-radius: 5px;
+        padding: 1px;
+        box-sizing: border-box;
       }
 
       .item-right {

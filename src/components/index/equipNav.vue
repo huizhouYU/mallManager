@@ -1,69 +1,118 @@
 <template>
   <div class="equipNav-box">
-    <el-menu default-active="0" class="el-menu-demo" mode="horizontal">
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3">消息中心</el-menu-item>
-      <el-menu-item index="4">订单管理</el-menu-item>
-      <el-submenu index="5">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="5-1">选项1</el-menu-item>
-        <el-menu-item index="5-2">选项2</el-menu-item>
-        <el-menu-item index="5-3">选项3</el-menu-item>
-        <el-submenu index="5-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="5-4-1">选项1</el-menu-item>
-          <el-menu-item index="5-4-2">选项2</el-menu-item>
-          <el-menu-item index="5-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="6">消息中心</el-menu-item>
-      <el-menu-item index="7">订单管理</el-menu-item>
-    </el-menu>
+    <ul>
+      <li v-for="(item,index) in chooseItemData" :key="index" @click="chooseClick(index)" :class="{'selected':selectIndex == index }">
+        {{item.name}}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+  export default {
+    data() {
+      return {
+        selectIndex: '-1',
+        chooseItemData: [{
+            id: '1',
+            name: 'MRI'
+          },
+          {
+            id: '2',
+            name: 'CT'
+          },
+          {
+            id: '3',
+            name: 'PET/ct'
+          },
+          {
+            id: '4',
+            name: 'X-线'
+          },
+          {
+            id: '5',
+            name: 'DR'
+          },
+          {
+            id: '6',
+            name: '血压仪'
+          },
+          {
+            id: '7',
+            name: '探测仪'
+          },
+          {
+            id: '8',
+            name: '超声波'
+          },
+        ]
+      }
+
+    },
+    methods:{
+      chooseClick(key){
+        console.log('key',key);
+        this.selectIndex=key;
+      }
+    }
+
+  }
 </script>
 
 <style scoped lang="less">
   .equipNav-box {
     height: 100%;
 
-  }
-  .el-menu{
-    background-color:  #f5f5f5;
-  }
-  .el-menu.el-menu--horizontal{
-    border: none;
+    ul {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      li {
+        height: 100%;
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #666;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+
+      .selected,
+      li:hover {
+        color: #40A9FF;
+        border-bottom: 1px solid #40A9FF;
+      }
+    }
   }
 
-  .el-menu.el-menu--horizontal {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100%;
-  }
+  // .el-menu{
+  //   background-color:  #f5f5f5;
+  // }
+  // .el-menu.el-menu--horizontal{
+  //   border: none;
+  // }
 
-  .el-menu--horizontal>.el-menu-item.is-active {
-    // border-bottom: 2px solid #409EFF;
-    border-bottom: none;
-    color: #409EFF;
-  }
+  // .el-menu.el-menu--horizontal {
+  //   display: flex;
+  //   justify-content: space-around;
+  //   align-items: center;
+  //   height: 100%;
+  // }
 
-  .el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
-    border-bottom: none;
-    color: #409EFF;
-  }
+  // .el-menu--horizontal>.el-menu-item.is-active {
+  //   // border-bottom: 2px solid #409EFF;
+  //   border-bottom: none;
+  //   color: #409EFF;
+  // }
+
+  // .el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
+  //   border-bottom: none;
+  //   color: #409EFF;
+  // }
 </style>

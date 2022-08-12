@@ -29,12 +29,28 @@
         <!-- 左侧导航 -->
         <el-aside width="240px" class="main-aside">
           <img src="../../assets/images/index/brand_type.png" />
-          <brand-nav calss="brand-nav-box"></brand-nav>
+          <!-- <brand-nav calss="brand-nav-box"></brand-nav> -->
+          <ul class="brand-nav-box">
+            <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)" @mouseout="leaveClass()">{{item.name}}
+              <i class="iconfont">&#xe63c;</i>
+            </li>
+          </ul>
+
           <div class="more-brands">
             <p>更多品牌</p>
             <img src="../../assets/images/index/double-right.png" alt="">
           </div>
         </el-aside>
+        <!-- 左侧导航条悬浮显示的内容 -->
+        <div class="more-classification" v-show="isShow" @mouseenter="enterClass1()" >
+          <div class="item" v-for="(item,index) in classDatas" :key="index">
+            <div class="title" >{{item.name}}</div>
+            <ul>
+              <li v-for="(child,ind) in item.childers" :key="ind"  >{{child.name}}</li>
+            </ul>
+          </div>
+        </div>
+
         <!-- 右边内容-->
         <el-main>
           <!-- 头部导航 -->
@@ -121,9 +137,6 @@
         <img src="../../assets/images/index/majorRepair.png" alt="">
       </div>
       <service-item4-page></service-item4-page>
-      <div class="more">
-        <button class="btn">更多 <img src="../../assets/images/index/icon_right.png" alt=""> </button>
-      </div>
     </div>
     <!-- 模块五 个人工程师 -->
     <div class="modle5-enter-service">
@@ -141,10 +154,7 @@
         </div>
         <img src="../../assets/images/index/majorRepair.png" alt="">
       </div>
-      <service-item4-page></service-item4-page>
-      <div class="more">
-        <button class="btn">更多 <img src="../../assets/images/index/icon_right.png" alt=""> </button>
-      </div>
+      <service-item5-page></service-item5-page>
     </div>
     <!-- 模块六 两张大图 -->
     <div class="modle6-pic">
@@ -255,28 +265,407 @@
   import brandNav from '../../components/index/brandNav.vue'
   import equipListCart from '../../components/index/equipListCart.vue'
   import serviceItem4Page from '../../components/index/serviceItem4Page.vue'
+  import serviceItem5Page from '../../components/index/serviceItem5Page.vue'
+
   export default {
     components: {
       indexHeader,
       equipNav,
       brandNav,
       equipListCart,
-      serviceItem4Page
+      serviceItem4Page,
+      serviceItem5Page
     },
     data() {
       return {
+        isShow:false,
+        brandList: [{
+            id: '1',
+            name: '西门子'
+          },
+          {
+            id: '2',
+            name: '东软'
+          },
+          {
+            id: '3',
+            name: '万东'
+          },
+          {
+            id: '4',
+            name: '安科'
+          },
+          {
+            id: '5',
+            name: '明峰'
+          },
+          {
+            id: '6',
+            name: '万东'
+          },
+          {
+            id: '7',
+            name: '新奥博伟'
+          },
+          {
+            id: '8',
+            name: '鑫高益'
+          },
+          {
+            id: '9',
+            name: '贝斯达'
+          },
 
+          {
+            id: '10',
+            name: '开普/宽腾'
+          }
+
+        ],
+        classDatas: [{
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          }
+        ]
       }
     },
-    methods: {}
+    methods: {
+      enterClass1(){
+        console.log("进入",this.isShow)
+        this.isShow=true
+      },
+      enterClass(id){
+        //根据id去请求classDatas数据
+        this.isShow=true
+      },
+      leaveClass(){
+        console.log("离开",this.isShow)
+        this.isShow = false
+      }
+    }
   }
 </script>
 
 <style scoped lang="less">
   // 首页整体
   .index-body {
+    width: 100%;
+    min-width: 1200px;
     background-color: #f5f5f5;
-    // padding-bottom: 0.625rem;
     position: relative;
     padding-top: 150px;
   }
@@ -349,7 +738,61 @@
     margin: auto;
     height: 660px;
 
-    // background-color: #f5f5f5;
+    .index-main {
+      position: relative;
+
+      .more-classification {
+        width: 730px;
+        height: 600px;
+        background-color: #fff;
+        position: absolute;
+        top: 60px;
+        left: 240px;
+        overflow-y: auto;
+        padding: 35px 20px 40px 30px;
+        box-sizing: border-box;
+        box-shadow: 0px 1px 10px 5px #999;
+
+        .item:last-child {
+          padding-bottom: 0;
+        }
+
+        // visibility: hidden;
+        .item {
+          padding-bottom: 30px;
+
+          .title {
+            padding: 2px 0px 2px 10px;
+            border-left: 1px solid #40A9FF;
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #333333;
+          }
+
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+
+            li {
+              margin: 5px 10px 5px 0px;
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #555555;
+              cursor: pointer;
+            }
+
+            li:hover {
+              color: #40A9FF;
+            }
+          }
+        }
+
+      }
+    }
+
     // 左侧导航
     .main-aside {
       width: 240px;
@@ -368,7 +811,31 @@
       .brand-nav-box {
         width: 100%;
         height: 530px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        li {
+          height: calc((100%)/10);
+          box-sizing: border-box;
+          background-color: #fff;
+          padding: 0px 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 14px;
+          color: #333;
+          border-bottom: 1px solid #eee;
+          cursor: pointer;
+        }
+
+        li:hover {
+          background-color: #E6F7FF;
+          color: #40A9FF;
+        }
+
       }
+
 
       .more-brands {
         height: 60px;
@@ -431,7 +898,8 @@
         .release-demand {
           height: 205px;
           width: 100%;
-          background-color: #f3fbfe;
+          background-image: url(../../assets/images/index/announce_bg.png);
+          // background-color: #f3fbfe;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -531,6 +999,7 @@
             li {
               font-size: 12px;
               color: #333;
+              cursor: pointer;
             }
 
 
@@ -580,7 +1049,7 @@
   .modle5-enter-service {
     width: 1200px;
     margin: auto;
-    margin-top: 35px;
+    margin-top: 30px;
     background-color: #fff;
 
     .enter-service-header {
@@ -595,7 +1064,9 @@
       align-items: center;
 
       .modle-title {
-        background-color: #8dcfff;
+        // background-color: #8dcfff;
+        background-image: url(../../assets/images/index/Business_bg.png);
+
         color: #fff;
         letter-spacing: 0.1875rem;
         width: 240px;
@@ -614,6 +1085,10 @@
           font-size: 14px;
           color: #888;
           margin: 0px 10px;
+          cursor: pointer;
+        }
+        li:hover{
+          color: #8dcfff;
         }
       }
 
@@ -624,32 +1099,6 @@
       height: 1.625rem;
     }
 
-    .more {
-      height: 90px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .btn {
-        width: 240px;
-        height: 45px;
-        color: #fff;
-        background-color: #8DCFFF;
-        font-size: 18px;
-        border: none;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        img {
-          width: 16px;
-          height: 13px;
-          margin-left: 15px;
-        }
-      }
-    }
   }
 
   // 模块六 两张大图
@@ -757,6 +1206,7 @@
             font-weight: 400;
             color: #666666;
             margin: 10px 0px;
+            cursor: pointer;
           }
         }
 
