@@ -31,7 +31,7 @@
           label: '维修服务'
         }],
         searchData: {
-          item: '',
+          item: '1',
           key: ''
         }
       }
@@ -83,10 +83,14 @@
       }
 
       //箭头颜色
-      .el-select .el-input .el-select__caret,
-      .el-icon-arrow-up:before {
+      /deep/ .el-select .el-input .el-select__caret {
         color: #000;
       }
+
+      // .el-select .el-input .el-select__caret,
+      // .el-icon-arrow-up:before {
+      //   color: #000;
+      // }
 
       .search-select /deep/ .el-input,
       .search-select /deep/ .el-input__inner {

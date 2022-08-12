@@ -198,6 +198,12 @@
               的360智能设备，最贴心的售后服务，360社区一手
               评测资讯，享受360安全、安心、放心的购物体验。
             </p>
+            <div class="about-we">
+              <p>关于我们</p>
+              <img src="../../assets/images/index/wx.png" alt="">
+              <img src="../../assets/images/index/xl.png" alt="">
+
+            </div>
           </div>
           <div class="left-item2">
             <p class="title">售后服务</p>
@@ -233,12 +239,12 @@
       </div>
     </div>
 
-<!-- 模块九 底部链接 -->
-<div class="modle9-bottom">
-  <p class="item1"> ©2019-2021 yijiequan.cn版权所有 </p>
-  <p class="item2">京ICP备08010314号-6</p>
-  <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p>
-</div>
+    <!-- 模块九 底部链接 -->
+    <div class="modle9-bottom">
+      <p class="item1"> ©2019-2021 yijiequan.cn版权所有 </p>
+      <p class="item2">京ICP备08010314号-6</p>
+      <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p>
+    </div>
   </div>
 
 </template>
@@ -743,8 +749,9 @@
           color: #333333;
           margin-bottom: 40px;
         }
-        ul{
-          li{
+
+        ul {
+          li {
             font-size: 14px;
             font-family: Microsoft YaHei;
             font-weight: 400;
@@ -765,6 +772,30 @@
           font-weight: 400;
           color: #333333;
           width: 340px;
+          line-height: 24px;
+        }
+
+        .about-we {
+          margin-top: 30px;
+          padding-top: 30px;
+          width: 340px;
+          border-top: 1px solid #eee;
+          display: flex;
+          justify-content: start;
+
+          p {
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #333333;
+            margin-right: 20px;
+          }
+
+          img {
+            width: 22px;
+            height: 18px;
+            margin-right: 20px;
+          }
         }
       }
 
@@ -787,18 +818,21 @@
         .title {
           text-align: center;
         }
-        .remark{
+
+        .remark {
           display: flex;
           flex-direction: column;
         }
-        .mobile{
+
+        .mobile {
           font-size: 28px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #333333;
           text-align: center;
         }
-        .time{
+
+        .time {
           margin-top: 15px;
           font-size: 14px;
           font-family: Microsoft YaHei;
@@ -810,8 +844,9 @@
     }
 
   }
+
   // 模块九 底部链接
-  .modle9-bottom{
+  .modle9-bottom {
     background-color: #fff;
     width: 100%;
     height: 90px;
@@ -819,13 +854,13 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    padding: 3px 0px 25px 0px;
+    padding: 15px 0;
     box-sizing: border-box;
-    p{
-      font-size: 14px;
+
+    p {
+      font-size: 12px;
       color: #999;
       text-align: center;
-      margin-top:8px ;
     }
   }
 </style>
