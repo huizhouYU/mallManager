@@ -42,7 +42,7 @@
           </div>
         </el-aside>
         <!-- 左侧导航条悬浮显示的内容 -->
-        <div class="more-classification" v-show="isShow" @mouseenter="enterClass1()" >
+        <div class="more-classification" v-show="!isShow" @mouseover="enterClass('')" @mouseout="leaveClass()">
           <div class="item" v-for="(item,index) in classDatas" :key="index">
             <div class="title" >{{item.name}}</div>
             <ul>
@@ -260,12 +260,12 @@
 </template>
 
 <script>
-  import indexHeader from '../../components/index/indexHeader.vue'
-  import equipNav from '../../components/index/equipNav.vue'
-  import brandNav from '../../components/index/brandNav.vue'
-  import equipListCart from '../../components/index/equipListCart.vue'
-  import serviceItem4Page from '../../components/index/serviceItem4Page.vue'
-  import serviceItem5Page from '../../components/index/serviceItem5Page.vue'
+  import indexHeader from '../../pages/index/indexHeader.vue'
+  import equipNav from '../../pages/index/equipNav.vue'
+  import brandNav from '../../pages/index/brandNav.vue'
+  import equipListCart from '../../pages/index/equipListCart.vue'
+  import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
+  import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
 
   export default {
     components: {
@@ -644,10 +644,6 @@
       }
     },
     methods: {
-      enterClass1(){
-        console.log("进入",this.isShow)
-        this.isShow=true
-      },
       enterClass(id){
         //根据id去请求classDatas数据
         this.isShow=true
@@ -751,7 +747,7 @@
         overflow-y: auto;
         padding: 35px 20px 40px 30px;
         box-sizing: border-box;
-        box-shadow: 0px 1px 10px 5px #999;
+        box-shadow: 0px 0px 10px 5px #eee;
 
         .item:last-child {
           padding-bottom: 0;
