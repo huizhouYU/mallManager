@@ -1,18 +1,32 @@
 <template>
   <div class="index-body">
+    <!-- 首页banner图 -->
+    <div class="top-banner">
+      <img src="../../assets/images/index/banner_top.png" alt="">
+    </div>
     <!-- 顶部模块 购物车 -->
     <div class="shop-box">
-      <div class="shop-content">
+      <div class="shop-content-item">
+        <ul>
+          <li>您好，欢迎来到医界商城！</li>
+          <li>请登录</li>
+          <li class="bule_font">免费注册</li>
+          <li>客服热线：400-010-1866</li>
+        </ul>
+      </div>
+      <div class="shop-content-item shop-content-right">
         <ul>
           <li>购物车</li>
-          <li>会员中心</li>
-          <li>供应商入驻</li>
-          <li>特色专区</li>
+          <li>我的收藏</li>
+          <li class="yellow_font">
+            <img src="../../assets/images/index/icon_vip.png" alt="">
+            会员中心
+          </li>
+          <li>管理后台</li>
+          <li class="bule_font">供应商入驻</li>
         </ul>
-        <p>400-123-1234</p>
       </div>
     </div>
-
     <!-- 模块一 -->
     <el-container class="module0-header">
       <!-- 头部搜索一栏 -->
@@ -20,43 +34,52 @@
         <index-header class="index-header"></index-header>
       </el-header>
     </el-container>
-
-
+    <!-- 主要模块 -->
+    <div class="main-tab">
+      <div class="main-tab-content">
+        <div class="main-tab-content-left">
+          <img src="../../assets/images/index/icon_hamburger.png" alt="">
+          <span class="title">品牌分类</span>
+        </div>
+        <div class="main-tab-content-right">
+          <ul>
+            <li v-for="(item,index) in tabList" :key="index">{{item.title}}
+              <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <!-- 模块二 -->
     <el-container class="module1-content index-content">
       <!-- 主体内容 -->
       <el-container class="index-main">
+
         <!-- 左侧导航 -->
         <el-aside width="240px" class="main-aside">
-          <img src="../../assets/images/index/brand_type.png" />
-          <!-- <brand-nav calss="brand-nav-box"></brand-nav> -->
           <ul class="brand-nav-box">
-            <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)" @mouseout="leaveClass()">{{item.name}}
+            <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)"
+              @mouseout="leaveClass()">{{item.name}}
               <i class="iconfont">&#xe63c;</i>
             </li>
           </ul>
-
           <div class="more-brands">
             <p>更多品牌</p>
             <img src="../../assets/images/index/double-right.png" alt="">
           </div>
         </el-aside>
         <!-- 左侧导航条悬浮显示的内容 -->
-        <div class="more-classification" v-show="!isShow" @mouseover="enterClass('')" @mouseout="leaveClass()">
+        <div class="more-classification" v-show="isShow" @mouseover="enterClass('')" @mouseout="leaveClass()">
           <div class="item" v-for="(item,index) in classDatas" :key="index">
-            <div class="title" >{{item.name}}</div>
+            <div class="title">{{item.name}}</div>
             <ul>
-              <li v-for="(child,ind) in item.childers" :key="ind"  >{{child.name}}</li>
+              <li v-for="(child,ind) in item.childers" :key="ind">{{child.name}}</li>
             </ul>
           </div>
         </div>
 
         <!-- 右边内容-->
         <el-main>
-          <!-- 头部导航 -->
-          <div class="main-header-nav">
-            <equip-nav></equip-nav>
-          </div>
           <!-- 中间设备列表 + 右边发布需求 -->
           <div class="main-content">
             <!-- 中间设备列表 -->
@@ -67,33 +90,44 @@
             <div class="main-content-right">
               <!-- 发布需求 -->
               <div class="release-demand">
-                <img src="../../assets/images/index/publish.png" alt="">
-                <div class="titles">
-                  <p class="title1">发布需求</p>
-                  <p class="title2">求购设备、提供设备</p>
-                  <button class="btn">立即发布</button>
+                <div class="login-info">
+                  <div class="person-logo">
+                    <img src="../../assets/images/index/icon_tx.png" alt="">
+                  </div>
+                  <div class="person-info">
+                    <span>您好，欢迎光临</span>
+                    <ul>
+                      <li class="bule-font li-login">登录</li>
+                      <li>注册</li>
+                    </ul>
+                  </div>
                 </div>
+                <div class="explain">
+                  企业一站式服务平台,登录立即享受
+                </div>
+                <el-button class="btn-demand">一键发布需求</el-button>
               </div>
               <!-- 热门求购 -->
               <div class="hot-shop-box">
-                <div class="hot-title">
-                  <img src="../../assets/images/index/bookmark-one.png" alt="">
-                  <div class="hot-text">
-                    <p class="text1">热门求购</p>
-                    <p class="text2">各大医疗器械热门求购</p>
-                  </div>
+                <div class="hot-shop-box-tab">
+                  <ul>
+                    <li :class="{'actived':isHotTab}" @click="isHotTab=true">热门求购</li>
+                    <li :class="{'actived':!isHotTab}" @click="isHotTab=false">设备维修</li>
+                  </ul>
                 </div>
                 <ul class="hot-list">
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
-                  <li> <img src="../../assets/images/index/circular.png" alt="" /> 动态血压记录分析系统</li>
+                  <li v-for="(item,index) in hotList">
+                    <template v-if="index<3">
+                      <div class="list-img"></div>
+                    </template>
+                    <template v-else>
+                      <div class="list-left-bg">
+                        <div class="line"></div>
+                        <div class="circle"></div>
+                      </div>
+                    </template>
+                    <span>{{item.title}}</span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -278,7 +312,78 @@
     },
     data() {
       return {
-        isShow:false,
+        //顶部导航栏
+        tabList: [{
+            title: '首页',
+            isHot: false
+          },
+          {
+            title: '配件专区',
+            isHot: true
+          },
+          {
+            title: '供求信息',
+            isHot: false
+          },
+          {
+            title: '医疗器械',
+            isHot: false
+          },
+          {
+            title: '企业服务',
+            isHot: true
+          },
+          {
+            title: '学习园地',
+            isHot: false
+          },
+          {
+            title: '工程师服务',
+            isHot: false
+          },
+          {
+            title: '合作品牌',
+            isHot: false
+          },
+        ],
+        isHotTab: true, //true:选中'热门求购,false:选中'设备维修'
+        //热门求购列表
+        hotList: [{
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+        ],
+
+        isShow: false,
         brandList: [{
             id: '1',
             name: '西门子'
@@ -319,7 +424,19 @@
           {
             id: '10',
             name: '开普/宽腾'
-          }
+          },
+          {
+            id: '11',
+            name: '联影'
+          },
+          {
+            id: '12',
+            name: '朗润'
+          },
+          {
+            id: '13',
+            name: '康达洲际'
+          },
 
         ],
         classDatas: [{
@@ -644,12 +761,12 @@
       }
     },
     methods: {
-      enterClass(id){
+      enterClass(id) {
         //根据id去请求classDatas数据
-        this.isShow=true
+        this.isShow = true
       },
-      leaveClass(){
-        console.log("离开",this.isShow)
+      leaveClass() {
+        console.log("离开", this.isShow)
         this.isShow = false
       }
     }
@@ -663,7 +780,7 @@
     min-width: 1200px;
     background-color: #f5f5f5;
     position: relative;
-    padding-top: 150px;
+    padding-top: 235px;
   }
 
   /* 清除浮动 */
@@ -674,25 +791,41 @@
     clear: both;
   }
 
+  // 首页banner图
+  .top-banner {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    top: 0;
+    left: 0;
+    z-index: 99;
+
+    img {
+      width: 100%;
+      height: 100px;
+    }
+  }
+
   // 顶部模块 购物车
   .shop-box {
     background-color: #f5f5f5;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
     height: 30px;
     width: 100%;
     z-index: 99;
+    display: flex;
+    width: 1200px;
 
-    .shop-content {
+    .shop-content-item {
+      flex: 1;
       height: 100%;
-      width: 1200px;
-      margin: auto;
       display: flex;
-      justify-content: end;
       align-items: center;
       font-size: 12px;
-      color: #666;
+      color: #696969;
 
       ul {
         display: flex;
@@ -700,13 +833,36 @@
         align-items: center;
 
         li {
+          cursor: pointer;
+          padding-right: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-          padding: 0px 20px;
-          border-right: 1px solid #666;
+          img {
+            width: 16px;
+            height: 14px;
+            margin-right: 4px;
+          }
         }
+      }
 
-        li:last-child {
-          border-right: none;
+      .yellow_font {
+        color: #F5C164;
+      }
+
+      .bule_font {
+        color: #40A9FF;
+      }
+    }
+
+    .shop-content-right {
+      justify-content: flex-end;
+
+      ul {
+        li {
+          padding-right: 0px;
+          padding-left: 10px;
         }
       }
     }
@@ -715,10 +871,10 @@
   /* 模块一 头部 */
   .module0-header {
     position: fixed;
-    top: 30px;
+    top: 130px;
     left: 0;
     width: 100%;
-    height: 120px;
+    height: 105px;
     background-color: #fff;
     z-index: 99;
 
@@ -728,21 +884,117 @@
     }
   }
 
+  // 主要模块
+  .main-tab {
+    height: 40px;
+    width: 100%;
+    background-color: #fff;
+
+    .main-tab-content {
+      width: 1200px;
+      height: 100%;
+      background-color: #fff;
+      margin-left: 50%;
+      transform: translate(-50%, 0);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-sizing: border-box;
+      border-bottom: 1px solid #F6F6F6;
+
+      //品牌分类
+      .main-tab-content-left {
+        width: 240px;
+        height: 100%;
+        background-color: #8DCFFF;
+        border-radius: 10px 10px 0px 0px;
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 20px;
+          height: 15px;
+          margin: 0px 10px 0px 20px;
+        }
+
+        .title {
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          color: #FFFFFF;
+        }
+      }
+
+      //顶部导航栏
+      .main-tab-content-right {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        ul {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          height: 100%;
+          padding-left: 40px;
+          box-sizing: border-box;
+
+          li {
+            cursor: pointer;
+            margin-right: 40px;
+            font-size: 16px;
+            padding: 0px 5px;
+            font-family: Microsoft YaHei;
+            color: #333;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-sizing: border-box;
+
+            img {
+              position: absolute;
+              top: 0px;
+              right: -20px;
+              animation: movepoint .5s infinite;
+            }
+          }
+
+          li:hover {
+            color: #40A9FF;
+            border-bottom: 2px solid #40A9FF;
+            margin-bottom: 2px;
+          }
+
+          @keyframes movepoint {
+            50% {
+              top: 1px;
+            }
+
+            100% {
+              top: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // 模块二
   .index-content {
     width: 1200px;
     margin: auto;
-    height: 660px;
+    height: 600px;
 
     .index-main {
       position: relative;
+
 
       .more-classification {
         width: 730px;
         height: 600px;
         background-color: #fff;
         position: absolute;
-        top: 60px;
+        top: 0px;
         left: 240px;
         overflow-y: auto;
         padding: 35px 20px 40px 30px;
@@ -753,7 +1005,6 @@
           padding-bottom: 0;
         }
 
-        // visibility: hidden;
         .item {
           padding-bottom: 30px;
 
@@ -821,7 +1072,6 @@
           align-items: center;
           font-size: 14px;
           color: #333;
-          border-bottom: 1px solid #eee;
           cursor: pointer;
         }
 
@@ -894,50 +1144,124 @@
         .release-demand {
           height: 205px;
           width: 100%;
-          background-image: url(../../assets/images/index/announce_bg.png);
-          // background-color: #f3fbfe;
+          background-position: 100% bottom;
+          background-image: url(../../assets/images/index/pic_login_bg.png);
+          background-repeat: no-repeat;
+          background-color: #FFFFFF;
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 20px 40px;
+          justify-content: space-between;
+          padding: 20px 0px 35px 0px;
           box-sizing: border-box;
+          overflow: hidden;
 
-          img {
-            width: 70px;
-            height: 70px;
-          }
-
-          .titles {
-            flex: 1;
+          //登录信息
+          .login-info {
+            width: 100%;
+            padding-left: 20px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            padding-top: 10px;
-            // padding-bottom: 1.25rem;
 
-            // background-color: aquamarine;
-            .title1 {
-              font-size: 16px;
-              margin-bottom: 10px;
-              color: #333;
+            .person-logo {
+              width: 54px;
+              height: 54px;
+              background: #F5F5F5;
+              border-radius: 50%;
+              margin-right: 12px;
+              box-sizing: border-box;
+              overflow: hidden;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              img {
+                width: 40px;
+                height: 40px;
+              }
             }
 
-            .title2 {
-              font-size: 12px;
-              color: #999;
-              margin-bottom: 10px;
+            .person-info {
+              height: 54px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              color: #333333;
+
+              ul {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                li {
+                  cursor: pointer;
+                  position: relative;
+                  padding: 0px 12px;
+                }
+
+                li:first-child {
+                  padding-left: 0px;
+                }
+
+                .li-login:after {
+                  position: absolute;
+                  content: "";
+                  display: block;
+                  width: 1px;
+                  height: 15px;
+                  border-right: 1px solid #BDBDBD;
+                  right: 0px;
+                  top: 3px;
+                }
+
+                .bule-font {
+                  color: #40A9FF;
+                }
+              }
             }
 
-            .btn {
-              width: 87px;
-              height: 26px;
-              background-color: #FFC53D;
-              color: #fff;
-              border-radius: 5px;
-              border: 1px solid #FFC53D;
-            }
           }
+
+          // 企业一站式服务平台,登录立即享受
+          .explain {
+            position: relative;
+            font-size: 12px;
+            font-family: Microsoft YaHei;
+            color: #EC3333;
+            background-color: #FFF6F6;
+            padding: 4px 6px;
+            border-radius: 10px;
+          }
+
+          .explain::before {
+            position: absolute;
+            content: "";
+            display: block;
+            background-color: #333;
+            top: -10px;
+            left: 35%;
+            border-left: 10px solid #fff;
+            border-right: 10px solid #fff;
+            border-bottom: 10px solid #FFF6F6;
+          }
+
+          // 一键发布需求
+          .btn-demand {
+            width: 170px;
+            height: 40px;
+            border: none;
+            background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
+            box-shadow: 0px 3px 7px 0px rgba(61, 171, 255, 0.8);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: Microsoft YaHei;
+          }
+
         }
 
         // 热门求购
@@ -949,33 +1273,58 @@
           padding: 20px 20px 15px 20px;
           box-sizing: border-box;
 
-          .hot-title {
-            height: 35px;
-            display: flex;
-            align-items: flex-start;
-
-            img {
-              width: 27px;
-              height: 33px;
-            }
-
-            .hot-text {
-              padding-left: 13px;
+          .hot-shop-box-tab {
+            ul {
               display: flex;
-              flex-direction: column;
-              justify-content: space-around;
-              align-items: flex-start;
 
-              .text1 {
-                font-size: 16px;
-                color: #333;
+              li {
+                cursor: pointer;
+                flex: 1;
+                text-align: center;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #DBDBDB;
               }
 
-              .text2 {
-                font-size: 12px;
-                color: #999;
+              .actived {
+                position: relative;
+                color: #40A9FF;
+                border-bottom: 1px solid #40A9FF;
+
               }
+
+              .actived:after {
+                position: absolute;
+                display: block;
+                content: "";
+                bottom: -5px;
+                left: 50%;
+                transform: translate(-50%, 0);
+                width: 7px;
+                height: 7px;
+                background-color: #fff;
+                border: 1px solid #40A9FF;
+                border-radius: 50%;
+                z-index: 1;
+                animation: moveline .8s infinite;
+              }
+
+              @keyframes moveline {
+                0% {
+                  box-shadow: 0px 0px 5px 0px rgba(61, 171, 255, 0.2);
+                }
+
+                50% {
+                  box-shadow: 0px 0px 5px 0px rgba(61, 171, 255, 0.8);
+                }
+
+                100% {
+                  box-shadow: 0px 0px 5px 0px rgba(61, 171, 255, 0.2);
+                }
+              }
+
+
             }
+
           }
 
           .hot-list {
@@ -986,17 +1335,73 @@
             justify-content: space-between;
             align-items: flex-start;
 
-            img {
-              width: 10px;
-              height: 10px;
-              margin-right: 7px;
+            li {
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              color: #333333;
+
+              .list-img {
+                width: 16px;
+                height: 16px;
+                margin-right: 7px;
+              }
+
+              span {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
             }
 
-            li {
-              font-size: 12px;
-              color: #333;
-              cursor: pointer;
+            li:first-child {
+              .list-img {
+                background-image: url('../../assets/images/index/icon_1.png');
+              }
             }
+
+            li:nth-child(2) {
+              .list-img {
+                background-image: url('../../assets/images/index/icon_2.png');
+              }
+            }
+
+            li:nth-child(3) {
+              .list-img {
+                background-image: url('../../assets/images/index/icon_3.png');
+              }
+            }
+
+            .list-left-bg {
+              width: 16px;
+              height: 16px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              box-sizing: border-box;
+              margin-right: 7px;
+
+              .line {
+                width: 8px;
+                margin-bottom: 13px;
+                height: 3px;
+                background: #8DCFFF;
+                border-radius: 0px 0px 2px 0px;
+              }
+
+              .circle {
+                width: 3px;
+                height: 3px;
+                background: #DBDBDB;
+                border-radius: 50%;
+              }
+            }
+
+
+
 
 
           }
@@ -1083,7 +1488,8 @@
           margin: 0px 10px;
           cursor: pointer;
         }
-        li:hover{
+
+        li:hover {
           color: #8dcfff;
         }
       }
