@@ -107,7 +107,7 @@
                 </div>
                 <el-button class="btn-demand">一键发布需求</el-button>
               </div>
-              <!-- 热门求购 -->
+              <!-- 热门求购  + 设备维修-->
               <div class="hot-shop-box">
                 <div class="hot-shop-box-tab">
                   <ul>
@@ -115,9 +115,25 @@
                     <li :class="{'actived':!isHotTab}" @click="isHotTab=false">设备维修</li>
                   </ul>
                 </div>
-                <ul class="hot-list">
+                <!-- 热门求购 -->
+                <ul class="hot-list" v-show="isHotTab">
                   <li v-for="(item,index) in hotList">
                     <template v-if="index<3">
+                      <div class="list-img"></div>
+                    </template>
+                    <template v-else>
+                      <div class="list-left-bg">
+                        <div class="line"></div>
+                        <div class="circle"></div>
+                      </div>
+                    </template>
+                    <span>{{item.title}}</span>
+                  </li>
+                </ul>
+                <!-- 设备维修 -->
+                <ul class="equipment-list" v-show="!isHotTab">
+                  <li v-for="(item,index) in equipmentList">
+                    <template v-if="index<4">
                       <div class="list-img"></div>
                     </template>
                     <template v-else>
@@ -349,6 +365,41 @@
         isHotTab: true, //true:选中'热门求购,false:选中'设备维修'
         //热门求购列表
         hotList: [{
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+          {
+            title: '动态血压记录分析系统'
+          },
+        ],
+        //设备维修列表
+        equipmentList: [{
             title: '动态血压记录分析系统'
           },
           {
@@ -1327,6 +1378,64 @@
 
           }
 
+          .equipment-list {
+            margin-top: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            li {
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              color: #333333;
+
+              .list-img {
+                width: 16px;
+                height: 16px;
+                margin-right: 7px;
+                background-image: url('../../assets/images/index/icon_new.png');
+              }
+
+              span {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+
+            .list-left-bg {
+              width: 16px;
+              height: 16px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              box-sizing: border-box;
+              margin-right: 7px;
+
+              .line {
+                width: 8px;
+                margin-bottom: 13px;
+                height: 3px;
+                background: #8DCFFF;
+                border-radius: 0px 0px 2px 0px;
+              }
+
+              .circle {
+                width: 3px;
+                height: 3px;
+                background: #DBDBDB;
+                border-radius: 50%;
+              }
+            }
+
+          }
+
           .hot-list {
             margin-top: 15px;
             flex: 1;
@@ -1399,10 +1508,6 @@
                 border-radius: 50%;
               }
             }
-
-
-
-
 
           }
         }
