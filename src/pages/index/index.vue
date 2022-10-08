@@ -151,6 +151,21 @@
         </el-main>
       </el-container>
     </el-container>
+    <!-- 品牌 -->
+    <div class="adv_brand-adv">
+      <div class="advertisement_left">
+        <img src="../../assets/images/index/pic_left.png" alt="">
+      </div>
+      <ul class="brands">
+        <li v-for="(item,index) in brandsList" :key="index">
+          <img :src="item" alt="图片加载失败">
+        </li>
+      </ul>
+      <div class="advertisement_right">
+        <img src="../../assets/images/index/pic_right.png" alt="">
+      </div>
+    </div>
+
     <!-- 模块三 四张大图 -->
     <div class="modle3-picture">
       <div class="picture-item">
@@ -400,39 +415,53 @@
         ],
         //设备维修列表
         equipmentList: [{
-            title: '动态血压记录分析系统'
+            title: '设备维修分析系统记录维修'
+          },
+          {
+            title: '设备维修分析系统'
+          },
+          {
+            title: '设备维修分析系统'
+          },
+          {
+            title: '设备维修分析系统记录维修'
           },
           {
             title: '动态血压记录分析系统'
           },
           {
-            title: '动态血压记录分析系统'
+            title: '设备维修分析系统记录维修'
           },
           {
             title: '动态血压记录分析系统'
           },
           {
-            title: '动态血压记录分析系统'
+            title: '设备维修分析系统'
           },
           {
-            title: '动态血压记录分析系统'
+            title: '设备维修分析系统血压记录分析系统'
           },
           {
-            title: '动态血压记录分析系统'
+            title: '设备维修分析系统'
           },
           {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
+            title: '动设备维修分析系统'
           },
         ],
+        //品牌logo
+        brandsList: [require('../../assets/images/index/brands/logo_万东.png'),
+          require('../../assets/images/index/brands/logo_飞利浦.png'),
+          require('../../assets/images/index/brands/logo_明峰.png'),
+          require('../../assets/images/index/brands/logo_联影.png'),
+          require('../../assets/images/index/brands/logo_朗润.png'),
+          require('../../assets/images/index/brands/logo_康达洲际.png'),
+          require('../../assets/images/index/brands/logo_奥泰.png'),
+          require('../../assets/images/index/brands/logo_安科.png'),
+          require('../../assets/images/index/brands/logo_佳能.png'),
+        ],
+
+
+
 
         isShow: false,
         brandList: [{
@@ -1514,6 +1543,46 @@
       }
     }
 
+  }
+
+  .adv_brand-adv {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 140px;
+
+    .advertisement_left,
+    .advertisement_right {
+      width: 240px;
+      height: 140px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .brands {
+      margin: 0px 10px;
+      flex: 1;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      display: grid;
+      grid-template-columns: repeat(5,auto);
+      li{
+        width: 144px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          width: auto;
+        }
+      }
+
+    }
   }
 
   // 模块三 四张大图

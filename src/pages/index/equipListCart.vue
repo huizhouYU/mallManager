@@ -2,7 +2,7 @@
   <div class="listicarts">
     <div class="item-cart" v-for="(item,index) in equipLists" :key="item.id">
       <!-- <img :src="item.imgPath" alt="图片无法加载"> -->
-      <img src="../../assets/images/index/equip1.png" alt="图片无法加载">
+      <img :src="item.imgPath" alt="图片无法加载">
       <p class="name">{{item.name}}</p>
       <p class="remark">{{item.remark}}</p>
     </div>
@@ -17,55 +17,55 @@
             id: '1',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid1'
+            imgPath: require('../../assets/images/index/grid/pic_grid1.png')
           },
           {
             id: '2',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid2'
+            imgPath: '../../assets/images/index/grid/pic_grid2.png'
           },
           {
             id: '3',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid3'
+            imgPath: '../../assets/images/index/grid/pic_grid3.png'
           },
           {
             id: '4',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid4'
+            imgPath: '../../assets/images/index/grid/pic_grid4.png'
           },
           {
             id: '5',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid5'
+            imgPath:'../../assets/images/index/grid/pic_grid5.png'
           },
           {
             id: '6',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid6'
+            imgPath: './assets/images/index/grid/pic_grid6.png'
           },
           {
             id: '7',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid7'
+            imgPath: './assets/images/index/grid/pic_grid7.png'
           },
           {
             id: '8',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid8'
+            imgPath: './assets/images/index/grid/pic_grid8.png'
           },
           {
             id: '9',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid9'
+            imgPath: './assets/images/index/grid/pic_grid9.png'
           }
         ]
       }
