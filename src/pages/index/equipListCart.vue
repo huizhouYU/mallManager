@@ -23,49 +23,49 @@
             id: '2',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: '../../assets/images/index/grid/pic_grid2.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid2.png')
           },
           {
             id: '3',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: '../../assets/images/index/grid/pic_grid3.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid3.png')
           },
           {
             id: '4',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: '../../assets/images/index/grid/pic_grid4.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid4.png')
           },
           {
             id: '5',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath:'../../assets/images/index/grid/pic_grid5.png'
+            imgPath:require('../../assets/images/index/grid/pic_grid5.png')
           },
           {
             id: '6',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid6.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid6.png')
           },
           {
             id: '7',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid7.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid7.png')
           },
           {
             id: '8',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid8.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid8.png')
           },
           {
             id: '9',
             name: '骨密度器',
             remark: '提供90天保修',
-            imgPath: './assets/images/index/grid/pic_grid9.png'
+            imgPath: require('../../assets/images/index/grid/pic_grid9.png')
           }
         ]
       }

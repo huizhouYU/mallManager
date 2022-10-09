@@ -151,7 +151,7 @@
         </el-main>
       </el-container>
     </el-container>
-    <!-- 品牌 -->
+    <!--各大品牌 -->
     <div class="adv_brand-adv">
       <div class="advertisement_left">
         <img src="../../assets/images/index/pic_left.png" alt="">
@@ -160,11 +160,17 @@
         <li v-for="(item,index) in brandsList" :key="index">
           <img :src="item" alt="图片加载失败">
         </li>
+        <li>
+          <span>更多品牌</span>
+          <img src="../../assets/images/index/brands/icon_double-right.png" alt="">
+        </li>
       </ul>
       <div class="advertisement_right">
         <img src="../../assets/images/index/pic_right.png" alt="">
       </div>
     </div>
+    <!-- 配件专区 -->
+    <accessories-area class="accessories_area"></accessories-area>
 
     <!-- 模块三 四张大图 -->
     <div class="modle3-picture">
@@ -329,6 +335,7 @@
   import equipNav from '../../pages/index/equipNav.vue'
   import brandNav from '../../pages/index/brandNav.vue'
   import equipListCart from '../../pages/index/equipListCart.vue'
+  import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
 
@@ -338,6 +345,7 @@
       equipNav,
       brandNav,
       equipListCart,
+      accessoriesArea,
       serviceItem4Page,
       serviceItem5Page
     },
@@ -1545,17 +1553,24 @@
 
   }
 
+  // 各大品牌
   .adv_brand-adv {
+    width: 1200px;
+    height: 140px;
+    margin: auto;
     margin-top: 10px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    height: 140px;
+
 
     .advertisement_left,
     .advertisement_right {
       width: 240px;
       height: 140px;
+      border-radius: 6px;
+      box-sizing: border-box;
+      overflow: hidden;
 
       img {
         width: 100%;
@@ -1563,26 +1578,77 @@
       }
     }
 
+    .advertisement_right {
+      width: 220px;
+    }
+
     .brands {
+      width: 720px;
       margin: 0px 10px;
-      flex: 1;
       height: 100%;
       box-sizing: border-box;
+      border-radius: 6px;
       background-color: #fff;
       display: grid;
-      grid-template-columns: repeat(5,auto);
-      li{
+      grid-template-columns: repeat(5, auto);
+
+
+      li {
         width: 144px;
         height: 70px;
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        img{
+        box-shadow: 1px 0px 0px 0px #F6F6F6, 0px 1px 0px 0px #F6F6F6;
+        transition: all 0.6s;
+
+        img {
           width: auto;
         }
       }
 
+      // 更多品牌
+      li:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          font-size: 14px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #666666;
+        }
+
+        img {
+          margin-left: 10px;
+          width: 12px;
+          height: 12px;
+        }
+      }
+
+      li:hover {
+        transform: scale(1.2);
+        z-index: 2;
+      }
+
+      li:last-child:hover {
+        span {
+          color: #40A9FF;
+        }
+
+      }
+
+
     }
+  }
+
+  // 配件专区
+  .accessories_area {
+    width: 1200px;
+    margin: auto;
+    margin-top: 25px;
   }
 
   // 模块三 四张大图
