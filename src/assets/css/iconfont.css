@@ -13,6 +13,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-gouwuche:before {
+  content: "\e73d";
+}
+
 .icon-liebiao:before {
   content: "\e603";
 }

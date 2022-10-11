@@ -1,7 +1,7 @@
 <!-- 配件专区 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more"></titleMore>
+    <titleMore :title="title" class="title_more" v-if="showTitle"></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
         <div class="item_top">
@@ -40,6 +40,9 @@
   export default {
     components: {
       titleMore
+    },
+    props:{
+      showTitle:Boolean
     },
     data() {
       return {
