@@ -1,6 +1,6 @@
 <template>
   <div class="listicarts">
-    <div class="item-cart" v-for="(item,index) in equipLists" :key="item.id">
+    <div class="item-cart" v-for="(item,index) in equipLists" :key="item.id" @click="jumpMore(item.id)">
       <!-- <img :src="item.imgPath" alt="图片无法加载"> -->
       <img :src="item.imgPath" alt="图片无法加载">
       <p class="name">{{item.name}}</p>
@@ -68,6 +68,11 @@
             imgPath: require('../../assets/images/index/grid/pic_grid9.png')
           }
         ]
+      }
+    },
+    methods:{
+      jumpMore(id){
+        this.$emit("jumpAllGoods",id)
       }
     }
   }

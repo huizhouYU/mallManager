@@ -31,6 +31,12 @@
         </div>
       </div>
     </div>
+    <div v-show="!showTitle" class="pagination">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
+        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
+        :total="400">
+      </el-pagination>
+    </div>
 
   </div>
 </template>
@@ -41,12 +47,13 @@
     components: {
       titleMore
     },
-    props:{
-      showTitle:Boolean
+    props: {
+      showTitle: Boolean
     },
     data() {
       return {
         title: "配件专区",
+        currentPage4: 4,
         accessoriesList: [{
             title: '飞利浦核磁/CT',
             keyValue: ['线圈', '主机', '梯度', '线圈'],
@@ -170,7 +177,15 @@
 
         ]
       }
-    }
+    },
+    methods: {
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
+    },
   }
 </script>
 
@@ -178,9 +193,10 @@
   .title_more {
     margin-bottom: 15px;
   }
-  .item_content{
+
+  .item_content {
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    grid-template-columns: repeat(2, auto);
     grid-gap: 4px;
   }
 
@@ -309,9 +325,31 @@
           }
         }
       }
-      .individual:last-child{
+
+      .individual:last-child {
         border: none;
       }
     }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0px 25px 0px;
+  }
+
+  /deep/ .el-pagination {
+    font-weight: 400;
+  }
+
+  /deep/ .el-pagination .el-select .el-input .el-input__inner {
+    background-color: #f5f5f5;
+  }
+
+  /deep/.el-pagination .btn-next,
+  /deep/.el-pagination .btn-prev,
+  /deep/ .el-pager li {
+    background: none;
   }
 </style>

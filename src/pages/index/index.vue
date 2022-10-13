@@ -44,17 +44,14 @@
         <div class="main-tab-content-right">
           <ul>
             <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==index}"
-              @click="chooseTab = index">{{item.title}}
+              @click="jumpTab(item.path,index)">{{item.title}}
               <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <!-- 首页 -->
-    <home v-show="chooseTab==0"></home>
-    <!-- 配件专区 -->
-    <accessory v-show="chooseTab==1"></accessory>
+    <router-view class="each-module"></router-view>
     <!-- 模块七 四大模块 -->
     <div class="model7-box">
       <div class="content">
@@ -152,16 +149,11 @@
 
 <script>
   import indexHeader from '../../pages/index/indexHeader.vue'
-  import home from '../../pages/home/index.vue' //首页
-  import accessory from '../../pages/accessory/index.vue' //配件专区
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
-
   export default {
     components: {
       indexHeader,
-      home,
-      accessory,
       serviceItem4Page,
       serviceItem5Page
     },
@@ -171,41 +163,61 @@
         //顶部导航栏
         tabList: [{
             title: '首页',
-            isHot: false
+            isHot: false,
+            path:'/home'
           },
           {
             title: '配件专区',
-            isHot: true
+            isHot: true,
+            path:'/accessory'
           },
           {
             title: '供求信息',
-            isHot: false
+            isHot: false,
+            path:'/supplyDemand'
           },
           {
             title: '医疗器械',
-            isHot: false
+            isHot: false,
+            path:''
           },
           {
             title: '企业服务',
-            isHot: true
+            isHot: true,
+            path:''
           },
           {
             title: '学习园地',
-            isHot: false
+            isHot: false,
+            path:''
           },
           {
             title: '工程师服务',
-            isHot: false
+            isHot: false,
+            path:''
           },
           {
             title: '合作品牌',
-            isHot: false
+            isHot: false,
+            path:'/cooperationBrand'
           },
         ]
 
       }
     },
+    mounted() {
+      this.initData()
+    },
     methods: {
+      initData(){
+        this.jumpTab('/home',0)
+      },
+      jumpTab(path,index){
+        this.chooseTab = index
+        this.$router.replace({
+          path:path
+        })
+      },
       enterClass(id) {
         //根据id去请求classDatas数据
         this.isShow = true
@@ -331,11 +343,14 @@
 
   // 主要模块
   .main-tab {
+    position: fixed;
     height: 40px;
     width: 100%;
     background-color: #fff;
+    z-index: 99;
 
     .main-tab-content {
+
       width: 1200px;
       height: 100%;
       background-color: #fff;
@@ -423,6 +438,12 @@
         }
       }
     }
+  }
+
+  .each-module {
+    margin-top: 40px;
+    width: 1200px;
+    margin: auto;
   }
 
 

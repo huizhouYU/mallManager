@@ -3,20 +3,22 @@
     <div class="banner">
       <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
     </div>
-  <!-- 配件专区 -->
-  <accessories-area class="accessories_area" :showTitle="showTitle"></accessories-area>
+    <div class="item">
+      <!-- 品牌分类 -->
+      <brand-list class="supply-demand-item"></brand-list>
+    </div>
+
   </div>
 </template>
 
 <script>
-  import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
+  import brandList from '../../pages/cooperationBrand/brandList.vue' //合作品牌
   export default{
     components: {
-      accessoriesArea
+      brandList
     },
     data(){
       return{
-        showTitle:false
       }
     }
   }

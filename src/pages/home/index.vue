@@ -14,7 +14,7 @@
             </li>
           </ul>
           <div class="more-brands">
-            <p>更多品牌</p>
+            <p>更多分类</p>
             <img src="../../assets/images/index/double-right.png" alt="">
           </div>
         </el-aside>
@@ -34,7 +34,7 @@
           <div class="main-content">
             <!-- 中间设备列表 -->
             <div class="main-content-left">
-              <equip-list-cart class="equipListCart-box"></equip-list-cart>
+              <equip-list-cart class="equipListCart-box" @jumpAllGoods="jumpAllGoods"></equip-list-cart>
             </div>
             <!-- 右边发布需求 -->
             <div class="main-content-right">
@@ -615,6 +615,12 @@
       }
     },
     methods: {
+      jumpAllGoods(id){
+        this.$router.replace({
+          path:'/allGoods',
+          query:{id:id}
+        })
+      },
       enterClass(id) {
         //根据id去请求classDatas数据
         this.isShow = true

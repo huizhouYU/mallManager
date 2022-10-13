@@ -1,0 +1,57 @@
+<template>
+  <div class="content">
+    <div class="banner">
+      <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
+    </div>
+    <div class="item">
+      <!-- 配件专区 -->
+      <supply-demand-item class="supply-demand-item"></supply-demand-item>
+      <!-- 精选推荐 -->
+      <recommendations-goods class="recommendations-goods"></recommendations-goods>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  import supplyDemandItem from '../supplyDemand/supplyDemandItem.vue' //供求信息单个数据
+  import recommendationsGoods from '../supplyDemand/recommendationsGoods.vue'//精选推荐
+  export default{
+    components: {
+      supplyDemandItem,recommendationsGoods
+    },
+    data(){
+      return{
+      }
+    }
+  }
+</script>
+
+<style lang="less" scoped>
+  .content{
+    width: 1200px;
+    margin: auto;
+    padding-top: 25px;
+  }
+  .banner{
+    width: 100%;
+    height: 90px;
+    margin: 0px 0px 32px 0px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .item{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    .supply-demand-item{
+      width: 920px;
+    }
+    .recommendations-goods{
+      margin-left: 30px;
+      width: 250px;
+    }
+  }
+</style>
