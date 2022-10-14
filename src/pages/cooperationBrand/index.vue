@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="cooperationBrand-content">
     <div class="banner">
       <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
     </div>
@@ -7,7 +7,6 @@
       <!-- 品牌分类 -->
       <brand-list class="supply-demand-item"></brand-list>
     </div>
-
   </div>
 </template>
 
@@ -25,10 +24,10 @@
 </script>
 
 <style lang="less" scoped>
-  .content{
+  .cooperationBrand-content{
     width: 1200px;
     margin: auto;
-    padding-top: 25px;
+    margin-top: 25px;
   }
   .banner{
     width: 100%;

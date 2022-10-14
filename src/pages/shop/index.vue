@@ -1,0 +1,227 @@
+<template>
+  <div class="body">
+    <div class="header-top">
+      <header-title class="header-title"></header-title>
+    </div>
+
+    <div class="header">
+      <index-header class="index-header"></index-header>
+    </div>
+    <div class="shop-main">
+      <div class="shop-logo">
+        <img src="../../assets/images/shop/pic_shop_bg.png" alt="">
+        <div class="shop-info">
+          <div class="shop-info-name">
+            <img src="../../assets/images/shop/icon_shop.png" alt="">
+            <span>合肥迅即影像科技网络有限公司</span>
+          </div>
+          <div class="shop-info-right">
+            <div class="item">
+              <div class="one-front">保</div>
+              <span>消费者服务保障</span>
+            </div>
+            <div class="item">
+              <div class="one-front">证</div>
+              <span>认证商家</span>
+            </div>
+            <div class="item">
+              <div class="one-front">质</div>
+              <span>质量保证</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content">
+        <ul>
+          <li v-for="(item,index) in tabList" :key="index" :class="{'selected':index == selectedTab}" @click="selectedTab = index">{{item.name}}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  import headerTitle from '../../pages/index/headerTitle.vue'
+  import indexHeader from '../../pages/index/indexHeader.vue'
+  export default {
+    components: {
+      headerTitle,
+      indexHeader
+    },
+    data() {
+      return {
+        selectedTab:'-1',
+        tabList: [{
+            name: '店铺首页',
+            path:''
+          },
+          {
+            name: '简要介绍',
+            path:''
+          },
+          {
+            name: '公司资质',
+            path:''
+          },
+          {
+            name: '店铺商品',
+            path:''
+          },
+          {
+            name: '供求信息',
+            path:''
+          },
+          {
+            name: '联系方式',
+            path:''
+          }
+        ]
+      }
+    }
+  }
+</script>
+
+<style lang="less" scoped>
+  .body {
+    background-color: #f5f5f5;
+    height: 100%;
+  }
+
+  .header-top {
+    position: fixed;
+    height: 30px;
+    width: 100%;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header {
+    position: fixed;
+    margin-top: 30px;
+    padding: 20px 0px;
+    width: 100%;
+    background-color: #fff;
+  }
+
+  .shop-main {
+    padding-top: 140px;
+    height: 20px;
+
+    .shop-logo {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      display: flex;
+      align-items: center;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 90px;
+      }
+
+      .shop-info {
+        width: 1200px;
+        z-index: 9;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .shop-info-name {
+          display: flex;
+          align-items: center;
+
+          img {
+            position: static;
+            width: 38px;
+            height: 38px;
+            margin-right: 10px;
+          }
+
+          span {
+            font-size: 28px;
+            font-family: Microsoft YaHei;
+            font-weight: 700;
+            color: #FFFFFF;
+          }
+        }
+
+        .shop-info-right {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+
+          .item {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 20px;
+
+            .one-front {
+              width: 34px;
+              height: 34px;
+              background-image: url('../../assets/images/shop/pic_circle.png');
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 18px;
+              font-family: Microsoft YaHei;
+              font-weight: 700;
+              color: #FFE077;
+              margin-right: 10px;
+            }
+
+            span {
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+ .tab-content{
+   height: 50px;
+   background-color: #fff;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   ul{
+     width: 1200px;
+     height: 100%;
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     li{
+       box-sizing: border-box;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       height: 100%;
+       padding: 0px 30px;
+       font-size: 16px;
+       font-family: Microsoft YaHei;
+       font-weight: 400;
+       color: #333333;
+       cursor: pointer;
+     }
+     li:hover{
+       color: #40A9FF;
+     }
+     .selected{
+       color: #40A9FF;
+       border-bottom: 2px solid #40A9FF;
+     }
+   }
+ }
+
+
+  }
+
+
+
+</style>

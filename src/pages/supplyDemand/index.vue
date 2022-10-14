@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="main-content">
     <div class="banner">
       <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
     </div>
@@ -28,10 +28,10 @@
 </script>
 
 <style lang="less" scoped>
-  .content{
+  .main-content{
     width: 1200px;
     margin: auto;
-    padding-top: 25px;
+     margin-top: 25px;
   }
   .banner{
     width: 100%;
@@ -42,7 +42,7 @@
       height: 100%;
     }
   }
-  .item{
+  .main-content .item{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;

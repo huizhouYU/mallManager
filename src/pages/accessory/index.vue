@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="accessory-content">
     <div class="banner">
       <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
     </div>
@@ -23,10 +23,10 @@
 </script>
 
 <style lang="less" scoped>
-  .content{
+  .accessory-content{
     width: 1200px;
     margin: auto;
-    padding-top: 25px;
+    margin-top: 25px;
   }
   .banner{
     width: 100%;

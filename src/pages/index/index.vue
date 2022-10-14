@@ -6,26 +6,7 @@
     </div>
     <!-- 顶部模块 购物车 -->
     <div class="shop-box">
-      <div class="shop-content-item">
-        <ul>
-          <li>您好，欢迎来到医界商城！</li>
-          <li>请登录</li>
-          <li class="bule_font">免费注册</li>
-          <li>客服热线：400-010-1866</li>
-        </ul>
-      </div>
-      <div class="shop-content-item shop-content-right">
-        <ul>
-          <li>购物车</li>
-          <li>我的收藏</li>
-          <li class="yellow_font">
-            <img src="../../assets/images/index/icon_vip.png" alt="">
-            会员中心
-          </li>
-          <li>管理后台</li>
-          <li class="bule_font">供应商入驻</li>
-        </ul>
-      </div>
+      <header-title></header-title>
     </div>
     <!-- 模块一 -->
     <el-container class="module0-header">
@@ -46,6 +27,7 @@
             <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==index}"
               @click="jumpTab(item.path,index)">{{item.title}}
               <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
+              <img src="../../assets/images/index/icon_new_red.png" alt="" v-else-if="item.isNew">
             </li>
           </ul>
         </div>
@@ -149,11 +131,13 @@
 
 <script>
   import indexHeader from '../../pages/index/indexHeader.vue'
+  import headerTitle from '../../pages/index/headerTitle.vue'
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
   export default {
     components: {
       indexHeader,
+      headerTitle,
       serviceItem4Page,
       serviceItem5Page
     },
@@ -164,42 +148,49 @@
         tabList: [{
             title: '首页',
             isHot: false,
-            path:'/home'
+            isNew: false,
+            path: '/home'
           },
           {
             title: '配件专区',
             isHot: true,
-            path:'/accessory'
+            isNew: false,
+            path: '/accessory'
           },
           {
             title: '供求信息',
             isHot: false,
-            path:'/supplyDemand'
+            isNew: false,
+            path: '/supplyDemand'
           },
           {
             title: '医疗器械',
             isHot: false,
-            path:''
+            isNew: false,
+            path: ''
           },
           {
             title: '企业服务',
-            isHot: true,
-            path:''
+            isHot: false,
+            isNew: true,
+            path: ''
           },
           {
             title: '学习园地',
             isHot: false,
-            path:''
+            path: ''
           },
           {
             title: '工程师服务',
             isHot: false,
-            path:''
+            isNew: false,
+            path: ''
           },
           {
             title: '合作品牌',
             isHot: false,
-            path:'/cooperationBrand'
+            isNew: false,
+            path: '/cooperationBrand'
           },
         ]
 
@@ -209,13 +200,13 @@
       this.initData()
     },
     methods: {
-      initData(){
-        this.jumpTab('/home',0)
+      initData() {
+        this.jumpTab('/home', 0)
       },
-      jumpTab(path,index){
+      jumpTab(path, index) {
         this.chooseTab = index
         this.$router.replace({
-          path:path
+          path: path
         })
       },
       enterClass(id) {
@@ -275,54 +266,6 @@
     z-index: 99;
     display: flex;
     width: 1200px;
-
-    .shop-content-item {
-      flex: 1;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      color: #696969;
-
-      ul {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        li {
-          cursor: pointer;
-          padding-right: 10px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          img {
-            width: 16px;
-            height: 14px;
-            margin-right: 4px;
-          }
-        }
-      }
-
-      .yellow_font {
-        color: #F5C164;
-      }
-
-      .bule_font {
-        color: #40A9FF;
-      }
-    }
-
-    .shop-content-right {
-      justify-content: flex-end;
-
-      ul {
-        li {
-          padding-right: 0px;
-          padding-left: 10px;
-        }
-      }
-    }
   }
 
   /* 模块一 头部 */
@@ -444,6 +387,7 @@
     margin-top: 40px;
     width: 1200px;
     margin: auto;
+    padding-top: 40px;
   }
 
 
