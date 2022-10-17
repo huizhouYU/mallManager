@@ -42,7 +42,18 @@ export default new Router({
     {
       name:'shop',
       path:'/shop',
-      component:shop
+      component:shop,
+      children: [{
+          path: '/goodDetail',
+          name: 'goodDetail', //商品详情页
+          component: () => import('../../src/pages/shop/goodDetail.vue')
+        },
+        {
+            path: '/shopHome',
+            name: 'shopHome', //首页
+            component: () => import('../../src/pages/shop/shopHome.vue')
+          }
+      ]
     },
     {
       name: 'login',

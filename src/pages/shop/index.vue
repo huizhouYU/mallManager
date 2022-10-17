@@ -31,11 +31,15 @@
           </div>
         </div>
       </div>
+      <!-- 导航栏 -->
       <div class="tab-content">
         <ul>
-          <li v-for="(item,index) in tabList" :key="index" :class="{'selected':index == selectedTab}" @click="selectedTab = index">{{item.name}}</li>
+          <li v-for="(item,index) in tabList" :key="index" :class="{'selected':index == selectedTab}"
+            @click="changeTab(item.path,index)">{{item.name}}</li>
         </ul>
       </div>
+      <router-view class="each-page"></router-view>
+      <index-bottom></index-bottom>
     </div>
 
   </div>
@@ -44,39 +48,50 @@
 <script>
   import headerTitle from '../../pages/index/headerTitle.vue'
   import indexHeader from '../../pages/index/indexHeader.vue'
+  import indexBottom from '../../pages/index/indexBottom.vue'
   export default {
     components: {
       headerTitle,
-      indexHeader
+      indexHeader,
+      indexBottom
     },
     data() {
       return {
-        selectedTab:'-1',
+        selectedTab: '-1',
         tabList: [{
             name: '店铺首页',
-            path:''
+            path: '/shopHome'
           },
           {
             name: '简要介绍',
-            path:''
+            path: ''
           },
           {
             name: '公司资质',
-            path:''
+            path: ''
           },
           {
             name: '店铺商品',
-            path:''
+            path: ''
           },
           {
             name: '供求信息',
-            path:''
+            path: ''
           },
           {
             name: '联系方式',
-            path:''
+            path: ''
           }
         ]
+      }
+    },
+    mounted() {
+      this.$router.replace({path:'/goodDetail'})
+    },
+    methods:{
+      changeTab(path,index){
+        this.selectedTab = index
+        this.$router.replace({path:path})
       }
     }
   }
@@ -92,9 +107,10 @@
     position: fixed;
     height: 30px;
     width: 100%;
-    z-index: 99;
+    z-index: 999;
     display: flex;
     justify-content: center;
+    background-color: #f5f5f5;
   }
 
   .header {
@@ -102,6 +118,7 @@
     margin-top: 30px;
     padding: 20px 0px;
     width: 100%;
+    z-index: 999;
     background-color: #fff;
   }
 
@@ -110,11 +127,11 @@
     height: 20px;
 
     .shop-logo {
-      position: relative;
       width: 100%;
       height: 90px;
       display: flex;
       align-items: center;
+      z-index: 999;
 
       img {
         position: absolute;
@@ -184,44 +201,53 @@
         }
       }
     }
- .tab-content{
-   height: 50px;
-   background-color: #fff;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   ul{
-     width: 1200px;
-     height: 100%;
-     display: flex;
-     justify-content: flex-start;
-     align-items: center;
-     li{
-       box-sizing: border-box;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       height: 100%;
-       padding: 0px 30px;
-       font-size: 16px;
-       font-family: Microsoft YaHei;
-       font-weight: 400;
-       color: #333333;
-       cursor: pointer;
-     }
-     li:hover{
-       color: #40A9FF;
-     }
-     .selected{
-       color: #40A9FF;
-       border-bottom: 2px solid #40A9FF;
-     }
-   }
- }
 
+    .tab-content {
+      height: 50px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
+      ul {
+        width: 1200px;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        li {
+          box-sizing: border-box;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          padding: 0px 30px;
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #333333;
+          cursor: pointer;
+        }
+
+        li:hover {
+          color: #40A9FF;
+          border-bottom: 2px solid #40A9FF;
+        }
+
+        li:active {
+          color: #40A9FF;
+          border-bottom: 2px solid #40A9FF;
+        }
+
+        .selected {
+          color: #40A9FF;
+        }
+      }
+    }
   }
-
-
-
+  .each-page{
+    background-color: #f5f5f5;
+    padding-bottom: 25px;
+  }
 </style>
