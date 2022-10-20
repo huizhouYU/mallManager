@@ -52,7 +52,32 @@ export default new Router({
             path: '/shopHome',
             name: 'shopHome', //首页
             component: () => import('../../src/pages/shop/shopHome.vue')
-          }
+          },
+          {
+              path: '/introductionIndex',
+              name: 'introductionIndex', //简要介绍
+              component: () => import('../../src/pages/shop/introduction/index.vue')
+            },
+            {
+                path: '/qualificationsIndex',
+                name: 'qualificationsIndex', //公司资质
+                component: () => import('../../src/pages/shop/qualifications/index.vue')
+              },
+              {
+                path: '/shopAllGoods',
+                name: 'shopAllGoods', //店铺商品
+                component: () => import('../../src/pages/allGoods/index.vue')
+              },
+              {
+                path: '/demandIndex',
+                name: 'demandIndex', //供求信息
+                component: () => import('../../src/pages/shop/demand/index.vue')
+              },
+              {
+                path: '/contactIndex',
+                name: 'contactIndex', //联系方式
+                component: () => import('../../src/pages/shop/contact/index.vue')
+              }
       ]
     },
     {

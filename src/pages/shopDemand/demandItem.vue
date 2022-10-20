@@ -1,19 +1,11 @@
 <template>
-  <div :class="['goods-content',{'goods-content-grid5':grid5}]">
+  <div  :class="['goods-content',{'goods-content-grid5':grid5}]">
     <div class="item" v-for="(item,index) in goodsList" :key="index" @click="jumpShop">
       <div class="item-img">
         <img :src="item.imgPath" alt="">
       </div>
       <div class="info">
-        <div class="name">{{item.name}}</div>
-        <div class="brand">{{item.brand}}</div>
-        <div class="price-shop">
-          <div class="price">
-            <template v-if="item.price!=''">￥{{item.price}}</template>
-            <template v-else>￥议价</template>
-          </div>
-          <i class="iconfont">&#xe73d;</i>
-        </div>
+        {{item.name}}
       </div>
     </div>
   </div>
@@ -33,57 +25,39 @@
       return {
         goodsList: [{
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: ''
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: ''
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: ''
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
           {
             imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪',
-            brand: '飞利浦',
-            price: '45'
+            name: '新版精密卡尔费休水分测定仪'
           },
         ]
       }
@@ -111,7 +85,7 @@
   .goods-content .item {
     margin-top: 15px;
     width: 180px;
-    height: 230px;
+    height: 188px;
     padding: 15px;
     padding-bottom: 18px;
     box-sizing: border-box;
@@ -121,7 +95,6 @@
     flex-direction: column;
     justify-content: space-between;
     line-height: 12px;
-
     .item-img {
       width: 150px;
       height: 134px;
@@ -132,45 +105,15 @@
         height: 100%;
       }
     }
-
     .info {
-      height: 55px;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
+      color: #333333;
       font-size: 12px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-
-      .name {
-        width: 100%;
-        color: #333333;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .brand {
-        width: 100%;
-        color: #666666;
-      }
-
-      .price-shop {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-
-        .price {
-          color: #E60000;
-        }
-
-        i {
-          color: #CACACA;
-        }
-      }
-
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 </style>

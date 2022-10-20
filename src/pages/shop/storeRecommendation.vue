@@ -1,9 +1,9 @@
 <template>
   <div class="recommend-box">
     <div class="top-title">
-      <img src="../../assets/images/shop/pic_line.png" alt="">
+      <img src="../../assets/images/shop/pic_line.png" alt="" v-show="isShowTitleImg">
       店内推荐
-      <img src="../../assets/images/shop/pic_line.png" alt="">
+      <img src="../../assets/images/shop/pic_line.png" alt=""  v-show="isShowTitleImg">
     </div>
     <ul>
       <li v-for="(item,index) in goodsList" :key="index">
@@ -16,6 +16,14 @@
 
 <script>
   export default {
+    props:{
+      'isShowTitleImg':{
+        type:Boolean,
+        default:()=>{
+          return true
+        }
+      }
+    },
     data() {
       return {
         goodsList: [{

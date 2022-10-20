@@ -38,7 +38,10 @@
             @click="changeTab(item.path,index)">{{item.name}}</li>
         </ul>
       </div>
-      <router-view class="each-page"></router-view>
+      <div class="pages">
+        <router-view class="each-page"></router-view>
+      </div>
+
       <index-bottom></index-bottom>
     </div>
 
@@ -64,29 +67,30 @@
           },
           {
             name: '简要介绍',
-            path: ''
+            path: '/introductionIndex'
           },
           {
             name: '公司资质',
-            path: ''
+            path: '/qualificationsIndex'
           },
           {
             name: '店铺商品',
-            path: ''
+            path: '/shopAllGoods'
           },
           {
             name: '供求信息',
-            path: ''
+            path: '/demandIndex'
           },
           {
             name: '联系方式',
-            path: ''
+            path: '/contactIndex'
           }
         ]
       }
     },
     mounted() {
-      this.$router.replace({path:'/goodDetail'})
+      this.selectedTab = 0
+      this.$router.replace({path:'/shopHome'})
     },
     methods:{
       changeTab(path,index){
@@ -124,7 +128,8 @@
 
   .shop-main {
     padding-top: 140px;
-    height: 20px;
+    background-color: #f5f5f5;
+    // height: 20px;
 
     .shop-logo {
       width: 100%;
@@ -246,8 +251,13 @@
       }
     }
   }
-  .each-page{
+  .pages{
+    width: 100%;
     background-color: #f5f5f5;
-    padding-bottom: 25px;
+    padding-bottom: 5px;
+  }
+  .each-page{
+    width: 1200px;
+    margin: auto;
   }
 </style>
