@@ -1,6 +1,6 @@
 <template>
   <div  :class="['goods-content',{'goods-content-grid5':grid5}]">
-    <div class="item" v-for="(item,index) in goodsList" :key="index" @click="jumpShop">
+    <div class="item" v-for="(item,index) in goodsList" :key="index" @click="getDetail(item)">
       <div class="item-img">
         <img :src="item.imgPath" alt="">
       </div>
@@ -63,9 +63,9 @@
       }
     },
     methods:{
-      jumpShop(){
+      getDetail(id){
         this.$router.push({
-          path:'/shop'
+          path:'/demandDetail'
         })
       }
     }

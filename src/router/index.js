@@ -77,7 +77,12 @@ export default new Router({
                 path: '/contactIndex',
                 name: 'contactIndex', //联系方式
                 component: () => import('../../src/pages/shop/contact/index.vue')
-              }
+              },
+              {
+                  path: '/demandDetail',
+                  name: 'demandDetail', //需求详情页
+                  component: () => import('../../src/pages/shop/demand/detail.vue')
+                },
       ]
     },
     {
