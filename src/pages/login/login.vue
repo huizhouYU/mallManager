@@ -40,7 +40,6 @@ export default {
     this.verifyCode = new GVerify('v_container')
   },
   methods: {
-
     // 验证验证码的函数
     checkCode () {
       if (this.loginForm.verCode.length <= 0) {
@@ -61,53 +60,25 @@ export default {
     login () {
       if (this.loginForm.username === '' && this.loginForm.password === '') {
         this.$message.error('用户名和密码不能为空！')
-        return ''
+        return
       }
-      if (!this.checkCode()) {
-        return ''
-      }
-      // this.$http.post('login', this.loginForm).then(res => {
-      //   console.log(res)
-      //   // 对象结构赋值
-      //   const {data, meta: {msg, status}} = res.data
-      //   if (msg === 200) {
-      //     // 登录成功 跳转首页
-      //     this.$router.push({
-      //       name: 'home'
-      //     })
-      //   }
-      // })
-      // 假设用户名和密码正确
-      // localStorage.setItem('token', '11111') //保存一个token值
-      // 登录成功 跳转首页
-      this.$router.push({
-        name: 'home'
-      })
-    },
-    async newlogin () {
-      if (this.loginForm.username === '' && this.loginForm.password === '') {
-        this.$message.error('用户名和密码不能为空！')
-        return ''
-      }
-      const res = await this.$http.post('login', this.loginForm)
-      // 对象结构赋值
-      const {
-        data,
-        meta: {
-          msg,
-          status
-        }
-      } = res.data
-      if (msg === 200) {
-        // 保存token值
-        localStorage.setItem('token', data.token)
-        // 登录成功 跳转首页
-        this.$router.push({
-          name: 'home'
-        })
+      if (this.checkCode()) {
+        console.log("jhu")
+        this.$store.dispatch('user/login', this.loginForm)
+          .then(() => {
+            console.log("登录成功！")
+            this.$router.replace({
+              path: this.redirect || '/',
+              query: this.otherQuery
+            })
+            this.loading = false
+            console.log("成功")
+          }).catch(() => {
+            this.loading = false
+            console.log("失败")
+          })
       }
     }
-
   }
 }
 </script>

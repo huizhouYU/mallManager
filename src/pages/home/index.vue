@@ -42,13 +42,19 @@
               <div class="release-demand">
                 <div class="login-info">
                   <div class="person-logo">
-                    <img src="../../assets/images/index/icon_tx.png" alt="">
+                    <img src="../../assets/images/index/icon_tx.png" alt="" v-show="!avatar">
+                    <img :src="avatar" alt="" v-show="avatar" @click="personCenter">
                   </div>
                   <div class="person-info">
-                    <span>您好，欢迎光临</span>
-                    <ul>
-                      <li class="bule-font li-login">登录</li>
+                    <span v-show="!name">您好，欢迎光临</span>
+                    <span v-show="name" @click="personCenter">{{name}}</span>
+                    <ul v-show="!name">
+                      <li class="bule-font li-login" @click="login">登录</li>
                       <li>注册</li>
+                    </ul>
+                    <ul v-show="name">
+                      <li class="bule-font" v-show="!mobile" @click="personCenter">请完善个人信息</li>
+                      <li class="gray-font no-padding" v-show="mobile" @click="personCenter">已完善个人信息</li>
                     </ul>
                   </div>
                 </div>
@@ -136,6 +142,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import brandNav from '../../pages/index/brandNav.vue'
   import equipListCart from '../../pages/index/equipListCart.vue'
   import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
@@ -151,9 +158,20 @@
       enterpriseServices,
       personalEngineer
     },
+    computed: {
+      ...mapGetters([
+        'name',
+        'avatar',
+        'mobile'
+      ])
+    },
+    mounted() {
+      console.log("avatar:",this.avatar)
+      console.log("name:",this.name)
+    },
     data() {
       return {
-        showTitle:true,
+        showTitle: true,
         isHotTab: true, //true:选中'热门求购,false:选中'设备维修'
         //热门求购列表
         hotList: [{
@@ -236,7 +254,6 @@
           require('../../assets/images/index/brands/logo_安科.png'),
           require('../../assets/images/index/brands/logo_佳能.png'),
         ],
-
         isShow: false,
         brandList: [{
             id: '1',
@@ -615,10 +632,15 @@
       }
     },
     methods: {
-      jumpAllGoods(id){
+      personCenter(){
+        alert("跳转到个人中心")
+      },
+      jumpAllGoods(id) {
         this.$router.replace({
-          path:'/allGoods',
-          query:{id:id}
+          path: '/allGoods',
+          query: {
+            id: id
+          }
         })
       },
       enterClass(id) {
@@ -628,8 +650,14 @@
       leaveClass() {
         console.log("离开", this.isShow)
         this.isShow = false
+      },
+      login() {
+        this.$router.push({
+          path: '/login',
+        })
       }
-    }
+    },
+
   }
 </script>
 
@@ -873,6 +901,13 @@
 
                 .bule-font {
                   color: #40A9FF;
+                }
+                .gray-font{
+                  color: #999;
+
+                }
+                .no-padding{
+                  padding:0px;
                 }
               }
             }

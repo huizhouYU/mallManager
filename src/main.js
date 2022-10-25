@@ -3,11 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import ElementUI from 'element-ui'
 import MyServerHttp from '@/plugins/http.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/reset.css'
 import '@/assets/css/iconfont.css'
+
+
+import './permission'
+
+
 import VueAMap from 'vue-amap'
 Vue.use(VueAMap)
 VueAMap.initAMapApiLoader({
@@ -40,6 +46,7 @@ Vue.use(MyServerHttp)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

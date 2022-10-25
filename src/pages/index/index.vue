@@ -104,16 +104,11 @@
             path: '/cooperationBrand'
           },
         ]
-
       }
     },
     mounted() {
-      this.initData()
     },
     methods: {
-      initData() {
-        this.jumpTab('/home', 0)
-      },
       jumpTab(path, index) {
         this.chooseTab = index
         this.$router.replace({

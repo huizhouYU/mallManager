@@ -14,6 +14,7 @@ export default new Router({
       name: 'index',
       path: '/',
       component: Index,
+      redirect:'/home',
       children: [{
           path: '/home',
           name: 'home', //首页
@@ -22,7 +23,7 @@ export default new Router({
           path: '/accessory',
           name: 'accessory', //配件专区
           component: () => import('../pages/accessory/index.vue')
-        },{
+        }, {
           path: '/supplyDemand',
           name: 'supplyDemand', //供求信息
           component: () => import('../pages/supplyDemand/index.vue')
@@ -40,60 +41,61 @@ export default new Router({
       ]
     },
     {
-      name:'shop',
-      path:'/shop',
-      component:shop,
+      name: 'shop',
+      path: '/shop',
+      component: shop,
       children: [{
           path: '/goodDetail',
           name: 'goodDetail', //商品详情页
           component: () => import('../../src/pages/shop/goodDetail.vue')
         },
         {
-            path: '/shopHome',
-            name: 'shopHome', //首页
-            component: () => import('../../src/pages/shop/shopHome.vue')
-          },
-          {
-              path: '/introductionIndex',
-              name: 'introductionIndex', //简要介绍
-              component: () => import('../../src/pages/shop/introduction/index.vue')
-            },
-            {
-                path: '/qualificationsIndex',
-                name: 'qualificationsIndex', //公司资质
-                component: () => import('../../src/pages/shop/qualifications/index.vue')
-              },
-              {
-                path: '/shopAllGoods',
-                name: 'shopAllGoods', //店铺商品
-                component: () => import('../../src/pages/allGoods/index.vue')
-              },
-              {
-                path: '/demandIndex',
-                name: 'demandIndex', //供求信息
-                component: () => import('../../src/pages/shop/demand/index.vue')
-              },
-              {
-                path: '/contactIndex',
-                name: 'contactIndex', //联系方式
-                component: () => import('../../src/pages/shop/contact/index.vue')
-              },
-              {
-                  path: '/demandDetail',
-                  name: 'demandDetail', //需求详情页
-                  component: () => import('../../src/pages/shop/demand/detail.vue')
-                },
+          path: '/shopHome',
+          name: 'shopHome', //首页
+          component: () => import('../../src/pages/shop/shopHome.vue')
+        },
+        {
+          path: '/introductionIndex',
+          name: 'introductionIndex', //简要介绍
+          component: () => import('../../src/pages/shop/introduction/index.vue')
+        },
+        {
+          path: '/qualificationsIndex',
+          name: 'qualificationsIndex', //公司资质
+          component: () => import('../../src/pages/shop/qualifications/index.vue')
+        },
+        {
+          path: '/shopAllGoods',
+          name: 'shopAllGoods', //店铺商品
+          component: () => import('../../src/pages/allGoods/index.vue')
+        },
+        {
+          path: '/demandIndex',
+          name: 'demandIndex', //供求信息
+          component: () => import('../../src/pages/shop/demand/index.vue')
+        },
+        {
+          path: '/contactIndex',
+          name: 'contactIndex', //联系方式
+          component: () => import('../../src/pages/shop/contact/index.vue')
+        },
+        {
+          path: '/demandDetail',
+          name: 'demandDetail', //需求详情页
+          component: () => import('../../src/pages/shop/demand/detail.vue')
+        },
       ]
     },
     {
       name: 'login',
       path: '/login',
       component: Login
-    },
-    {
-      name: 'home',
-      path: '/',
-      component: Home
     }
+    // ,
+    // {
+    //   name: 'home',
+    //   path: '/',
+    //   component: Home
+    // }
   ]
 })
