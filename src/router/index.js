@@ -37,6 +37,17 @@ export default new Router({
           path: '/allGoods',
           name: 'allGoods', //所有商品
           component: () => import('../pages/allGoods/index.vue')
+        },
+        {
+          path: '/buyer',
+          name: 'Buyer', //所有商品
+          component: () => import('../pages/buyer/index.vue'),
+          redirect:'/personal',
+          children: [{
+              path: '/personal',
+              name: 'Personal', //首页
+              component: () => import('../pages/buyer/personal/index.vue')
+            }]
         }
       ]
     },

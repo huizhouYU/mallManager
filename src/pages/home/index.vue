@@ -633,7 +633,12 @@
     },
     methods: {
       personCenter(){
-        alert("跳转到个人中心")
+        this.$router.replace({
+          path: '/buyer',
+          query: {
+            // id: id
+          }
+        })
       },
       jumpAllGoods(id) {
         this.$router.replace({
