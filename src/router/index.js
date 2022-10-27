@@ -39,15 +39,30 @@ export default new Router({
           component: () => import('../pages/allGoods/index.vue')
         },
         {
+          path: '/shoppingCart',
+          name: 'ShoppingCart', //买家购物车
+          component: () => import('../pages/shoppingCart/index.vue')
+        },
+        {
           path: '/buyer',
-          name: 'Buyer', //所有商品
+          name: 'Buyer', //买家中心
           component: () => import('../pages/buyer/index.vue'),
           redirect:'/personal',
           children: [{
               path: '/personal',
               name: 'Personal', //首页
               component: () => import('../pages/buyer/personal/index.vue')
-            }]
+            },
+            {
+                path: '/personalData',
+                name: 'PersonalData', //个人资料
+                component: () => import('../pages/buyer/personal/personalData.vue')
+              },
+              {
+                  path: '/changePWD',
+                  name: 'ChangePWD', //修改密码
+                  component: () => import('../pages/buyer/personal/changePWD.vue')
+                }]
         }
       ]
     },

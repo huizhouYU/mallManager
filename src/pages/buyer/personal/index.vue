@@ -503,11 +503,13 @@
             height: 135px;
             border: 3px solid #40A9FF;
             border-radius: 6px;
+            box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
 
             img {
+              border-radius: 6px;
               width: 125px;
               height: 125px;
               z-index: 1;

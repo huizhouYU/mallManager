@@ -2,30 +2,10 @@
   <div class="buyer-box">
     <!-- 侧边导航栏 -->
     <div class="side-navigation">
-      <div class="public-menu">
-        <span class="title">个人首页</span>
-        <ul>
-          <li>个人资料</li>
-          <li>收货地址</li>
-        </ul>
-      </div>
-      <div class="public-menu">
-        <span class="title">购物车</span>
-      </div>
-      <div class="public-menu">
-        <span class="title">所有订单</span>
-        <ul>
-          <li>待付款</li>
-          <li>待审核</li>
-          <li>待发货</li>
-          <li>待收货</li>
-        </ul>
-      </div>
-      <div class="public-menu">
-        <span class="title">退款订单</span>
-        <ul>
-          <li>退款中</li>
-          <li>已退款</li>
+      <div class="public-menu" v-for="(item,index) in navList" :key="index" >
+        <span :class="[{'bule-font':item.path == chosedNav},'title']" @click="selectNav(item.path)" >{{item.name}}</span>
+        <ul v-show="item.child.length>0">
+          <li :class="[{'bule-font':child.path == chosedNav}]" v-for="(child,ind) in item.child" @click="selectNav(child.path)">{{child.name}}</li>
         </ul>
       </div>
     </div>
@@ -34,6 +14,79 @@
 </template>
 
 <script>
+  export default {
+    data() {
+      return {
+        chosedNav: '',
+        navList: [{
+            name: '个人中心',
+            path: '/personal',
+            child: [{
+                name: '个人资料',
+                path: '/personalData',
+              },
+              {
+                name: '修改密码',
+                path: '/changePWD',
+              }
+            ]
+          },
+          {
+            name: '购物车',
+            path: '/shoppingCart',
+            child: [
+
+            ]
+          },
+          {
+            name: '所有订单',
+            path: '',
+            child: [{
+                name: '待付款',
+                path: '',
+              },
+              {
+                name: '待审核',
+                path: '',
+              },
+              {
+                name: '待发货',
+                path: '',
+              },
+              {
+                name: '待收货',
+                path: '',
+              }
+            ]
+          },
+          {
+            name: '退款订单',
+            path: '',
+            child: [{
+                name: '退款中',
+                path: '',
+              },
+              {
+                name: '已退款',
+                path: '',
+              }
+            ]
+          }
+        ]
+      }
+    },
+    mounted() {
+      this.chosedNav = '/personal'
+    },
+    methods:{
+      selectNav(path){
+        this.chosedNav = path
+        this.$router.replace({
+          path:path
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="less" scoped>
@@ -57,6 +110,9 @@
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #333333;
+        }
+        .bule-font{
+          color: #40A9FF;
         }
 
         ul {
