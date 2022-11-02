@@ -224,6 +224,7 @@
     font-family: Microsoft YaHei;
     font-weight: 400;
     color: #333333;
+    box-sizing: border-box;
 
   }
 </style>

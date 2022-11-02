@@ -16,31 +16,37 @@
         <div class="order-state">
           <div class="order-state-item">
             <div class="img-box">
-              <img src="../../../assets/images/index/buyer/icon_paid.png" alt="">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_paid.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_paid_Selected.png" alt="">
             </div>
             <span>待付款</span>
           </div>
           <div class="order-state-item">
             <div class="img-box">
-              <img src="../../../assets/images/index/buyer/icon_examine.png" alt="">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_examine.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_examine_Selected.png" alt="">
             </div>
             <span>待审核</span>
           </div>
           <div class="order-state-item">
             <div class="img-box">
-              <img src="../../../assets/images/index/buyer/icon_received.png" alt="">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_received.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_received_Selected.png" alt="">
             </div>
             <span>待收货</span>
           </div>
           <div class="order-state-item">
             <div class="img-box">
-              <img src="../../../assets/images/index/buyer/icon_After_sales.png" alt="">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_After_sales.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_After_sales_Selected.png" alt="">
+              
             </div>
             <span>退款售后</span>
           </div>
           <div class="order-state-item">
             <div class="img-box">
-              <img src="../../../assets/images/index/buyer/icon_All_Orders.png" alt="">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_All_Orders.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_All_Orders_Selected.png" alt="">
             </div>
             <span>全部订单</span>
           </div>
@@ -244,6 +250,14 @@
             align-items: center;
             justify-content: space-around;
 
+            .no-select {
+              display: block;
+            }
+
+            .selected {
+              display: none;
+            }
+
             .img-box {
               width: 35px;
               height: 35px;
@@ -254,6 +268,18 @@
               font-family: Microsoft YaHei;
               font-weight: 400;
               color: #333333;
+            }
+          }
+
+          .order-state-item:hover {
+            box-shadow: 0 0 16px 0 rgba(0, 0, 0, .1);
+
+            .no-select {
+              display: none;
+            }
+
+            .selected {
+              display: block;
             }
           }
         }
