@@ -6,7 +6,7 @@
     </div>
     <!-- 顶部模块 购物车 -->
     <div class="shop-box">
-      <header-title></header-title>
+      <header-title @changeTab="changeTab"></header-title>
     </div>
     <!-- 模块一 -->
     <el-container class="module0-header">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <router-view class="each-module"></router-view>
+    <router-view class="each-module" @changeTab="changeTab"></router-view>
     <index-bottom></index-bottom>
   </div>
 </template>
@@ -109,8 +109,12 @@
     mounted() {
     },
     methods: {
+      changeTab(key){
+        this.chooseTab = key
+      },
       jumpTab(path, index) {
         this.chooseTab = index
+         console.log("this.chooseTab:",this.chooseTab)
         this.$router.replace({
           path: path
         })

@@ -25,27 +25,27 @@ const state = {
 
 const mutations = {
   SET_TOKEN: (state, token) => {
-    console.log("保存token")
+    // console.log("保存token")
     state.token = token
   },
   SET_INTRODUCTION: (state, introduction) => {
-    console.log("保存introduction")
+    // console.log("保存introduction")
     state.introduction = introduction
   },
   SET_MOBILE: (state, mobile) => {
-    console.log("保存mobile")
+    // console.log("保存mobile")
     state.mobile = mobile
   },
   SET_NAME: (state, name) => {
-    console.log("保存name")
+    // console.log("保存name")
     state.name = name
   },
   SET_AVATAR: (state, avatar) => {
-    console.log("保存avatar")
+    // console.log("保存avatar")
     state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
-    console.log("保存roles")
+    // console.log("保存roles")
     state.roles = roles
   }
 }
@@ -117,7 +117,7 @@ const actions = {
     commit,
     state
   }) {
-    console.log("请求用户信息")
+    // console.log("请求用户信息")
     return new Promise((resolve, reject) => {
       const roles = ["admin"]
       commit('SET_ROLES', roles)

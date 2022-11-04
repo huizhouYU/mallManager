@@ -187,6 +187,7 @@
           align-items: flex-start;
 
           img {
+            cursor: pointer;
             width: 60px;
             height: 60px;
             border-radius: 50%;

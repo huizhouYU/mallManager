@@ -12,11 +12,11 @@
       <ul>
         <li @click="toShopCart">购物车</li>
         <li>我的收藏</li>
-        <li class="yellow_font">
+        <li class="yellow_font" @click="personCenter">
           <img src="../../assets/images/index/icon_vip.png" alt="">
           会员中心
         </li>
-        <li @click="personCenter">管理后台</li>
+        <li>管理后台</li>
         <li class="bule_font">供应商入驻</li>
       </ul>
     </div>
@@ -27,12 +27,14 @@
 export default{
   methods:{
     toShopCart(){
-      this.$router.replace({
+      this.$emit("changeTab",'-1')
+      this.$router.push({
         path:'/shoppingCart'
       })
     },
     personCenter(){
-      this.$router.replace({
+      this.$emit("changeTab",'-1')
+      this.$router.push({
         path: '/buyer',
         query: {
           // id: id

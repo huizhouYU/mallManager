@@ -32,9 +32,14 @@
             <img :src="good.goodsImg" alt="">
             <div class="flex-vertical-start-start goods-info">
               <span class="name">{{good.name}}</span>
-              <div class="flex-horizontal-centent-centent modle">{{good.selectedModel}}
-                <i class="iconfont">&#xe601;</i>
-              </div>
+              <el-popover placement="bottom" width="300" trigger="click" popper-class="modle-popover">
+                <more-modle-select :modles="good.model" :selectedModel="good.selectedModel"
+                  @changeModle="changeModle($event,index,ind)"></more-modle-select>
+                <div class="flex-horizontal-centent-centent modle" slot="reference">
+                  {{good.selectedModel}}
+                  <i class="iconfont">&#xe601;</i>
+                </div>
+              </el-popover>
             </div>
           </div>
           <!-- 单价 -->
@@ -43,7 +48,7 @@
           <div class="flex-horizontal-centent-centent amount-width amount-content">
             <div class="flex-horizontal-centent-centent add" @click="addNum(index,ind)">+</div>
             <div class="flex-horizontal-centent-centent amount">{{good.amount}}</div>
-            <div class="flex-horizontal-centent-centent sub" @click="subNum(index,ind)">-</div>
+            <div class="flex-horizontal-centent-centent sub" @click="subtraNum(index,ind)">-</div>
           </div>
           <!-- 金额 -->
           <div class="flex-horizontal-centent-centent money-width">￥{{good.money}}</div>
@@ -72,12 +77,18 @@
 </template>
 
 <script>
+  import Clickoutside from 'element-ui/src/utils/clickoutside'
+  import moreModleSelect from '../../pages/shoppingCart/moreModleSelect.vue'
   export default {
+    components: {
+      moreModleSelect
+    },
     data() {
       return {
         totle: 119,
         chosedNum: 0, //选择的数量
-        sumPrice: 999.99, //总计金额
+        sumPrice: 0, //总计金额
+        chosedGoodsList: [], //选中的商品
         selectAll: false, //是否全选
         shoppingCartList: [{
             storeId: '1',
@@ -88,120 +99,116 @@
                 isSelect: false,
                 goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-                model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+                model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
-                price: '99999.99',
+                price: '45.9',
                 amount: '1',
-                money: '99999.99'
+                money: '45.9'
               },
               {
-                goodsId: '1-1',
+                goodsId: '1-2',
                 isSelect: false,
                 goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-                model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+                model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
-                price: '99999.99',
+                price: '67.4',
                 amount: '1',
-                money: '99999.99'
+                money: '67.4'
               }
             ]
           },
           {
-            storeId: '1',
+            storeId: '2',
             storeName: '哈哈哈哈哈哈无限公司',
             isSelectAll: false, //是否全选
             list: [{
-              goodsId: '1-1',
+              goodsId: '2-1',
               isSelect: false,
               goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
               name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-              model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+              model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
               selectedModel: 'AR586886',
-              price: '99999.99',
+              price: '99',
               amount: '1',
-              money: '99999.99'
+              money: '99'
             }]
           },
           {
-            storeId: '1',
+            storeId: '3',
             storeName: '哈哈哈哈哈哈无限公司',
             isSelectAll: false, //是否全选
             list: [{
-                goodsId: '1-1',
+                goodsId: '3-1',
                 isSelect: false,
                 goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-                model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+                model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
-                price: '99999.99',
+                price: '89',
                 amount: '1',
-                money: '99999.99'
+                money: '89'
               },
               {
-                goodsId: '1-1',
+                goodsId: '3-2',
                 isSelect: false,
                 goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-                model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+                model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
-                price: '99999.99',
+                price: '120',
                 amount: '1',
-                money: '99999.99'
+                money: '120'
               }
             ]
           },
           {
-            storeId: '1',
+            storeId: '4',
             storeName: '哈哈哈哈哈哈无限公司',
             isSelectAll: false, //是否全选
             list: [{
-              goodsId: '1-1',
+              goodsId: '4-1',
               isSelect: false,
               goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
               name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
-              model: ['AR586886', 'OZA866', 'OZA866', 'OZA866'],
+              model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
               selectedModel: 'AR586886',
-              price: '99999.99',
+              price: '59',
               amount: '1',
-              money: '99999.99'
+              money: '59'
             }]
           },
 
         ]
       }
     },
-    watch: {
-      // selectAll(newVal,oleVal){
-      //   this.changeAllSelectStatue()
-      // }
-    },
-    computed: {
-      // selectAll:function(){
-      //   // var flag = false
-      //   if(this.shoppingCartList.length<1){
-      //     return false
-      //   }
-      //   for(var item in this.shoppingCartList){
-      //     if(!item.isSelectAll){
-      //       return false
-      //     }
-      //   }
-      //   return true
-      // }
+    directives: {
+      Clickoutside
     },
     methods: {
+      changeModle(e, parentInd, goodInd) {
+        this.shoppingCartList[parentInd].list[goodInd].selectedModel = e
+      },
       //增加数量
       addNum(parentInd, goodInd) {
         this.shoppingCartList[parentInd].list[goodInd].amount++
+        this.changeMoney(parentInd, goodInd)
       },
       //减少数量
-      subNum(parentInd, goodInd) {
+      subtraNum(parentInd, goodInd) {
         if (this.shoppingCartList[parentInd].list[goodInd].amount == 1) {
           this.del(parentInd, goodInd)
         } else {
           this.shoppingCartList[parentInd].list[goodInd].amount--
+          this.changeMoney(parentInd, goodInd)
         }
+      },
+      //改变商品金额
+      changeMoney(parentInd, goodInd) {
+        this.shoppingCartList[parentInd].list[goodInd].money = this.shoppingCartList[parentInd].list[goodInd].amount *
+          this.shoppingCartList[parentInd].list[goodInd].price
+        //计算总金额
+        this.changeSumMoney()
       },
       //删除商品
       del(parentInd, goodInd) {
@@ -217,6 +224,35 @@
           this.shoppingCartList[index].isSelectAll = this.selectAll
           this.changeStoreSelectStatue(index, 'all')
         }
+        //非全选：将选中的商品列表清空
+        if (!this.selectAll) {
+          this.chosedGoodsList = []
+          this.subNum = 0
+          this.sumPrice = 0
+        } else {
+          this.addChosedGoodsList()
+        }
+
+      },
+      //将购物车中所有商品添加到 选中的商品列表
+      addChosedGoodsList() {
+        this.chosedGoodsList = []
+        for (var index in this.shoppingCartList) {
+          for (var i in this.shoppingCartList[index].list) {
+            if (this.shoppingCartList[index].list[i].isSelect) {
+              this.chosedGoodsList.push(this.shoppingCartList[index].list[i])
+            }
+          }
+        }
+        this.chosedNum = this.chosedGoodsList.length
+        this.changeSumMoney()
+      },
+      //计算选中商品总金额
+      changeSumMoney() {
+        this.sumPrice = 0
+        for (var index in this.chosedGoodsList) {
+          this.sumPrice += Number(this.chosedGoodsList[index].money)
+        }
       },
       //全选某一家店铺的商品
       changeStoreSelectStatue(index, keyType) {
@@ -227,6 +263,7 @@
         if (keyType != 'all') {
           this.selectAll = this.checkAllStatue()
         }
+        this.addChosedGoodsList()
 
       },
       // 检查整个购物车商品是否已经全选了
@@ -242,6 +279,7 @@
       changeGoodStatue(parentInd) {
         this.shoppingCartList[parentInd].isSelectAll = this.checkStoreAllStatue(parentInd)
         this.selectAll = this.checkAllStatue()
+        this.addChosedGoodsList()
       },
       // 检查整个购物车商品是否已经全选了
       checkStoreAllStatue(parentInd) {
@@ -368,10 +406,6 @@
           position: absolute;
           left: 0px;
 
-          /deep/ .el-checkbox__inner {
-            border-radius: 50%;
-          }
-
           /deep/.el-checkbox__label {
             font-size: 12px;
             font-family: Microsoft YaHei;
@@ -444,6 +478,8 @@
 
               // 型号
               .modle {
+                cursor: pointer;
+                position: relative;
                 margin-top: 18px;
                 padding: 8px 5px;
                 font-size: 12px;
@@ -455,6 +491,15 @@
                 .iconfont {
                   margin-left: 9px;
                 }
+              }
+
+              /* 消除小三角 */
+              /deep/ .el-popper[x-placement^=bottom] .popper__arrow{
+                display: none !important;
+              }
+
+             .el-popper .popper__arrow:after{
+                border-width: 0px;
               }
             }
           }
@@ -509,10 +554,6 @@
       font-weight: 400;
       color: #666666;
       box-sizing: border-box;
-
-      /deep/ .el-checkbox__inner {
-        border-radius: 50%;
-      }
 
       /deep/.el-checkbox__label {
         font-size: 12px;

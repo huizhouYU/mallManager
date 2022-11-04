@@ -8,6 +8,13 @@ import shop from '../../src/pages/shop/index.vue'
 // import supplyDemand from '../../pages/supplyDemand/index.vue' //供求信息
 // import cooperationBrand from '../cooperationBrand/index.vue' //合作品牌
 Vue.use(Router)
+//解决vue路由重复导航错误
+//获取原型对象上的push函数
+const originalPush = Router.prototype.push
+//修改原型对象中的push方法
+Router.prototype.push = function push(location) {
+   return originalPush.call(this, location).catch(err => err)
+}
 
 export default new Router({
   routes: [{

@@ -166,8 +166,8 @@
       ])
     },
     mounted() {
-      console.log("avatar:",this.avatar)
-      console.log("name:",this.name)
+      // console.log("avatar:",this.avatar)
+      // console.log("name:",this.name)
     },
     data() {
       return {
@@ -633,7 +633,8 @@
     },
     methods: {
       personCenter(){
-        this.$router.replace({
+        this.$emit("changeTab",'-1')
+        this.$router.push({
           path: '/buyer',
           query: {
             // id: id
@@ -641,7 +642,8 @@
         })
       },
       jumpAllGoods(id) {
-        this.$router.replace({
+        this.$emit("changeTab",'-1')
+        this.$router.push({
           path: '/allGoods',
           query: {
             id: id
@@ -653,7 +655,7 @@
         this.isShow = true
       },
       leaveClass() {
-        console.log("离开", this.isShow)
+        // console.log("离开", this.isShow)
         this.isShow = false
       },
       login() {
@@ -852,6 +854,7 @@
             align-items: center;
 
             .person-logo {
+              cursor: pointer;
               width: 54px;
               height: 54px;
               background: #F5F5F5;
@@ -870,6 +873,7 @@
             }
 
             .person-info {
+              cursor: pointer;
               height: 54px;
               display: flex;
               flex-direction: column;
