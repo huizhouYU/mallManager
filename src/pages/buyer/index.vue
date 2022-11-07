@@ -26,6 +26,10 @@
                 path: '/personalData',
               },
               {
+                name: '收货地址',
+                path: '/receiptAddress',
+              },
+              {
                 name: '修改密码',
                 path: '/changePWD',
               }

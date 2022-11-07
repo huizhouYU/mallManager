@@ -58,7 +58,12 @@
       </div>
     </div>
     <!-- 全选+删除+合计+结算 -->
-    <div class="flex-horizontal-between-centent shopping-cart-bottom">
+    <div class="flex-horizontal-between-centent shopping-cart-bottom" v-click-outside="outsideClick">
+      <!-- 选中商品的div -->
+      <div class="chosed-goods-content" v-show="showChosedFlag">
+        <div class="sum-goods">普通商品<span>{{chosedNum}}</span>件</div>
+        <slideTab :progressList="chosedGoodsList" v-if="chosedGoodsList.length>0" />
+      </div>
       <!-- 全选+删除 -->
       <div class="flex-horizontal-centent-centent">
         <el-checkbox label="全选" class="select-all" v-model="selectAll" @change="changeAllSelectStatue()"
@@ -67,24 +72,48 @@
       </div>
       <!-- 合计+结算 -->
       <div class="flex-horizontal-centent-centent sum-settlement">
-        <div class="chosed-num">已选择 <span>{{chosedNum}}</span> 件商品</div>
-        <div class="sum">合计：<span>{{sumPrice}}</span></div>
+        <div class="chosed-num" @click="showChosedGoods">
+          已选择 <span>{{chosedNum}}</span> 件商品
+          <i class="iconfont">&#xe601;</i>
+        </div>
+        <div class="sum">合计：<span>￥{{sumPrice}}</span></div>
         <div class="flex-horizontal-centent-centent settlement" @click="settlement">结算</div>
       </div>
     </div>
-
+    <!-- 确认删除弹框 -->
+    <el-dialog :visible.sync="dialogVisible" width="380px" height="206px">
+      <div class="dialog-content">
+        <img src="../../assets/images/shop/pic_warning_delgoods.png" alt="">
+        <span class="del-span">删除商品</span>
+        <span class="del-span-remark">确认要删除该商品吗？</span>
+        <div class="buts">
+          <el-button size="small" type="danger" plain @click="sureDialog">确 定</el-button>
+          <el-button size="small" type="primary" @click="closeDialog">取 消</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import Clickoutside from 'element-ui/src/utils/clickoutside'
   import moreModleSelect from '../../pages/shoppingCart/moreModleSelect.vue'
+  import slideTab from '../../pages/shoppingCart/slideTab.vue'
   export default {
     components: {
-      moreModleSelect
+      moreModleSelect,
+      slideTab
     },
     data() {
       return {
+        showChosedFlag: false, //是否展开选中的商品
+        dialogVisible: false, //删除商品的弹框
+        //删除商品
+        delOperation: {
+          key: "", //根据这个字段判断是单个商品删除还是批量商品删除（key：batch则为批量删除）
+          parentInd: '',
+          goodInd: '',
+        },
         totle: 119,
         chosedNum: 0, //选择的数量
         sumPrice: 0, //总计金额
@@ -97,7 +126,7 @@
             list: [{
                 goodsId: '1-1',
                 isSelect: false,
-                goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+                goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbkimg.cdn.bcebos.com%2Fpic%2F728da9773912b31bc2156fcc8618367adbb4e1de&refer=http%3A%2F%2Fbkimg.cdn.bcebos.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=8d0c36c1237d0ec07ed65eb877a5a914',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
                 model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
@@ -108,7 +137,7 @@
               {
                 goodsId: '1-2',
                 isSelect: false,
-                goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+                goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage1.big-bit.com%2F2021%2F0908%2F20210908031318131.jpg&refer=http%3A%2F%2Fimage1.big-bit.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=4ecc58be52ba978fd7622546fe98b8c9',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
                 model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
@@ -125,7 +154,7 @@
             list: [{
               goodsId: '2-1',
               isSelect: false,
-              goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+              goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.ctb168.com%2Fe%2Fupload%2Fs1%2Ffck%2Fimage%2F2019%2F08%2F22%2F1753169660.jpg&refer=http%3A%2F%2Fwww.ctb168.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=e488dbfa5903ac42d70d02ad959800f7',
               name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
               model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
               selectedModel: 'AR586886',
@@ -141,7 +170,7 @@
             list: [{
                 goodsId: '3-1',
                 isSelect: false,
-                goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+                goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-a9a5dc78dfc2f132b934f5156f50db08_b.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=853e9356a1a21413b8ce640090144669',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
                 model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
@@ -152,7 +181,7 @@
               {
                 goodsId: '3-2',
                 isSelect: false,
-                goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+                goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftenfei03.cfp.cn%2Fcreative%2Fvcg%2Fnowarter800%2Fnew%2FVCG41N915384844.jpg&refer=http%3A%2F%2Ftenfei03.cfp.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=e52f32892c5e8ebee9fe8fcfba96a383',
                 name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
                 model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
                 selectedModel: 'AR586886',
@@ -169,7 +198,7 @@
             list: [{
               goodsId: '4-1',
               isSelect: false,
-              goodsImg: 'https://img2.baidu.com/it/u=3991721782,727212756&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
+              goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.soogot.com%2Fuploadfile%2F20181214%2F20181214172628821.jpg&refer=http%3A%2F%2Fwww.soogot.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=4b1747d8b1c008da1cf7ecb0edf0dccf',
               name: '飞利浦核磁共振 CT线圈大家伙的快速那是你我IP等你下课撒才能封建时代',
               model: ['AR586886', 'SZA866', 'OZA866', 'FGED866'],
               selectedModel: 'AR586886',
@@ -186,6 +215,11 @@
       Clickoutside
     },
     methods: {
+      outsideClick() {
+        if(this.showChosedFlag){
+          this.showChosedFlag = false
+        }
+      },
       changeModle(e, parentInd, goodInd) {
         this.shoppingCartList[parentInd].list[goodInd].selectedModel = e
       },
@@ -212,11 +246,48 @@
       },
       //删除商品
       del(parentInd, goodInd) {
-        this.$message.success("删除最后一个，弹出弹框，让其确定是否删除该商品")
+        // this.$message.success("删除最后一个，弹出弹框，让其确定是否删除该商品")
+        this.delOperation.key = ""
+        this.delOperation.parentInd = parentInd
+        this.delOperation.goodInd = goodInd
+        this.dialogVisible = true
       },
       //底部删除按钮
       delBottom() {
-        this.$message.success("删除最后一个，弹出弹框，让其确定是否删除该商品")
+        if (this.chosedGoodsList.length < 1) {
+          this.$message.warning("请先选择要删除的商品！")
+          return
+        }
+        this.delOperation.key = "batch"
+        this.delOperation.parentInd = ''
+        this.delOperation.goodInd = ''
+        this.dialogVisible = true
+
+      },
+      //删除弹框：确认
+      sureDialog(key, parentInd, goodInd) { //key:判断是否进行批量删除（key：batch则为批量删除）
+        if (this.delOperation.key == "batch") {
+          this.$message.success("获取要删除商品的list，请求后端接口进行删除")
+        } else {
+          this.$message.success("删除单个商品，请求后端接口进行删除")
+        }
+        this.closeDialog()
+      },
+      //删除弹框：取消
+      closeDialog() {
+        this.delOperation.key = ""
+        this.delOperation.parentInd = ''
+        this.delOperation.goodInd = ''
+        this.dialogVisible = false
+      },
+      //查看已选择的商品
+      showChosedGoods() {
+        if(this.chosedGoodsList.length>0){
+          this.showChosedFlag = !this.showChosedFlag
+        }else{
+          this.showChosedFlag = false
+        }
+
       },
       //全选时改变状态
       changeAllSelectStatue() {
@@ -494,11 +565,11 @@
               }
 
               /* 消除小三角 */
-              /deep/ .el-popper[x-placement^=bottom] .popper__arrow{
+              /deep/ .el-popper[x-placement^=bottom] .popper__arrow {
                 display: none !important;
               }
 
-             .el-popper .popper__arrow:after{
+              .el-popper .popper__arrow:after {
                 border-width: 0px;
               }
             }
@@ -554,6 +625,66 @@
       font-weight: 400;
       color: #666666;
       box-sizing: border-box;
+      position: relative;
+
+      .chosed-goods-content {
+        z-index: 10;
+        position: absolute;
+        left: 0;
+        bottom: calc(100%);
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 1px solid #40A9FF;
+        border-radius: 10px 10px 0px 0px;
+        box-sizing: border-box;
+
+        .sum-goods {
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #666666;
+
+          span {
+            color: #40A9FF;
+            margin: 0px 5px;
+          }
+        }
+      }
+
+      .chosed-goods-content:before {
+        box-sizing: content-box;
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        bottom: -24px;
+        right: 220px;
+        padding: 0;
+        border-top: 12px solid #FFFFFF;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        display: block;
+        content: '';
+        z-index: 12;
+      }
+
+      .chosed-goods-content:after {
+        box-sizing: content-box;
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        bottom: -28px;
+        right: 218px;
+        padding: 0;
+        border-top: 14px solid #40A9FF;
+        border-bottom: 14px solid transparent;
+        border-left: 14px solid transparent;
+        border-right: 14px solid transparent;
+        display: block;
+        content: '';
+        z-index: 10;
+      }
 
       /deep/.el-checkbox__label {
         font-size: 12px;
@@ -577,7 +708,14 @@
 
         // 已选择数量
         .chosed-num {
+          padding: 5px 0px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
           span {
+            margin: 0 5px;
             font-size: 14px;
             font-family: Microsoft YaHei;
             font-weight: 400;
@@ -610,5 +748,62 @@
         }
       }
     }
+  }
+
+  /deep/ .el-dialog__body {
+    padding-top: 0px;
+  }
+
+  /deep/ .el-dialog {
+
+
+    .dialog-content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+      }
+
+      .del-span {
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #333333;
+        margin-bottom: 5px;
+      }
+
+      .del-span-remark {
+        font-size: 12px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #666666;
+        margin-bottom: 15px;
+      }
+
+      .buts {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /deep/ .el-button {
+          height: 30px;
+          width: 66px;
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          box-sizing: border-box;
+        }
+
+        .el-button+.el-button {
+          margin-left: 25px;
+        }
+      }
+    }
+
   }
 </style>

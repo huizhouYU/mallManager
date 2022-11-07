@@ -13,7 +13,7 @@ Vue.use(Router)
 const originalPush = Router.prototype.push
 //修改原型对象中的push方法
 Router.prototype.push = function push(location) {
-   return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location).catch(err => err)
 }
 
 export default new Router({
@@ -21,7 +21,7 @@ export default new Router({
       name: 'index',
       path: '/',
       component: Index,
-      redirect:'/home',
+      redirect: '/home',
       children: [{
           path: '/home',
           name: 'home', //首页
@@ -54,22 +54,28 @@ export default new Router({
           path: '/buyer',
           name: 'Buyer', //买家中心
           component: () => import('../pages/buyer/index.vue'),
-          redirect:'/personal',
+          redirect: '/personal',
           children: [{
               path: '/personal',
               name: 'Personal', //首页
               component: () => import('../pages/buyer/personal/index.vue')
             },
             {
-                path: '/personalData',
-                name: 'PersonalData', //个人资料
-                component: () => import('../pages/buyer/personal/personalData.vue')
-              },
-              {
-                  path: '/changePWD',
-                  name: 'ChangePWD', //修改密码
-                  component: () => import('../pages/buyer/personal/changePWD.vue')
-                }]
+              path: '/personalData',
+              name: 'PersonalData', //个人资料
+              component: () => import('../pages/buyer/personal/personalData.vue')
+            },
+            {
+              path: '/receiptAddress',
+              name: 'ReceiptAddress', //收货地址
+              component: () => import('../pages/buyer/personal/receiptAddress.vue')
+            },
+            {
+              path: '/changePWD',
+              name: 'ChangePWD', //修改密码
+              component: () => import('../pages/buyer/personal/changePWD.vue')
+            }
+          ]
         }
       ]
     },

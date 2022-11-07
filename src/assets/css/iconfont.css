@@ -13,6 +13,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-cuowuguanbiquxiao:before {
+  content: "\e8e7";
+}
+
 .icon-youjiantou:before {
   content: "\e641";
 }

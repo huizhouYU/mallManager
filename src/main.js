@@ -12,6 +12,7 @@ import '@/assets/css/iconfont.css'
 
 
 import './permission'
+import '../../mallManager/src/assets/js/directive.js'
 
 
 import VueAMap from 'vue-amap'
