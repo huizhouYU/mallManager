@@ -106,15 +106,14 @@
         ]
       }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
-      changeTab(key){
+      changeTab(key) {
         this.chooseTab = key
       },
       jumpTab(path, index) {
         this.chooseTab = index
-         console.log("this.chooseTab:",this.chooseTab)
+        console.log("this.chooseTab:", this.chooseTab)
         this.$router.replace({
           path: path
         })
@@ -139,6 +138,7 @@
     background-color: #f5f5f5;
     position: relative;
     padding-top: 235px;
+    height: 100%;
   }
 
   /* 清除浮动 */
@@ -296,6 +296,8 @@
   .each-module {
     margin-top: 40px;
     width: 1200px;
+    // height: 500px;
+    // height: calc(100% - 275px);
     margin: auto;
     padding-top: 40px;
   }

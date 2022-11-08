@@ -10,8 +10,9 @@
     </div>
     <div class="shop-content-item shop-content-right">
       <ul>
+        <li @click="toIndex">医界圈首页</li>
         <li @click="toShopCart">购物车</li>
-        <li>我的收藏</li>
+        <!-- <li>我的收藏</li> -->
         <li class="yellow_font" @click="personCenter">
           <img src="../../assets/images/index/icon_vip.png" alt="">
           会员中心
@@ -26,6 +27,12 @@
 <script>
 export default{
   methods:{
+    toIndex(){
+      this.$emit("changeTab",'0')
+      this.$router.push({
+        path:'/'
+      })
+    },
     toShopCart(){
       this.$emit("changeTab",'-1')
       this.$router.push({

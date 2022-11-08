@@ -9,7 +9,7 @@
         </ul>
       </div>
     </div>
-    <router-view class="buyer-main"></router-view>
+    <router-view class="buyer-main" @changeChosedNav="changeChosedNav"></router-view>
   </div>
 </template>
 
@@ -43,7 +43,7 @@
             ]
           },
           {
-            name: '所有订单',
+            name: '我的订单',
             path: '',
             child: [{
                 name: '待付款',
@@ -88,6 +88,9 @@
         this.$router.replace({
           path:path
         })
+      },
+      changeChosedNav(key){
+        this.chosedNav = key
       }
     }
   }

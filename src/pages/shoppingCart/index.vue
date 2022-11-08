@@ -216,7 +216,7 @@
     },
     methods: {
       outsideClick() {
-        if(this.showChosedFlag){
+        if (this.showChosedFlag) {
           this.showChosedFlag = false
         }
       },
@@ -282,9 +282,9 @@
       },
       //查看已选择的商品
       showChosedGoods() {
-        if(this.chosedGoodsList.length>0){
+        if (this.chosedGoodsList.length > 0) {
           this.showChosedFlag = !this.showChosedFlag
-        }else{
+        } else {
           this.showChosedFlag = false
         }
 
@@ -372,6 +372,10 @@
 <style lang="less" scoped>
   .shopping-cart-box {
     width: 1200px;
+    height: calc(100% - 275px);
+    // height: calc(100% - 100px);
+    // overflow: auto;
+    position: relative;
 
     //公共的样式：横向+水平居中+垂直居中
     .flex-horizontal-centent-centent {
@@ -487,11 +491,22 @@
       }
     }
 
+    // 购物车列表 滚动条
+    .shoping-cart-content::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+    }
+
     // 购物车列表
     .shoping-cart-content {
+      position: absolute;
+      height: calc(100% - 160px);
+      overflow: auto;
+      top: 140px;
       width: 100%;
       box-sizing: border-box;
       margin-top: 20px;
+      padding-bottom: 70px;
 
       // 一家店铺里加购的商品
       .store-goods {
@@ -613,9 +628,12 @@
 
     // 全选+删除+合计+结算
     .shopping-cart-bottom {
+      box-shadow: 0px -1px 0px 0px #F6F6F6;
+      z-index: 10;
       width: 100%;
       height: 70px;
       background: #FFFFFF;
+      // background: #ff7535;
       border-radius: 10px;
       margin-top: 20px;
       padding-left: 10px;
@@ -625,7 +643,10 @@
       font-weight: 400;
       color: #666666;
       box-sizing: border-box;
-      position: relative;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+
 
       .chosed-goods-content {
         z-index: 10;

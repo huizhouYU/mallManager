@@ -3,12 +3,18 @@
     <div class="left">
       <div class="user">
         <div class="img-name">
-          <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">
+          <vue-hover-mask @click="toPersonalData">
+            <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">
+            <!-- action插槽 -->
+            <template v-slot:action>
+              <i class="iconfont icon-bianji-copy">编辑资料</i>
+            </template>
+          </vue-hover-mask>
           <span>用户昵称啊</span>
         </div>
         <ul class="address-myinfo">
-          <li>我的收货地址</li>
-          <li>我的信息</li>
+          <li @click="toReceiptAddress">我的收货地址</li>
+          <li @click="toPersonalData">我的信息</li>
         </ul>
       </div>
       <!-- 订单模块 -->
@@ -16,31 +22,38 @@
         <div class="order-state">
           <div class="order-state-item">
             <div class="img-box">
-              <img class="no-select" src="../../../assets/images/index/buyer/icon_paid.png" alt="">
-              <img class="selected" src="../../../assets/images/index/buyer/icon_paid_Selected.png" alt="">
-            </div>
-            <span>待付款</span>
-          </div>
-          <div class="order-state-item">
-            <div class="img-box">
               <img class="no-select" src="../../../assets/images/index/buyer/icon_examine.png" alt="">
               <img class="selected" src="../../../assets/images/index/buyer/icon_examine_Selected.png" alt="">
             </div>
+            <el-badge :value="orderList.toBeReviewed.length" class="item" v-show="orderList.toBeReviewed.length>0">
+            </el-badge>
             <span>待审核</span>
           </div>
+          <div class="order-state-item">
+            <div class="img-box">
+              <img class="no-select" src="../../../assets/images/index/buyer/icon_paid.png" alt="">
+              <img class="selected" src="../../../assets/images/index/buyer/icon_paid_Selected.png" alt="">
+            </div>
+            <el-badge :value="orderList.toBePaid.length" class="item" v-show="orderList.toBePaid.length>0"></el-badge>
+            <span>待付款</span>
+          </div>
+
           <div class="order-state-item">
             <div class="img-box">
               <img class="no-select" src="../../../assets/images/index/buyer/icon_received.png" alt="">
               <img class="selected" src="../../../assets/images/index/buyer/icon_received_Selected.png" alt="">
             </div>
+            <el-badge :value="orderList.toBeReceived.length" class="item" v-show="orderList.toBeReceived.length>0">
+            </el-badge>
             <span>待收货</span>
           </div>
           <div class="order-state-item">
             <div class="img-box">
               <img class="no-select" src="../../../assets/images/index/buyer/icon_After_sales.png" alt="">
               <img class="selected" src="../../../assets/images/index/buyer/icon_After_sales_Selected.png" alt="">
-              
             </div>
+            <el-badge :value="orderList.refundAfterSales.length" class="item"
+              v-show="orderList.refundAfterSales.length>0"></el-badge>
             <span>退款售后</span>
           </div>
           <div class="order-state-item">
@@ -51,29 +64,34 @@
             <span>全部订单</span>
           </div>
         </div>
-        <div class="order-item">
+
+        <div class="order-item" v-for="(item,index) in showOrderList" :key="index">
           <div class="order-item-left">
-            <img src="../../../assets/images/index/buyer/pic_order_01.png" alt="">
+            <img :src="item.imgUrl" alt="">
             <div class="state-time">
-              <span>退款中</span>
-              <div class="time">2026-12-28 18:26:58 <span>剩余时间：<font>71:59:59</font></span> </div>
+              <template v-if="item.status==0">
+                <span>温馨提示：订单还在审核中，请耐心等待</span>
+              </template>
+              <template v-else-if="item.status==1">
+                <span>温馨提示：您有一条订单还未付款，付款后商家会尽快为您安排发货</span>
+              </template>
+              <template v-else-if="item.status==2">
+                <span>{{item.logistics}}</span>
+              </template>
+              <template v-else-if="item.status==3">
+                <span>退款中</span>
+              </template>
+
+              <div class="time">{{item.orderTime}} <span>剩余时间：<font>{{item.timeRemaining}}</font></span> </div>
             </div>
           </div>
           <ul class="order-item-right">
-            <li>物流明细</li>
-            <li>查看详情</li>
-          </ul>
-        </div>
-        <div class="order-item">
-          <div class="order-item-left">
-            <img src="../../../assets/images/index/buyer/pic_order_01.png" alt="">
-            <div class="state-time">
-              <span>退款中</span>
-              <div class="time">2026-12-28 18:26:58 <span>剩余时间：<font>71:59:59</font></span> </div>
-            </div>
-          </div>
-          <ul class="order-item-right">
-            <li>物流明细</li>
+            <template v-if="item.status==1">
+              <li>立即付款</li>
+            </template>
+            <template v-else-if="item.status==2 || item.status==3">
+              <li>物流明细</li>
+            </template>
             <li>查看详情</li>
           </ul>
         </div>
@@ -155,6 +173,107 @@
 </template>
 
 <script>
+  import VueHoverMask from 'vue-hover-mask'
+  export default {
+    components: {
+      VueHoverMask
+    },
+    data() {
+      return {
+        showOrderList: [],
+        limitNum: 2,
+        orderList: {
+          //待审核
+          toBeReviewed: [{
+              orderId: '1',
+              status: 0,
+              imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+              timeRemaining: '71:59:59',
+              orderTime: '2026-12-28 18:28:56'
+            },
+            {
+              orderId: '2',
+              status: 0,
+              imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+              timeRemaining: '71:59:59',
+              orderTime: '2026-12-28 18:28:56'
+            }
+          ],
+          //待付款
+          toBePaid: [{
+            orderId: '3',
+            status: 1,
+            imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+            timeRemaining: '71:59:59',
+            orderTime: '2026-12-28 18:28:56'
+          }],
+          //待收货
+          toBeReceived: [{
+              orderId: '4',
+              status: 2,
+              imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+              logistics: '您的包裹正在揽收中',
+              timeRemaining: '71:59:59',
+              orderTime: '2026-12-28 18:28:56',
+            },
+            {
+              orderId: '5',
+              status: 2,
+              imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+              logistics: '[杭州市]快件离开[杭州市快递集中点]已发往[杭州中转部]',
+              timeRemaining: '71:59:59',
+              orderTime: '2026-12-28 18:28:56'
+            }
+          ],
+          //退款售后
+          refundAfterSales: [{
+            orderId: '6',
+            status: 3,
+            imgUrl: require('../../../assets/images/index/buyer/pic_order_01.png'),
+            timeRemaining: '71:59:59',
+            orderTime: '2026-12-28 18:28:56'
+          }],
+          //全部订单
+          allOrder: []
+
+        }
+      }
+    },
+    mounted() {
+      // showOrderList
+      for (var item in this.orderList) {
+        // console.log("item:",item)
+        for (var order of this.orderList[item]) {
+          // console.log(order)
+          if (this.showOrderList.length < this.limitNum) {
+            this.showOrderList.push(order)
+            // console.log("this.showOrderList:",this.showOrderList)
+          } else {
+            return
+          }
+
+        }
+      }
+
+    },
+    methods: {
+      //跳转去"个人资料"
+      toPersonalData() {
+        this.$emit("changeChosedNav", '/personalData')
+        this.$router.push({
+          path: '/personalData'
+        })
+      },
+      //跳转去"收货地址"
+      toReceiptAddress() {
+        this.$emit("changeChosedNav", '/receiptAddress')
+        this.$router.push({
+          path: '/receiptAddress'
+        })
+      }
+    }
+
+  }
 </script>
 
 <style lang="less" scoped>
@@ -185,12 +304,27 @@
           display: flex;
           justify-content: flex-start;
           align-items: flex-start;
+          position: relative;
+
+          //遮罩层
+          /deep/.vue-hover-mask_action {
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-sizing: border-box;
+          }
+          /deep/.iconfont{
+            font-size: 12px;
+            color: #fff;
+          }
 
           img {
             cursor: pointer;
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            box-sizing: border-box;
           }
 
           span {
@@ -246,6 +380,7 @@
           .order-state-item {
             width: 90px;
             height: 90px;
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -269,6 +404,12 @@
               font-family: Microsoft YaHei;
               font-weight: 400;
               color: #333333;
+            }
+
+            .item {
+              position: absolute;
+              right: 16px;
+              top: 2px;
             }
           }
 
