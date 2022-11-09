@@ -74,6 +74,11 @@ export default new Router({
               path: '/changePWD',
               name: 'ChangePWD', //修改密码
               component: () => import('../pages/buyer/personal/changePWD.vue')
+            },
+            {
+              path: '/allOrders',
+              name: 'AllOrders', //我的订单
+              component: () => import('../pages/buyer/myOrder/allOrders.vue')
             }
           ]
         }

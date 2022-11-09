@@ -14,6 +14,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-qizhi:before {
+  content: "\e607";
+}
+
 .icon-cuowuguanbiquxiao:before {
   content: "\e8e7";
 }

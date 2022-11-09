@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11459718",
+      "name": "旗帜",
+      "font_class": "qizhi",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "1727523",
       "name": "304错误、关闭、取消",
       "font_class": "cuowuguanbiquxiao",

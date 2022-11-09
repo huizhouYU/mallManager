@@ -44,7 +44,7 @@
           },
           {
             name: '我的订单',
-            path: '',
+            path: '/allOrders',
             child: [{
                 name: '待付款',
                 path: '',

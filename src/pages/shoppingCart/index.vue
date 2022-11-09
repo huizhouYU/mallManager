@@ -372,7 +372,8 @@
 <style lang="less" scoped>
   .shopping-cart-box {
     width: 1200px;
-    height: calc(100% - 275px);
+    // height: calc(100% - 275px);
+    min-height: 640px;
     // height: calc(100% - 100px);
     // overflow: auto;
     position: relative;

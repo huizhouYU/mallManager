@@ -138,7 +138,7 @@
     background-color: #f5f5f5;
     position: relative;
     padding-top: 235px;
-    height: 100%;
+    // height:100%;
   }
 
   /* 清除浮动 */
@@ -296,8 +296,6 @@
   .each-module {
     margin-top: 40px;
     width: 1200px;
-    // height: 500px;
-    // height: calc(100% - 275px);
     margin: auto;
     padding-top: 40px;
   }
