@@ -91,7 +91,7 @@
     methods:{
       jumpShop(){
         this.$router.push({
-          path:'/shop'
+          path:'/goodDetail'
         })
       }
     }

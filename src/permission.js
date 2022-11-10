@@ -27,7 +27,7 @@ router.beforeEach(async (to, from, next) => {
   //从Cookies中获取token
   const hasToken = getToken()
   if (hasToken) {
-    console.log("to.path:", to.path)
+    // console.log("to.path:", to.path)
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({

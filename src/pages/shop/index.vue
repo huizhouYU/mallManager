@@ -89,8 +89,8 @@
       }
     },
     mounted() {
-      this.selectedTab = 0
-      this.$router.replace({path:'/shopHome'})
+      // this.selectedTab = 0
+      // this.$router.replace({path:'/shopHome'})
     },
     methods:{
       changeTab(path,index){

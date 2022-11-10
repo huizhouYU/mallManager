@@ -17,7 +17,12 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
+      path:'/redirect',
+      component:()=>import('../../src/components/redirect.vue')
+    },
+    {
       name: 'index',
       path: '/',
       component: Index,
@@ -129,6 +134,11 @@ export default new Router({
           component: () => import('../../src/pages/shop/demand/detail.vue')
         },
       ]
+    },
+    {
+      path:'/orderDetail',
+      name: 'OrderDetail', //订单详情
+      component:()=>import('../../src/pages/buyer/myOrder/orderDetail.vue')
     },
     {
       name: 'login',

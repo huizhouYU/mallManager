@@ -30,7 +30,19 @@
             <!-- 价格 -->
             <div class="info-item">
               <span class="title letterSpacing">价格</span>
-              <div class="price">￥<span>{{goodsInfo.price}}</span></div>
+
+              <div class="price">￥
+                <template v-if="goodsInfo.goodType == 0">
+                  <span>议价</span>
+                  <div class="remark">
+                    <img src="../../assets/images/shop/icon_remark_warning.png" alt="">
+                    议价订单提交申请后可在全部订单中查看该订单是否审核通过
+                    </div>
+                </template>
+                <template v-else>
+                  <span>{{goodsInfo.price}}</span>
+                </template>
+              </div>
             </div>
             <!-- 型号 -->
             <div class="info-item">
@@ -55,18 +67,39 @@
             <div class="info-item">
               <span class="title letterSpacing"></span>
               <div class="btns">
-                <div class="buy-now" @click="buyNow">立即购买</div>
+                <div class="buy-now" @click="buyNow">
+                  <template v-if="goodsInfo.goodType == 0">
+                    提交申请
+                  </template>
+                  <template v-else>
+                    立即购买
+                  </template>
+                </div>
                 <div class="add-to-cart" @click="addToCart">
                   <img src="../../assets/images/shop/icon_shoppingcart_add.png" alt="">
                   加入购物车
                 </div>
               </div>
             </div>
+            <!-- 支付方式 -->
+            <div class="info-item">
+              <span class="title">支付方式</span>
+              <ul class="pay-way">
+                <li>支付宝</li>
+                <li>微信</li>
+                <li>对公转账</li>
+              </ul>
+            </div>
             <!-- 联系客服 -->
             <div class="info-item">
               <span class="title letterSpacing">服务</span>
               <div class="service" @click="contactCustomer">
                 <img src="../../assets/images/shop/icon_service.png" alt="">联系客服
+                <!-- 二维码 -->
+                <div class="QR-code">
+                  <img src="../../assets/images/index/pic_erweima_black.png" alt="">
+                  <div class="triangle"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -105,15 +138,16 @@
         ],
         num: 1,
         goodsInfo: {
+          goodType: '0', //0:议价商品，1：普通商品
           bigImgPath: require('../../assets/images/shop/pic_Commodity Details_ct.png'),
           name: '西门子双源大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信',
           lableList: ['西门子', '核磁', '大品牌'],
           price: '999.99',
           model: 'Force双源ct',
           oldNewDegree: '十成新',
-          brand:'西门子',
-          category:'联影 > PET CT/ PET MRI > uEXPLORER',
-          qualityGuaranteePeriod:'586天'
+          brand: '西门子',
+          category: '联影 > PET CT/ PET MRI > uEXPLORER',
+          qualityGuaranteePeriod: '586天'
         }
       }
     },
@@ -281,6 +315,20 @@
               span {
                 font-size: 16px;
               }
+              .remark{
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                img{
+                  width: 10px;
+                  height: 10px;
+                  margin-right: 4px;
+                }
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #999999;
+              }
             }
 
             .grey-box {
@@ -369,6 +417,14 @@
               }
             }
 
+            .pay-way {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+
+              li+li {}
+            }
+
             //联系客服
             .service {
               cursor: pointer;
@@ -379,12 +435,52 @@
               font-family: Microsoft YaHei;
               font-weight: 400;
               color: #0065CB;
+              position: relative;
 
               img {
                 width: 14px;
                 height: 15px;
                 margin-right: 4px;
               }
+
+              .QR-code {
+                position: absolute;
+                top: -25px;
+                right: -134%;
+                width: 70px;
+                height: 70px;
+                border: 1px solid #40A9FF;
+                box-sizing: border-box;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+
+              //三角形
+              .triangle {
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent transparent #40A9FF;
+                transform: rotate(-45deg);
+                position: absolute;
+                top: 22px;
+                left: -6px;
+              }
+
+              .triangle::after {
+                content: '';
+                border-style: solid;
+                border-width: 0 9px 9px;
+                border-color: transparent transparent transparent #fff;
+                position: absolute;
+                top: 1px;
+                left: -9px;
+              }
+
             }
           }
         }
@@ -402,20 +498,22 @@
           display: flex;
           align-items: center;
         }
-        .product-info{
-          padding:15px 20px 22px 100px ;
+
+        .product-info {
+          padding: 15px 20px 22px 100px;
           box-sizing: border-box;
           width: 946px;
           height: 71px;
           background: #FFFFFF;
           display: grid;
-          grid-template-columns: repeat(2,auto);
+          grid-template-columns: repeat(2, auto);
           font-size: 14px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #666666;
         }
-        .shop-details-img{
+
+        .shop-details-img {
           width: 946px;
         }
 

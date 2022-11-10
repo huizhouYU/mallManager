@@ -19,7 +19,12 @@
       <div class="flex-cente-center price">单价</div>
       <div class="flex-cente-center num">数量</div>
       <div class="flex-cente-center money">实付款</div>
-      <div class="flex-cente-center statue">交易状态</div>
+      <div class="flex-cente-center statue">
+        <el-select v-model="value" placeholder="交易状态">
+          <el-option v-for="item in orderStatueOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
       <div class="flex-cente-center operation">操作</div>
     </div>
     <!-- 循环每一个订单 -->
@@ -44,12 +49,12 @@
                 </span>
                 <span class="flex-cente-center">{{order.storeName}}</span>
               </div>
-              <i class="iconfont">&#xe607;</i>
+              <i :class="['iconfont',{'bule-color':order.remark != ''}]" @click="editRemark(index)">&#xe607;</i>
             </div>
           </td>
         </tr>
         <!-- 一个订单商品信息 -->
-        <tr>
+        <tr @click="orderDetail(order.orderId)">
           <!-- 商品信息 -->
           <td colspan="3" class="">
             <div class="good-info-div">
@@ -124,9 +129,7 @@
         </tr>
         </tbody>
       </table>
-
     </div>
-
     <!-- 页码 -->
     <div class="pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
@@ -134,6 +137,20 @@
         :total="400">
       </el-pagination>
     </div>
+    <!-- 编辑备注 -->
+    <el-dialog :visible.sync="dialogEditVisible" width="500px" height="206px" title="编辑">
+      <el-form ref="editRemarkForm" :model="editRemarkForm" label-width="90px" label-position="left"
+        class="editRemark-form">
+        <el-form-item label="备注内容：" prop="remark">
+          <el-input v-model="editRemarkForm.remark" placeholder="订单备注信息仅自己可见" resize="none" type="textarea"
+            maxlength="200" show-word-limit></el-input>
+        </el-form-item>
+        <el-form-item class="edit-remark-btns">
+          <el-button @click="dialogEditVisible=false">取消</el-button>
+          <el-button type="primary" plain @click="saveRemark">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 
   </div>
 </template>
@@ -144,6 +161,38 @@
       return {
         currentPage4: 4,
         selectedStaute: 0,
+        //编辑备注 弹框
+        dialogEditVisible: false,
+        editRemarkForm: {
+          orderId: '',
+          remark: ''
+        },
+        value: '', //选择的交易状态
+        orderStatueOptions: [{
+            value: '0',
+            label: '全部订单'
+          }, {
+            value: '1',
+            label: '待审核'
+          }, {
+            value: '2',
+            label: '待付款'
+          }, {
+            value: '3',
+            label: '待发货'
+          }, {
+            value: '4',
+            label: '待收货'
+          },
+          {
+            value: '5',
+            label: '已完成'
+          },
+          {
+            value: '6',
+            label: '已取消'
+          }
+        ],
         mainOrderStatue: [{
             id: '0',
             statue: '全部订单'
@@ -166,6 +215,8 @@
           }
         ],
         orderList: [{
+            orderId: '1',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '1', //1:支付宝;2:微信;3:对公转账
@@ -189,6 +240,8 @@
             statue: '1', //1:待审核;2:待付款;3:代发货;4:待收货;5:已完成;6:已取消
           },
           {
+            orderId: '2',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '2', //1:支付宝;2:微信;3:对公转账
@@ -205,6 +258,8 @@
             statue: '2', //1:待审核;2:待付款;3:代发货;4:待收货;5:已完成;6:已取消
           },
           {
+            orderId: '3',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '1', //1:支付宝;2:微信;3:对公转账
@@ -221,6 +276,8 @@
             statue: '3', //1:待审核;2:待付款;3:代发货;4:待收货;5:已完成;6:已取消
           },
           {
+            orderId: '4',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '3', //1:支付宝;2:微信;3:对公转账
@@ -237,6 +294,8 @@
             statue: '4', //1:待审核;2:待付款;3:代发货;4:待收货;5:已完成;6:已取消
           },
           {
+            orderId: '5',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '2', //1:支付宝;2:微信;3:对公转账
@@ -253,6 +312,8 @@
             statue: '5', //1:待审核;2:待付款;3:代发货;4:待收货;5:已完成;6:已取消
           },
           {
+            orderId: '6',
+            remark: '',
             orderTime: '2008-12-28 18:58:56',
             orderNo: '156786581686',
             payWay: '', //1:支付宝;2:微信;3:对公转账
@@ -271,12 +332,38 @@
         ]
       }
     },
+    mounted() {
+      this.selectedStaute = this.$route.query.id
+    },
     methods: {
+      editRemark(index) {
+        this.editRemarkForm.remark = this.orderList[index].remark
+        this.editRemarkForm.orderId = this.orderList[index].orderId
+        this.dialogEditVisible = true
+      },
+      //
+      saveRemark() {
+        //先根据orderId找出要保存的订单，之后对接接口后，可以重新获取订单信息，无需前端循环找到数据改变状态
+        for (var index in this.orderList) {
+          if (this.orderList[index].orderId == this.editRemarkForm.orderId) {
+            this.orderList[index].remark = this.editRemarkForm.remark
+            this.dialogEditVisible = false
+            return
+          }
+        }
+        this.dialogEditVisible = false
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+      },
+      orderDetail(orderId){
+        this.$router.push({
+          path:'/orderDetail',
+          query:{orderId:orderId}
+        })
       }
     }
   }
@@ -437,6 +524,50 @@
       .operation {
         width: 145px;
       }
+      .statue{
+        /deep/.el-input__inner{
+          outline: none;
+          border: none;
+          background-color: inherit;
+          padding: 0;
+          width: 80px;
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #666666;
+          text-align: center;
+        }
+        /deep/ .el-input__suffix{
+          right: -6px;
+        }
+        /deep/ .el-select .el-input .el-select__caret{
+          font-size: 12px;
+          color: #666666;
+        }
+        ::-webkit-input-placeholder {
+          /* WebKit browsers，webkit内核浏览器 */
+          color: #666;
+          font-size: 12px;
+        }
+
+        :-moz-placeholder {
+          /* Mozilla Firefox 4 to 18 */
+          color: #666;
+          font-size: 12px;
+        }
+
+        ::-moz-placeholder {
+          /* Mozilla Firefox 19+ */
+          color: #666;
+          font-size: 12px;
+        }
+
+        input:-ms-input-placeholder {
+          /* Internet Explorer 10+ */
+          color: #666;
+          font-size: 12px;
+        }
+      }
     }
 
     .order-box {
@@ -465,13 +596,16 @@
         font-weight: 400;
         color: #454545;
       }
-      .color6{
+
+      .color6 {
         color: #666;
       }
-      .marginTop6{
+
+      .marginTop6 {
         margin-top: 6px;
       }
-      .fontWeight7{
+
+      .fontWeight7 {
         font-weight: 700;
       }
     }
@@ -488,6 +622,10 @@
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #666666;
+
+      .bule-color {
+        color: #40a9ff;
+      }
 
       .order-header-info {
         span {
@@ -627,5 +765,75 @@
   /deep/.el-pagination .btn-prev,
   /deep/ .el-pager li {
     background: none;
+  }
+
+  //编辑备注 弹框
+  /deep/ .el-dialog__header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #F3F3F3;
+  }
+
+  // 标题文字
+  /deep/ .el-dialog__title {
+    font-size: 14px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    color: #333333;
+  }
+
+  /deep/.el-dialog__body {
+    padding: 10px 20px;
+  }
+
+  .editRemark-form {
+    padding-top: 20px;
+
+    /deep/.el-form-item {
+      margin-bottom: 22px;
+    }
+
+    /deep/ .el-form-item__label {
+      font-size: 12px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #333333;
+    }
+
+    /deep/.el-input__inner {
+      height: 100px;
+      width: 300px;
+      font-size: 12px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #333;
+    }
+
+    .edit-remark-btns {
+      width: 100%;
+
+      /deep/.el-form-item__content {
+        // width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    /deep/.el-button {
+      height: 30px;
+      padding: 10px 20px;
+      font-size: 12px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    /deep/ .el-button+.el-button {
+      margin-left: 50px;
+    }
   }
 </style>
