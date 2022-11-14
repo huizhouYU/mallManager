@@ -110,7 +110,7 @@
       height: 70px;
       background-color: #fff;
       box-sizing: border-box;
-      margin-top: 25px;
+      // margin-top: 25px;
       border-bottom: 1px solid #eee;
     
       .content {

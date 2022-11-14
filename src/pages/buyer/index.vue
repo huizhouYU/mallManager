@@ -113,7 +113,7 @@
       }
     },
     mounted() {
-      this.chosedNav=this.$route.path.replace("/","")+this.$route.query.id
+      this.chosedNav = this.$route.path.replace("/", "") + this.$route.query.id
     },
     methods: {
       selectNav(id, path, params) {
@@ -148,6 +148,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: 5px;
 
     // 侧边导航栏
     .side-navigation {

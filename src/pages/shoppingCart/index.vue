@@ -77,7 +77,7 @@
           <i class="iconfont">&#xe601;</i>
         </div>
         <div class="sum">合计：<span>￥{{sumPrice}}</span></div>
-        <div class="flex-horizontal-centent-centent settlement" @click="settlement">结算</div>
+        <el-button class="flex-horizontal-centent-centent settlement" :disabled="!chosedNum>0" @click="settlement">结算</el-button>
       </div>
     </div>
     <!-- 确认删除弹框 -->
@@ -363,7 +363,18 @@
       },
       // 结算
       settlement() {
-        this.$message.success("结算")
+        //
+        if(this.chosedGoodsList.length<1){
+          this.$message.warning("请先选择商品")
+        }else{
+          this.$router.push({
+            path:'/orderPayment',
+            query:{
+              chosedGood:this.chosedGoodsList
+            }
+          })
+        }
+
       }
     }
   }
@@ -376,6 +387,7 @@
     min-height: 640px;
     // height: calc(100% - 100px);
     // overflow: auto;
+    margin-bottom: 20px;
     position: relative;
 
     //公共的样式：横向+水平居中+垂直居中

@@ -141,6 +141,11 @@ export default new Router({
       component:()=>import('../../src/pages/buyer/myOrder/orderDetail.vue')
     },
     {
+      path:'/orderPayment',
+      name: 'OrderPayment', //立即支付
+      component:()=>import('../../src/pages/buyer/orderPayment/index.vue')
+    },
+    {
       name: 'login',
       path: '/login',
       component: Login

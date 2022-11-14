@@ -254,7 +254,7 @@
   .pages{
     width: 100%;
     background-color: #f5f5f5;
-    padding-bottom: 5px;
+    padding-bottom: 25px;
   }
   .each-page{
     width: 1200px;

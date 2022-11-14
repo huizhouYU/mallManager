@@ -336,7 +336,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0px 25px 0px;
+    margin: 30px 0px 5px 0px;
   }
 
   /deep/ .el-pagination {

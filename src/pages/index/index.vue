@@ -298,5 +298,6 @@
     width: 1200px;
     margin: auto;
     padding-top: 40px;
+    padding-bottom: 20px;
   }
 </style>
