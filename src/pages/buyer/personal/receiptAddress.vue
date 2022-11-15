@@ -59,7 +59,9 @@
           <el-input v-model="addressForm.name" placeholder="请输入收货人姓名"></el-input>
         </el-form-item>
         <el-form-item label="收货地址：" prop="region">
-          <el-input v-model="addressForm.region" placeholder="请选择省/市/区/街道"></el-input>
+          <el-cascader v-model="addressForm.region" placeholder="请选择省/市/区/街道" :options="cities"  @change="changeFormat"
+            ref="cascaderRegion" />
+          <!-- <el-input v-model="addressForm.region" placeholder="请选择省/市/区/街道"></el-input> -->
         </el-form-item>
         <el-form-item label="详细地址：" prop="address">
           <el-input v-model="addressForm.address" placeholder="请输入收货人详细地址"></el-input>
@@ -79,6 +81,7 @@
 </template>
 
 <script>
+   const city = require("../../../../src/json/citys.json")
   export default {
     data() {
       var validatePhone = (rule, value, callback) => {
@@ -93,6 +96,7 @@
         }
       }
       return {
+        cities:'',
         //编辑地址 弹框
         editTitle: '', //编辑收货地址弹框标题：新增地址/编辑地址
         dialogEditVisible: false,
@@ -172,6 +176,8 @@
           this.defaultAddress = this.addressList[index]
         }
       }
+      //获取地区
+      this.cities = city
     },
     methods: {
       isCellPhone(val) {
@@ -179,6 +185,14 @@
           return false
         } else {
           return true
+        }
+      },
+      changeFormat() {
+        if (this.$refs["cascaderRegion"].getCheckedNodes()[0] != undefined) {
+          let regionName = this.$refs["cascaderRegion"].getCheckedNodes()[0].pathLabels
+          this.addressForm.regionName = regionName.join("/")
+          // this.addressForm.regionIdList = this.$refs["cascaderRegion"].getCheckedNodes()[0].path
+          // this.addressForm.regionIdList = this.addressForm.regionIdList.map(Number)
         }
       },
       //点击删除地址：弹出确定删除地址弹框
@@ -244,7 +258,7 @@
         }
         for (var key in obj) {
           var val = obj[key];
-          newObj[key] = typeof val === 'object' ? cloneObj(val) : val;
+          newObj[key] = typeof val === 'object' ? this.cloneObj(val) : val;
         }
         return newObj;
       },

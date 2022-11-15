@@ -23,7 +23,9 @@
         </div>
 
       </div>
-      <div class="contact-info-right"></div>
+      <div class="contact-info-right">
+        <v-amap></v-amap>
+      </div>
     </div>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
@@ -35,9 +37,11 @@
 
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
-  export default{
-    components:{
-      goodItem
+  import vAmap from '../../../components/amaps.vue'
+  export default {
+    components: {
+      goodItem,
+      vAmap
     }
   }
 </script>
@@ -101,7 +105,8 @@
       margin-top: 20px;
       padding: 12px 14px 25px 14px;
       border-top: 2px solid #40A9FF;
-      span{
+
+      span {
         font-size: 16px;
         font-family: Microsoft YaHei;
         font-weight: 400;

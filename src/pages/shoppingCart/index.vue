@@ -124,6 +124,8 @@
             storeName: '哈哈哈哈哈哈无限公司',
             isSelectAll: false, //是否全选
             list: [{
+              storeId: '1',
+              storeName: '哈哈哈哈哈哈无限公司',
                 goodsId: '1-1',
                 isSelect: false,
                 goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbkimg.cdn.bcebos.com%2Fpic%2F728da9773912b31bc2156fcc8618367adbb4e1de&refer=http%3A%2F%2Fbkimg.cdn.bcebos.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=8d0c36c1237d0ec07ed65eb877a5a914',
@@ -135,6 +137,8 @@
                 money: '45.9'
               },
               {
+                storeId: '1',
+                storeName: '哈哈哈哈哈哈无限公司',
                 goodsId: '1-2',
                 isSelect: false,
                 goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage1.big-bit.com%2F2021%2F0908%2F20210908031318131.jpg&refer=http%3A%2F%2Fimage1.big-bit.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=4ecc58be52ba978fd7622546fe98b8c9',
@@ -149,9 +153,11 @@
           },
           {
             storeId: '2',
-            storeName: '哈哈哈哈哈哈无限公司',
+            storeName: '海波莫就无限公司',
             isSelectAll: false, //是否全选
             list: [{
+              storeId: '2',
+              storeName: '海波莫就无限公司',
               goodsId: '2-1',
               isSelect: false,
               goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.ctb168.com%2Fe%2Fupload%2Fs1%2Ffck%2Fimage%2F2019%2F08%2F22%2F1753169660.jpg&refer=http%3A%2F%2Fwww.ctb168.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=e488dbfa5903ac42d70d02ad959800f7',
@@ -165,9 +171,11 @@
           },
           {
             storeId: '3',
-            storeName: '哈哈哈哈哈哈无限公司',
+            storeName: '金币不哦怒江',
             isSelectAll: false, //是否全选
             list: [{
+              storeId: '3',
+              storeName: '金币不哦怒江',
                 goodsId: '3-1',
                 isSelect: false,
                 goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-a9a5dc78dfc2f132b934f5156f50db08_b.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=853e9356a1a21413b8ce640090144669',
@@ -179,6 +187,8 @@
                 money: '89'
               },
               {
+                storeId: '3',
+                storeName: '金币不哦怒江',
                 goodsId: '3-2',
                 isSelect: false,
                 goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftenfei03.cfp.cn%2Fcreative%2Fvcg%2Fnowarter800%2Fnew%2FVCG41N915384844.jpg&refer=http%3A%2F%2Ftenfei03.cfp.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=e52f32892c5e8ebee9fe8fcfba96a383',
@@ -193,9 +203,11 @@
           },
           {
             storeId: '4',
-            storeName: '哈哈哈哈哈哈无限公司',
+            storeName: '魔衣不够宝檽瘆得慌',
             isSelectAll: false, //是否全选
             list: [{
+              storeId: '4',
+              storeName: '魔衣不够宝檽瘆得慌',
               goodsId: '4-1',
               isSelect: false,
               goodsImg: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.soogot.com%2Fuploadfile%2F20181214%2F20181214172628821.jpg&refer=http%3A%2F%2Fwww.soogot.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670396735&t=4b1747d8b1c008da1cf7ecb0edf0dccf',
@@ -324,6 +336,7 @@
         for (var index in this.chosedGoodsList) {
           this.sumPrice += Number(this.chosedGoodsList[index].money)
         }
+        this.sumPrice = this.sumPrice.toFixed(2)
       },
       //全选某一家店铺的商品
       changeStoreSelectStatue(index, keyType) {
@@ -370,7 +383,7 @@
           this.$router.push({
             path:'/orderPayment',
             query:{
-              chosedGood:this.chosedGoodsList
+              chosedGood:JSON.stringify(this.chosedGoodsList)
             }
           })
         }
@@ -512,14 +525,14 @@
 
     // 购物车列表
     .shoping-cart-content {
-      position: absolute;
-      height: calc(100% - 160px);
-      overflow: auto;
-      top: 140px;
+      // position: absolute;
+      // height: calc(100% - 160px);
+      // overflow: auto;
+      // top: 140px;
       width: 100%;
       box-sizing: border-box;
       margin-top: 20px;
-      padding-bottom: 70px;
+      // padding-bottom: 70px;
 
       // 一家店铺里加购的商品
       .store-goods {
@@ -656,7 +669,7 @@
       font-weight: 400;
       color: #666666;
       box-sizing: border-box;
-      position: absolute;
+      position: sticky;
       bottom: 0px;
       left: 0px;
 

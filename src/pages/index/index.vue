@@ -18,7 +18,37 @@
     <!-- 主要模块 -->
     <div class="main-tab">
       <div class="main-tab-content">
-        <div class="main-tab-content-left">
+        <el-popover placement="bottom-start" width="215" trigger="hover"  v-show="isShowContent">
+          <div slot="reference" class="main-tab-content-left">
+            <img src="../../assets/images/index/icon_hamburger.png" alt="">
+            <span class="title">品牌分类</span>
+          </div>
+          <!-- 悬浮 品牌分类 展示内容 -->
+          <div class="brand-classification">
+            <div width="240px" class="main-aside">
+              <ul class="brand-nav-box">
+                <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)"
+                  @mouseout="leaveClass()">{{item.name}}
+                  <i class="iconfont">&#xe63c;</i>
+                </li>
+              </ul>
+              <div class="more-brands">
+                <p>更多分类</p>
+                <img src="../../assets/images/index/double-right.png" alt="">
+              </div>
+            </div>
+            <!-- 左侧导航条悬浮显示的内容 -->
+            <div class="more-classification" v-show="isShow" @mouseover="enterClass('')" @mouseout="leaveClass()">
+              <div class="item" v-for="(item,index) in classDatas" :key="index">
+                <div class="title">{{item.name}}</div>
+                <ul>
+                  <li v-for="(child,ind) in item.childers" :key="ind">{{child.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </el-popover>
+        <div slot="reference" class="main-tab-content-left" v-show="!isShowContent">
           <img src="../../assets/images/index/icon_hamburger.png" alt="">
           <span class="title">品牌分类</span>
         </div>
@@ -103,20 +133,415 @@
             isNew: false,
             path: '/cooperationBrand'
           },
+        ],
+        isShow: false,
+        isShowContent: false,
+        brandList: [{
+            id: '1',
+            name: '西门子'
+          },
+          {
+            id: '2',
+            name: '东软'
+          },
+          {
+            id: '3',
+            name: '万东'
+          },
+          {
+            id: '4',
+            name: '安科'
+          },
+          {
+            id: '5',
+            name: '明峰'
+          },
+          {
+            id: '6',
+            name: '万东'
+          },
+          {
+            id: '7',
+            name: '新奥博伟'
+          },
+          {
+            id: '8',
+            name: '鑫高益'
+          },
+          {
+            id: '9',
+            name: '贝斯达'
+          },
+
+          {
+            id: '10',
+            name: '开普/宽腾'
+          },
+          {
+            id: '11',
+            name: '联影'
+          },
+          {
+            id: '12',
+            name: '朗润'
+          },
+          {
+            id: '13',
+            name: '康达洲际'
+          },
+
+        ],
+        classDatas: [{
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          },
+          {
+            id: '1',
+            name: '分子影像成像系统',
+            childers: [{
+                id: '1-1',
+                name: '英特拉阿奇瓦 1.5T'
+              },
+              {
+                id: '1-2',
+                name: '全景0.23T'
+              },
+              {
+                id: '1-3',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-4',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-5',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-6',
+                name: '英特网'
+              },
+              {
+                id: '1-7',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-8',
+                name: '多瓦 1.5T'
+              },
+              {
+                id: '1-9',
+                name: '英特拉 1.5T'
+              },
+              {
+                id: '1-10',
+                name: '英特网'
+              },
+              {
+                id: '1-11',
+                name: '全景1.0T'
+              },
+              {
+                id: '1-12',
+                name: '多瓦 1.5T'
+              }
+            ]
+          }
         ]
       }
     },
     mounted() {},
     methods: {
+      enterClass(id) {
+        //根据id去请求classDatas数据
+        this.isShow = true
+      },
+      leaveClass() {
+        // console.log("离开", this.isShow)
+        this.isShow = false
+      },
       changeTab(key) {
         this.chooseTab = key
+        if(this.chooseTab != '0'){
+          this.isShowContent = true
+        }else{
+          this.isShowContent = false
+        }
       },
       jumpTab(path, index) {
         this.chooseTab = index
-        console.log("this.chooseTab:", this.chooseTab)
+        if(this.chooseTab != '0'){
+          this.isShowContent = true
+        }else{
+          this.isShowContent = false
+        }
+        // console.log("this.chooseTab:", this.chooseTab)
         this.$router.replace({
           path: path
         })
+
       },
       enterClass(id) {
         //根据id去请求classDatas数据
@@ -203,7 +628,7 @@
     z-index: 99;
 
     .main-tab-content {
-
+      position: relative;
       width: 1200px;
       height: 100%;
       background-color: #fff;
@@ -218,7 +643,7 @@
       //品牌分类
       .main-tab-content-left {
         width: 240px;
-        height: 100%;
+        height: 40px;
         background-color: #8DCFFF;
         border-radius: 10px 10px 0px 0px;
         display: flex;
@@ -299,5 +724,125 @@
     margin: auto;
     padding-top: 40px;
     padding-bottom: 20px;
+  }
+
+  .brand-classification {
+    position: absolute;
+    left: 0px;
+    // top: 100%;
+
+    // 左侧导航
+    .main-aside {
+      width: 240px;
+      height: 100%;
+      box-sizing: border-box;
+      padding-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+
+      img {
+        width: 100%;
+        height: 60px;
+      }
+
+      .brand-nav-box {
+        width: 100%;
+        height: 530px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        li {
+          height: calc((100%)/10);
+          box-sizing: border-box;
+          background-color: #fff;
+          padding: 0px 15px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 14px;
+          color: #333;
+          cursor: pointer;
+        }
+
+        li:hover {
+          background-color: #E6F7FF;
+          color: #40A9FF;
+        }
+
+      }
+
+
+      .more-brands {
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0px 15px;
+        background-color: #F4FBFF;
+
+        p {
+          color: #333;
+          font-size: 16px;
+        }
+
+        img {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+
+    .more-classification {
+      width: 730px;
+      height: 600px;
+      background-color: #fff;
+      position: absolute;
+      top: 0px;
+      left: 240px;
+      overflow-y: auto;
+      padding: 35px 20px 40px 30px;
+      box-sizing: border-box;
+      box-shadow: 0px 0px 10px 5px #eee;
+
+      .item:last-child {
+        padding-bottom: 0;
+      }
+
+      .item {
+        padding-bottom: 30px;
+
+        .title {
+          padding: 2px 0px 2px 10px;
+          border-left: 1px solid #40A9FF;
+          font-size: 14px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #333333;
+        }
+
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          margin-top: 10px;
+
+          li {
+            margin: 5px 10px 5px 0px;
+            font-size: 12px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #555555;
+            cursor: pointer;
+          }
+
+          li:hover {
+            color: #40A9FF;
+          }
+        }
+      }
+
+    }
   }
 </style>

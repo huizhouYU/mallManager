@@ -113,7 +113,7 @@
   import storeRecommendation from '../../pages/shop/storeRecommendation.vue'
   import goodItem from '../../pages/allGoods/goodItem.vue'
   import demandItem from '../../pages/shopDemand/demandItem.vue'
-  import vAmap from '../../components/amap.vue'
+  import vAmap from '../../components/amaps.vue'
   export default {
     components: {
       storeRecommendation,
