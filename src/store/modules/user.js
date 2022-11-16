@@ -121,7 +121,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const roles = ["admin"]
       commit('SET_ROLES', roles)
-      commit('SET_NAME', "百货互补")
+      commit('SET_NAME', "百货互补超负荷是否")
       commit('SET_AVATAR', "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
       commit('SET_INTRODUCTION', "固定无")
       commit('SET_MOBILE', "18154526542")
@@ -169,22 +169,26 @@ const actions = {
     dispatch
   }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
-        removeToken()
-        // resetRouter()
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
+      // logout(state.token).then(() => {
+      //   commit('SET_TOKEN', '')
+      //   commit('SET_ROLES', [])
+      //   removeToken()
+      //   // resetRouter()
 
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-        dispatch('tagsView/delAllViews', null, {
-          root: true
-        })
+      //   // reset visited views and cached views
+      //   // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+      //   dispatch('tagsView/delAllViews', null, {
+      //     root: true
+      //   })
 
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      //   resolve()
+      // }).catch(error => {
+      //   reject(error)
+      // })
     })
   },
 

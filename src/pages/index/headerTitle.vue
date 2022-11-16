@@ -3,8 +3,37 @@
     <div class="shop-content-item">
       <ul>
         <li>您好，欢迎来到医界商城！</li>
-        <li>请登录</li>
-        <li class="bule_font">免费注册</li>
+        <template v-if="!name">
+          <li>请登录</li>
+          <li class="bule_font">免费注册</li>
+        </template>
+        <template v-if="name">
+          <li>
+            <el-popover placement="bottom-start" trigger="hover" popper-class="tips-con">
+              <div class="hover-top-name-content" slot="default">
+                <ul>
+                  <li @click="personCenter">个人中心</li>
+                  <li @click="logout">退出</li>
+                </ul>
+                <div class="logo-name-div">
+                  <img :src="avatar" alt="">
+                  <div class="name-info-div">
+                    <span>
+                      {{name}}
+                    </span>
+                    <span class="color9">已完善个人信息</span>
+                  </div>
+                </div>
+              </div>
+              <div slot="reference" class="top-name">
+                <span>{{name}}</span>
+                <i class="iconfont">&#xe601;</i>
+              </div>
+            </el-popover>
+
+          </li>
+        </template>
+
         <li>客服热线：400-010-1866</li>
       </ul>
     </div>
@@ -25,33 +54,150 @@
 </template>
 
 <script>
-export default{
-  methods:{
-    toIndex(){
-      this.$emit("changeTab",'0')
-      this.$router.push({
-        path:'/'
-      })
+  import {
+    mapGetters
+  } from 'vuex'
+  export default {
+    computed: {
+      ...mapGetters([
+        'name',
+        'avatar',
+        'mobile'
+      ])
     },
-    toShopCart(){
-      this.$emit("changeTab",'-1')
-      this.$router.push({
-        path:'/shoppingCart'
-      })
-    },
-    personCenter(){
-      this.$emit("changeTab",'-1')
-      this.$router.push({
-        path: '/buyer',
-        query: {
-          // id: id
-        }
-      })
-    },
-  }
-}
-</script>
+    methods: {
+      logout(){
+        this.$store.dispatch('user/logout')
+          .then(() => {
+            console.log("退出成功！")
+            this.toIndex()
+            // this.$router.push({
+            //   path: '/redirect',
+            //   query: {
+            //     // path: encodeURI("/home"),
+            //     path:'"/home"'
+            //   },
+            //   replace: true
+            // })
+            this.loading = false
+            console.log("成功")
+          }).catch(() => {
+            this.loading = false
+            console.log("失败")
+          })
+      },
 
+
+      toIndex() {
+        this.$emit("changeTab", '0')
+        this.$router.push({
+          path: '/'
+        })
+      },
+      toShopCart() {
+        this.$emit("changeTab", '-1')
+        this.$router.push({
+          path: '/shoppingCart'
+        })
+      },
+      personCenter() {
+        this.$emit("changeTab", '-1')
+        this.$router.push({
+          path: '/buyer',
+          query: {
+            // id: id
+          }
+        })
+      },
+      loginOut(){
+
+      }
+    }
+  }
+</script>
+<style lang="less">
+  /**写样式要注意，写在不带scoped的 style 里 */
+  // 修改下面的小三角，属性名根据组件的placement位置做相应修改
+  .tips-con[x-placement^='left'] .popper__arrow::after {
+    border-left-color: #4728d4;
+  }
+
+  .tips-con[x-placement^='right'] .popper__arrow::after {
+    border-right-color: #ea4e3d;
+  }
+
+  .tips-con[x-placement^='bottom'] .popper__arrow::after {
+    border-bottom-color: #fff;
+  }
+
+  .tips-con[x-placement^='top'] .popper__arrow::after {
+    border-top-color: #12dceb;
+  }
+
+  // 修改title的颜色
+  .tips-con .el-popover__title {
+    color: rgb(230, 51, 236);
+  }
+
+  .tips-con {
+    background-color: #fff;
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    color: #333333;
+
+    .hover-top-name-content {
+      width: 260px;
+
+      ul {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        li {
+          cursor: pointer;
+          padding: 0px 10px;
+        }
+
+        li+li {
+          border-left: 1px solid #DDDDDD;
+        }
+      }
+
+      .logo-name-div {
+        margin-left: 25px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        img {
+          width: 50px;
+          height: 50px;
+          background: #FFFFFF;
+          border: 1px solid #EEEEEE;
+          border-radius: 50%;
+          box-sizing: border-box;
+        }
+
+        .name-info-div {
+          margin-left: 12px;
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-start;
+          flex-direction: column;
+
+          .color9 {
+            color: #999999;
+          }
+          span+span{
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+</style>
 <style lang="less" scoped>
   // 顶部模块 购物车
   .header-title-box {
@@ -85,6 +231,27 @@ export default{
           display: flex;
           justify-content: center;
           align-items: center;
+
+          .top-name {
+            height: 100%;
+            max-width: 100px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span {
+              display: inline-block;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .top-name:hover {
+            color: #40A9FF;
+          }
+
 
           img {
             width: 16px;

@@ -40,25 +40,25 @@
             <div class="main-content-right">
               <!-- 发布需求 -->
               <div class="release-demand">
-                <div class="login-info">
+                <!-- 未登录状态 -->
+                <div class="login-info" v-show="!name">
                   <div class="person-logo">
-                    <img src="../../assets/images/index/icon_tx.png" alt="" v-show="!avatar">
-                    <img :src="avatar" alt="" v-show="avatar" @click="personCenter">
+                    <img src="../../assets/images/index/icon_tx.png" alt="">
                   </div>
                   <div class="person-info">
-                    <span v-show="!name">您好，欢迎光临</span>
-                    <span v-show="name" @click="personCenter">{{name}}</span>
-                    <ul v-show="!name">
+                    <span>您好，欢迎光临</span>
+                    <ul>
                       <li class="bule-font li-login" @click="login">登录</li>
                       <li>注册</li>
                     </ul>
-                    <ul v-show="name">
-                      <li class="bule-font" v-show="!mobile" @click="personCenter">请完善个人信息</li>
-                      <li class="gray-font no-padding" v-show="mobile" @click="personCenter">已完善个人信息</li>
-                    </ul>
                   </div>
                 </div>
-                <div class="explain">
+                <!-- 已登录样式 -->
+                <div class="logined-info" v-show="name">
+                  <img :src="avatar" alt="" @click="personCenter">
+                  <span @click="personCenter">{{name}}</span>
+                </div>
+                <div class="explain" v-show="!name">
                   企业一站式服务平台,登录立即享受
                 </div>
                 <el-button class="btn-demand">一键发布需求</el-button>
@@ -142,7 +142,9 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {
+    mapGetters
+  } from 'vuex'
   import brandNav from '../../pages/index/brandNav.vue'
   import equipListCart from '../../pages/index/equipListCart.vue'
   import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
@@ -632,8 +634,8 @@
       }
     },
     methods: {
-      personCenter(){
-        this.$emit("changeTab",'-1')
+      personCenter() {
+        this.$emit("changeTab", '-1')
         this.$router.push({
           path: '/buyer',
           query: {
@@ -642,7 +644,7 @@
         })
       },
       jumpAllGoods(id) {
-        this.$emit("changeTab",'-1')
+        this.$emit("changeTab", '-1')
         this.$router.push({
           path: '/allGoods',
           query: {
@@ -834,9 +836,9 @@
           height: 205px;
           width: 100%;
           background-position: 100% bottom;
-          background-image: url(../../assets/images/index/pic_login_bg.png);
           background-repeat: no-repeat;
           background-color: #FFFFFF;
+          background-image: url('../../assets/images/index/pic_home_login.png');
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -845,7 +847,7 @@
           box-sizing: border-box;
           overflow: hidden;
 
-          //登录信息
+          //未登录信息
           .login-info {
             width: 100%;
             padding-left: 20px;
@@ -867,8 +869,8 @@
               align-items: center;
 
               img {
-                width: 40px;
-                height: 40px;
+                width: 100%;
+                height: 100%;
               }
             }
 
@@ -911,14 +913,50 @@
                 .bule-font {
                   color: #40A9FF;
                 }
-                .gray-font{
+
+                .gray-font {
                   color: #999;
 
                 }
-                .no-padding{
-                  padding:0px;
+
+                .no-padding {
+                  padding: 0px;
                 }
               }
+            }
+          }
+
+          //登录信息
+          .logined-info {
+            width: 100%;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            img {
+
+              cursor: pointer;
+              width: 54px;
+              height: 54px;
+              border-radius: 50%;
+              box-sizing: border-box;
+              overflow: hidden;
+            }
+
+            span {
+              width: 100px;
+              display: inline-block;
+              margin-top: 15px;
+              cursor: pointer;
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              color: #333333;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              text-align: center;
             }
           }
 
