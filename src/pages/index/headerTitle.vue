@@ -66,7 +66,7 @@
       ])
     },
     methods: {
-      logout(){
+      logout() {
         this.$store.dispatch('user/logout')
           .then(() => {
             console.log("退出成功！")
@@ -109,7 +109,7 @@
           }
         })
       },
-      loginOut(){
+      loginOut() {
 
       }
     }
@@ -119,19 +119,32 @@
   /**写样式要注意，写在不带scoped的 style 里 */
   // 修改下面的小三角，属性名根据组件的placement位置做相应修改
   .tips-con[x-placement^='left'] .popper__arrow::after {
-    border-left-color: #4728d4;
+    border-left-color: rgba(54,229,255,0);
+    border: none;
   }
 
   .tips-con[x-placement^='right'] .popper__arrow::after {
-    border-right-color: #ea4e3d;
+    border-right-color: rgba(54,229,255,0);
+    border: none;
   }
 
   .tips-con[x-placement^='bottom'] .popper__arrow::after {
-    border-bottom-color: #fff;
+    border-bottom-color: rgba(54,229,255,0);
+    border: none;
   }
 
   .tips-con[x-placement^='top'] .popper__arrow::after {
-    border-top-color: #12dceb;
+    border-top-color: rgba(54,229,255,0);
+    border: none;
+  }
+
+  .tips-con .el-popper .popper__arrow,
+  .tips-con .el-popper .popper__arrow:after {
+    display: none;
+  }
+
+  .el-popper .popper__arrow:after {
+    display: none;
   }
 
   // 修改title的颜色
@@ -140,6 +153,8 @@
   }
 
   .tips-con {
+    // top: -20px;
+    // margin-top: 100px;
     background-color: #fff;
     font-size: 12px;
     font-family: Microsoft YaHei;
@@ -148,6 +163,7 @@
 
     .hover-top-name-content {
       width: 260px;
+      padding: 10px 0px;
 
       ul {
         width: 100%;
@@ -167,6 +183,7 @@
 
       .logo-name-div {
         margin-left: 25px;
+        margin-top: 18px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -190,8 +207,9 @@
           .color9 {
             color: #999999;
           }
-          span+span{
-            margin-top: 5px;
+
+          span+span {
+            margin-top: 10px;
           }
         }
       }
@@ -211,6 +229,7 @@
     // z-index: 99;
     display: flex;
     width: 1200px;
+    height: 100%;
 
     .shop-content-item {
       flex: 1;
@@ -224,21 +243,31 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
 
         li {
+          height: 100%;
           cursor: pointer;
           padding-right: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
 
+          span {
+            display: inline-block;
+            height: 100%;
+            line-height: 30px;
+          }
+
           .top-name {
+            padding: 0px 6px;
             height: 100%;
             max-width: 100px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
+
 
             span {
               display: inline-block;
@@ -250,6 +279,7 @@
 
           .top-name:hover {
             color: #40A9FF;
+            background-color: #fff;
           }
 
 

@@ -13,8 +13,8 @@
           <el-input v-model="searchData.key" class="search-input" placeholder="输入相关产品名或企业名"></el-input>
           <el-button class="search-btn"><i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span></el-button>
         </div>
-        <span class="font-6">或</span>
-        <el-button class="btn-demand">快速发布需求</el-button>
+        <!-- <span class="font-6">或</span> -->
+        <button class="btn-demand">快速发布需求</button>
       </div>
       <div class="search-box-bottom">
         <span class="hot-word">热搜词：</span>
@@ -184,5 +184,6 @@
     font-family: Microsoft YaHei;
     font-weight: 400;
     color: #FFFFFF;
+    border: none;
   }
 </style>

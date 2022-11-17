@@ -1,8 +1,12 @@
 <template>
   <div class="index-body">
     <!-- 首页banner图 -->
-    <div class="top-banner">
+    <div class="top-banner" v-show="!hiddenTopImg">
       <img src="../../assets/images/index/banner_top.png" alt="">
+      <div class="del-icon-div" @click="hiddenTopImg=true">
+        <i class="iconfont">&#xe8e7;</i>
+      </div>
+
     </div>
     <!-- 顶部模块 购物车 -->
     <div class="shop-box">
@@ -18,7 +22,7 @@
     <!-- 主要模块 -->
     <div class="main-tab">
       <div class="main-tab-content">
-        <el-popover placement="bottom-start" width="215" trigger="hover"  v-show="isShowContent">
+        <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent">
           <div slot="reference" class="main-tab-content-left">
             <img src="../../assets/images/index/icon_hamburger.png" alt="">
             <span class="title">品牌分类</span>
@@ -84,6 +88,7 @@
     },
     data() {
       return {
+        hiddenTopImg: false,
         chooseTab: 0,
         //顶部导航栏
         tabList: [{
@@ -524,17 +529,17 @@
       },
       changeTab(key) {
         this.chooseTab = key
-        if(this.chooseTab != '0'){
+        if (this.chooseTab != '0') {
           this.isShowContent = true
-        }else{
+        } else {
           this.isShowContent = false
         }
       },
       jumpTab(path, index) {
         this.chooseTab = index
-        if(this.chooseTab != '0'){
+        if (this.chooseTab != '0') {
           this.isShowContent = true
-        }else{
+        } else {
           this.isShowContent = false
         }
         // console.log("this.chooseTab:", this.chooseTab)
@@ -562,7 +567,7 @@
     min-width: 1200px;
     background-color: #f5f5f5;
     position: relative;
-    padding-top: 235px;
+    // padding-top: 235px;
     // height:100%;
   }
 
@@ -576,38 +581,58 @@
 
   // 首页banner图
   .top-banner {
-    position: fixed;
+    position: relative;
+    // position: fixed;
     width: 100%;
     height: 100px;
-    top: 0;
-    left: 0;
-    z-index: 99;
+    overflow: hidden;
+    // top: 0;
+    // left: 0;
+    // z-index: 99;
 
     img {
       width: 100%;
       height: 100px;
+    }
+
+    .del-icon-div {
+      box-sizing: border-box;
+      cursor: pointer;
+      position: absolute;
+      height: 25px;
+      width: 25px;
+      top: -8px;
+      right: -6px;
+      font-size: 14px;
+      border-radius: 50%;
+      color: #fff;
+      background-color: #989898;
+
+      i {
+        position: absolute;
+        bottom: 1px;
+        left: 3px;
+      }
     }
   }
 
   // 顶部模块 购物车
   .shop-box {
     background-color: #f5f5f5;
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    height: 30px;
-    width: 100%;
-    z-index: 99;
+    // position: sticky;
+    // top: 0px;
     display: flex;
-    width: 1200px;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    z-index: 99;
   }
 
   /* 模块一 头部 */
   .module0-header {
-    position: fixed;
-    top: 130px;
-    left: 0;
+    position: sticky;
+    // top: 30px;
+    top: 0px;
     width: 100%;
     height: 105px;
     background-color: #fff;
@@ -621,11 +646,9 @@
 
   // 主要模块
   .main-tab {
-    position: fixed;
     height: 40px;
     width: 100%;
     background-color: #fff;
-    z-index: 99;
 
     .main-tab-content {
       position: relative;
@@ -722,14 +745,12 @@
     margin-top: 40px;
     width: 1200px;
     margin: auto;
-    padding-top: 40px;
     padding-bottom: 20px;
   }
 
   .brand-classification {
     position: absolute;
     left: 0px;
-    // top: 100%;
 
     // 左侧导航
     .main-aside {

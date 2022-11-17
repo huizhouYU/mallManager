@@ -4,38 +4,44 @@
     <div class="model7-box">
       <div class="content">
         <div class="item">
-          <img src="../../assets/images/index/modle7_item1.png" alt="">
+          <img src="../../assets/images/index/pic_word_shi.png" alt="">
           <div class="title">
-            <p class="name">专业服务</p>
-            <p class="remark">服务3100万用户，覆盖各类服务</p>
+            <p class="name">商家实名</p>
+            <p class="remark">官方把关，服务商100%实名认证</p>
           </div>
         </div>
         <div class="item">
-          <img src="../../assets/images/index/modle7_item1.png" alt="">
+          <img src="../../assets/images/index/pic_word_gui.png" alt="">
+          <div class="title">
+            <p class="name">交易合规</p>
+            <p class="remark">所有交易均采用电子合同签署</p>
+          </div>
+        </div>
+        <div class="item">
+          <img src="../../assets/images/index/pic_word_an.png" alt="">
           <div class="title">
             <p class="name">资金安全</p>
-            <p class="remark">服务3100万用户，覆盖各类服务</p>
+            <p class="remark">付款后，验收合格后卖家方可提款</p>
           </div>
         </div>
         <div class="item">
-          <img src="../../assets/images/index/modle7_item1.png" alt="">
+          <img src="../../assets/images/index/pic_word_bao.png" alt="">
           <div class="title">
-            <p class="name">专业服务</p>
-            <p class="remark">服务3100万用户，覆盖各类服务</p>
+            <p class="name">全程保障</p>
+            <p class="remark">企业服务交易全流程线上保障</p>
           </div>
         </div>
-        <div class="item">
-          <img src="../../assets/images/index/modle7_item1.png" alt="">
-          <div class="title">
-            <p class="name">专业服务</p>
-            <p class="remark">服务3100万用户，覆盖各类服务</p>
-          </div>
-        </div>
-    
+
       </div>
     </div>
+    <div class="bottom-four-model">
+      <router-link tag="a" class="item" target="_blank" to="./aboutUs">关于我们</router-link>
+      <router-link tag="a" class="item" target="_blank" to="./residencyAgreement">入驻协议</router-link>
+      <router-link tag="a" class="item" target="_blank" to="./tradingRules">交易规则</router-link>
+      <router-link tag="a" class="item" target="_blank" to="./legalStatement">法律声明</router-link>
+    </div>
     <!-- 模块八 关于商城 -->
-    <div class="modle8-box">
+    <!--  <div class="modle8-box">
       <div class="content">
         <div class="item-left">
           <div class="left-item1">
@@ -50,7 +56,7 @@
               <p>关于我们</p>
               <img src="../../assets/images/index/wx.png" alt="">
               <img src="../../assets/images/index/xl.png" alt="">
-    
+
             </div>
           </div>
           <div class="left-item2">
@@ -85,17 +91,17 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 模块九 底部链接 -->
     <div class="modle9-bottom">
       <p class="item1"> ©2019-2021 yijiequan.cn版权所有 </p>
       <p class="item2">京ICP备08010314号-6</p>
       <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p>
     </div>
-    
-    
-    
-    
+
+
+
+
   </div>
 </template>
 
@@ -105,200 +111,240 @@
 <style scoped lang="less">
   // 模块七 四大模块
   .model7-box {
-    
-      width: 100%;
-      height: 70px;
-      background-color: #fff;
-      box-sizing: border-box;
-      // margin-top: 25px;
-      border-bottom: 1px solid #eee;
-    
-      .content {
-        width: 1200px;
-        height: 100%;
-        margin: auto;
+
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    box-sizing: border-box;
+    // margin-top: 25px;
+    border-bottom: 1px solid #eee;
+
+    .content {
+      width: 1200px;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .item {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-    
-        .item {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-    
-          img {
-            width: 56px;
-            height: 56px;
-          }
-    
-          .title {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            margin-left: 12px;
-    
-            .name {
-              font-size: 20px;
-              color: #333;
-            }
-    
-            .remark {
-              font-size: 12px;
-              color: #999;
-            }
-          }
-    
+
+        img {
+          width: 56px;
+          height: 56px;
         }
+
+        .title {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          margin-left: 12px;
+
+          .name {
+            font-size: 20px;
+            color: #333;
+          }
+
+          .remark {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+
       }
-    
+    }
+
   }
+
+  // 关于我们+ 入驻协议 + 交易规则 + 法律声明
+  .bottom-four-model {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 92px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-bottom: 1px solid #EEEEEE;
+
+    .item {
+      height: 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #666666;
+      padding: 0px 40px;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .item:hover{
+      color: #40A9FF;
+    }
+
+    .item+.item {
+      border-left: 1px solid #CCCCCC;
+    }
+    .item:first-child{
+      padding-left: 0px;
+    }
+    .item:last-child{
+      padding-right: 0px;
+    }
+  }
+
   // 模块八 关于商城
-  .modle8-box {
-    
-      width: 100%;
-      height: 350px;
-      background-color: #fff;
-      box-sizing: border-box;
-      border-bottom: 1px solid #eee;
-    
-      .content {
-        width: 1200px;
-        height: 350px;
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box;
-        padding: 60px 0px;
-    
-        .item-left,
-        .item-right {
-          width: 600px;
-          height: 100%;
-          box-sizing: border-box;
-          display: flex;
-    
-          .title {
-            font-size: 18px;
-            font-family: Microsoft YaHei;
-            font-weight: 600;
-            color: #333333;
-            margin-bottom: 40px;
-          }
-    
-          ul {
-            li {
-              font-size: 14px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #666666;
-              margin: 10px 0px;
-              cursor: pointer;
-            }
-          }
-    
-        }
-    
-        .left-item1 {
-          width: 430px;
-          height: 100%;
-    
-          .remark {
-            font-size: 14px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: #333333;
-            width: 340px;
-            line-height: 24px;
-          }
-    
-          .about-we {
-            margin-top: 30px;
-            padding-top: 30px;
-            width: 340px;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: start;
-    
-            p {
-              font-size: 14px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #333333;
-              margin-right: 20px;
-            }
-    
-            img {
-              width: 22px;
-              height: 18px;
-              margin-right: 20px;
-            }
-          }
-        }
-    
-        .left-item2 {
-          width: 170px;
-          height: 100%;
-        }
-    
-        .right-item1 {
-          padding-left: 20px;
-          width: 250px;
-          height: 100%;
-        }
-    
-        .right-item2 {
-          width: 350px;
-          height: 100%;
-          border-left: 1px solid #eee;
-    
-          .title {
-            text-align: center;
-          }
-    
-          .remark {
-            display: flex;
-            flex-direction: column;
-          }
-    
-          .mobile {
-            font-size: 28px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: #333333;
-            text-align: center;
-          }
-    
-          .time {
-            margin-top: 15px;
-            font-size: 14px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: #999999;
-            text-align: center;
-          }
-        }
-      }
-  }
+  // .modle8-box {
+
+  //     width: 100%;
+  //     height: 350px;
+  //     background-color: #fff;
+  //     box-sizing: border-box;
+  //     border-bottom: 1px solid #eee;
+
+  //     .content {
+  //       width: 1200px;
+  //       height: 350px;
+  //       margin: auto;
+  //       display: flex;
+  //       justify-content: space-between;
+  //       align-items: center;
+  //       box-sizing: border-box;
+  //       padding: 60px 0px;
+
+  //       .item-left,
+  //       .item-right {
+  //         width: 600px;
+  //         height: 100%;
+  //         box-sizing: border-box;
+  //         display: flex;
+
+  //         .title {
+  //           font-size: 18px;
+  //           font-family: Microsoft YaHei;
+  //           font-weight: 600;
+  //           color: #333333;
+  //           margin-bottom: 40px;
+  //         }
+
+  //         ul {
+  //           li {
+  //             font-size: 14px;
+  //             font-family: Microsoft YaHei;
+  //             font-weight: 400;
+  //             color: #666666;
+  //             margin: 10px 0px;
+  //             cursor: pointer;
+  //           }
+  //         }
+
+  //       }
+
+  //       .left-item1 {
+  //         width: 430px;
+  //         height: 100%;
+
+  //         .remark {
+  //           font-size: 14px;
+  //           font-family: Microsoft YaHei;
+  //           font-weight: 400;
+  //           color: #333333;
+  //           width: 340px;
+  //           line-height: 24px;
+  //         }
+
+  //         .about-we {
+  //           margin-top: 30px;
+  //           padding-top: 30px;
+  //           width: 340px;
+  //           border-top: 1px solid #eee;
+  //           display: flex;
+  //           justify-content: start;
+
+  //           p {
+  //             font-size: 14px;
+  //             font-family: Microsoft YaHei;
+  //             font-weight: 400;
+  //             color: #333333;
+  //             margin-right: 20px;
+  //           }
+
+  //           img {
+  //             width: 22px;
+  //             height: 18px;
+  //             margin-right: 20px;
+  //           }
+  //         }
+  //       }
+
+  //       .left-item2 {
+  //         width: 170px;
+  //         height: 100%;
+  //       }
+
+  //       .right-item1 {
+  //         padding-left: 20px;
+  //         width: 250px;
+  //         height: 100%;
+  //       }
+
+  //       .right-item2 {
+  //         width: 350px;
+  //         height: 100%;
+  //         border-left: 1px solid #eee;
+
+  //         .title {
+  //           text-align: center;
+  //         }
+
+  //         .remark {
+  //           display: flex;
+  //           flex-direction: column;
+  //         }
+
+  //         .mobile {
+  //           font-size: 28px;
+  //           font-family: Microsoft YaHei;
+  //           font-weight: 400;
+  //           color: #333333;
+  //           text-align: center;
+  //         }
+
+  //         .time {
+  //           margin-top: 15px;
+  //           font-size: 14px;
+  //           font-family: Microsoft YaHei;
+  //           font-weight: 400;
+  //           color: #999999;
+  //           text-align: center;
+  //         }
+  //       }
+  //     }
+  // }
   // 模块九 底部链接
   .modle9-bottom {
-    
-      background-color: #fff;
-      width: 100%;
-      height: 90px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      padding: 15px 0;
-      box-sizing: border-box;
-    
-      p {
-        font-size: 12px;
-        color: #999;
-        text-align: center;
-      }
-    
+
+    background-color: #fff;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+    box-sizing: border-box;
+
+    p {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+
   }
 </style>
