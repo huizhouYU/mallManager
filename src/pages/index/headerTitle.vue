@@ -9,7 +9,7 @@
         </template>
         <template v-if="name">
           <li>
-            <el-popover placement="bottom-start" trigger="hover" popper-class="tips-con">
+            <el-popover placement="bottom-start" trigger="hover"  popper-class="tips-con" :visible-arrow="false" >
               <div class="hover-top-name-content" slot="default">
                 <ul>
                   <li @click="personCenter">个人中心</li>
@@ -150,6 +150,9 @@
   // 修改title的颜色
   .tips-con .el-popover__title {
     color: rgb(230, 51, 236);
+  }
+  .el-popper[x-placement^=bottom]{
+    margin-top: 0;
   }
 
   .tips-con {

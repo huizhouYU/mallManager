@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11239039",
+      "name": "客服",
+      "font_class": "kefu1",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "14494486",
+      "name": "回到顶部1",
+      "font_class": "back-top1",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    },
+    {
+      "icon_id": "28427024",
+      "name": "购物车",
+      "font_class": "gouwuche1",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
       "icon_id": "6605907",
       "name": "67下双箭头",
       "font_class": "xiashuangjiantou",

@@ -13,7 +13,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-kefu1:before {
+  content: "\e645";
+}
 
+.icon-back-top1:before {
+  content: "\e780";
+}
+
+.icon-gouwuche1:before {
+  content: "\e60f";
+}
 .icon-xiashuangjiantou:before {
   content: "\e646";
 }

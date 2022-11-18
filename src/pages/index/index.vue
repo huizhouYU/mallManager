@@ -1,5 +1,28 @@
 <template>
   <div class="index-body">
+    <!-- 侧边固定部分 -->
+    <ul class="side-fixing">
+      <!-- 购物车 -->
+      <li class="shoppingcart" @click="toShoppingcart">
+        <i class="iconfont">&#xe60f;</i>
+      </li>
+      <!-- 客服 -->
+      <li class="service">
+        <el-popover placement="left" trigger="hover" popper-class="service-tips-con" style="left: 1420px;">
+          <div class="service-content" slot="default">
+            <img src="../../assets/images/index/buyer/pic_erweima.png" alt="">
+
+          <span>扫一扫 联系客服</span>
+          </div>
+          <i slot="reference" class="iconfont">&#xe645;</i>
+        </el-popover>
+      </li>
+      <!-- 回到顶部 -->
+      <li class="top" @click="goTop">
+        <i class="iconfont">&#xe780;</i>
+      </li>
+    </ul>
+
     <!-- 首页banner图 -->
     <div class="top-banner" v-show="!hiddenTopImg">
       <img src="../../assets/images/index/banner_top.png" alt="">
@@ -22,7 +45,7 @@
     <!-- 主要模块 -->
     <div class="main-tab">
       <div class="main-tab-content">
-        <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent">
+        <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent"  :visible-arrow="false">
           <div slot="reference" class="main-tab-content-left">
             <img src="../../assets/images/index/icon_hamburger.png" alt="">
             <span class="title">品牌分类</span>
@@ -548,6 +571,12 @@
         })
 
       },
+      toShoppingcart(){
+        this.changeTab("-1");
+        this.$router.push({
+          path: '/shoppingCart'
+        })
+      },
       enterClass(id) {
         //根据id去请求classDatas数据
         this.isShow = true
@@ -555,11 +584,51 @@
       leaveClass() {
         console.log("离开", this.isShow)
         this.isShow = false
+      },
+      //回到顶部
+      goTop(){
+       document.documentElement.scrollTop = 0;
       }
     }
   }
 </script>
+<style lang="less">
+  /**写样式要注意，写在不带scoped的 style 里 */
+  // 修改下面的小三角，属性名根据组件的placement位置做相应修改
 
+  .el-popper[x-placement^=left] .popper__arrow {
+    border-left-color: #fff;
+  }
+
+  .el-popover {
+    min-width: 96px;
+    margin-right: 30px !important;
+  }
+
+  .service-tips-con {
+    width: 110px;
+    background-color: red;
+    box-sizing: border-box;
+    background-color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .service-content {
+      max-width: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+
+      img {
+        width: 96px;
+        height: 96px;
+      }
+
+    }
+  }
+</style>
 <style scoped lang="less">
   // 首页整体
   .index-body {
@@ -567,8 +636,51 @@
     min-width: 1200px;
     background-color: #f5f5f5;
     position: relative;
-    // padding-top: 235px;
-    // height:100%;
+  }
+
+  .side-fixing {
+    position: fixed;
+    width: 48px;
+    height: 146px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    right: 10px;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 999;
+
+    li {
+      width: 36px;
+      height: 36px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      cursor: pointer;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    li:hover {
+      background: #F9F9F9;
+
+      i {
+        transform: scale(1.3);
+        color: #40A9FF;
+      }
+
+    }
+
   }
 
   /* 清除浮动 */

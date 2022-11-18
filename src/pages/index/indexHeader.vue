@@ -14,7 +14,7 @@
           <el-button class="search-btn"><i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span></el-button>
         </div>
         <!-- <span class="font-6">或</span> -->
-        <button class="btn-demand">快速发布需求</button>
+        <button class="btn-demand" @click="publishDemand">快速发布需求</button>
       </div>
       <div class="search-box-bottom">
         <span class="hot-word">热搜词：</span>
@@ -45,6 +45,13 @@
         hotWords: ['核磁共振', '骨密度器', '西门子', '血压仪']
       }
     },
+    methods:{
+      publishDemand(){
+        this.$router.push({
+          path:'/publishDemand'
+        })
+      }
+    }
   }
 </script>
 

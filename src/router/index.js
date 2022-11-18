@@ -151,6 +151,11 @@ export default new Router({
       component: Login
     },
     {
+      path:'/publishDemand',
+      name: 'PublishDemand', //发布需求
+      component:()=>import('../../src/pages/index/publishDemand.vue')
+    },
+    {
       name: 'ResidencyAgreement',
       path: '/residencyAgreement',//入驻协议
        component:()=>import('../../src/pages/index/residencyAgreement.vue')
