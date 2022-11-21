@@ -84,7 +84,12 @@ export default new Router({
               path: '/allOrders',
               name: 'AllOrders', //我的订单
               component: () => import('../pages/buyer/myOrder/allOrders.vue')
-            }
+            },{
+              path: '/supplyDemandInfo',
+              name: 'SupplyDemandInfo', //供求信息
+              component: () => import('../pages/buyer/personal/supplyDemandInfo.vue')
+            },
+            
           ]
         }
       ]

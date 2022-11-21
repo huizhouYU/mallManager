@@ -108,7 +108,14 @@
                 params: {},
               }
             ]
-          }
+          },
+          {
+            id: 'supplyDemandInfo',
+            name: '供求信息',
+            path: '/supplyDemandInfo',
+            params: '',
+            child: []
+          },
         ]
       }
     },

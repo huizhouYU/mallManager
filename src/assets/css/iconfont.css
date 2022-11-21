@@ -13,6 +13,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-jia:before {
+  content: "\e600";
+}
 .icon-kefu1:before {
   content: "\e645";
 }
