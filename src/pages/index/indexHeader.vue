@@ -48,7 +48,7 @@
     methods:{
       publishDemand(){
         this.$router.push({
-          path:'/publishDemand'
+          path:'/publishDemandIndex'
         })
       }
     }

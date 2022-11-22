@@ -136,13 +136,13 @@
             title: '医疗器械',
             isHot: false,
             isNew: false,
-            path: ''
+            path: '/medicalApparatus'
           },
           {
             title: '企业服务',
             isHot: false,
             isNew: true,
-            path: ''
+            path: '/enterpriseServices'
           },
           {
             title: '学习园地',

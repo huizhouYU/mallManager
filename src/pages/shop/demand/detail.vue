@@ -65,7 +65,7 @@
           </div>
         </div>
         <!-- 店内相关求购 -->
-        <div class="shop-demand">
+        <div class="shop-demand" v-if="isShop">
           <div class="title">店内相关求购</div>
           <ul>
             <li>急需一个封魔盒，求</li>
@@ -77,7 +77,7 @@
           </ul>
         </div>
         <!-- 其他相关求购 -->
-        <div class="shop-demand">
+        <div class="shop-demand" v-if="isShop">
           <div class="title">其他相关求购</div>
           <ul>
             <li>要碗牛肉面，只要牛肉，不要面，满满的牛肉</li>
@@ -95,6 +95,12 @@
 
 <script>
   export default {
+    props: {
+      isShop: {
+        type: Boolean,
+        default:true
+      }
+    },
     data() {
       return {
         currentChosed: ['供求信息', '店铺供求', 'Philips MR维修及配件供应']
@@ -338,7 +344,7 @@
           li {
             margin: 10px;
             width: 200px;
-            padding-left:15px;
+            padding-left: 15px;
             box-sizing: border-box;
             font-size: 12px;
             font-family: Microsoft YaHei;

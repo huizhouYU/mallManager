@@ -17,11 +17,11 @@
   export default {
     props: {
       longitude: { //经度
-        type: String,
+        type: Number,
         default: 117.289758
       },
       latitude: { //纬度
-        type: String,
+        type: Number,
         default: 31.867761
       }
       // longitude: String,
@@ -57,7 +57,7 @@
         AMapLoader.load({
           "key": "351fa1549567026aba8fb335fe01e931", // 申请好的Web端开发者Key，首次调用 load 时必填
           "version": "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-          "plugins": ["AMap.AutoComplete", "AMap.PlaceSearch"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+          // "plugins": ["AMap.AutoComplete", "AMap.PlaceSearch"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
           // "plugins": [],           // 需要使用的的插件列表，如比例尺'AMap.Scale'等
         }).then((AMap) => {
           this.map = new AMap.Map('bai-du-map', {

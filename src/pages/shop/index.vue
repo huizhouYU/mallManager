@@ -34,7 +34,7 @@
       <!-- 导航栏 -->
       <div class="tab-content">
         <ul>
-          <li v-for="(item,index) in tabList" :key="index" :class="{'selected':index == selectedTab}"
+          <li v-for="(item,index) in tabList" :key="index" :class="{'selected':item.path == selectedTab}"
             @click="changeTab(item.path,index)">{{item.name}}</li>
         </ul>
       </div>
@@ -89,12 +89,13 @@
       }
     },
     mounted() {
+      this.selectedTab = this.$route.path
       // this.selectedTab = 0
       // this.$router.replace({path:'/shopHome'})
     },
     methods:{
       changeTab(path,index){
-        this.selectedTab = index
+        this.selectedTab = path
         this.$router.replace({path:path})
       }
     }

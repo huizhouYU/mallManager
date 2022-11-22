@@ -394,50 +394,16 @@
 </script>
 
 <style lang="less" scoped>
+  //核心宽度
+  @core-weight: 1200px;
   .shopping-cart-box {
-    width: 1200px;
+    width: @core-weight;
     // height: calc(100% - 275px);
     min-height: 640px;
     // height: calc(100% - 100px);
     // overflow: auto;
     margin-bottom: 20px;
     position: relative;
-
-    //公共的样式：横向+水平居中+垂直居中
-    .flex-horizontal-centent-centent {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    //公共的样式：横向+水平左对齐+垂直居中
-    .flex-horizontal-start-centent {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-    }
-
-    //公共的样式：横向+水平左对齐+垂直上对齐
-    .flex-horizontal-start-start {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-
-    //公共的样式：横向+水平between+垂直居中
-    .flex-horizontal-between-centent {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    //公共的样式：垂直+水平左对齐+垂直上对齐
-    .flex-vertical-start-start {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
 
     //购物车总数量
     .shopping-cart-top {

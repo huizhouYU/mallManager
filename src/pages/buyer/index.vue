@@ -141,6 +141,7 @@
             replace: true
           })
         }
+        document.documentElement.scrollTop = 0;
 
       },
       changeChosedNav(key) {

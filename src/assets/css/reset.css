@@ -15,3 +15,135 @@ li {
 li {
   list-style: none;
 }
+
+
+/* 核心宽度 */
+@core-weight: 1200px;
+
+.flex-center-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-start-center {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-start-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-end-center {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flex-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-between-start {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.flex-around-center {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-column-start-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.flex-column-start-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-column-start-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.flex-column-between-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.flex-column-between-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-column-between-end {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.flex-column-center-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+/* 公共的样式：横向+水平居中+垂直居中 */
+.flex-horizontal-centent-centent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 公共的样式：横向+水平左对齐+垂直居中 */
+.flex-horizontal-start-centent {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* 公共的样式：横向+水平左对齐+垂直上对齐 */
+.flex-horizontal-start-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* 公共的样式：横向+水平between+垂直居中 */
+.flex-horizontal-between-centent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 公共的样式：垂直+水平左对齐+垂直上对齐 */
+.flex-vertical-start-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

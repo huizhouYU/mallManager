@@ -3,10 +3,6 @@ import Router from 'vue-router'
 import Login from '../pages/login/login.vue'
 import Home from '../pages/home/home.vue'
 import Index from '../pages/index/index.vue'
-import shop from '../../src/pages/shop/index.vue'
-// import accessory from '../../pages/accessory/index.vue' //配件专区
-// import supplyDemand from '../../pages/supplyDemand/index.vue' //供求信息
-// import cooperationBrand from '../cooperationBrand/index.vue' //合作品牌
 Vue.use(Router)
 //解决vue路由重复导航错误
 //获取原型对象上的push函数
@@ -17,10 +13,9 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-  routes: [
-    {
-      path:'/redirect',
-      component:()=>import('../../src/components/redirect.vue')
+  routes: [{
+      path: '/redirect',
+      component: () => import('../../src/components/redirect.vue')
     },
     {
       name: 'index',
@@ -44,6 +39,16 @@ export default new Router({
           path: '/cooperationBrand',
           name: 'cooperationBrand', //合作品牌
           component: () => import('../pages/cooperationBrand/index.vue')
+        },
+        {
+          path: '/medicalApparatus',
+          name: 'MedicalApparatus', //医疗器械
+          component: () => import('../pages/medicalApparatus/index.vue')
+        },
+        {
+          path:'/enterpriseServices',
+          name:'EnterpriseServices',//企业服务
+          component: () => import('../pages/enterpriseServices/index.vue')
         },
         {
           path: '/allGoods',
@@ -84,12 +89,11 @@ export default new Router({
               path: '/allOrders',
               name: 'AllOrders', //我的订单
               component: () => import('../pages/buyer/myOrder/allOrders.vue')
-            },{
+            }, {
               path: '/supplyDemandInfo',
               name: 'SupplyDemandInfo', //供求信息
               component: () => import('../pages/buyer/personal/supplyDemandInfo.vue')
             },
-            
           ]
         }
       ]
@@ -97,7 +101,7 @@ export default new Router({
     {
       name: 'shop',
       path: '/shop',
-      component: shop,
+      component: () => import('../../src/pages/shop/index.vue'),
       children: [{
           path: '/goodDetail',
           name: 'goodDetail', //商品详情页
@@ -141,14 +145,14 @@ export default new Router({
       ]
     },
     {
-      path:'/orderDetail',
+      path: '/orderDetail',
       name: 'OrderDetail', //订单详情
-      component:()=>import('../../src/pages/buyer/myOrder/orderDetail.vue')
+      component: () => import('../../src/pages/buyer/myOrder/orderDetail.vue')
     },
     {
-      path:'/orderPayment',
+      path: '/orderPayment',
       name: 'OrderPayment', //立即支付
-      component:()=>import('../../src/pages/buyer/orderPayment/index.vue')
+      component: () => import('../../src/pages/buyer/orderPayment/index.vue')
     },
     {
       name: 'login',
@@ -156,29 +160,46 @@ export default new Router({
       component: Login
     },
     {
-      path:'/publishDemand',
-      name: 'PublishDemand', //发布需求
-      component:()=>import('../../src/pages/index/publishDemand.vue')
+      path: '/publishDemandIndex',
+      name: 'PublishDemandIndex', //发布需求
+      redirect: '/publishDemand',
+      component: () => import('../../src/pages/publishDemand/index.vue'),
+      children: [{
+          path: '/publishDemand',
+          name: 'PublishDemand', //发布需求表单填写页面
+          component: () => import('../../src/pages/publishDemand/publishDemand.vue')
+        },
+        {
+          path: '/success',
+          name: 'Success', //发布成功
+          component: () => import('../../src/pages/publishDemand/success.vue')
+        }
+      ]
+    },
+    {
+      path: '/personDemandDetail',
+      name: 'PersonDemandDetail', //个人发布的需求详情页
+      component: () => import('../../src/pages/publishDemand/demandDetail.vue')
     },
     {
       name: 'ResidencyAgreement',
-      path: '/residencyAgreement',//入驻协议
-       component:()=>import('../../src/pages/index/residencyAgreement.vue')
+      path: '/residencyAgreement', //入驻协议
+      component: () => import('../../src/pages/index/residencyAgreement.vue')
     },
     {
       name: 'TradingRules',
-      path: '/tradingRules',//交易规则
-       component:()=>import('../../src/pages/index/tradingRules.vue')
+      path: '/tradingRules', //交易规则
+      component: () => import('../../src/pages/index/tradingRules.vue')
     },
     {
       name: 'AboutUs',
-      path: '/aboutUs',//关于我们
-       component:()=>import('../../src/pages/index/aboutUs.vue')
+      path: '/aboutUs', //关于我们
+      component: () => import('../../src/pages/index/aboutUs.vue')
     },
     {
       name: 'LegalStatement',
-      path: '/legalStatement',//法律声明
-       component:()=>import('../../src/pages/index/legalStatement.vue')
+      path: '/legalStatement', //法律声明
+      component: () => import('../../src/pages/index/legalStatement.vue')
     }
     // ,
     // {

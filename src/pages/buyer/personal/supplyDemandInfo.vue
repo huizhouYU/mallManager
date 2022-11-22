@@ -26,18 +26,28 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <span class="span-btn">编辑</span>
-            <span class="span-btn">删除</span>
+            <span class="span-btn" @click="edit(scope.row)">编辑</span>
+            <span class="span-btn"  @click="deleteDemand(scope.row)">删除</span>
           </template>
         </el-table-column>
       </el-table>
-         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-           :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-           :total="400">
-         </el-pagination>
-
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="1"
+        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
+        :total="400">
+      </el-pagination>
     </div>
-
+    <!-- 确认删除弹框 -->
+    <el-dialog :visible.sync="dialogDelVisible" width="380px" height="206px">
+      <div class="dialog-content">
+        <img src="../../../assets/images/index/buyer/pic_warning_deladdress.png" alt="">
+        <span class="del-span">删除信息</span>
+        <span class="del-span-remark">您确定要删除该条供求信息吗？</span>
+        <div class="buts">
+          <el-button size="small" type="danger" plain @click="sureDelDialog">确 定</el-button>
+          <el-button size="small" type="primary" @click="dialogDelVisible= false">取 消</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -45,46 +55,48 @@
   export default {
     data() {
       return {
+        dialogDelVisible: false, //确定删除需求的弹框
         type: 0,
         keyWord: '',
         tableData: [{
-          type: '求购设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        }, {
-          type: '供应设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        }, {
-          type: '求购设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        }, {
-          type: '供应设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        },
-        {
-          type: '求购设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        }, {
-          type: '供应设备',
-          title: '头线圈',
-          brandName: '飞利浦',
-          name: 'ARjdxsdxkasjm',
-          time: '2016-05-02',
-        }]
+            type: '求购设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          }, {
+            type: '供应设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          }, {
+            type: '求购设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          }, {
+            type: '供应设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          },
+          {
+            type: '求购设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          }, {
+            type: '供应设备',
+            title: '头线圈',
+            brandName: '飞利浦',
+            name: 'ARjdxsdxkasjm',
+            time: '2016-05-02',
+          }
+        ]
       }
     },
     methods: {
@@ -93,24 +105,27 @@
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
-      }
+      },
+      edit(row){
+       this.$message.warning("跳转页面")
+       this.$router.push({
+         path:'/personDemandDetail'
+       })
+        document.documentElement.scrollTop = 0;
+      },
+      deleteDemand(row){
+        this.dialogDelVisible = true
+      },
+      //确定删除地址
+      sureDelDialog() {
+        this.$message.success("根据需求id请求后端接口调用删除接口")
+        this.dialogDelVisible = false
+      },
     },
   }
 </script>
 
 <style lang="less" scoped>
-  .flex-around-center {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .flex-start-center {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
   .supplyDemandInfo {
     width: 100%;
   }
@@ -223,16 +238,18 @@
     color: #40A9FF;
   }
 
-  /deep/ .el-pagination{
+  /deep/ .el-pagination {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   /deep/ .el-pagination span:not([class*=suffix]),
-  /deep/ .el-pager li{
+  /deep/ .el-pager li {
     font-size: 12px;
   }
+
   /deep/ .el-pagination {
     font-weight: 400;
   }
@@ -245,5 +262,62 @@
   /deep/.el-pagination .btn-prev,
   /deep/ .el-pager li {
     background: none;
+  }
+
+  /deep/ .el-dialog__body {
+    padding-top: 0px;
+  }
+
+  /deep/ .el-dialog {
+
+
+    .dialog-content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 20px;
+      }
+
+      .del-span {
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #333333;
+        margin-bottom: 5px;
+      }
+
+      .del-span-remark {
+        font-size: 12px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #666666;
+        margin-bottom: 15px;
+      }
+
+      .buts {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /deep/ .el-button {
+          height: 30px;
+          width: 66px;
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          box-sizing: border-box;
+        }
+
+        .el-button+.el-button {
+          margin-left: 25px;
+        }
+      }
+    }
+
   }
 </style>

@@ -15,17 +15,17 @@
     </div>
     <!-- 表头 -->
     <div class="table-header">
-      <div class="flex-cente-center good">商品</div>
-      <div class="flex-cente-center price">单价</div>
-      <div class="flex-cente-center num">数量</div>
-      <div class="flex-cente-center money">实付款</div>
-      <div class="flex-cente-center statue">
+      <div class="flex-center-center good">商品</div>
+      <div class="flex-center-center price">单价</div>
+      <div class="flex-center-center num">数量</div>
+      <div class="flex-center-center money">实付款</div>
+      <div class="flex-center-center statue">
         <el-select v-model="value" placeholder="交易状态">
           <el-option v-for="item in orderStatueOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </div>
-      <div class="flex-cente-center operation">操作</div>
+      <div class="flex-center-center operation">操作</div>
     </div>
     <!-- 循环每一个订单 -->
     <div v-for="(order,index) in orderList" :key="index" class="order-box">
@@ -34,9 +34,9 @@
         <tr>
           <td colspan="6">
             <div class="order-header-div">
-              <div class="flex-cente-center order-header-info">
-                <span class="flex-cente-center">{{order.orderTime}}</span>
-                <span class="flex-cente-center order-no">订单编号：{{order.orderNo}}
+              <div class="flex-center-center order-header-info">
+                <span class="flex-center-center">{{order.orderTime}}</span>
+                <span class="flex-center-center order-no">订单编号：{{order.orderNo}}
                   <template v-if="order.payWay == 1">
                     <img src="../../../assets/images/index/buyer/order/icon_Alipay_square.png" alt="" title="支付宝支付">
                   </template>
@@ -47,7 +47,7 @@
                     <img src="../../../assets/images/index/buyer/order/icon_duigong_square.png" alt="" title="对公转账">
                   </template>
                 </span>
-                <span class="flex-cente-center">{{order.storeName}}</span>
+                <span class="flex-center-center">{{order.storeName}}</span>
               </div>
               <i :class="['iconfont',{'bule-color':order.remark != ''}]" @click="editRemark(index)">&#xe607;</i>
             </div>
@@ -370,24 +370,6 @@
 </script>
 
 <style lang="less" scoped>
-  .flex-cente-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .flex-start-center {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  .flex-column-start-center {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  }
 
   .all-orders-box {
     margin-top: 20px;

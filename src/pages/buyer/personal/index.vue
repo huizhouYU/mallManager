@@ -263,6 +263,7 @@
         this.$router.push({
           path: '/personalData'
         })
+        document.documentElement.scrollTop = 0;
       },
       //跳转去"收货地址"
       toReceiptAddress() {
@@ -270,6 +271,7 @@
         this.$router.push({
           path: '/receiptAddress'
         })
+        document.documentElement.scrollTop = 0;
       }
     }
 
