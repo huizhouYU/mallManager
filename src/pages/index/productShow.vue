@@ -92,11 +92,11 @@
   .item_content {
     display: grid;
     grid-template-columns: repeat(5, auto);
-    grid-gap: 4px;
+    grid-gap: 10px;
   }
 
   .item {
-    width: 236px;
+    width: 232px;
     height: 295px;
     background: #FFFFFF;
     border-radius: 10px;

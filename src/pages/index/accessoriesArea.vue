@@ -197,11 +197,11 @@
   .item_content {
     display: grid;
     grid-template-columns: repeat(2, auto);
-    grid-gap: 4px;
+    grid-gap: 10px;
   }
 
   .item {
-    width: 598px;
+    width: 595px;
     height: 280px;
     padding: 14px 0px 25px 0px;
     background: #FFFFFF;

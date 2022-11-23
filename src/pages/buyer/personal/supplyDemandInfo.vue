@@ -1,7 +1,7 @@
 <template>
   <div class="supplyDemandInfo-box">
     <div class="supplyDemandInfo-main">
-      <div class="flex-around-center supplyDemandInfo-main-top">
+      <div class="flex-between-center supplyDemandInfo-main-top">
         <ul class="flex-start-center">
           <li :class="{'selected':type ==0}" @click="type=0">全部信息</li>
           <li :class="{'selected':type ==1}" @click="type=1">求购设备</li>

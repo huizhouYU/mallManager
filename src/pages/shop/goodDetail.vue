@@ -444,6 +444,7 @@
               }
 
               .QR-code {
+                display: none;
                 position: absolute;
                 top: -25px;
                 right: -134%;
@@ -481,6 +482,11 @@
                 left: -9px;
               }
 
+            }
+            .service:hover{
+              .QR-code{
+                display: block;
+              }
             }
           }
         }
