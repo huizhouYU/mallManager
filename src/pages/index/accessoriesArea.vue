@@ -200,7 +200,57 @@
     grid-gap: 10px;
   }
 
+  .item:hover {
+
+    ::after,
+    ::before {
+      /* 固定在div下 */
+      // z-index: -1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      /* 撑开一点大小 */
+      // margin: -5%;
+      box-shadow: inset 0px 0px 1px #40A9FF;
+      animation: clipMe 10s linear infinite;
+    }
+
+    ::before {
+      content: "";
+    }
+
+    ::after {
+      content: "";
+      /* 提前运动4s */
+      animation-delay: -4s;
+    }
+  }
+
+
+  @keyframes clipMe {
+
+    0%,
+    100% {
+      clip: rect(0px, 595px, 10px, 0px);
+    }
+
+    25% {
+      clip: rect(0px, 10px, 280.0px, 0px);
+    }
+
+    50% {
+      clip: rect(250px, 595px, 280px, 0px);
+    }
+
+    75% {
+      clip: rect(0px, 595px, 280px, 585.0px);
+    }
+  }
+
   .item {
+    position: relative;
     width: 595px;
     height: 280px;
     padding: 14px 0px 25px 0px;
