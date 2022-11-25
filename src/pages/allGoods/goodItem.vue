@@ -21,10 +21,10 @@
 
 <script>
   export default {
-    props:{
-      'grid5':{
-        type:Boolean,
-        default:()=>{
+    props: {
+      'grid5': {
+        type: Boolean,
+        default: () => {
           return false
         }
       }
@@ -88,10 +88,10 @@
         ]
       }
     },
-    methods:{
-      jumpShop(){
+    methods: {
+      jumpShop() {
         this.$router.push({
-          path:'/goodDetail'
+          path: '/goodDetail'
         })
       }
     }
@@ -104,8 +104,9 @@
     grid-template-columns: repeat(6, auto);
     justify-content: space-between;
   }
-  .goods-content-grid5{
-     grid-template-columns: repeat(5, auto);
+
+  .goods-content-grid5 {
+    grid-template-columns: repeat(5, auto);
   }
 
   .goods-content .item {
@@ -172,5 +173,9 @@
       }
 
     }
+  }
+
+  .goods-content .item:hover {
+    border-color: #239BFF;
   }
 </style>

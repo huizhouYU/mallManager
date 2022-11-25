@@ -1,5 +1,5 @@
 <template>
-  <div  :class="['goods-content',{'goods-content-grid5':grid5}]">
+  <div :class="['goods-content',{'goods-content-grid5':grid5}]">
     <div class="item" v-for="(item,index) in goodsList" :key="index" @click="getDetail(item)">
       <div class="item-img">
         <img :src="item.imgPath" alt="">
@@ -13,10 +13,10 @@
 
 <script>
   export default {
-    props:{
-      'grid5':{
-        type:Boolean,
-        default:()=>{
+    props: {
+      'grid5': {
+        type: Boolean,
+        default: () => {
           return false
         }
       }
@@ -62,10 +62,10 @@
         ]
       }
     },
-    methods:{
-      getDetail(id){
+    methods: {
+      getDetail(id) {
         this.$router.push({
-          path:'/demandDetail'
+          path: '/demandDetail'
         })
       }
     }
@@ -78,8 +78,13 @@
     grid-template-columns: repeat(6, auto);
     justify-content: space-between;
   }
-  .goods-content-grid5{
-     grid-template-columns: repeat(5, auto);
+
+  .goods-content-grid5 {
+    grid-template-columns: repeat(5, auto);
+  }
+
+  .goods-content .item:hover {
+    border-color: #40A9FF;
   }
 
   .goods-content .item {
@@ -95,6 +100,7 @@
     flex-direction: column;
     justify-content: space-between;
     line-height: 12px;
+
     .item-img {
       width: 150px;
       height: 134px;
@@ -105,6 +111,7 @@
         height: 100%;
       }
     }
+
     .info {
       width: 100%;
       color: #333333;

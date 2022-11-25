@@ -39,7 +39,7 @@
         </ul>
       </div>
       <div class="pages">
-        <router-view class="each-page"></router-view>
+        <router-view class="each-page" @selectTab="selectTab"></router-view>
       </div>
 
       <index-bottom></index-bottom>
@@ -97,7 +97,11 @@
       changeTab(path,index){
         this.selectedTab = path
         this.$router.replace({path:path})
+      },
+      selectTab(params){
+        this.changeTab(params.path,params.index)
       }
+      
     }
   }
 </script>

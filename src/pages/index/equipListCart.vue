@@ -1,6 +1,6 @@
 <template>
   <div class="listicarts">
-    <div class="item-cart" v-for="(item,index) in equipLists" :key="item.id" @click="jumpMore(item.id)">
+    <div class="flex-column-around-center item-cart" v-for="(item,index) in equipLists" :key="item.id" @click="jumpMore(item.id)">
       <!-- <img :src="item.imgPath" alt="图片无法加载"> -->
       <img :src="item.imgPath" alt="图片无法加载">
       <p class="name">{{item.name}}</p>
@@ -93,10 +93,6 @@
     height: 190px;
     box-sizing: border-box;
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
     padding: 5px 20px 20px 20px;
 
     img {

@@ -41,7 +41,7 @@
             <img src="../../assets/images/shop/icon_Introduction.png" alt="">
             <span>简要介绍</span>
           </div>
-          <div class="module-title-right">
+          <div class="module-title-right" @click="toJump('/introductionIndex','1')">
             <span>更多</span>
             <i class="iconfont">&#xe63c;</i>
           </div>
@@ -50,6 +50,35 @@
         <div>
           浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包一级企业，公司注册资本10868万元，净资产达3、7亿多元。下辖上海蔚昕建设发展有限公司等分布在全国各地的九家分公司。集团公司具有建筑装修装饰工程、地基与基础工程、钢结构工程、市政公用工程施工总承包，环保施工等专业承包资质，是一家集建筑、房地产开发、建材经营等为一体的大型建筑企业，可承揽工业、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。
         </div>
+      </div>
+
+      <!-- 店铺商品 -->
+      <div class="module goods">
+        <div class="module-title">
+          <div class="module-title-left">
+            <img src="../../assets/images/shop/icon_Goods.png" alt="">
+            <span>店铺商品</span>
+          </div>
+          <div class="module-title-right" @click="toJump('/shopAllGoods','3')">
+            <span>更多</span>
+            <i class="iconfont">&#xe63c;</i>
+          </div>
+        </div>
+        <good-item :grid5="grid5"></good-item>
+      </div>
+      <!-- 供求信息 -->
+      <div class="module goods">
+        <div class="module-title">
+          <div class="module-title-left">
+            <img src="../../assets/images/shop/icon_supply and demand.png" alt="">
+            <span>供求信息</span>
+          </div>
+          <div class="module-title-right" @click="toJump('/demandIndex','4')">
+            <span>更多</span>
+            <i class="iconfont">&#xe63c;</i>
+          </div>
+        </div>
+        <demand-item :grid5="grid5"></demand-item>
       </div>
       <!-- 荣誉证书 -->
       <div class="module certificate">
@@ -77,34 +106,6 @@
           </li>
         </ul>
       </div>
-      <!-- 店铺商品 -->
-      <div class="module goods">
-        <div class="module-title">
-          <div class="module-title-left">
-            <img src="../../assets/images/shop/icon_Goods.png" alt="">
-            <span>店铺商品</span>
-          </div>
-          <div class="module-title-right">
-            <span>更多</span>
-            <i class="iconfont">&#xe63c;</i>
-          </div>
-        </div>
-        <good-item :grid5="grid5"></good-item>
-      </div>
-      <!-- 供求信息 -->
-      <div class="module goods">
-        <div class="module-title">
-          <div class="module-title-left">
-            <img src="../../assets/images/shop/icon_supply and demand.png" alt="">
-            <span>供求信息</span>
-          </div>
-          <div class="module-title-right">
-            <span>更多</span>
-            <i class="iconfont">&#xe63c;</i>
-          </div>
-        </div>
-        <demand-item :grid5="grid5"></demand-item>
-      </div>
     </div>
   </div>
 </template>
@@ -125,6 +126,16 @@
       return {
         isShowTitleImg: false,
         grid5: true
+      }
+    },
+    methods: {
+      toJump(path, index) {
+        var params = {
+          path,
+          index
+        }
+        document.documentElement.scrollTop = 0;
+        this.$emit('selectTab', params)
       }
     }
   }
@@ -273,6 +284,14 @@
               font-size: 16px;
               font-family: Microsoft YaHei;
               font-weight: 700;
+              color: #40A9FF;
+            }
+          }
+
+          .module-title-right:hover {
+            color: #40A9FF;
+
+            i {
               color: #40A9FF;
             }
           }

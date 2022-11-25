@@ -4,33 +4,30 @@
       <ul>
         <li>您好，欢迎来到医界商城！</li>
         <template v-if="!name">
-          <li>请登录</li>
+          <li @click="login">请登录</li>
           <li class="bule_font">免费注册</li>
         </template>
         <template v-if="name">
-          <li>
-            <el-popover placement="bottom-start" trigger="hover"  popper-class="tips-con" :visible-arrow="false" >
-              <div class="hover-top-name-content" slot="default">
-                <ul>
-                  <li @click="personCenter">个人中心</li>
-                  <li @click="logout">退出</li>
-                </ul>
-                <div class="logo-name-div">
-                  <img :src="avatar" alt="">
-                  <div class="name-info-div">
-                    <span>
-                      {{name}}
-                    </span>
-                    <span class="color9">已完善个人信息</span>
-                  </div>
+          <li class="show-info-li">
+            <div class="flex-center-center top-name">
+              <span>{{name}}</span>
+              <i class="iconfont">&#xe601;</i>
+            </div>
+            <div class="hover-top-name-content">
+              <ul>
+                <li @click="personCenter">个人中心</li>
+                <li @click="logout">退出</li>
+              </ul>
+              <div class="flex-start-center logo-name-div">
+                <img :src="avatar" alt="">
+                <div class="flex-column-around-start name-info-div">
+                  <span>
+                    {{name}}
+                  </span>
+                  <span class="color9">已完善个人信息</span>
                 </div>
               </div>
-              <div slot="reference" class="top-name">
-                <span>{{name}}</span>
-                <i class="iconfont">&#xe601;</i>
-              </div>
-            </el-popover>
-
+            </div>
           </li>
         </template>
 
@@ -66,6 +63,12 @@
       ])
     },
     methods: {
+      login() {
+        this.$router.push({
+          path: '/login',
+          replace: true
+        })
+      },
       logout() {
         this.$store.dispatch('user/logout')
           .then(() => {
@@ -115,121 +118,10 @@
     }
   }
 </script>
-<style lang="less">
-  /**写样式要注意，写在不带scoped的 style 里 */
-  // 修改下面的小三角，属性名根据组件的placement位置做相应修改
-  .tips-con[x-placement^='left'] .popper__arrow::after {
-    border-left-color: rgba(54,229,255,0);
-    border: none;
-  }
-
-  .tips-con[x-placement^='right'] .popper__arrow::after {
-    border-right-color: rgba(54,229,255,0);
-    border: none;
-  }
-
-  .tips-con[x-placement^='bottom'] .popper__arrow::after {
-    border-bottom-color: rgba(54,229,255,0);
-    border: none;
-  }
-
-  .tips-con[x-placement^='top'] .popper__arrow::after {
-    border-top-color: rgba(54,229,255,0);
-    border: none;
-  }
-
-  .tips-con .el-popper .popper__arrow,
-  .tips-con .el-popper .popper__arrow:after {
-    display: none;
-  }
-
-  .el-popper .popper__arrow:after {
-    display: none;
-  }
-
-  // 修改title的颜色
-  .tips-con .el-popover__title {
-    color: rgb(230, 51, 236);
-  }
-  .el-popper[x-placement^=bottom]{
-    margin-top: 0;
-  }
-
-  .tips-con {
-    // top: -20px;
-    // margin-top: 100px;
-    background-color: #fff;
-    font-size: 12px;
-    font-family: Microsoft YaHei;
-    font-weight: 400;
-    color: #333333;
-
-    .hover-top-name-content {
-      width: 260px;
-      padding: 10px 0px;
-
-      ul {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        li {
-          cursor: pointer;
-          padding: 0px 10px;
-        }
-
-        li+li {
-          border-left: 1px solid #DDDDDD;
-        }
-      }
-
-      .logo-name-div {
-        margin-left: 25px;
-        margin-top: 18px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        img {
-          width: 50px;
-          height: 50px;
-          background: #FFFFFF;
-          border: 1px solid #EEEEEE;
-          border-radius: 50%;
-          box-sizing: border-box;
-        }
-
-        .name-info-div {
-          margin-left: 12px;
-          display: flex;
-          justify-content: space-around;
-          align-items: flex-start;
-          flex-direction: column;
-
-          .color9 {
-            color: #999999;
-          }
-
-          span+span {
-            margin-top: 10px;
-          }
-        }
-      }
-    }
-  }
-</style>
 <style lang="less" scoped>
   // 顶部模块 购物车
   .header-title-box {
     background-color: #f5f5f5;
-    // position: fixed;
-    // top: 100px;
-    // left: 50%;
-    // transform: translate(-50%, 0);
-    // height: 30px;
-    // width: 100%;
-    // z-index: 99;
     display: flex;
     width: 1200px;
     height: 100%;
@@ -262,15 +154,25 @@
             line-height: 30px;
           }
 
+          img {
+            width: 16px;
+            height: 14px;
+            margin-right: 4px;
+          }
+        }
+
+        //昵称
+        .show-info-li {
+          padding: 0px !important;
+          margin-right: 10px;
+          position: relative;
+          box-sizing: border-box;
+
           .top-name {
             padding: 0px 6px;
-            height: 100%;
+            height: 31px;
             max-width: 100px;
             box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
 
             span {
               display: inline-block;
@@ -280,16 +182,88 @@
             }
           }
 
-          .top-name:hover {
-            color: #40A9FF;
+          //头像 +个人中心+退出
+          .hover-top-name-content {
+            position: absolute;
+            display: none;
+            top: 30px;
+            left: 0;
+            z-index: 100;
             background-color: #fff;
+            border: 1px solid #EEEEEE;
+            width: 260px;
+            padding: 16px 0px;
+
+            ul {
+              width: 100%;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+
+              li {
+                cursor: pointer;
+                padding: 0px 10px;
+              }
+
+              li+li {
+                border-left: 1px solid #DDDDDD;
+              }
+            }
+
+            .logo-name-div {
+              margin-left: 25px;
+              margin-top: 18px;
+              height: 50px;
+              box-sizing: border-box;
+
+              img {
+                width: 50px;
+                height: 50px;
+                background: #FFFFFF;
+                border: 1px solid #EEEEEE;
+                border-radius: 50%;
+                box-sizing: border-box;
+              }
+
+              .name-info-div {
+                padding: 8px 0px;
+                margin-left: 12px;
+
+                span {
+                  line-height: 22px;
+                }
+
+                .color9 {
+                  color: #999999;
+                }
+
+              }
+            }
           }
 
+          .hover-top-name-content::before {
+            position: absolute;
+            display: block;
+            content: '';
+            background-color: #fff;
+            height: 2px;
+            width: 98px;
+            top: -1px;
+            left: 0px;
+          }
 
-          img {
-            width: 16px;
-            height: 14px;
-            margin-right: 4px;
+        }
+
+        //个人信息悬浮样式
+        .show-info-li:hover {
+          background-color: #fff;
+
+          .top-name {
+            border: 1px solid #EEEEEE;
+          }
+
+          .hover-top-name-content {
+            display: block;
           }
         }
       }
@@ -313,5 +287,8 @@
         }
       }
     }
+
+
+
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="index-body">
     <!-- 侧边固定部分 -->
-    <ul class="side-fixing">
+    <ul class="flex-column-between-center side-fixing">
       <!-- 购物车 -->
       <li class="shoppingcart" @click="toShoppingcart">
         <i class="iconfont">&#xe60f;</i>
@@ -9,10 +9,9 @@
       <!-- 客服 -->
       <li class="service">
         <el-popover placement="left" trigger="hover" popper-class="service-tips-con" style="left: 1420px;">
-          <div class="service-content" slot="default">
+          <div class="flex-column-center-center service-content" slot="default">
             <img src="../../assets/images/index/buyer/pic_erweima.png" alt="">
-
-          <span>扫一扫 联系客服</span>
+            <span>扫一扫 联系客服</span>
           </div>
           <i slot="reference" class="iconfont">&#xe645;</i>
         </el-popover>
@@ -32,7 +31,7 @@
 
     </div>
     <!-- 顶部模块 购物车 -->
-    <div class="shop-box">
+    <div class="flex-center-center shop-box">
       <header-title @changeTab="changeTab"></header-title>
     </div>
     <!-- 模块一 -->
@@ -44,8 +43,8 @@
     </el-container>
     <!-- 主要模块 -->
     <div class="main-tab">
-      <div class="main-tab-content">
-        <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent"  :visible-arrow="false">
+      <div class="flex-start-center main-tab-content">
+        <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent" :visible-arrow="false">
           <div slot="reference" class="main-tab-content-left">
             <img src="../../assets/images/index/icon_hamburger.png" alt="">
             <span class="title">品牌分类</span>
@@ -54,12 +53,12 @@
           <div class="brand-classification">
             <div width="240px" class="main-aside">
               <ul class="brand-nav-box">
-                <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)"
+                <li v-for="(item,index) in brandList" :key="item.id" class="flex-between-center" @mouseenter="enterClass(item.id)"
                   @mouseout="leaveClass()">{{item.name}}
                   <i class="iconfont">&#xe63c;</i>
                 </li>
               </ul>
-              <div class="more-brands">
+              <div class="flex-between-center more-brands">
                 <p>更多分类</p>
                 <img src="../../assets/images/index/double-right.png" alt="">
               </div>
@@ -80,7 +79,7 @@
           <span class="title">品牌分类</span>
         </div>
         <div class="main-tab-content-right">
-          <ul>
+          <ul class="flex-start-center">
             <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==index}"
               @click="jumpTab(item.path,index)">{{item.title}}
               <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
@@ -571,7 +570,7 @@
         })
 
       },
-      toShoppingcart(){
+      toShoppingcart() {
         this.changeTab("-1");
         this.$router.push({
           path: '/shoppingCart'
@@ -586,8 +585,8 @@
         this.isShow = false
       },
       //回到顶部
-      goTop(){
-       document.documentElement.scrollTop = 0;
+      goTop() {
+        document.documentElement.scrollTop = 0;
       }
     }
   }
@@ -615,10 +614,6 @@
 
     .service-content {
       max-width: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       font-size: 12px;
 
       img {
@@ -647,10 +642,6 @@
     border-radius: 24px;
     right: 10px;
     top: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px;
     box-sizing: border-box;
     z-index: 999;
@@ -694,13 +685,9 @@
   // 首页banner图
   .top-banner {
     position: relative;
-    // position: fixed;
     width: 100%;
     height: 100px;
     overflow: hidden;
-    // top: 0;
-    // left: 0;
-    // z-index: 99;
 
     img {
       width: 100%;
@@ -731,11 +718,6 @@
   // 顶部模块 购物车
   .shop-box {
     background-color: #f5f5f5;
-    // position: sticky;
-    // top: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 30px;
     z-index: 99;
   }
@@ -743,7 +725,6 @@
   /* 模块一 头部 */
   .module0-header {
     position: sticky;
-    // top: 30px;
     top: 0px;
     width: 100%;
     height: 105px;
@@ -769,9 +750,6 @@
       background-color: #fff;
       margin-left: 50%;
       transform: translate(-50%, 0);
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
       box-sizing: border-box;
       border-bottom: 1px solid #F6F6F6;
 
@@ -804,9 +782,6 @@
         height: 100%;
 
         ul {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
           height: 100%;
           padding-left: 40px;
           box-sizing: border-box;
@@ -891,9 +866,6 @@
           box-sizing: border-box;
           background-color: #fff;
           padding: 0px 15px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
           font-size: 14px;
           color: #333;
           cursor: pointer;
@@ -909,9 +881,6 @@
 
       .more-brands {
         height: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         box-sizing: border-box;
         padding: 0px 15px;
         background-color: #F4FBFF;

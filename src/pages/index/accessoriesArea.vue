@@ -4,26 +4,26 @@
     <titleMore :title="title" class="title_more" v-if="showTitle"></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
-        <div class="item_top">
+        <div class="flex-between-center item_top">
           <span class="item_top_title">{{item.title}}</span>
           <div class="item_more">
             <ul>
               <li v-for="(k,inde) in item.keyValue" :key="inde">{{k}}</li>
             </ul>
-            <div class="more">
+            <div class="flex-start-center more">
               <span>更多</span>
               <i class="iconfont">&#xe63c;</i>
             </div>
           </div>
         </div>
         <div class="item_bottom">
-          <div class="individual" v-for="(option,ind) in item.optionList" :key="ind">
+          <div class="flex-column-between-center individual" v-for="(option,ind) in item.optionList" :key="ind">
             <div class="individual_img">
               <img :src="option.imgPath" alt="">
             </div>
-            <div class="individual_name">
+            <div class="flex-column-around-center individual_name">
               <span class="name">{{option.name}}</span>
-              <ul>
+              <ul class="flex-center-center">
                 <li v-for="(x,i) in option.label" :key="i">{{x}}</li>
               </ul>
             </div>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div v-show="!showTitle" class="pagination">
+    <div v-show="!showTitle" class="flex-center-center pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
         :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
         :total="400">
@@ -200,54 +200,54 @@
     grid-gap: 10px;
   }
 
-  .item:hover {
+  // .item:hover {
 
-    ::after,
-    ::before {
-      /* 固定在div下 */
-      // z-index: -1;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      /* 撑开一点大小 */
-      // margin: -5%;
-      box-shadow: inset 0px 0px 1px #40A9FF;
-      animation: clipMe 10s linear infinite;
-    }
+  //   ::after,
+  //   ::before {
+  //     /* 固定在div下 */
+  //     // z-index: -1;
+  //     position: absolute;
+  //     top: 0;
+  //     right: 0;
+  //     bottom: 0;
+  //     left: 0;
+  //     /* 撑开一点大小 */
+  //     // margin: -5%;
+  //     box-shadow: inset 0px 0px 1px #40A9FF;
+  //     animation: clipMe 10s linear infinite;
+  //   }
 
-    ::before {
-      content: "";
-    }
+  //   ::before {
+  //     content: "";
+  //   }
 
-    ::after {
-      content: "";
-      /* 提前运动4s */
-      animation-delay: -4s;
-    }
-  }
+  //   ::after {
+  //     content: "";
+  //     /* 提前运动4s */
+  //     animation-delay: -4s;
+  //   }
+  // }
 
 
-  @keyframes clipMe {
+  // @keyframes clipMe {
 
-    0%,
-    100% {
-      clip: rect(0px, 595px, 10px, 0px);
-    }
+  //   0%,
+  //   100% {
+  //     clip: rect(0px, 595px, 10px, 0px);
+  //   }
 
-    25% {
-      clip: rect(0px, 10px, 280.0px, 0px);
-    }
+  //   25% {
+  //     clip: rect(0px, 10px, 280.0px, 0px);
+  //   }
 
-    50% {
-      clip: rect(250px, 595px, 280px, 0px);
-    }
+  //   50% {
+  //     clip: rect(250px, 595px, 280px, 0px);
+  //   }
 
-    75% {
-      clip: rect(0px, 595px, 280px, 585.0px);
-    }
-  }
+  //   75% {
+  //     clip: rect(0px, 595px, 280px, 585.0px);
+  //   }
+  // }
 
   .item {
     position: relative;
@@ -260,9 +260,6 @@
 
     .item_top {
       padding: 0px 28px 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
       .item_top_title {
         font-size: 16px;
@@ -295,9 +292,6 @@
         }
 
         .more {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
           cursor: pointer;
 
           i {
@@ -321,10 +315,6 @@
         height: 210px;
         box-sizing: border-box;
         padding-left: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
         border-right: 1px solid #F6F6F6;
 
         .individual_img {
@@ -341,10 +331,6 @@
           height: 68px;
           box-sizing: border-box;
           padding-top: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-around;
 
           .name {
             font-size: 14px;
@@ -354,9 +340,6 @@
           }
 
           ul {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-size: 12px;
             font-family: Microsoft YaHei;
             color: #666666;
@@ -383,9 +366,6 @@
   }
 
   .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 30px 0px 5px 0px;
   }
 

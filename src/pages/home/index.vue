@@ -61,7 +61,7 @@
                 <div class="explain" v-show="!name">
                   企业一站式服务平台,登录立即享受
                 </div>
-                <el-button class="btn-demand">一键发布需求</el-button>
+                <!-- <el-button class="btn-demand">一键发布需求</el-button> -->
               </div>
               <!-- 热门求购  + 设备维修-->
               <div class="hot-shop-box">
@@ -145,7 +145,6 @@
   import {
     mapGetters
   } from 'vuex'
-  import brandNav from '../../pages/index/brandNav.vue'
   import equipListCart from '../../pages/index/equipListCart.vue'
   import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
   import productShow from '../../pages/index/productShow.vue' //产品展示
@@ -153,7 +152,6 @@
   import personalEngineer from '../../pages/index/personalEngineer.vue' //个人工程师
   export default {
     components: {
-      brandNav,
       equipListCart,
       accessoriesArea,
       productShow,
@@ -663,6 +661,7 @@
       login() {
         this.$router.push({
           path: '/login',
+          replace:true
         })
       }
     },
@@ -833,7 +832,7 @@
 
         // 发布需求
         .release-demand {
-          height: 205px;
+          // height: 205px;
           width: 100%;
           background-position: 100% bottom;
           background-repeat: no-repeat;
@@ -854,6 +853,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            margin-bottom: 16px;
 
             .person-logo {
               cursor: pointer;
@@ -934,9 +934,9 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
+            box-sizing: border-box;
 
             img {
-
               cursor: pointer;
               width: 54px;
               height: 54px;

@@ -135,7 +135,7 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    padding: 15px 30px 0px 30px;
+    padding: 15px 30px 20px 30px;
   }
 
   .brands-top {
@@ -180,7 +180,10 @@
     grid-template-columns: repeat(8, auto);
 
     .brands-item {
+      cursor: pointer;
       width: 142px;
+      padding: 12px 15px 15px;
+      box-sizing: border-box;
       height: 100px;
       display: flex;
       flex-direction: column;
@@ -188,7 +191,8 @@
       justify-content: space-around;
 
       img {
-        max-width: 115px;
+        width: 100%;
+        // max-width: 115px;
         height: 50px;
       }
 
@@ -197,6 +201,18 @@
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #333333;
+      }
+    }
+
+    .brands-item:hover {
+
+      // box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+      img {
+        transform: scale(1.2);
+      }
+
+      span {
+        color: #40A9FF;
       }
     }
   }

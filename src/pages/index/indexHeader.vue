@@ -1,17 +1,17 @@
 <template>
   <div class="content">
-    <div class="log-box">
+    <div class="flex-center-center log-box">
       <img src="../../assets/images/logo.png" class="herder-logo" />
     </div>
     <div class="search-box">
-      <div class="search-box-top">
+      <div class="flex-between-center search-box-top">
         <div class="search">
-          <el-select v-model="searchData.item" placeholder="请选择" class="search-select">
+          <el-select :popper-append-to-body="false" v-model="searchData.item" placeholder="请选择" class="search-select">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
           <el-input v-model="searchData.key" class="search-input" placeholder="输入相关产品名或企业名"></el-input>
-          <el-button class="search-btn"><i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span></el-button>
+          <el-button class="flex-around-center search-btn"><i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span></el-button>
         </div>
         <!-- <span class="font-6">或</span> -->
         <button class="btn-demand" @click="publishDemand">快速发布需求</button>
@@ -45,10 +45,10 @@
         hotWords: ['核磁共振', '骨密度器', '西门子', '血压仪']
       }
     },
-    methods:{
-      publishDemand(){
+    methods: {
+      publishDemand() {
         this.$router.push({
-          path:'/publishDemandIndex'
+          path: '/publishDemandIndex'
         })
       }
     }
@@ -64,9 +64,6 @@
     .log-box {
       width: 240px;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
 
       /* 图标 */
       .herder-logo {
@@ -81,9 +78,6 @@
       width: 100%;
 
       .search-box-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
 
         /* 搜索 */
         .search {
@@ -94,6 +88,11 @@
           display: flex;
           align-items: center;
 
+          //去掉下拉框小三角
+          /deep/ .el-popper[x-placement^=bottom] .popper__arrow {
+            display: none;
+          }
+
           //下拉框
           .search-select {
             width: 110px;
@@ -102,15 +101,15 @@
             align-items: center;
           }
 
-          //箭头颜色
-          /deep/ .el-select .el-input .el-select__caret {
-            color: #000;
+          /deep/.el-popper[x-placement^=bottom] {
+            margin-top: 5px;
           }
 
           .search-select /deep/ .el-input,
           .search-select /deep/ .el-input__inner {
             border: none; // 去掉边框
           }
+
 
           //输入框
           .search-input {
@@ -128,17 +127,17 @@
           //搜索按钮
           .search-btn {
             width: 85px;
-            height: 42px;
-            border-radius: 5px;
+            height: 43px;
+            // border-radius: 5px;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 5px;
             margin-right: -1px;
             background-color: #8dcfff;
             color: #fff;
             font-size: 16px;
             letter-spacing: 1px;
-            display: flex;
-            flex-direction: inherit;
-            align-items: center;
-            justify-content: space-around;
           }
         }
       }
@@ -170,6 +169,10 @@
           li:first-child {
             color: #EC3333;
           }
+
+          li:hover {
+            color: #40A9FF;
+          }
         }
       }
     }
@@ -183,6 +186,7 @@
 
   // 快速发布需求
   .btn-demand {
+    display: none;
     width: 146px;
     height: 40px;
     background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 100%);
