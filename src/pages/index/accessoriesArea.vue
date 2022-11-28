@@ -310,6 +310,23 @@
       display: flex;
       align-items: center;
 
+      .individual:hover {
+        cursor: pointer;
+        .individual_name {
+
+          .name,
+          ul {
+            color: #40A9FF;
+          }
+
+          ul {
+            li:first-child {
+              border-color: #40A9FF;
+            }
+          }
+        }
+      }
+
       .individual {
         width: 200px;
         height: 210px;

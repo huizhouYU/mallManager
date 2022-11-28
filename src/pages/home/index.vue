@@ -1,35 +1,35 @@
 <template>
   <div>
     <!-- 模块二 -->
-    <el-container class="module1-content index-content">
+    <div class="module1-content index-content">
       <!-- 主体内容 -->
-      <el-container class="index-main">
+      <div class="flex-between-start index-main">
 
         <!-- 左侧导航 -->
-        <el-aside width="240px" class="main-aside">
+        <div width="240px" class="main-aside">
           <ul class="brand-nav-box">
-            <li v-for="(item,index) in brandList" :key="item.id" @mouseenter="enterClass(item.id)"
-              @mouseout="leaveClass()">{{item.name}}
+            <li v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">{{item.cateName}}
               <i class="iconfont">&#xe63c;</i>
             </li>
+            <!-- 左侧导航条悬浮显示的内容 -->
+            <div class="more-classification">
+              <div class="item" v-for="(item,index) in classDatas" :key="index">
+                <div class="title">{{item.cateName}}</div>
+                <ul>
+                  <li v-for="(child,ind) in item.children" :key="ind">{{child.cateName}}</li>
+                </ul>
+              </div>
+            </div>
           </ul>
           <div class="more-brands">
             <p>更多分类</p>
             <img src="../../assets/images/index/double-right.png" alt="">
           </div>
-        </el-aside>
-        <!-- 左侧导航条悬浮显示的内容 -->
-        <div class="more-classification" v-show="isShow" @mouseover="enterClass('')" @mouseout="leaveClass()">
-          <div class="item" v-for="(item,index) in classDatas" :key="index">
-            <div class="title">{{item.name}}</div>
-            <ul>
-              <li v-for="(child,ind) in item.childers" :key="ind">{{child.name}}</li>
-            </ul>
-          </div>
         </div>
 
+
         <!-- 右边内容-->
-        <el-main>
+        <div>
           <!-- 中间设备列表 + 右边发布需求 -->
           <div class="main-content">
             <!-- 中间设备列表 -->
@@ -104,9 +104,9 @@
               </div>
             </div>
           </div>
-        </el-main>
-      </el-container>
-    </el-container>
+        </div>
+      </div>
+    </div>
     <!--各大品牌 -->
     <div class="adv_brand-adv">
       <div class="advertisement_left">
@@ -127,7 +127,7 @@
     </div>
     <!-- 配件专区 -->
     <accessories-area class="accessories_area" :showTitle="showTitle"></accessories-area>
-    <!-- 产品展示 -->
+    <!-- 医疗器械 -->
     <product-show class="product-show"></product-show>
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services"></enterprise-services>
@@ -147,9 +147,12 @@
   } from 'vuex'
   import equipListCart from '../../pages/index/equipListCart.vue'
   import accessoriesArea from '../../pages/index/accessoriesArea.vue' //配件专区
-  import productShow from '../../pages/index/productShow.vue' //产品展示
+  import productShow from '../../pages/index/productShow.vue' //医疗器械
   import enterpriseServices from '../../pages/index/enterpriseServices.vue' //企业服务
   import personalEngineer from '../../pages/index/personalEngineer.vue' //个人工程师
+  import {
+    getBrandsList
+  } from '@/api/index'
   export default {
     components: {
       equipListCart,
@@ -166,9 +169,10 @@
       ])
     },
     mounted() {
-      // console.log("avatar:",this.avatar)
-      // console.log("name:",this.name)
+      // console.log("jjj")
+      this.getData()
     },
+    props: ['brandList'],
     data() {
       return {
         showTitle: true,
@@ -254,384 +258,16 @@
           require('../../assets/images/index/brands/logo_安科.png'),
           require('../../assets/images/index/brands/logo_佳能.png'),
         ],
-        isShow: false,
-        brandList: [{
-            id: '1',
-            name: '西门子'
-          },
-          {
-            id: '2',
-            name: '东软'
-          },
-          {
-            id: '3',
-            name: '万东'
-          },
-          {
-            id: '4',
-            name: '安科'
-          },
-          {
-            id: '5',
-            name: '明峰'
-          },
-          {
-            id: '6',
-            name: '万东'
-          },
-          {
-            id: '7',
-            name: '新奥博伟'
-          },
-          {
-            id: '8',
-            name: '鑫高益'
-          },
-          {
-            id: '9',
-            name: '贝斯达'
-          },
-
-          {
-            id: '10',
-            name: '开普/宽腾'
-          },
-          {
-            id: '11',
-            name: '联影'
-          },
-          {
-            id: '12',
-            name: '朗润'
-          },
-          {
-            id: '13',
-            name: '康达洲际'
-          },
-
-        ],
-        classDatas: [{
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          },
-          {
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          },
-          {
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          },
-          {
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          },
-          {
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          },
-          {
-            id: '1',
-            name: '分子影像成像系统',
-            childers: [{
-                id: '1-1',
-                name: '英特拉阿奇瓦 1.5T'
-              },
-              {
-                id: '1-2',
-                name: '全景0.23T'
-              },
-              {
-                id: '1-3',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-4',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-5',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-6',
-                name: '英特网'
-              },
-              {
-                id: '1-7',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-8',
-                name: '多瓦 1.5T'
-              },
-              {
-                id: '1-9',
-                name: '英特拉 1.5T'
-              },
-              {
-                id: '1-10',
-                name: '英特网'
-              },
-              {
-                id: '1-11',
-                name: '全景1.0T'
-              },
-              {
-                id: '1-12',
-                name: '多瓦 1.5T'
-              }
-            ]
-          }
-        ]
+        classDatas: [],
       }
     },
     methods: {
+      getData() {
+        //获取品牌列表
+        getBrandsList().then(response => {
+          console.log("获取分类：", response)
+        })
+      },
       personCenter() {
         this.$emit("changeTab", '-1')
         this.$router.push({
@@ -650,18 +286,18 @@
           }
         })
       },
-      enterClass(id) {
+      enterClass(index) {
         //根据id去请求classDatas数据
-        this.isShow = true
-      },
-      leaveClass() {
-        // console.log("离开", this.isShow)
-        this.isShow = false
+        if (this.brandList[index].children != undefined && this.brandList[index].children.length > 0) {
+          this.classDatas = this.brandList[index].children
+        } else {
+          this.classDatas = []
+        }
       },
       login() {
         this.$router.push({
           path: '/login',
-          replace:true
+          replace: true
         })
       }
     },
@@ -678,56 +314,6 @@
 
     .index-main {
       position: relative;
-
-      .more-classification {
-        width: 730px;
-        height: 600px;
-        background-color: #fff;
-        position: absolute;
-        top: 0px;
-        left: 240px;
-        overflow-y: auto;
-        padding: 35px 20px 40px 30px;
-        box-sizing: border-box;
-        box-shadow: 0px 0px 10px 5px #eee;
-
-        .item:last-child {
-          padding-bottom: 0;
-        }
-
-        .item {
-          padding-bottom: 30px;
-
-          .title {
-            padding: 2px 0px 2px 10px;
-            border-left: 1px solid #40A9FF;
-            font-size: 14px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: #333333;
-          }
-
-          ul {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-
-            li {
-              margin: 5px 10px 5px 0px;
-              font-size: 12px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #555555;
-              cursor: pointer;
-            }
-
-            li:hover {
-              color: #40A9FF;
-            }
-          }
-        }
-
-      }
     }
 
     // 左侧导航
@@ -746,6 +332,7 @@
       }
 
       .brand-nav-box {
+        position: relative;
         width: 100%;
         height: 530px;
         display: flex;
@@ -770,6 +357,62 @@
           color: #40A9FF;
         }
 
+        .more-classification {
+          display: none;
+          width: 730px;
+          height: 600px;
+          background-color: #fff;
+          position: absolute;
+          top: 0px;
+          left: 240px;
+          z-index: 88;
+          overflow-y: auto;
+          padding: 35px 20px 40px 30px;
+          box-sizing: border-box;
+          box-shadow: 0px 0px 10px 5px #eee;
+
+          .item:last-child {
+            padding-bottom: 0;
+          }
+
+          .item {
+            padding-bottom: 30px;
+
+            .title {
+              padding: 2px 0px 2px 10px;
+              border-left: 1px solid #40A9FF;
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #333333;
+            }
+
+            ul {
+              display: flex;
+              flex-wrap: wrap;
+              margin-top: 10px;
+
+              li {
+                margin: 5px 10px 5px 0px;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #555555;
+                cursor: pointer;
+              }
+
+              li:hover {
+                color: #40A9FF;
+              }
+            }
+          }
+
+        }
+
+      }
+
+      ul:hover .more-classification {
+        display: block;
       }
 
 
@@ -797,7 +440,7 @@
     // 右侧内容
     .el-main {
       width: 960px;
-      height: 660px;
+      height: 600px;
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -1246,6 +889,8 @@
 
         img {
           width: auto;
+          transform: scale(1);
+          transition: all .3s ease-in-out;
         }
       }
 
@@ -1270,8 +915,9 @@
       }
 
       li:hover {
-        transform: scale(1.2);
-        z-index: 2;
+        img {
+          transform: scale(1.2);
+        }
       }
 
       li:last-child:hover {
@@ -1282,7 +928,7 @@
     }
   }
 
-  // 配件专区 产品展示 企业服务 个人工程师
+  // 配件专区 医疗器械 企业服务 个人工程师
   .accessories_area,
   .product-show,
   .enterprise-services,

@@ -194,6 +194,8 @@
         width: 100%;
         // max-width: 115px;
         height: 50px;
+        transform: scale(1);
+        transition: all .3s ease-in-out;
       }
 
       span {
