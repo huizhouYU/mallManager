@@ -193,7 +193,7 @@
       img {
         width: 100%;
         // max-width: 115px;
-        height: 50px;
+        height: 40px;
         transform: scale(1);
         transition: all .3s ease-in-out;
       }

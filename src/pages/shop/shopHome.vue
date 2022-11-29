@@ -146,6 +146,7 @@
     display: flex;
     justify-content: flex-start;
     padding-top: 20px;
+    width: 1200px;
 
     .shop-home-box-left {
       width: 230px;

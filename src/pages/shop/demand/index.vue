@@ -27,6 +27,7 @@
 
 <style lang="less" scoped>
   .demand-box {
+    width: 1200px;
     margin-top: 20px;
     .demand-item {
       background-color: #fff;

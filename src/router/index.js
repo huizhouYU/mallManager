@@ -46,8 +46,8 @@ export default new Router({
           component: () => import('../pages/medicalApparatus/index.vue')
         },
         {
-          path:'/enterpriseServices',
-          name:'EnterpriseServices',//企业服务
+          path: '/enterpriseServices',
+          name: 'EnterpriseServices', //企业服务
           component: () => import('../pages/enterpriseServices/index.vue')
         },
         {
@@ -201,11 +201,5 @@ export default new Router({
       path: '/legalStatement', //法律声明
       component: () => import('../../src/pages/index/legalStatement.vue')
     }
-    // ,
-    // {
-    //   name: 'home',
-    //   path: '/',
-    //   component: Home
-    // }
   ]
 })

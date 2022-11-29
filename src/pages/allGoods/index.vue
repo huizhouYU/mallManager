@@ -143,6 +143,7 @@
   .whole {
     box-sizing: border-box;
     margin-top: 25px;
+    width: 1200px;
   }
 
   .content {

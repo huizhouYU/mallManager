@@ -262,7 +262,7 @@
     padding-bottom: 25px;
   }
   .each-page{
-    width: 1200px;
+    // width: 1200px;
     margin: auto;
   }
 </style>

@@ -184,6 +184,7 @@
     },
     methods: {
       getData() {
+        console.log("index获取分类：")
         //获取分类
         categoryList().then(response => {
           if (response.code == 10000) {
@@ -523,6 +524,22 @@
         li:hover {
           background-color: #E6F7FF;
           color: #40A9FF;
+        }
+
+        //更改每个模块滚动条样式
+        .more-classification::-webkit-scrollbar {
+          width: 6px;
+        }
+        .more-classification::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+          background: rgba(0, 0, 0, 0.2);
+        }
+
+        .more-classification::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+          border-radius: 0;
+          background: rgba(0, 0, 0, 0);
         }
 
         .more-classification {

@@ -1,149 +1,327 @@
 <template>
-  <div class="content">
-    <div class="login-box">
-      <el-form label-position="top" label-width="80px" :model="loginForm" class="login-form">
-        <h2>登录</h2>
-        <el-form-item label="用户名" class="form-label" >
-          <el-input v-model="loginForm.username" placeholder="请输入用户名" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="密码" class="form-label">
-          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password></el-input>
-        </el-form-item>
-        <el-form-item label="验证码" class="form-label">
-          <div class="login-code">
-            <el-input v-model="loginForm.verCode" placeholder="请输入验证码" class="login-code-input"></el-input>
-            <div id="v_container"></div>
-          </div>
-        </el-form-item>
-        <el-button type="primary" round class="login-btn" @click="login">登录</el-button>
-      </el-form>
+  <div class="flex-column-start-center login-content">
+    <div class="flex-center-center login-top">
+      <div class="flex-between-center login-top-main">
+        <img src="../../assets/images/logo.png" alt="">
+        <ul class="flex-center-center">
+          <li>医界商城首页</li>
+          <li>服务热线：400-8888-888</li>
+        </ul>
+
+      </div>
     </div>
+    <div class="flex-between-center login-content-main">
+      <div class="login-left-box">
+        <img src="../../assets/images/login/pic_login.png" alt="">
+      </div>
+      <div class="flex-center-center login-right-box">
+        <el-form class="my-el-form" :model="loginForm" ref="ruleForm" :label-position="top" :rules="loginFormRules">
+          <div class="flex-center-center title">医界商城登录</div>
+          <ul class="flex-around-center">
+            <li @click="loginWay= 1" :class="{'isActived':loginWay== 1}">账号登录</li>
+            <li @click="loginWay= 2" :class="{'isActived':loginWay== 2}">验证码登录</li>
+          </ul>
+          <el-form-item label="用户名" prop="username">
+            <el-input type="text" v-model="loginForm.password" autocomplete="off" placeholder="账户/电话号码/邮箱"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div class="flex-between-center remember-forget ">
+              <el-checkbox v-model="remember">记住用户密码</el-checkbox>
+              <span class="forget-password">忘记密码？</span>
+            </div>
+          </el-form-item>
+          <el-button type="primary" @click="onSubmit">登录</el-button>
+          <div class="flex-between-center login-form-bottom">
+            <div class="flex-start-center other-login-way">其他登录方式
+              <div class="weixin">
+              </div>
+              <div class="zhifubao">
+              </div>
+            </div>
+            <ul class="flex-center-center">
+              <li>没有账号？</li>
+               <li>注册</li>
+            </ul>
+          </div>
+
+
+        </el-form>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import {
-  GVerify
-} from '../../assets/js/verifyCode.js'
-export default {
-  data () {
-    return {
-      loginForm: {
-        username: '',
-        password: '',
-        verCode: ''
-      },
-      verifyCode: ''
-    }
-  },
-  mounted () {
-    this.verifyCode = new GVerify('v_container')
-  },
-  methods: {
-    // 验证验证码的函数
-    checkCode () {
-      if (this.loginForm.verCode.length <= 0) {
-        this.$message.error('请输入验证码！')
-        return false
-      }
-      var verifyFlag = this.verifyCode.validate(this.loginForm.verCode)
-      if (!verifyFlag) {
-        this.$message.error('验证码输入有误！')
-        this.verifyCode = new GVerify('v_container') // 更新验证码
-        this.loginForm.verCode = '' // 清空输入框
-        return false
-      } else {
-        return true
+  export default {
+    data() {
+      return {
+        loginWay: 1,
+        remember: false,
+        loginForm: {
+          username: '',
+          password: ''
+        },
+        loginFormRules: {
+          username: [{
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          }],
+        }
       }
     },
-    // 登录
-    login () {
-      if (this.loginForm.username === '' && this.loginForm.password === '') {
-        this.$message.error('用户名和密码不能为空！')
-        return
-      }
-      if (this.checkCode()) {
-        console.log("jhu")
-        this.$store.dispatch('user/login', this.loginForm)
-          .then(() => {
-            console.log("登录成功！")
-            this.$router.replace({
-              path: this.redirect || '/',
-              query: this.otherQuery
-            })
-            this.loading = false
-            console.log("成功")
-          }).catch(() => {
-            this.loading = false
-            console.log("失败")
-          })
+    methods: {
+      onSubmit() {
+
       }
     }
   }
-}
 </script>
 
-<style scoped>
-  #v_container {
-    vertical-align: middle;
-    box-sizing: border-box;
-    height: 40px;
-    width: 100px;
-    cursor: pointer;
-  }
+<style lang="less" scoped>
+  @core-weight: 1200px;
 
-  .content {
-    height: 100%;
-    background: url(../../assets/images/login_bg.png) no-repeat;
-    background-size: cover;
-  }
-
-  .login-box {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-  }
-
-  .login-form {
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 400px;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  .login-btn {
+  .login-content {
+    height: 100vh;
+    min-width: @core-weight;
     width: 100%;
-    margin: 20px 0px 10px 0px;
-    letter-spacing: 2px;
-  }
+    background-color: #F5F7F9;
 
-  a {
-    text-decoration: none;
-    color: #ff905c;
-  }
+    .login-top {
+      width: 100%;
+      height: 70px;
+      background: #FFFFFF;
+      box-shadow: 0px 2px 5px 0px rgba(146, 167, 214, 0.3);
 
-  a:hover {
-    text-decoration: underline;
-  }
+      .login-top-main {
+        width: 1200px;
+        height: 100%;
 
-  .login-code {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+        img {
+          width: 145px;
+          height: 49px;
+        }
 
-  .login-code-input {
-    margin-right: 10px;
-  }
+        ul {
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #727272;
 
-  .el-form-item {
-    margin-bottom: 0rem;
-  }
+          li {
+            padding: 0px 4px;
+          }
+        }
 
-  .form-label /deep/ .el-form-item__label {
-    padding: 0px;
+        li+li {
+          border-left: 1px solid #727272;
+        }
+      }
+    }
+
+    .login-content-main {
+      height: calc(100% - 70px);
+      width: 1200px;
+      margin: 0px center;
+    }
+
+    .login-left-box,
+    .login-right-box {
+      flex: 1;
+      height: 100%;
+    }
+
+    .login-left-box {
+      position: relative;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 566px;
+        height: 453px;
+        transform: translate(-50%, -70%);
+        // animation: mymove 2.5s linear infinite alternate-reverse;
+        animation: mymove 2.5s linear infinite alternate;
+      }
+
+      @keyframes mymove {
+        0% {
+          transform: translate(-50%, -40%)
+        }
+
+        50% {
+          transform: translate(-50%, -50%)
+        }
+
+        100% {
+          transform: translate(-50%, -60%)
+        }
+      }
+    }
+
+    .login-right-box {
+      .my-el-form {
+        box-sizing: border-box;
+        width: 400px;
+        height: 580px;
+        background: #FFFFFF;
+        box-shadow: 0px 2px 15px 0px rgba(137, 151, 183, 0.3);
+        padding: 30px 40px 50px;
+
+        .title {
+          width: 100%;
+          font-size: 22px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #1890FF;
+        }
+
+        ul {
+          margin-top: 22px;
+          margin-bottom: 40px;
+          font-size: 18px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #666666;
+
+          li {
+            cursor: pointer;
+          }
+
+          .isActived {
+            color: #1890FF;
+            position: relative;
+          }
+
+          .isActived::after {
+            display: block;
+            content: '';
+            width: 52px;
+            height: 5px;
+            background: #1890FF;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            // transition: width 3s linear;
+          }
+        }
+
+        .remember-forget {
+          width: 100%;
+
+          /deep/ .el-checkbox__inner {
+            width: 16px;
+            height: 16px;
+          }
+
+          // /deep/ .el-form-item__content{
+          //   width: 100%;
+          //   display: flex;
+          //   justify-content: space-between;
+          //   align-items: center;
+          // }
+        }
+
+        .forget-password {
+          cursor: pointer;
+          color: #585858;
+        }
+
+        .forget-password:hover {
+          color: #1890FF;
+        }
+
+        .login-form-bottom {
+          margin-top: 34px;
+          font-size: 14px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #515A6E;
+
+          .other-login-way {
+
+            .weixin,
+            .zhifubao {
+              width: 30px;
+              height: 30px;
+              background: #E6EBF1;
+              border-radius: 50%;
+              box-sizing: border-box;
+            }
+
+            .weixin:hover,
+            .zhifubao:hover {
+              background-color: #1890FF;
+            }
+
+            .weixin {
+              margin-left: 5px;
+            }
+
+            .weixin {
+              margin-left: 15px;
+            }
+          }
+          ul{
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #585858;
+          }
+        }
+
+        //改el-form中样式
+        /deep/.el-form-item__label {
+          font-size: 14px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #515A6E;
+          line-height: 30px;
+        }
+
+        /deep/ .el-form-item__content {
+          line-height: auto;
+        }
+
+        /deep/.el-input__inner {
+          border-radius: 0px;
+        }
+
+        /deep/.el-input__inner:focus {
+          border-color: rgba(24, 144, 255, 1);
+          box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+        }
+
+        /deep/ .el-form-item {
+          margin-bottom: 38px;
+        }
+
+        /deep/ .el-form-item:last-child {
+          margin-bottom: 35px;
+        }
+
+        /deep/.el-button {
+          width: 100%;
+          height: 32px;
+          border-radius: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          letter-spacing: 2px;
+          line-height: 0;
+        }
+      }
+    }
   }
 </style>

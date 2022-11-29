@@ -47,20 +47,19 @@
                   </div>
                   <div class="person-info">
                     <span>您好，欢迎光临</span>
-                    <ul>
-                      <li class="bule-font li-login" @click="login">登录</li>
-                      <li>注册</li>
-                    </ul>
+                    <div class="flex-center-center tip">登录享受一站式服务</div>
                   </div>
+                </div>
+                <div class="flex-between-center explain" v-show="!name">
+                  <div class=" flex-center-center btn login" @click="login">登录</div>
+                  <div class=" flex-center-center btn register">注册</div>
                 </div>
                 <!-- 已登录样式 -->
                 <div class="logined-info" v-show="name">
                   <img :src="avatar" alt="" @click="personCenter">
                   <span @click="personCenter">{{name}}</span>
                 </div>
-                <div class="explain" v-show="!name">
-                  企业一站式服务平台,登录立即享受
-                </div>
+
                 <!-- <el-button class="btn-demand">一键发布需求</el-button> -->
               </div>
               <!-- 热门求购  + 设备维修-->
@@ -114,9 +113,13 @@
       </div>
       <ul class="brands">
         <li v-for="(item,index) in brandsList" :key="index">
-          <img :src="item" alt="图片加载失败">
+          <img :src="item.imgUrl" alt="图片加载失败">
+          <div class="mask">
+            <span>{{item.name}}</span>
+            <div class=" flex-center-center btn-logo">进入品牌</div>
+          </div>
         </li>
-        <li>
+        <li @click="toMoreBrand">
           <span>更多品牌</span>
           <img src="../../assets/images/index/brands/icon_double-right.png" alt="">
         </li>
@@ -248,15 +251,42 @@
           },
         ],
         //品牌logo
-        brandsList: [require('../../assets/images/index/brands/logo_万东.png'),
-          require('../../assets/images/index/brands/logo_飞利浦.png'),
-          require('../../assets/images/index/brands/logo_明峰.png'),
-          require('../../assets/images/index/brands/logo_联影.png'),
-          require('../../assets/images/index/brands/logo_朗润.png'),
-          require('../../assets/images/index/brands/logo_康达洲际.png'),
-          require('../../assets/images/index/brands/logo_奥泰.png'),
-          require('../../assets/images/index/brands/logo_安科.png'),
-          require('../../assets/images/index/brands/logo_佳能.png'),
+        brandsList: [{
+            imgUrl: require('../../assets/images/index/brands/logo_万东.png'),
+            name: '万东'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_飞利浦.png'),
+            name: '飞利浦'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_明峰.png'),
+            name: '明峰'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_联影.png'),
+            name: '联影'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_朗润.png'),
+            name: '朗润'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_康达洲际.png'),
+            name: '康达洲际'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_奥泰.png'),
+            name: '奥泰'
+          }, {
+            imgUrl: require('../../assets/images/index/brands/logo_安科.png'),
+            name: '安科'
+          },
+          {
+            imgUrl: require('../../assets/images/index/brands/logo_佳能.png'),
+            name: '佳能'
+          }
+
         ],
         classDatas: [],
       }
@@ -298,6 +328,12 @@
         this.$router.push({
           path: '/login',
           replace: true
+        })
+      },
+      toMoreBrand() {
+        this.$emit("changeTab", '7')
+        this.$router.push({
+          path: '/cooperationBrand'
         })
       }
     },
@@ -355,6 +391,23 @@
         li:hover {
           background-color: #E6F7FF;
           color: #40A9FF;
+        }
+
+        //更改每个模块滚动条样式
+        .more-classification::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .more-classification::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+          background: rgba(0, 0, 0, 0.2);
+        }
+
+        .more-classification::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+          border-radius: 0;
+          background: rgba(0, 0, 0, 0);
         }
 
         .more-classification {
@@ -496,7 +549,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
 
             .person-logo {
               cursor: pointer;
@@ -527,44 +580,15 @@
               font-family: Microsoft YaHei;
               color: #333333;
 
-              ul {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-
-                li {
-                  cursor: pointer;
-                  position: relative;
-                  padding: 0px 12px;
-                }
-
-                li:first-child {
-                  padding-left: 0px;
-                }
-
-                .li-login:after {
-                  position: absolute;
-                  content: "";
-                  display: block;
-                  width: 1px;
-                  height: 15px;
-                  border-right: 1px solid #BDBDBD;
-                  right: 0px;
-                  top: 3px;
-                }
-
-                .bule-font {
-                  color: #40A9FF;
-                }
-
-                .gray-font {
-                  color: #999;
-
-                }
-
-                .no-padding {
-                  padding: 0px;
-                }
+              .tip {
+                padding: 5px 8px;
+                box-sizing: border-box;
+                background: #FFF6F6;
+                border-radius: 11px;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #EC3333;
               }
             }
           }
@@ -603,28 +627,55 @@
             }
           }
 
-          // 企业一站式服务平台,登录立即享受
+          // 登录  注册
           .explain {
-            position: relative;
-            font-size: 12px;
-            font-family: Microsoft YaHei;
-            color: #EC3333;
-            background-color: #FFF6F6;
-            padding: 4px 6px;
-            border-radius: 10px;
+
+            .btn {
+              cursor: pointer;
+              width: 90px;
+              // height: 36px;
+              padding: 15px 0px;
+              box-sizing: border-box;
+              border-radius: 18px;
+              height: 12px;
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+
+            }
+            .btn+.btn{
+              margin-left: 8px;
+            }
+
+            .login {
+              background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
+              color: #FFFFFF;
+            }
+            .login:hover{
+              opacity: 0.8;
+            }
+
+            .register {
+              background: #F6F6F6;
+              color: #333333;
+            }
+            .register:hover{
+               background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
+                color: #FFFFFF;
+            }
           }
 
-          .explain::before {
-            position: absolute;
-            content: "";
-            display: block;
-            background-color: #333;
-            top: -10px;
-            left: 35%;
-            border-left: 10px solid #fff;
-            border-right: 10px solid #fff;
-            border-bottom: 10px solid #FFF6F6;
-          }
+          // .explain::before {
+          //   position: absolute;
+          //   content: "";
+          //   display: block;
+          //   background-color: #333;
+          //   top: -10px;
+          //   left: 35%;
+          //   border-left: 10px solid #fff;
+          //   border-right: 10px solid #fff;
+          //   border-bottom: 10px solid #FFF6F6;
+          // }
 
           // 一键发布需求
           .btn-demand {
@@ -876,8 +927,10 @@
       background-color: #fff;
       display: grid;
       grid-template-columns: repeat(5, auto);
+      overflow: hidden;
 
       li {
+        position: relative;
         width: 144px;
         height: 70px;
         cursor: pointer;
@@ -891,6 +944,32 @@
           width: auto;
           transform: scale(1);
           transition: all .3s ease-in-out;
+        }
+
+        .mask {
+          display: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          background: rgba(0, 0, 0, 0.6);
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #FFFFFF;
+
+          .btn-logo {
+            margin-top: 8px;
+            width: 77px;
+            height: 22px;
+            background: #239BFF;
+            border-radius: 10px;
+          }
         }
       }
 
@@ -915,8 +994,8 @@
       }
 
       li:hover {
-        img {
-          transform: scale(1.2);
+        .mask {
+          display: flex;
         }
       }
 

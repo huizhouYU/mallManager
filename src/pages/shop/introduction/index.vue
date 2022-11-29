@@ -62,6 +62,9 @@
 </script>
 
 <style lang="less" scoped>
+  .introduction-box{
+    width: 1200px;
+  }
   .company {
     margin-top: 20px;
     width: 1200px;

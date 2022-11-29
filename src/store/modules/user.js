@@ -19,7 +19,7 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  mobile:'',
+  mobile: '',
   roles: []
 }
 
@@ -117,15 +117,21 @@ const actions = {
     commit,
     state
   }) {
-    // console.log("请求用户信息")
     return new Promise((resolve, reject) => {
       const roles = ["admin"]
-      commit('SET_ROLES', roles)
-      commit('SET_NAME', "百货互补超负荷是否")
-      commit('SET_AVATAR', "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
-      commit('SET_INTRODUCTION', "固定无")
-      commit('SET_MOBILE', "18154526542")
-      resolve()
+      const token = getToken()
+      if (token) {
+        commit('SET_ROLES', roles)
+        commit('SET_NAME', "百货互补超负荷是否")
+        commit('SET_AVATAR', "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
+        commit('SET_INTRODUCTION', "固定无")
+        commit('SET_MOBILE', "18154526542")
+        resolve("success")
+      } else {
+        resolve("fail")
+      }
+
+
 
 
       // getInfo(state.token).then(response => {
@@ -172,6 +178,12 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken()
+      commit('SET_NAME', "")
+      commit('SET_AVATAR',"")
+      commit('SET_INTRODUCTION', "")
+      commit('SET_MOBILE', "")
+
+
       resolve()
       // logout(state.token).then(() => {
       //   commit('SET_TOKEN', '')

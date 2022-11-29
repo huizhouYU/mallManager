@@ -49,6 +49,7 @@
 <style lang="less" scoped>
   .contact-box {
     padding-top: 20px;
+    width: 1200px;
 
     .contact-info {
       width: 1200px;

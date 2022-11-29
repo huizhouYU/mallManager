@@ -8,37 +8,34 @@ import 'nprogress/nprogress.css' // progress bar style
 import {
   getToken
 } from '@/utils/auth' // get token from cookie
-// import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 //白名单
-const whiteList = ['/login', '/home', '/register', '/auth-redirect','/residencyAgreement','/tradingRules','/aboutUs','/legalStatement'] // no redirect whitelist
+const whiteList = ['/login', '/home', '/register', '/residencyAgreement', '/tradingRules', '/aboutUs', '/legalStatement' ] // 无重定向白名单
+//需要登录才能看见的名单
+const loginList = ['/buyer', '/personal', '/personalData', '/receiptAddress', '/changePWD', '/allOrders',
+  '/supplyDemandInfo', '/orderDetail', '/orderPayment', '/personDemandDetail','/shoppingCart' ]
+
 
 router.beforeEach(async (to, from, next) => {
-  // start progress bar
+  // 启动进度条
   NProgress.start()
 
-  // set page title
-  // document.title = getPageTitle(to.meta.title)
-
-  // determine whether the user has logged in
-  //从Cookies中获取token
+  // 确定用户是否已登录  从Cookies中获取token
   const hasToken = getToken()
   if (hasToken) {
-    // console.log("to.path:", to.path)
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+      // 如果已登录，则重定向到主页
       next({
         path: '/'
       })
-
       NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
-      await store.dispatch('user/getInfo')
+      const a = await store.dispatch('user/getInfo')
       next()
-      // // determine whether the user has obtained his permission roles through getInfo
+      // // 确定用户是否已通过getInfo获得其权限角色
       // const hasRoles = store.getters.roles && store.getters.roles.length > 0
       // console.log("hasRoles:", hasRoles)
       // if (hasRoles) {
@@ -74,19 +71,27 @@ router.beforeEach(async (to, from, next) => {
       // }
     }
   } else {
-    /* has no token*/
-    if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
-      next()
-    } else {
-      // other pages that do not have permission to access are redirected to the login page.
+    if (loginList.indexOf(to.path) !== -1) {
+      // 需要登录权限的页面被重定向到登录页面
       next(`/login?redirect=${to.path}`)
       NProgress.done()
+    } else {
+      //不需要登录的页面直接进入
+      next()
     }
+
+    // if (whiteList.indexOf(to.path) !== -1) {
+    //   // 在免费登录白名单中，直接进入
+    //   next()
+    // } else {
+    //   // 没有访问权限的其他页面被重定向到登录页面
+    //   next(`/login?redirect=${to.path}`)
+    //   NProgress.done()
+    // }
   }
 })
 
 router.afterEach(() => {
-  // finish progress bar
+  // 完成进度条
   NProgress.done()
 })

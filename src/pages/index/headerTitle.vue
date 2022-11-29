@@ -94,7 +94,8 @@
       toIndex() {
         this.$emit("changeTab", '0')
         this.$router.push({
-          path: '/'
+          path: '/',
+          replace:true
         })
       },
       toShopCart() {
@@ -207,6 +208,9 @@
 
               li+li {
                 border-left: 1px solid #DDDDDD;
+              }
+              li:hover{
+                color: #40A9FF;
               }
             }
 
