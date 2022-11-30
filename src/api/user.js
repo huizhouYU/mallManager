@@ -1,17 +1,24 @@
 import request from '@/utils/request'
-//登录
+//用户名密码登录
 export function login(data) {
   return request({
-    // url: '/vue-element-admin/user/login',
     url: '/login',
     method: 'post',
     data:data
   })
 }
+//短信验证码登录
+export function msgLogin(data) {
+  return request({
+    url: '/msgLogin',
+    method: 'post',
+    data:data
+  })
+}
+
 //获取用户信息
 export function getInfo(token) {
   return request({
-    // url: '/vue-element-admin/user/info',
     url: '/user/info',
     method: 'get',
     // params: { token }

@@ -1,5 +1,6 @@
 import {
   login,
+  msgLogin,
   logout,
   register,
   getInfo
@@ -51,7 +52,7 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  // 用户名密码登录
   login({
     commit
   }, userInfo) {
@@ -62,24 +63,58 @@ const actions = {
     } = userInfo
     return new Promise((resolve, reject) => {
       console.log("假设请求登录接口，并且登录成功了")
-      commit('SET_TOKEN', "iuhdusfpo0bphjihoihojihiohih")
-      setToken("iuhdusfpo0bphjihoihojihiohih")
-      resolve()
-      // login({
-      //   username: username.trim(),
-      //   password: password
-      // }).then(response => {
-      //   console.log("sdresponse：",response)
-      //   const {
-      //     data
-      //   } = response.data
-      //   console.log("setToken:",data)
-      //   commit('SET_TOKEN', data)
-      //   setToken(data)
-      //   resolve()
-      // }).catch(error => {
-      //   reject(error)
-      // })
+      // commit('SET_TOKEN', "iuhdusfpo0bphjihoihojihiohih")
+      // setToken("iuhdusfpo0bphjihoihojihiohih")
+      // resolve()
+      login({
+        username: username.trim(),
+        password: password
+      }).then(response => {
+
+        if (response.code == 10000) {
+          const {
+            data
+          } = response
+          console.log("setToken:", data)
+          commit('SET_TOKEN', data)
+          setToken(data)
+        }
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  //短信验证码登录
+  msgLogin({
+    commit
+  }, userInfo) {
+    console.log("请求登录接口")
+    const {
+      mobile,
+      vCode
+    } = userInfo
+    return new Promise((resolve, reject) => {
+      console.log("假设请求登录接口，并且登录成功了")
+      // commit('SET_TOKEN', "iuhdusfpo0bphjihoihojihiohih")
+      // setToken("iuhdusfpo0bphjihoihojihiohih")
+      // resolve()
+      msgLogin({
+        mobile: mobile.trim(),
+        captcha: vCode
+      }).then(response => {
+        if (response.code == 10000) {
+          const {
+            data
+          } = response
+          console.log("setToken:", data)
+          commit('SET_TOKEN', data)
+          setToken(data)
+        }
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 
@@ -120,51 +155,26 @@ const actions = {
     return new Promise((resolve, reject) => {
       const roles = ["admin"]
       const token = getToken()
-      if (token) {
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', "百货互补超负荷是否")
-        commit('SET_AVATAR', "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
-        commit('SET_INTRODUCTION', "固定无")
-        commit('SET_MOBILE', "18154526542")
-        resolve("success")
-      } else {
-        resolve("fail")
-      }
+      getInfo().then(response => {
+        console.log("getInfo:", response)
+        if (response.code == 10000) {
+          const {
+            data
+          } = response
+          console.log(data)
+          commit('SET_NAME', data.user.username)
+          commit('SET_AVATAR',
+            "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
+          commit('SET_INTRODUCTION', "固定无")
+          commit('SET_MOBILE', "18154526542")
+        } else {
+          reject(response.message)
+        }
+        resolve(response)
 
-
-
-
-      // getInfo(state.token).then(response => {
-      //   const {  data } = response.data
-      //   if (!data) {
-      //     reject('Verification failed, please Login again.')
-      //   }
-
-      //   // const { roles, name, avatar, introduction } = data
-      //   const {
-      //     store,
-      //     user
-      //   } = data
-      //   const roles = ["admin"]
-      //   // roles.push(store.stype)
-      //   // roles = ["admin"]
-
-      //   // roles must be a non-empty array
-      //   if (!roles || roles.length <= 0) {
-      //     reject('getInfo: roles must be a non-null array!')
-      //   }
-      //   commit('SET_ROLES', roles)
-      //   commit('SET_NAME', user.username)
-      //   commit('SET_AVATAR', "")
-      //   commit('SET_INTRODUCTION', "固定无")
-      //   // commit('SET_ROLES', roles)
-      //   // commit('SET_NAME', name)
-      //   // commit('SET_AVATAR', avatar)
-      //   // commit('SET_INTRODUCTION', introduction)
-      //   resolve(data)
-      // }).catch(error => {
-      //   reject(error)
-      // })
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 
@@ -179,7 +189,7 @@ const actions = {
       commit('SET_ROLES', [])
       removeToken()
       commit('SET_NAME', "")
-      commit('SET_AVATAR',"")
+      commit('SET_AVATAR', "")
       commit('SET_INTRODUCTION', "")
       commit('SET_MOBILE', "")
 

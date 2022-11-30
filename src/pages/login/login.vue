@@ -7,7 +7,6 @@
           <li>医界商城首页</li>
           <li>服务热线：400-8888-888</li>
         </ul>
-
       </div>
     </div>
     <div class="flex-between-center login-content-main">
@@ -15,52 +14,114 @@
         <img src="../../assets/images/login/pic_login.png" alt="">
       </div>
       <div class="flex-center-center login-right-box">
-        <el-form class="my-el-form" :model="loginForm" ref="ruleForm" :label-position="top" :rules="loginFormRules">
+        <div class="my-login-div">
           <div class="flex-center-center title">医界商城登录</div>
           <ul class="flex-around-center">
             <li @click="loginWay= 1" :class="{'isActived':loginWay== 1}">账号登录</li>
             <li @click="loginWay= 2" :class="{'isActived':loginWay== 2}">验证码登录</li>
           </ul>
-          <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="loginForm.password" autocomplete="off" placeholder="账户/电话号码/邮箱"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <div class="flex-between-center remember-forget ">
-              <el-checkbox v-model="remember">记住用户密码</el-checkbox>
-              <span class="forget-password">忘记密码？</span>
-            </div>
-          </el-form-item>
-          <el-button type="primary" @click="onSubmit">登录</el-button>
-          <div class="flex-between-center login-form-bottom">
-            <div class="flex-start-center other-login-way">其他登录方式
-              <div class="weixin">
+          <!-- 账号登录 -->
+          <el-form class="my-el-form" :model="loginForm" ref="ruleForm" :label-position="labelPosition"
+            :rules="loginFormRules" v-show="loginWay== 1">
+            <el-form-item label="用户名" prop="username">
+              <el-input type="text" v-model="loginForm.username" autocomplete="off" placeholder="账户/电话号码/邮箱"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <div class="flex-between-center remember-forget ">
+                <el-checkbox v-model="remember">记住用户密码</el-checkbox>
+                <span class="forget-password" @click="forget">忘记密码？</span>
               </div>
-              <div class="zhifubao">
+            </el-form-item>
+            <el-button type="primary" @click="onSubmit('ruleForm')">登录</el-button>
+            <div class="flex-between-center login-form-bottom">
+              <div class="flex-start-center other-login-way">其他登录方式
+                <div class="flex-center-center weixin">
+                  <img src="../../assets/images/login/pic_WeChat_white.png" alt="">
+                </div>
+                <div class="flex-center-center zhifubao">
+                  <img src="../../assets/images/login/pic_Alipay_white.png" alt="">
+                </div>
               </div>
+              <span class="span-register"  @click="register"> 没有账号？<font class="bule-font">注册</font> </span>
             </div>
-            <ul class="flex-center-center">
-              <li>没有账号？</li>
-               <li>注册</li>
-            </ul>
-          </div>
+          </el-form>
+          <!-- 验证码登录 -->
+          <el-form class="my-el-form" :model="vCodeForm" ref="vCodeRuleForm" :label-position="labelPosition"
+            :rules="vCodeFormRules" v-show="loginWay== 2">
+            <el-form-item label="手机号" prop="mobile">
+              <el-input type="text" v-model="vCodeForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
+            </el-form-item>
+            <el-form-item label="验证码" prop="vCode" class="get-v-code-form-item">
+              <el-input v-model="vCodeForm.vCode" :disabled="vCodeForm.mobile == ''">
+                <template slot="append">
+                  <span class="flex-center-center get-v-code" @click="getCode" v-show="countDown == 0">获取验证码</span>
+                   <span class="flex-center-center count-down"  v-show="countDown>0">{{countDown}}s</span>
+                </template>
+              </el-input>
+            </el-form-item>
+            <!-- 占位 -->
+            <div class="seize-a-seat"></div>
+            <el-button type="primary" @click="onSubmit('vCodeRuleForm')">登录</el-button>
+            <div class="flex-between-center login-form-bottom">
+              <div class="flex-start-center other-login-way">其他登录方式
+                <div class="flex-center-center weixin">
+                  <img src="../../assets/images/login/pic_WeChat_white.png" alt="">
+                </div>
+                <div class="flex-center-center zhifubao">
+                  <img src="../../assets/images/login/pic_Alipay_white.png" alt="">
+                </div>
+              </div>
+              <span class="span-register" @click="register"> 没有账号？<font class="bule-font">注册</font> </span>
+            </div>
+          </el-form>
+        </div>
 
-
-        </el-form>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
+  import {
+   sendMsg
+  } from '@/api/user'
   export default {
     data() {
+      var validatePhone = (rule, value, callback) => {
+        if (value === '') {
+          // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/; if (value === '') {
+          callback(new Error('请输入手机号'))
+        } else if (!this.isCellPhone(
+            value)) { // 引入methods中封装的检查手机格式的方法 callback(new Error('请输入正确的手机号!'))          } else {
+          callback(new Error('请输入正确的手机号!'))
+        } else {
+          callback()
+        }
+      }
       return {
+        labelPosition: 'top',
         loginWay: 1,
         remember: false,
+        countDown:0,
+        vCodeForm: {
+          mobile: '',
+          vCode: ''
+        },
+        vCodeFormRules: {
+          mobile: [{
+            required: true,
+            validator: validatePhone,
+            trigger: 'blur'
+          }],
+          vCode: [{
+            required: true,
+            message: '请输入验证码',
+            trigger: 'blur'
+          }],
+        },
         loginForm: {
           username: '',
           password: ''
@@ -79,9 +140,122 @@
         }
       }
     },
+    mounted() {
+      this.getCookie()
+    },
     methods: {
-      onSubmit() {
+      isCellPhone(val) {
+        if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+          return false
+        } else {
+          return true
+        }
+      },
+      //获取手机短信验证码
+      getCode() {
+        if (!this.isCellPhone(this.vCodeForm.mobile)) {
+          this.$message.error('请先输入正确的手机号码！')
+          return
+        }
+        //axios请求
+        let data = {
+          mobile: this.vCodeForm.mobile
+        }
+        sendMsg(data).then(response => {
+          console.log(response.data.data)
+        })
+        // 验证码倒计时
+        if (!this.timer) {
+          this.countDown = 60;
+          // this.showRegisterGetVCode = false;
+          this.timer = setInterval(() => {
+            if (this.countDown > 0 && this.countDown <= 60) {
+              this.countDown--;
+            } else {
+              // this.showRegisterGetVCode = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+      },
+      getCookie() {
+        this.loginForm.username = localStorage.getItem("yj_UserName")
+        this.loginForm.password = localStorage.getItem("yj_Pws")
+        this.remember = Boolean(localStorage.getItem("yj_isRemember"))
 
+      },
+      //存储
+      setCookie(userName, userPws) {
+        localStorage.setItem("yj_UserName", userName)
+        localStorage.setItem("yj_Pws", userPws)
+        localStorage.setItem("yj_isRemember", this.remember)
+      },
+      //如果用户不选择记住密码清除cookie
+      clearCookie() {
+        this.setCookie("", "");
+      },
+      onSubmit(ruleForm) {
+        this.$refs[ruleForm].validate((valid) => {
+          if (valid) {
+            this.login()
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      login() {
+        if(this.loginWay == 1){//用户名密码登录
+        //是否记住密码
+        if (this.remember) {
+          this.setCookie(this.loginForm.username, this.loginForm.password)
+        } else {
+          this.clearCookie();
+        }
+          this.$store.dispatch('user/login', this.loginForm)
+            .then((response) => {
+              if(response.code == 10000){
+                this.$router.replace({
+                  path: this.redirect || '/',
+                  query: this.otherQuery
+                })
+              }else{
+                this.$message.error(response.message)
+              }
+              this.loading = false
+            }).catch(() => {
+              this.loading = false
+              console.log("失败")
+            })
+        }else if (this.loginWay == 2){//短信验证码登录
+          this.$store.dispatch('user/msgLogin', this.vCodeForm)
+            .then((response) => {
+              if(response.code == 10000){
+                this.$router.replace({
+                  path: this.redirect || '/',
+                  query: this.otherQuery
+                })
+              }else{
+                this.$message.error(response.message)
+              }
+              this.loading = false
+            }).catch(() => {
+              this.loading = false
+              console.log("失败")
+            })
+        }
+
+      },
+      forget(){
+        this.$router.push({
+          path: '/forgetPsd',
+        })
+      },
+      register(){
+        this.$router.push({
+          path: '/register',
+        })
       }
     }
   }
@@ -142,6 +316,10 @@
 
     .login-left-box {
       position: relative;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      // transform-style: preserve-3d;
 
       img {
         position: absolute;
@@ -149,72 +327,122 @@
         left: 50%;
         width: 566px;
         height: 453px;
-        transform: translate(-50%, -70%);
-        // animation: mymove 2.5s linear infinite alternate-reverse;
-        animation: mymove 2.5s linear infinite alternate;
+        transform: translate(-55%, -45%);
+        // transform-style: preserve-3d;
+        // transform: perspective(800px) rotateX(20deg) rotateY(0deg) rotateZ(-10deg);
+        animation: mymove 5s linear infinite alternate;
       }
 
       @keyframes mymove {
         0% {
-          transform: translate(-50%, -40%)
+          transform: translate(-55%, -45%);
+          // transform:perspective(800px) rotateX(20deg)  rotateY(0deg)  rotateZ(-10deg)
         }
 
-        50% {
-          transform: translate(-50%, -50%)
+        33% {
+          transform: translate(-45%, -45%);
+          // transform:perspective(800px) rotateX(0deg) rotateY(0deg)   rotateZ(0deg)
+        }
+        66% {
+          transform: translate(-45%, -55%);
+          // transform:perspective(800px) rotateX(0deg) rotateY(0deg)   rotateZ(0deg)
         }
 
         100% {
-          transform: translate(-50%, -60%)
+          transform: translate(-55%, -55%);
+          // transform:perspective(800px) rotateX(-10deg)  rotateY(0deg) rotateZ(10deg)
         }
       }
     }
 
     .login-right-box {
-      .my-el-form {
+      .my-login-div {
         box-sizing: border-box;
         width: 400px;
-        height: 580px;
+        height: 500px;
         background: #FFFFFF;
         box-shadow: 0px 2px 15px 0px rgba(137, 151, 183, 0.3);
         padding: 30px 40px 50px;
 
-        .title {
-          width: 100%;
-          font-size: 22px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #1890FF;
+      }
+
+      .title {
+        width: 100%;
+        font-size: 22px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #1890FF;
+      }
+
+      ul {
+        margin-top: 22px;
+        margin-bottom: 40px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #666666;
+        line-height: 17px;
+
+        li {
+          cursor: pointer;
         }
 
-        ul {
-          margin-top: 22px;
-          margin-bottom: 40px;
-          font-size: 18px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #666666;
+        .isActived {
+          color: #1890FF;
+          position: relative;
+        }
 
-          li {
+        .isActived::after {
+          display: block;
+          content: '';
+          width: 52px;
+          height: 5px;
+          background: #1890FF;
+          position: absolute;
+          bottom: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+
+      .my-el-form {
+
+        // 占位
+        .seize-a-seat {
+          height: 55px;
+          width: 100%;
+        }
+
+        .get-v-code-form-item {
+          /deep/ .el-input__inner {
+            border-right: none;
+          }
+          /deep/.el-input__inner:focus {
+            border-right:1px solid rgba(24, 144, 255, 1);
+            box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+          }
+          /deep/.el-form-item .is-error .el-input__inner{
+             border-right:1px solid #f56c6c;
+          }
+
+          // 获取短信验证码
+          .get-v-code,.count-down {
+            width: 90px;
+            color: #495060;
+            // padding-left: 10px;
+            line-height: 14px;
+            border-left: 1px solid #495060;
+            cursor: pointer;
+          }
+          .get-v-code{
             cursor: pointer;
           }
 
-          .isActived {
+          .get-v-code:hover {
             color: #1890FF;
-            position: relative;
+             border-left: 1px solid #1890FF;
           }
 
-          .isActived::after {
-            display: block;
-            content: '';
-            width: 52px;
-            height: 5px;
-            background: #1890FF;
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            // transition: width 3s linear;
-          }
         }
 
         .remember-forget {
@@ -224,13 +452,6 @@
             width: 16px;
             height: 16px;
           }
-
-          // /deep/ .el-form-item__content{
-          //   width: 100%;
-          //   display: flex;
-          //   justify-content: space-between;
-          //   align-items: center;
-          // }
         }
 
         .forget-password {
@@ -249,35 +470,50 @@
           font-weight: 400;
           color: #515A6E;
 
+          .bule-font {
+            color: #1890FF;
+          }
+
           .other-login-way {
 
             .weixin,
             .zhifubao {
+              cursor: pointer;
               width: 30px;
               height: 30px;
               background: #E6EBF1;
               border-radius: 50%;
               box-sizing: border-box;
+
+              img {
+                width: 20px;
+                height: 16px;
+              }
             }
 
-            .weixin:hover,
+            .weixin:hover {
+              background-color: #28C445;
+            }
+
             .zhifubao:hover {
-              background-color: #1890FF;
+              background-color: #40A9FF;
             }
 
             .weixin {
               margin-left: 5px;
             }
 
-            .weixin {
+            .zhifubao {
               margin-left: 15px;
             }
           }
-          ul{
+
+          .span-register {
             font-size: 14px;
             font-family: Microsoft YaHei;
             font-weight: 400;
             color: #585858;
+            cursor: pointer;
           }
         }
 
@@ -287,15 +523,16 @@
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #515A6E;
-          line-height: 30px;
+          line-height: 13px;
         }
 
         /deep/ .el-form-item__content {
-          line-height: auto;
+          line-height: 13px;
         }
 
         /deep/.el-input__inner {
           border-radius: 0px;
+          height: 34px;
         }
 
         /deep/.el-input__inner:focus {
@@ -304,11 +541,17 @@
         }
 
         /deep/ .el-form-item {
-          margin-bottom: 38px;
+          margin-bottom: 35px;
         }
 
         /deep/ .el-form-item:last-child {
           margin-bottom: 35px;
+        }
+
+        /deep/ .el-input-group__append {
+          background-color: #fff;
+          border-left: none;
+          padding: 0 4px;
         }
 
         /deep/.el-button {

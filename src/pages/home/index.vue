@@ -52,7 +52,7 @@
                 </div>
                 <div class="flex-between-center explain" v-show="!name">
                   <div class=" flex-center-center btn login" @click="login">登录</div>
-                  <div class=" flex-center-center btn register">注册</div>
+                  <div class=" flex-center-center btn register"  @click="register">注册</div>
                 </div>
                 <!-- 已登录样式 -->
                 <div class="logined-info" v-show="name">
@@ -154,7 +154,7 @@
   import enterpriseServices from '../../pages/index/enterpriseServices.vue' //企业服务
   import personalEngineer from '../../pages/index/personalEngineer.vue' //个人工程师
   import {
-    getBrandsList
+    getBrandsList,demandList
   } from '@/api/index'
   export default {
     components: {
@@ -172,7 +172,6 @@
       ])
     },
     mounted() {
-      // console.log("jjj")
       this.getData()
     },
     props: ['brandList'],
@@ -294,8 +293,19 @@
     methods: {
       getData() {
         //获取品牌列表
-        getBrandsList().then(response => {
+        getBrandsList({limit:9}).then(response => {
           console.log("获取分类：", response)
+        })
+        let data = {
+          pageNo: 1,
+          pageSize: 12,
+          articleType: 1,
+          id:'',
+          keyType: '',
+          keyword: ''
+        }
+        demandList(data).then(response => {
+          console.log(response.data.data)
         })
       },
       personCenter() {
@@ -327,7 +337,13 @@
       login() {
         this.$router.push({
           path: '/login',
-          replace: true
+          // replace: true
+        })
+      },
+      register(){
+        this.$router.push({
+          path: '/register',
+          // replace: true
         })
       },
       toMoreBrand() {

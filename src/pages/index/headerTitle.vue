@@ -5,7 +5,7 @@
         <li>您好，欢迎来到医界商城！</li>
         <template v-if="!name">
           <li @click="login">请登录</li>
-          <li class="bule_font">免费注册</li>
+          <li class="bule_font" @click="register">免费注册</li>
         </template>
         <template v-if="name">
           <li class="show-info-li">
@@ -67,6 +67,11 @@
         this.$router.push({
           path: '/login',
           replace: true
+        })
+      },
+      register(){
+        this.$router.push({
+          path: '/register',
         })
       },
       logout() {

@@ -156,8 +156,18 @@ export default new Router({
     },
     {
       name: 'login',
-      path: '/login',
+      path: '/login',//登录
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register', //注册
+      component: () => import('../../src/pages/login/register.vue')
+    },
+    {
+      path: '/forgetPsd',
+      name: 'ForgetPsd', //找回密码
+      component: () => import('../../src/pages/login/forgetPsd.vue')
     },
     {
       path: '/publishDemandIndex',
