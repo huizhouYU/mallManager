@@ -316,10 +316,6 @@
 
     .login-left-box {
       position: relative;
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
-      // transform-style: preserve-3d;
 
       img {
         position: absolute;
@@ -327,30 +323,20 @@
         left: 50%;
         width: 566px;
         height: 453px;
-        transform: translate(-55%, -45%);
-        // transform-style: preserve-3d;
-        // transform: perspective(800px) rotateX(20deg) rotateY(0deg) rotateZ(-10deg);
-        animation: mymove 5s linear infinite alternate;
+        transform: translate(-50%, -45%);
+        animation: mymove 2.5s linear infinite alternate-reverse;
       }
 
       @keyframes mymove {
         0% {
-          transform: translate(-55%, -45%);
-          // transform:perspective(800px) rotateX(20deg)  rotateY(0deg)  rotateZ(-10deg)
+          transform: translate(-50%, -45%);
         }
 
-        33% {
-          transform: translate(-45%, -45%);
-          // transform:perspective(800px) rotateX(0deg) rotateY(0deg)   rotateZ(0deg)
+        50% {
+          transform: translate(-50%, -50%);
         }
-        66% {
-          transform: translate(-45%, -55%);
-          // transform:perspective(800px) rotateX(0deg) rotateY(0deg)   rotateZ(0deg)
-        }
-
         100% {
-          transform: translate(-55%, -55%);
-          // transform:perspective(800px) rotateX(-10deg)  rotateY(0deg) rotateZ(10deg)
+          transform: translate(-50%, -55%);
         }
       }
     }
