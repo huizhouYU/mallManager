@@ -46,7 +46,13 @@
 </template>
 
 <script>
+  import {
+    articleList
+  } from '@/api/supplyDemand'
   export default {
+    mounted() {
+      this.getData()
+    },
     data() {
       return {
         currentPage4: 4,
@@ -114,6 +120,26 @@
       }
     },
     methods: {
+      getData(){
+        // pageNo	页码,示例值(1)	query	true
+        // integer(int32)
+        // pageSize	每页记录数,示例值(10)	query	true
+        // integer(int32)
+        // articleType	需求类型1-求购设备 2-项目外包 3-灵活兼职,示例值(1)	query	false
+        // integer(int32)
+        // keyType	关键字类型 title-标题 equipment-设备型号	query	false
+        // string
+        // keyword	搜索关键字	query	false
+        // string
+        var params = {
+          pageNo:1,
+          pageSize:10,
+        }
+
+        articleList(params).then(response => {
+          console.log('供求信息-需求列表：',response)
+        })
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },

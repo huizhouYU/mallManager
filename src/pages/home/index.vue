@@ -26,15 +26,14 @@
             <img src="../../assets/images/index/double-right.png" alt="">
           </div>
         </div>
-
-
         <!-- 右边内容-->
         <div>
           <!-- 中间设备列表 + 右边发布需求 -->
           <div class="main-content">
             <!-- 中间设备列表 -->
             <div class="main-content-left">
-              <equip-list-cart class="equipListCart-box" @jumpAllGoods="jumpAllGoods"></equip-list-cart>
+              <equip-list-cart class="equipListCart-box" :recommendGoods='recommendGoods' @jumpAllGoods="jumpAllGoods">
+              </equip-list-cart>
             </div>
             <!-- 右边发布需求 -->
             <div class="main-content-right">
@@ -52,7 +51,7 @@
                 </div>
                 <div class="flex-between-center explain" v-show="!name">
                   <div class=" flex-center-center btn login" @click="login">登录</div>
-                  <div class=" flex-center-center btn register"  @click="register">注册</div>
+                  <div class=" flex-center-center btn register" @click="register">注册</div>
                 </div>
                 <!-- 已登录样式 -->
                 <div class="logined-info" v-show="name">
@@ -113,9 +112,9 @@
       </div>
       <ul class="brands">
         <li v-for="(item,index) in brandsList" :key="index">
-          <img :src="item.imgUrl" alt="图片加载失败">
+          <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="图片加载失败">
           <div class="mask">
-            <span>{{item.name}}</span>
+            <span>{{item.brandName}}</span>
             <div class=" flex-center-center btn-logo">进入品牌</div>
           </div>
         </li>
@@ -131,9 +130,9 @@
     <!-- 配件专区 -->
     <accessories-area class="accessories_area" :showTitle="showTitle"></accessories-area>
     <!-- 医疗器械 -->
-    <product-show class="product-show"></product-show>
+    <product-show class="product-show" :productList="productList"></product-show>
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services"></enterprise-services>
+    <enterprise-services class="enterprise-services" :companyList="companyList"></enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer"></personal-engineer>
     <!-- 模块六 两张大图 -->
@@ -154,7 +153,11 @@
   import enterpriseServices from '../../pages/index/enterpriseServices.vue' //企业服务
   import personalEngineer from '../../pages/index/personalEngineer.vue' //个人工程师
   import {
-    getBrandsList,demandList
+    recommendGoods,
+    getBrandsList,
+    articleList,
+    equipmentList,
+    storeList
   } from '@/api/index'
   export default {
     components: {
@@ -179,6 +182,9 @@
       return {
         showTitle: true,
         isHotTab: true, //true:选中'热门求购,false:选中'设备维修'
+        recommendGoods: [], //九宫格推荐商品
+        productList: [], //医疗器械
+        companyList: [], //企业服务
         //热门求购列表
         hotList: [{
             title: '动态血压记录分析系统'
@@ -250,41 +256,42 @@
           },
         ],
         //品牌logo
-        brandsList: [{
-            imgUrl: require('../../assets/images/index/brands/logo_万东.png'),
-            name: '万东'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_飞利浦.png'),
-            name: '飞利浦'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_明峰.png'),
-            name: '明峰'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_联影.png'),
-            name: '联影'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_朗润.png'),
-            name: '朗润'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_康达洲际.png'),
-            name: '康达洲际'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_奥泰.png'),
-            name: '奥泰'
-          }, {
-            imgUrl: require('../../assets/images/index/brands/logo_安科.png'),
-            name: '安科'
-          },
-          {
-            imgUrl: require('../../assets/images/index/brands/logo_佳能.png'),
-            name: '佳能'
-          }
+        brandsList: [
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_万东.png'),
+          //     name: '万东'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_飞利浦.png'),
+          //     name: '飞利浦'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_明峰.png'),
+          //     name: '明峰'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_联影.png'),
+          //     name: '联影'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_朗润.png'),
+          //     name: '朗润'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_康达洲际.png'),
+          //     name: '康达洲际'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_奥泰.png'),
+          //     name: '奥泰'
+          //   }, {
+          //     imgUrl: require('../../assets/images/index/brands/logo_安科.png'),
+          //     name: '安科'
+          //   },
+          //   {
+          //     imgUrl: require('../../assets/images/index/brands/logo_佳能.png'),
+          //     name: '佳能'
+          //   }
 
         ],
         classDatas: [],
@@ -292,20 +299,65 @@
     },
     methods: {
       getData() {
-        //获取品牌列表
-        getBrandsList({limit:9}).then(response => {
-          console.log("获取分类：", response)
+        //获取九宫格推荐商品
+        recommendGoods({
+          limit: 9
+        }).then(response => {
+          console.log("九宫格推荐商品：", response)
+          this.recommendGoods = response.data
         })
-        let data = {
-          pageNo: 1,
-          pageSize: 12,
-          articleType: 1,
-          id:'',
-          keyType: '',
-          keyword: ''
-        }
-        demandList(data).then(response => {
-          console.log(response.data.data)
+        //获取品牌列表
+        getBrandsList({
+          limit: 9
+        }).then(response => {
+          console.log("获取分类：", response)
+          this.brandsList = response.data
+          for (var index in this.brandsList) {
+            if (this.brandsList[index].brandLogo.indexOf("http://") == -1) {
+              this.brandsList[index].brandLogo = 'http://image.yijiequan.cn/' + this.brandsList[index].brandLogo
+              console.log("logo:", index)
+            }
+          }
+        })
+        // 需求类型1-求购设备 2-项目外包 3-灵活兼职
+        articleList({
+          limit: 12,
+          articleType: 1
+        }).then(response => {
+          console.log('热门求购+设备维修：', response)
+        })
+        articleList({
+          limit: 12,
+          articleType: 2
+        }).then(response => {
+          console.log('设备维修：', response)
+        })
+        //商品类型 material-配件  equipment-设备器械
+        equipmentList({
+          goodsType: 'material',
+          limit: 10
+        }).then(response => {
+          if (response.code == 10000) {
+            this.productList = response.data
+          } else {
+            this.productList = []
+          }
+          console.log('医疗器械：', response)
+        })
+        equipmentList({
+          goodsType: 'material',
+          limit: 10
+        }).then(response => {
+          console.log('配件专区：', response)
+        })
+        //获取企业服务-个人工程师
+        // 店铺类型 personal-个人 company-企业
+        storeList({
+          limit: 5,
+          storeType: 'company'
+        }).then(response => {
+          console.log('企业服务：', response)
+          this.companyList = response.data
         })
       },
       personCenter() {
@@ -340,7 +392,7 @@
           // replace: true
         })
       },
-      register(){
+      register() {
         this.$router.push({
           path: '/register',
           // replace: true
@@ -659,7 +711,8 @@
               font-weight: 400;
 
             }
-            .btn+.btn{
+
+            .btn+.btn {
               margin-left: 8px;
             }
 
@@ -667,7 +720,8 @@
               background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
               color: #FFFFFF;
             }
-            .login:hover{
+
+            .login:hover {
               opacity: 0.8;
             }
 
@@ -675,9 +729,10 @@
               background: #F6F6F6;
               color: #333333;
             }
-            .register:hover{
-               background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
-                color: #FFFFFF;
+
+            .register:hover {
+              background: linear-gradient(0deg, #69C0FF 0%, #48AFF9 99%);
+              color: #FFFFFF;
             }
           }
 
@@ -957,6 +1012,7 @@
         transition: all 0.6s;
 
         img {
+          max-width: 100%;
           width: auto;
           transform: scale(1);
           transition: all .3s ease-in-out;

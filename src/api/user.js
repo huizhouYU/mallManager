@@ -35,7 +35,7 @@ export function sendMsg(data) {
 //注册
 export function register(data) {
   return request({
-    url: '/user/register',
+    url: '/register',
     method: 'post',
     data:data
   })

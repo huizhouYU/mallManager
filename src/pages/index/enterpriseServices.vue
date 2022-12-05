@@ -6,18 +6,17 @@
       <div :class="['item','item'+index]" v-for="(item,index) in companyList">
         <!-- 第一个 -->
         <div class="flex-column-around-center first-item" v-if="index == 0">
-          <div class="flex-center-center img-div">
-            <!-- <el-carousel :interval="4000" type="card" height="120px"> -->
-            <el-carousel indicator-position="outside">
+          <div class="flex-center-center img-div">             <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
+           <!-- <el-carousel indicator-position="outside">
               <el-carousel-item v-for="imgSrc in item.imgList" :key="imgSrc">
                 <img :src="imgSrc" alt="">
               </el-carousel-item>
-            </el-carousel>
+            </el-carousel> -->
           </div>
-          <div class="flex-start-center company-name">{{item.companyName}}</div>
+          <div class="flex-start-center company-name">{{item.storeName}}</div>
           <div class="flex-start-start company-info-item">
             <div class="key">联系人:</div>
-            <div class="value">{{item.name}}</div>
+            <div class="value">{{item.ownerName}}</div>
           </div>
           <div class="flex-start-start company-info-item">
             <div class="key">所属分类：</div>
@@ -26,21 +25,21 @@
           <div class="flex-start-start company-info-item">
             <div class="key">公司地址：</div>
             <div class="value address">
-              <span>{{item.address}}</span>
+              <span>{{item.region}}{{item.address}}</span>
             </div>
           </div>
           <div class="flex-start-start company-info-item">
             <div class="key ">公司简介：</div>
             <div class="value describe">
-              <span>{{item.describe}}</span>
+              <span>{{item.description}}</span>
             </div>
           </div>
         </div>
         <!-- 其他 -->
         <div class="flex-start-start item-content" v-else>
-          <img :src="item.imgList[0]" alt="">
+          <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
           <div class="flex-column-between-start other-info">
-            <div class="company-name">{{item.companyName}}</div>
+            <div class="company-name">{{item.storeName}}</div>
             <div class="flex-start-start company-info-item">
               <div class="key">所属分类：</div>
               <div class="value">{{item.type}}</div>
@@ -48,7 +47,7 @@
             <div class="flex-start-start company-info-item">
               <div class="key">公司地址：</div>
               <div class="value address">
-                <span>{{item.address}}</span>
+                <span>{{item.region}}{{item.address}}</span>
               </div>
             </div>
             <div class="flex-center-center go-company">进入店铺</div>
@@ -66,70 +65,71 @@
     components: {
       titleMore
     },
+    props: ['companyList'],
     data() {
       return {
         title: "企业服务",
-        companyList: [{
-            companyName: '这是公司名称',
-            name: '肖尔',
-            type: '医疗器械二类',
-            address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 进门左转第一期三号楼14层24铺',
-            describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-            imgList: [
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../assets/images/index/buyer/pic_personal_recommend.png'),
-              require('../../assets/images/index/pic_left.png'),
-            ]
-          },
-          {
-            companyName: '这是公司名称',
-            name: '肖尔',
-            type: '医疗器械二类',
-            address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-            describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-            imgList: [
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-            ]
-          },
-          {
-            companyName: '这是公司名称',
-            name: '肖尔',
-            type: '医疗器械二类',
-            address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-            describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-            imgList: [
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-            ]
-          },
-          {
-            companyName: '这是公司名称',
-            name: '肖尔',
-            type: '医疗器械二类',
-            address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-            describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-            imgList: [
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-            ]
-          },
-          {
-            companyName: '这是公司名称',
-            name: '肖尔',
-            type: '医疗器械二类',
-            address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-            describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-            imgList: [
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-              require('../../../src/assets/images/index/pic_business.png'),
-            ]
-          }
-        ],
+        // companyList: [{
+        //     companyName: '这是公司名称',
+        //     name: '肖尔',
+        //     type: '医疗器械二类',
+        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 进门左转第一期三号楼14层24铺',
+        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
+        //     imgList: [
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../assets/images/index/buyer/pic_personal_recommend.png'),
+        //       require('../../assets/images/index/pic_left.png'),
+        //     ]
+        //   },
+        //   {
+        //     companyName: '这是公司名称',
+        //     name: '肖尔',
+        //     type: '医疗器械二类',
+        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
+        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
+        //     imgList: [
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //     ]
+        //   },
+        //   {
+        //     companyName: '这是公司名称',
+        //     name: '肖尔',
+        //     type: '医疗器械二类',
+        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
+        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
+        //     imgList: [
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //     ]
+        //   },
+        //   {
+        //     companyName: '这是公司名称',
+        //     name: '肖尔',
+        //     type: '医疗器械二类',
+        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
+        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
+        //     imgList: [
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //     ]
+        //   },
+        //   {
+        //     companyName: '这是公司名称',
+        //     name: '肖尔',
+        //     type: '医疗器械二类',
+        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
+        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
+        //     imgList: [
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //       require('../../../src/assets/images/index/pic_business.png'),
+        //     ]
+        //   }
+        // ],
         productList: [{
             imgPath: require('../../../src/assets/images/index/pic_business.png'),
             name: '欧莱博BY-D-I黄疸仪维修欧莱博BY-D-I黄疸仪维修',
@@ -229,9 +229,10 @@
 
     .item:hover {
       box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
-    .company-name{
-      color: #40A9FF !important;
-    }
+
+      .company-name {
+        color: #40A9FF !important;
+      }
     }
 
     .item {

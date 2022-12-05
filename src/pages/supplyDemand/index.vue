@@ -16,13 +16,26 @@
 <script>
   import supplyDemandItem from '../supplyDemand/supplyDemandItem.vue' //供求信息单个数据
   import recommendationsGoods from '../supplyDemand/recommendationsGoods.vue'//精选推荐
+ // import {
+ //   articleList
+ // } from '@/api/index'
   export default{
     components: {
       supplyDemandItem,recommendationsGoods
     },
+    // mounted() {
+    //   this.getData()
+    // },
     data(){
       return{
       }
+    },
+    methods:{
+      // getData(){
+      //   articleList({goodsType:'material',limit:10}).then(response => {
+      //     console.log('供求信息-需求列表：',response)
+      //   })
+      // }
     }
   }
 </script>

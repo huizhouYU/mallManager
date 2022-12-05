@@ -168,6 +168,8 @@ const actions = {
           commit('SET_INTRODUCTION', "固定无")
           commit('SET_MOBILE', "18154526542")
         } else {
+          commit('SET_TOKEN', '')
+          removeToken()
           reject(response.message)
         }
         resolve(response)

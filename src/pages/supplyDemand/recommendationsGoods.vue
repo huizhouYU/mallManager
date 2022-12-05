@@ -6,6 +6,7 @@
     </div>
     <div v-for="(item,index) in recommendgoodsList" :key="index" class="recommendgoods-item">
       <div class="img-title">
+        <!-- <img :src="'https://images.weserv.nl/?url='+item.imgPath" alt=""> -->
         <img :src="item.imgPath" alt="">
         <div class="bg-title">{{item.title}}</div>
       </div>
@@ -17,6 +18,9 @@
 </template>
 
 <script>
+  import {
+    recommendList
+  } from '@/api/supplyDemand'
   export default {
     data() {
       return {
@@ -41,6 +45,16 @@
           laber: ['飞利浦', '核磁配件']
         }
         ]
+      }
+    },
+    mounted() {
+      this.getData()
+    },
+    methods:{
+      getData(){
+        recommendList().then(response=>{
+          console.log('供求信息-精品推荐：',response)
+        })
       }
     }
   }
