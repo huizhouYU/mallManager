@@ -38,7 +38,7 @@
     <el-container class="module0-header">
       <!-- 头部搜索一栏 -->
       <el-header>
-        <index-header class="index-header"></index-header>
+        <index-header class="index-header" @changeTab="changeTab"></index-header>
       </el-header>
     </el-container>
     <!-- 主要模块 -->

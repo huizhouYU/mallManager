@@ -101,7 +101,7 @@
       selectTab(params){
         this.changeTab(params.path,params.index)
       }
-      
+
     }
   }
 </script>
@@ -127,7 +127,7 @@
     margin-top: 30px;
     padding: 20px 0px;
     width: 100%;
-    z-index: 999;
+    z-index: 99;
     background-color: #fff;
   }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="flex-center-center log-box">
+    <div class="flex-center-center log-box" @click="toIndex">
       <img src="../../assets/images/logo.png" class="herder-logo" />
     </div>
     <div class="search-box">
@@ -50,6 +50,13 @@
         this.$router.push({
           path: '/publishDemandIndex'
         })
+      },
+      toIndex() {
+        this.$router.push({
+          path: '/',
+          replace:true
+        })
+        this.$emit("changeTab",'0')
       }
     }
   }

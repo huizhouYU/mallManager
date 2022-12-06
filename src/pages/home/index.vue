@@ -186,114 +186,11 @@
         productList: [], //医疗器械
         companyList: [], //企业服务
         //热门求购列表
-        hotList: [{
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-        ],
+        hotList: [],
         //设备维修列表
-        equipmentList: [{
-            title: '设备维修分析系统记录维修'
-          },
-          {
-            title: '设备维修分析系统'
-          },
-          {
-            title: '设备维修分析系统'
-          },
-          {
-            title: '设备维修分析系统记录维修'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '设备维修分析系统记录维修'
-          },
-          {
-            title: '动态血压记录分析系统'
-          },
-          {
-            title: '设备维修分析系统'
-          },
-          {
-            title: '设备维修分析系统血压记录分析系统'
-          },
-          {
-            title: '设备维修分析系统'
-          },
-          {
-            title: '动设备维修分析系统'
-          },
-        ],
+        equipmentList: [],
         //品牌logo
-        brandsList: [
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_万东.png'),
-          //     name: '万东'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_飞利浦.png'),
-          //     name: '飞利浦'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_明峰.png'),
-          //     name: '明峰'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_联影.png'),
-          //     name: '联影'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_朗润.png'),
-          //     name: '朗润'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_康达洲际.png'),
-          //     name: '康达洲际'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_奥泰.png'),
-          //     name: '奥泰'
-          //   }, {
-          //     imgUrl: require('../../assets/images/index/brands/logo_安科.png'),
-          //     name: '安科'
-          //   },
-          //   {
-          //     imgUrl: require('../../assets/images/index/brands/logo_佳能.png'),
-          //     name: '佳能'
-          //   }
-
-        ],
+        brandsList: [],
         classDatas: [],
       }
     },
@@ -314,8 +211,7 @@
           this.brandsList = response.data
           for (var index in this.brandsList) {
             if (this.brandsList[index].brandLogo.indexOf("http://") == -1) {
-              this.brandsList[index].brandLogo = 'http://image.yijiequan.cn/' + this.brandsList[index].brandLogo
-              console.log("logo:", index)
+              this.brandsList[index].brandLogo = 'http://www.yijiequan.cn/' + this.brandsList[index].brandLogo
             }
           }
         })
@@ -324,17 +220,19 @@
           limit: 12,
           articleType: 1
         }).then(response => {
-          console.log('热门求购+设备维修：', response)
+          console.log('热门求购：', response)
+          this.hotList = response.data
         })
         articleList({
           limit: 12,
           articleType: 2
         }).then(response => {
           console.log('设备维修：', response)
+          this.equipmentList = response.data
         })
         //商品类型 material-配件  equipment-设备器械
         equipmentList({
-          goodsType: 'material',
+          goodsType: 'equipment',
           limit: 10
         }).then(response => {
           if (response.code == 10000) {
@@ -371,12 +269,18 @@
       },
       jumpAllGoods(id) {
         this.$emit("changeTab", '-1')
+        // this.$router.push({
+        //   path: '/allGoods',
+        //   query: {
+        //     id: id
+        //   }
+        // })
+        console.log("id:",id)
         this.$router.push({
-          path: '/allGoods',
-          query: {
-            id: id
-          }
+          path: '/goodDetail',
+          query:{goodsId:id}
         })
+
       },
       enterClass(index) {
         //根据id去请求classDatas数据
@@ -736,18 +640,6 @@
             }
           }
 
-          // .explain::before {
-          //   position: absolute;
-          //   content: "";
-          //   display: block;
-          //   background-color: #333;
-          //   top: -10px;
-          //   left: 35%;
-          //   border-left: 10px solid #fff;
-          //   border-right: 10px solid #fff;
-          //   border-bottom: 10px solid #FFF6F6;
-          // }
-
           // 一键发布需求
           .btn-demand {
             width: 170px;
@@ -1012,7 +904,7 @@
         transition: all 0.6s;
 
         img {
-          max-width: 100%;
+          max-width: 65%;
           width: auto;
           transform: scale(1);
           transition: all .3s ease-in-out;

@@ -1,17 +1,19 @@
 <template>
   <div class="shop-detail-box">
-    <div class="location">西门子 > 核磁共振 > CT > 西门子Force双源ct</div>
+    <div class="location">{{goodsInfo.cateName}}</div>
     <div class="shop-detail-main">
       <div class="shop-detail-content">
         <div class="shop-detail-img-info">
           <div class="img-list">
-            <img class="big-img" :src="goodsInfo.bigImgPath" alt="">
+            <img class="big-img" :src="'https://images.weserv.nl/?url='+ bigImgPath" alt="">
             <div class="img-ul">
               <span>
                 <i class="iconfont">&#xe642;</i>
               </span>
               <ul>
-                <li v-for="(item,index) in imgList" :key="index"><img :src="item" alt="" @click="changeImg(item)"></li>
+                <li v-for="(item,index) in goodsInfo.imageList" :key="index">
+                  <img :src="'https://images.weserv.nl/?url='+item" alt="" @click="changeImg(item)">
+                </li>
               </ul>
               <span>
                 <i class="iconfont">&#xe641;</i>
@@ -21,23 +23,24 @@
           <div class="goods-info">
             <!-- 商品名称 -->
             <div class="goods-title">
-              {{goodsInfo.name}}
+              {{goodsInfo.goodsName}}
             </div>
             <!-- 卖点：标签 -->
             <ul>
-              <li v-for="(item,index) in goodsInfo.lableList">{{item}}</li>
+              <li>{{goodsInfo.brand}}</li>
+              <li v-for="(item,index) in goodsInfo.tagList" v-show=" goodsInfo.tagList.length>0">{{item}}</li>
             </ul>
             <!-- 价格 -->
             <div class="info-item">
               <span class="title letterSpacing">价格</span>
 
               <div class="price">￥
-                <template v-if="goodsInfo.goodType == 0">
+                <template v-if="goodsInfo.saleType == 2">
                   <span>议价</span>
                   <div class="remark">
                     <img src="../../assets/images/shop/icon_remark_warning.png" alt="">
                     议价订单提交申请后可在全部订单中查看该订单是否审核通过
-                    </div>
+                  </div>
                 </template>
                 <template v-else>
                   <span>{{goodsInfo.price}}</span>
@@ -46,13 +49,24 @@
             </div>
             <!-- 型号 -->
             <div class="info-item">
-              <span class="title letterSpacing">型号</span>
-              <div class="grey-box">{{goodsInfo.model}}</div>
+              <span class="title">商品编码</span>
+              <div class="grey-box">{{goodsInfo.goodsPn}}</div>
             </div>
             <!-- 新旧程度 -->
             <div class="info-item">
               <span class="title">新旧程度</span>
-              <div class="grey-box">{{goodsInfo.oldNewDegree}}</div>
+              <div class="grey-box">
+                <template v-if="goodsInfo.degree == 1">一成新</template>
+                <template v-else-if="goodsInfo.degree == 2">二成新</template>
+                <template v-else-if="goodsInfo.degree == 3">三成新</template>
+                <template v-else-if="goodsInfo.degree == 4">四成新</template>
+                <template v-else-if="goodsInfo.degree == 5">五成新</template>
+                <template v-else-if="goodsInfo.degree == 6">六成新</template>
+                <template v-else-if="goodsInfo.degree == 7">七成新</template>
+                <template v-else-if="goodsInfo.degree == 8">八成新</template>
+                <template v-else-if="goodsInfo.degree == 9">九成新</template>
+                <template v-else-if="goodsInfo.degree == 10">十成新</template>
+              </div>
             </div>
             <!-- 数量 -->
             <div class="info-item">
@@ -108,11 +122,28 @@
         <div class="product-introduction">产品介绍</div>
         <div class="product-info">
           <div class="product-info-item">品牌：{{goodsInfo.brand}}</div>
-          <div class="product-info-item">新旧程度：{{goodsInfo.oldNewDegree}}</div>
-          <div class="product-info-item">所属类目：{{goodsInfo.category}}</div>
-          <div class="product-info-item">保质期：{{goodsInfo.qualityGuaranteePeriod}}</div>
+          <div class="product-info-item">新旧程度：
+            <template v-if="goodsInfo.degree == 1">一成新</template>
+            <template v-else-if="goodsInfo.degree == 2">二成新</template>
+            <template v-else-if="goodsInfo.degree == 3">三成新</template>
+            <template v-else-if="goodsInfo.degree == 4">四成新</template>
+            <template v-else-if="goodsInfo.degree == 5">五成新</template>
+            <template v-else-if="goodsInfo.degree == 6">六成新</template>
+            <template v-else-if="goodsInfo.degree == 7">七成新</template>
+            <template v-else-if="goodsInfo.degree == 8">八成新</template>
+            <template v-else-if="goodsInfo.degree == 9">九成新</template>
+            <template v-else-if="goodsInfo.degree == 10">十成新</template>
+          </div>
+          <div class="product-info-item">所属类目：{{goodsInfo.cateName}}</div>
+          <div class="product-info-item">保质期：{{goodsInfo.qualityTime}}
+            <template v-if="goodsInfo.qualityTimeUnit == 'day'">日</template>
+            <template v-else-if="goodsInfo.qualityTimeUnit == 'month'">月</template>
+            <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
+          </div>
         </div>
-        <img class="shop-details-img" src="../../assets/images/shop/pic_Details Page.png" alt="">
+        <!-- <img class="shop-details-img" src="../../assets/images/shop/pic_Details Page.png" alt=""> -->
+        <img class="shop-details-img" :src="goodsInfo.longImage" alt="" v-if="goodsInfo.longImage != ''">
+
 
       </div>
       <!-- 店内推荐 -->
@@ -123,19 +154,17 @@
 
 <script>
   import storeRecommendation from '../../pages/shop/storeRecommendation.vue'
+  import {
+    goodsDetail
+  } from '@/api/goods'
   export default {
     components: {
       storeRecommendation
     },
     data() {
       return {
-        imgList: [
-          require('../../assets/images/shop/pic_Commodity Details_ct.png'),
-          require('../../assets/images/shop/pic_Commodity Details_ct2.jpg'),
-          require('../../assets/images/shop/pic_Commodity Details_ct.png'),
-          require('../../assets/images/shop/pic_Commodity Details_ct.png'),
-          require('../../assets/images/shop/pic_Commodity Details_ct.png')
-        ],
+        goodsId: '',
+        bigImgPath: '',
         num: 1,
         goodsInfo: {
           goodType: '0', //0:议价商品，1：普通商品
@@ -151,9 +180,21 @@
         }
       }
     },
+    mounted() {
+      this.goodsId = this.$route.query.goodsId
+      goodsDetail({
+        goodsId: this.goodsId
+      }).then(response => {
+        console.log("获取商品详情：", response)
+        this.goodsInfo = response.data
+        this.bigImgPath = this.goodsInfo.imageList[0]
+        console.log(this.goodsInfo.cateName)
+        // this.goodsInfo.cateName = this.goodsInfo.cateName.replace("\\",">")
+      })
+    },
     methods: {
       changeImg(imgPath) {
-        this.goodsInfo.bigImgPath = imgPath
+        this.bigImgPath = imgPath
       },
       addNum() {
         this.num += 1;
@@ -226,6 +267,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 10px;
 
             i {
               cursor: pointer;
@@ -270,7 +312,6 @@
               line-height: 14px;
               height: 14px;
               padding: 0px 8px;
-              border-right: 1px solid #666666;
               font-size: 12px;
               font-family: Microsoft YaHei;
               font-weight: 400;
@@ -281,8 +322,8 @@
               padding-left: 0px;
             }
 
-            li:last-child {
-              border-right: none;
+            li+li {
+              border-left: 1px solid #666666;
             }
           }
 
@@ -315,15 +356,18 @@
               span {
                 font-size: 16px;
               }
-              .remark{
+
+              .remark {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-                img{
+
+                img {
                   width: 10px;
                   height: 10px;
                   margin-right: 4px;
                 }
+
                 font-size: 12px;
                 font-family: Microsoft YaHei;
                 font-weight: 400;
@@ -483,8 +527,9 @@
               }
 
             }
-            .service:hover{
-              .QR-code{
+
+            .service:hover {
+              .QR-code {
                 display: block;
               }
             }

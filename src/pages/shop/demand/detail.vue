@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class="demand-detail-content">
     <div class="current-chosed">{{currentChosed.join('>')}}</div>
     <div class="main-box">
       <div class="left-box">
         <div class="title">
-          <div class="name">Philips MR维修及配件供应
+          <div class="name">{{demandInfo.title}}
             <img src="../../../assets/images/index/icon_new_red.png" alt="">
           </div>
-          <span class="publish-time">发布时间：2028.12.16</span>
+          <span class="publish-time">发布时间：{{demandInfo.updatedAt}}</span>
         </div>
         <!-- 基本信息 -->
-        <div class="basic-information">
+        <div class="basic-information" v-if="demandInfo.articleType != 3">
           <div class="public-top-title">
             <img src="../../../assets/images/shop/icon_triangle_right.png" alt="">
             <span>基本信息</span>
@@ -23,10 +23,14 @@
               <li>设备型号</li>
             </ul>
             <ul class="two">
-              <li>求购设备</li>
-              <li>核磁</li>
-              <li>设备品牌</li>
-              <li>philips MR</li>
+              <li>
+                <template v-if="demandInfo.articleType == 1">求购设备</template>
+                <template v-else-if="demandInfo.articleType == 2">项目外包</template>
+                <template v-else-if="demandInfo.articleType == 3">灵活兼职</template>
+              </li>
+              <li>{{demandInfo.equipmentName || '-'}}</li>
+              <li>{{demandInfo.brandName|| '-'}}</li>
+              <li>{{demandInfo.equipmentType|| '-'}}</li>
             </ul>
           </div>
         </div>
@@ -37,11 +41,9 @@
             <span>详细描述</span>
           </div>
           <div class="description">
-            <span>
-              专业维修飞利浦MR全部型号（包含不限于intera，achieva，multiva，ingenia，prodiva，elitios），原厂的技术，第三方专业高效的服务态度，飞利浦MR各型号配件齐全，工程师目前常驻华东区安徽跟山东，及东北区辽宁省，期待你的来电洽谈，承接飞利浦MR维修维保，GPS各型号MR配件供应，技术支持等服务，仓库在总部安徽，可安排仓管发航空件，急客户所急，合肥迅即影像科技有限公司全力为您服务，18855651129许齐（MR技术部技术总监）。
-            </span>
-            <img src="../../../assets/images/shop/pic_Commodity Details_ct.png" alt="">
-            <img src="../../../assets/images/index/demand/pic_gongqiu_tj.png" alt="">
+            <span v-html="demandInfo.description"></span>
+            <!-- <img src="../../../assets/images/shop/pic_Commodity Details_ct.png" alt="">
+            <img src="../../../assets/images/index/demand/pic_gongqiu_tj.png" alt=""> -->
           </div>
         </div>
         <div class="remark">请主动联系我，联系时请说明是在“医界商城”看到的，谢谢！</div>
@@ -50,15 +52,18 @@
         <div class="contact">
           <div class="item">
             <div class="key">联系人:</div>
-            <div class="value">***</div>
+             <div class="value" v-if="token ==null">***</div>
+            <div class="value" v-else>{{demandInfo.linkMan}}</div>
           </div>
           <div class="item">
             <div class="key spacing">电话:</div>
-            <div class="value">188*****888</div>
+            <div class="value" v-if="token ==null">188*****888</div>
+            <div class="value" v-else>{{demandInfo.linkTel}}</div>
           </div>
           <div class="item">
             <div class="key spacing">地区:</div>
-            <div class="value">*****</div>
+            <div class="value"  v-if="token ==null">*****</div>
+            <div class="value"  v-else>{{demandInfo.region}}</div>
           </div>
           <div class="btn-login">
             登录查看联系方式
@@ -94,22 +99,50 @@
 </template>
 
 <script>
+  import {
+    articleDetail
+  } from '@/api/supplyDemand'
+  import {
+    mapGetters
+  } from 'vuex'
   export default {
+    computed: {
+      ...mapGetters([
+        'token'
+      ])
+    },
     props: {
       isShop: {
         type: Boolean,
-        default:true
+        default: true
       }
     },
     data() {
       return {
+        id: '',
+        demandInfo: '',
         currentChosed: ['供求信息', '店铺供求', 'Philips MR维修及配件供应']
       }
+    },
+    mounted() {
+      this.id = this.$route.query.articleId
+      articleDetail({
+        id: this.id
+      }).then(response => {
+        console.log("供求信息详情：", response)
+        console.log("token:",this.token)
+        this.demandInfo = response.data
+        this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://","<img src=\"https://images.weserv.nl/?url=http://")
+      })
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .demand-detail-content {
+    width: 1200px;
+  }
+
   .current-chosed {
     margin: 10px 0px;
     font-size: 12px;
@@ -122,6 +155,7 @@
     display: flex;
     justify-content: flex-start;
     align-self: flex-start;
+
 
     .left-box {
       width: 950px;

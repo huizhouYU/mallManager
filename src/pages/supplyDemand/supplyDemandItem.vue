@@ -1,7 +1,8 @@
 <template>
   <div class="supply-demand-content">
-    <div class="item-card" v-for="(item,index) in demandsList" :key="item.id">
-      <img :src="item.imgPath" alt="" class="demand-img">
+    <div class="item-card" v-for="(item,index) in demandsList" :key="item.articleId">
+      <!-- <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" class="demand-img"> -->
+      <img :src="'https://images.weserv.nl/?url='+item.imageList" alt="" class="demand-img">
       <div class="demand-info">
         <div class="title-type">
           <span class="title">{{item.title}}</span>
@@ -14,31 +15,32 @@
         <div class="term">
           <div class="term-item">
             <span class="term-key">名称</span>
-            <span class="term-value">{{item.name}}</span>
+            <span class="term-value">{{item.equipmentName||'-'}}</span>
           </div>
           <div class="term-item">
             <span class="term-key">品牌</span>
-            <span class="term-value">{{item.brand}}</span>
+            <span class="term-value">{{item.brandName||'-'}}</span>
           </div>
           <div class="term-item">
             <span class="term-key">P/N码</span>
-            <span class="term-value">{{item.PnCode}}</span>
+            <span class="term-value">{{item.pnCode||'-'}}</span>
           </div>
         </div>
         <span class="description">{{item.description}}</span>
         <div class="company">
-          <img src="../../assets/images/index/icon_qi.png" alt="">
-          <span class="company-name">{{item.company}}</span>
+          <img src="../../assets/images/index/icon_qi.png" alt="" v-if="item.stype =='company'">
+          <img src="../../assets/images/index/icon_ge.png" alt="" v-else-if="item.stype =='personal'">
+          <span class="company-name">{{item.storeName}}</span>
         </div>
       </div>
-      <div class="contact">
+      <div class="contact" @click="toDetail(item.articleId)">
         立即联系
       </div>
     </div>
     <div class="pagination">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
+        :page-sizes="[10, 20, 30, 40]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+        :total="totalCount">
       </el-pagination>
     </div>
 
@@ -55,96 +57,42 @@
     },
     data() {
       return {
-        currentPage4: 4,
-        demandsList: [{
-            id: '1',
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            title: '高压蒸汽灭菌器故障解决',
-            articleType: '1', //需求类型1-求购设备 2-项目外包 3-灵活兼职
-            name: '铁线圈',
-            brand: '铁线圈',
-            PnCode: '铁线圈',
-            description: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金结算，欢迎各界新老客户来电咨询、聊天',
-            company: '哈哈哈无限公司',
-            tel: '13965425452'
-          },
-          {
-            id: '2',
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            title: '高压蒸汽灭菌器故障解决',
-            articleType: '2', //需求类型1-求购设备 2-项目外包 3-灵活兼职
-            name: '铁线圈',
-            brand: '铁线圈',
-            PnCode: '铁线圈',
-            description: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金结算，欢迎各界新老客户来电咨询、聊天',
-            company: '哈哈哈无限公司',
-            tel: '13965425452'
-          },
-          {
-            id: '3',
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            title: '高压蒸汽灭菌器故障解决',
-            articleType: '3', //需求类型1-求购设备 2-项目外包 3-灵活兼职
-            name: '铁线圈',
-            brand: '铁线圈',
-            PnCode: '铁线圈',
-            description: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金结算，欢迎各界新老客户来电咨询、聊天',
-            company: '哈哈哈无限公司',
-            tel: '13965425452'
-          },
-          {
-            id: '4',
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            title: '高压蒸汽灭菌器故障解决',
-            articleType: '1', //需求类型1-求购设备 2-项目外包 3-灵活兼职
-            name: '铁线圈',
-            brand: '铁线圈',
-            PnCode: '铁线圈',
-            description: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金结算，欢迎各界新老客户来电咨询、聊天',
-            company: '哈哈哈无限公司',
-            tel: '13965425452'
-          },
-          {
-            id: '5',
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            title: '高压蒸汽灭菌器故障解决',
-            articleType: '3', //需求类型1-求购设备 2-项目外包 3-灵活兼职
-            name: '铁线圈',
-            brand: '铁线圈',
-            PnCode: '铁线圈',
-            description: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金结算，欢迎各界新老客户来电咨询、聊天',
-            company: '哈哈哈无限公司',
-            tel: '13965425452'
-          }
-        ]
+        totalCount: 0,
+        page: {
+          pageNo: 1,
+          pageSize: 10,
+        },
+        demandsList: []
       }
     },
     methods: {
-      getData(){
-        // pageNo	页码,示例值(1)	query	true
-        // integer(int32)
-        // pageSize	每页记录数,示例值(10)	query	true
-        // integer(int32)
-        // articleType	需求类型1-求购设备 2-项目外包 3-灵活兼职,示例值(1)	query	false
-        // integer(int32)
-        // keyType	关键字类型 title-标题 equipment-设备型号	query	false
-        // string
-        // keyword	搜索关键字	query	false
-        // string
-        var params = {
-          pageNo:1,
-          pageSize:10,
-        }
-
-        articleList(params).then(response => {
-          console.log('供求信息-需求列表：',response)
+      getData() {
+        articleList(this.page).then(response => {
+          console.log('供求信息-需求列表：', response)
+          this.page.pageNo = response.data.pageNum
+          this.page.pageSize = response.data.pageSize
+          this.totalCount = response.data.totalCount
+          this.demandsList = response.data.list
         })
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.page.pageSize = val
+        this.getData()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.page.pageNo = val
+        this.getData()
+      },
+      toDetail(articleId) {
+        this.$router.push({
+          path: '/demandDetail',
+          query: {
+            articleId
+          }
+        })
+        document.documentElement.scrollTop = 0;
       }
     },
   }
@@ -223,6 +171,11 @@
 
           .term-key {
             background: #F4F4F4;
+            width: 60px;
+          }
+
+          .term-value {
+            width: 94px;
           }
 
           .term-key,
@@ -236,6 +189,11 @@
             display: inline-block;
             padding: 0px 15px;
             border: 1px solid #F4F4F4;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
           }
         }
       }

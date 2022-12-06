@@ -34,68 +34,13 @@
     },
     data() {
       return {
-        // goodsList: [{
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: ''
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: ''
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: ''
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        //   {
-        //     imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-        //     name: '新版精密卡尔费休水分测定仪',
-        //     brand: '飞利浦',
-        //     price: '45'
-        //   },
-        // ]
       }
     },
     methods: {
       jumpShop(goodsId) {
         this.$router.push({
           path: '/goodDetail',
-          params:{goodsId}
+          query:{goodsId}
         })
       }
     }

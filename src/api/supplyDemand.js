@@ -7,6 +7,14 @@ export function articleList(query) {
     params:query
   })
 }
+//需求详情
+export function articleDetail(query) {
+  return request({
+    url: 'article/detail',
+    method: 'get',
+    params:query
+  })
+}
 
 //精选推荐
 export function recommendList(query) {
