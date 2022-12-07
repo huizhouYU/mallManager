@@ -21,7 +21,8 @@ const state = {
   avatar: '',
   introduction: '',
   mobile: '',
-  roles: []
+  roles: [],
+  currentLookStoreId: ''
 }
 
 const mutations = {
@@ -48,10 +49,21 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     // console.log("保存roles")
     state.roles = roles
+  },
+  SET_STOREID: (state, storeID) => {
+    // console.log("保存roles")
+    state.currentLookStoreId = storeID
   }
 }
 
 const actions = {
+  setStoreId({ commit }, storeId) {
+    
+    return new Promise((resolve, reject) => {
+      commit('SET_STOREID', storeId)
+      resolve("保存当前浏览的店铺ID成功")
+    })
+  },
   // 用户名密码登录
   login({
     commit

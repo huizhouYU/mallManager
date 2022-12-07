@@ -2,7 +2,13 @@
   <div class="supply-demand-content">
     <div class="item-card" v-for="(item,index) in demandsList" :key="item.articleId">
       <!-- <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" class="demand-img"> -->
-      <img :src="'https://images.weserv.nl/?url='+item.imageList" alt="" class="demand-img">
+      <template v-if="item.imageList != null && item.imageList.length>0">
+        <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" class="demand-img">
+      </template>
+      <template v-else>
+        <img src="../../assets/images/index/s_logo.jpg" alt="" class="demand-img">
+      </template>
+
       <div class="demand-info">
         <div class="title-type">
           <span class="title">{{item.title}}</span>
@@ -26,7 +32,7 @@
             <span class="term-value">{{item.pnCode||'-'}}</span>
           </div>
         </div>
-        <span class="description">{{item.description}}</span>
+        <span class="description">{{item.serviceContent}}</span>
         <div class="company">
           <img src="../../assets/images/index/icon_qi.png" alt="" v-if="item.stype =='company'">
           <img src="../../assets/images/index/icon_ge.png" alt="" v-else-if="item.stype =='personal'">
@@ -104,6 +110,10 @@
     grid-template-columns: repeat(1, auto);
   }
 
+  .item-card:hover {
+    box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
+  }
+
   .item-card {
     height: 180px;
     width: 920px;
@@ -171,7 +181,7 @@
 
           .term-key {
             background: #F4F4F4;
-            width: 60px;
+            width: 74px;
           }
 
           .term-value {
@@ -245,6 +255,10 @@
       justify-content: center;
       align-content: center;
       cursor: pointer;
+    }
+
+    .contact:hover {
+      background: #40A9FF;
     }
   }
 

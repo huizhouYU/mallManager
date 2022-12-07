@@ -71,7 +71,9 @@
 
 <script>
   import goodItem from '../../pages/allGoods/goodItem.vue'
-
+import {
+    mapGetters
+  } from 'vuex'
   import {
     goodsList
   } from '@/api/goods'
@@ -79,13 +81,19 @@
     components: {
       goodItem
     },
+    computed: {
+      ...mapGetters([
+        'currentLookStoreId'
+      ])
+    },
     data() {
       return {
-        currentPage4: 4,
+
         total: 0, //总条数
         page: {
           pageNo: 1,
-          pageSize: 12
+          pageSize: 12,
+          storeId:''
         },
         goodsDataList:[],
         isBrandLogoStow: true,
@@ -161,6 +169,7 @@
       if (this.selectItem.model.length > 15) {
         this.isModelShow = true
       }
+      this.page.storeId = this.currentLookStoreId
       this.getData()
     }
   }

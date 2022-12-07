@@ -3,34 +3,34 @@
     <div class="contact-info">
       <div class="contact-info-left">
         <div class="contact-info-item">
-          <span class="item-left">霍先生</span>
-          <span class="phone">189 5687 2499</span>
+          <span class="item-left">{{storeInfo.ownerName}}</span>
+          <span class="phone">{{storeInfo.tel}}</span>
         </div>
         <div class="contact-info-item">
-          <span class="">哈哈哈哈哈哈无限公司</span>
+          <span class="">{{storeInfo.storeName}}</span>
         </div>
         <div class="contact-info-item">
           <span class="item-left">电话</span>
-          <span class="">0551-59862689</span>
+          <span class="">{{storeInfo.tel}}</span>
         </div>
         <div class="contact-info-item">
           <span class="item-left">QQ</span>
-          <span class="">23546891251</span>
+          <span class="">{{storeInfo.imQq||'-'}}</span>
         </div>
         <div class="contact-info-item">
           <span class="item-left">地址</span>
-          <span class="">四川 成都 哈哈区 哈哈路18号发财广场8栋888室 拷贝</span>
+          <span class="">{{storeInfo.regionName}}{{storeInfo.address}}</span>
         </div>
 
       </div>
       <div class="contact-info-right">
-        <v-amap></v-amap>
+        <v-amap :latitude="Number(storeInfo.latitude)" :longitude="Number(storeInfo.longitude)"></v-amap>
       </div>
     </div>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <span>店内推荐</span>
-      <good-item></good-item>
+      <good-item :goodsList="goodsDataList"></good-item>
     </div>
   </div>
 </template>
@@ -38,10 +38,53 @@
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
   import vAmap from '../../../components/amaps.vue'
+  import {
+    mapGetters
+  } from 'vuex'
+  import {
+    goodsList
+  } from '@/api/goods'
+  import {
+    storeDetail
+  } from '@/api/store'
   export default {
+    computed: {
+      ...mapGetters([
+        'currentLookStoreId'
+      ])
+    },
     components: {
       goodItem,
       vAmap
+    },
+    data() {
+      return {
+        storeInfo: '',
+        goodsDataList: [],
+      }
+    },
+    mounted() {
+      this.getData()
+    },
+    methods: {
+      getData() {
+        storeDetail({
+          storeId: this.currentLookStoreId
+        }).then(response => {
+          console.log("获取店铺详情：", response)
+          this.storeInfo = response.data
+        })
+        var page = {
+          pageNo: 1,
+          pageSize: 10,
+          storeId: this.currentLookStoreId
+        }
+        goodsList(page).then(response => {
+          console.log("获取店铺内商品列表:", response)
+          this.goodsDataList = response.data.list
+        })
+      },
+
     }
   }
 </script>

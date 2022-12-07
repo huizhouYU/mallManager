@@ -74,13 +74,13 @@
           </template>
         </div>
       </div>
-      <good-item></good-item>
+      <good-item :goodsList="goodsDataList"></good-item>
     </div>
 
     <div class="pagination">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
+        :page-sizes="[12, 24, 36, 48]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </div>
   </div>
@@ -88,13 +88,21 @@
 
 <script>
   import goodItem from '../../pages/allGoods/goodItem.vue'
+  import {
+    goodsList
+  } from '@/api/goods'
   export default {
     components: {
       goodItem
     },
     data() {
       return {
-        currentPage4: 4,
+        total: 0, //总条数
+        page: {
+          pageNo: 1,
+          pageSize: 12,
+          goodsType:'equipment'//商品类型 material-配件 equipment-设备器械
+        },
         isClassificationStow: true,
         isClassificationShow: false, //【分类】是否显示‘收起’、‘展开’
         isEquipmentStow: true,
@@ -127,15 +135,29 @@
           ]
 
           // model:['全部','手术刀柄和刀片','皮片刀','疣体剥离刀','柳叶刀','铲刀','普通手术剪','组织剪','综合组织剪','拆线剪','教育用手术剪','教学用直尖针','普通持针钳','创夹缝拆钳','皮肤轧钳','子弹钳','纱布剥离钳']
-        }
+        },
+        goodsDataList:[]
       }
     },
     methods: {
+      getData(){
+        goodsList(this.page).then(response=>{
+          console.log("获取医疗器械商品列表：",response)
+          this.total = response.data.totalCount
+          this.page.pageNo = response.data.pageNum
+          this.page.pageSize =response.data.pageSize
+          this.goodsDataList = response.data.list
+        })
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.page.pageSize = val
+        this.getData()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.page.pageNo = val
+        this.getData()
       }
     },
     mounted() {
@@ -155,6 +177,7 @@
       if (this.selectItem.model.length > 15) {
         this.isModelShow = true
       }
+      this.getData()
     }
   }
 </script>

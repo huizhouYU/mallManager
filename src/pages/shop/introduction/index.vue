@@ -3,18 +3,18 @@
     <!-- 公司信息 -->
     <div class="company">
       <div class="company-left">
-        <span class="company-name">迅即网络科技有限公司</span>
+        <span class="company-name">{{storeInfo.storeName}}</span>
         <div class="item">
           <span>联系人：</span>
-          <span>霍先生</span>
+          <span>{{storeInfo.ownerName}}</span>
         </div>
         <div class="item">
           <span>联系电话：</span>
-          <span>189 5687 2499</span>
+          <span>{{storeInfo.tel}}</span>
         </div>
         <div class="item-sort">
           <span>店铺分类：</span>
-          <span>医用冷疗|低温|冷藏设备及器具</span>
+          <span>待补充</span>
         </div>
       </div>
       <div class="company-right">
@@ -39,32 +39,82 @@
     </div>
     <!-- 公司简介 -->
     <div class="introduction">
-      <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt="">
-      <span>
-        浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包一级企业，公司注册资本10868万元，净资产达3、7亿多元。下辖上海蔚昕建设发展有限公司等分布在全国各地的九家分公司。集团公司具有建筑装修装饰工程、地基与基础工程、钢结构工程、市政公用工程施工总承包，环保施工等专业承包资质，是一家集建筑、房地产开啊发、建材经营等为一体的大型建筑企业，可承揽工业、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。
+      <template v-if="storeInfo.storeBanner != null && storeInfo.storeBanner != ''">
+        <img :src="'https://images.weserv.nl/?url='+storeInfo.storeBanner" alt="">
+      </template>
+      <template v-else>
+        <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt="">
+      </template>
+      <!-- <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt=""> -->
+      <span v-html="storeInfo.description">
+        <!-- 浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包一级企业，公司注册资本10868万元，净资产达3、7亿多元。下辖上海蔚昕建设发展有限公司等分布在全国各地的九家分公司。集团公司具有建筑装修装饰工程、地基与基础工程、钢结构工程、市政公用工程施工总承包，环保施工等专业承包资质，是一家集建筑、房地产开啊发、建材经营等为一体的大型建筑企业，可承揽工业、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。 -->
       </span>
     </div>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
-      <good-item></good-item>
+      <good-item :goodsList="goodsDataList"></good-item>
     </div>
   </div>
 </template>
 
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
-  export default{
-    components:{
+  import {
+    mapGetters
+  } from 'vuex'
+  import {
+    goodsList
+  } from '@/api/goods'
+  import {
+    storeDetail
+  } from '@/api/store'
+  export default {
+    computed: {
+      ...mapGetters([
+        'currentLookStoreId'
+      ])
+    },
+    components: {
       goodItem
+    },
+    data() {
+      return {
+        storeInfo: '',
+        goodsDataList: [],
+      }
+    },
+    mounted() {
+      this.getData()
+    },
+    methods: {
+      getData() {
+        storeDetail({
+          storeId: this.currentLookStoreId
+        }).then(response => {
+          console.log("获取店铺详情：", response)
+          this.storeInfo = response.data
+        })
+        var page = {
+          pageNo: 1,
+          pageSize: 10,
+          storeId: this.currentLookStoreId
+        }
+        goodsList(page).then(response => {
+          console.log("获取店铺内商品列表:", response)
+          this.goodsDataList = response.data.list
+        })
+      },
+
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .introduction-box{
+  .introduction-box {
     width: 1200px;
   }
+
   .company {
     margin-top: 20px;
     width: 1200px;
@@ -157,7 +207,8 @@
       }
     }
   }
-// 公司简介
+
+  // 公司简介
   .introduction {
     margin-top: 20px;
     width: 1200px;
@@ -169,13 +220,15 @@
     display: flex;
     justify-content: space-between;
     align-self: flex-start;
-    img{
+
+    img {
       width: 200px;
       height: 180px;
       margin-top: 10px;
       margin-right: 16px;
     }
-    span{
+
+    span {
       font-size: 14px;
       font-family: Microsoft YaHei;
       font-weight: 400;
@@ -183,8 +236,9 @@
       line-height: 24px;
     }
   }
+
   // 店内推荐
-  .shop-recommend{
+  .shop-recommend {
     margin-top: 20px;
     width: 1200px;
     // height: 260px;

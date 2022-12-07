@@ -31,7 +31,7 @@
           <div class="flex-start-start company-info-item">
             <div class="key ">公司简介：</div>
             <div class="value describe">
-              <span>{{item.description}}</span>
+              <span>{{item.serviceContent}}</span>
             </div>
           </div>
         </div>
@@ -69,67 +69,6 @@
     data() {
       return {
         title: "企业服务",
-        // companyList: [{
-        //     companyName: '这是公司名称',
-        //     name: '肖尔',
-        //     type: '医疗器械二类',
-        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 进门左转第一期三号楼14层24铺',
-        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-        //     imgList: [
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../assets/images/index/buyer/pic_personal_recommend.png'),
-        //       require('../../assets/images/index/pic_left.png'),
-        //     ]
-        //   },
-        //   {
-        //     companyName: '这是公司名称',
-        //     name: '肖尔',
-        //     type: '医疗器械二类',
-        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-        //     imgList: [
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //     ]
-        //   },
-        //   {
-        //     companyName: '这是公司名称',
-        //     name: '肖尔',
-        //     type: '医疗器械二类',
-        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-        //     imgList: [
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //     ]
-        //   },
-        //   {
-        //     companyName: '这是公司名称',
-        //     name: '肖尔',
-        //     type: '医疗器械二类',
-        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-        //     imgList: [
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //     ]
-        //   },
-        //   {
-        //     companyName: '这是公司名称',
-        //     name: '肖尔',
-        //     type: '医疗器械二类',
-        //     address: '浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺',
-        //     describe: '浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包承揽工...、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。',
-        //     imgList: [
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //       require('../../../src/assets/images/index/pic_business.png'),
-        //     ]
-        //   }
-        // ],
         productList: [{
             imgPath: require('../../../src/assets/images/index/pic_business.png'),
             name: '欧莱博BY-D-I黄疸仪维修欧莱博BY-D-I黄疸仪维修',

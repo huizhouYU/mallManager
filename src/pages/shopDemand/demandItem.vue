@@ -1,11 +1,17 @@
 <template>
   <div :class="['goods-content',{'goods-content-grid5':grid5}]">
-    <div class="item" v-for="(item,index) in goodsList" :key="index" @click="getDetail(item)">
+    <div class="item" v-for="(item,index) in demandDataList" :key="index" @click="getDetail(item.articleId)">
       <div class="item-img">
-        <img :src="item.imgPath" alt="">
+        <!-- <img :src="'https://images.weserv.nl/?url='+item.imgPath" alt=""> -->
+        <template v-if="item.imageList != null && item.imageList.length>0">
+          <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" >
+        </template>
+        <template v-else>
+          <img src="../../assets/images/index/s_logo.jpg" alt="" >
+        </template>
       </div>
       <div class="info">
-        {{item.name}}
+        {{item.title}}
       </div>
     </div>
   </div>
@@ -19,54 +25,23 @@
         default: () => {
           return false
         }
+      },
+      'demandDataList':{
+        type:Array
       }
     },
     data() {
       return {
-        goodsList: [{
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-          {
-            imgPath: require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            name: '新版精密卡尔费休水分测定仪'
-          },
-        ]
       }
     },
     methods: {
-      getDetail(id) {
+      getDetail(articleId) {
         this.$router.push({
-          path: '/demandDetail'
+          path: '/demandDetail',
+          query:{articleId}
         })
+        document.documentElement.scrollTop = 0;
+        this.$emit('selectOnlyTab', '-1')
       }
     }
   }

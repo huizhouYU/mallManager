@@ -3,20 +3,30 @@
     <div class="shop-home-box-left">
       <div class="left-top">
         <div class="shop-logo">
-          <img src="../../assets/images/shop/pic_shoplogo_default.png" alt="">
+          <template v-if="storeInfo.storeBanner != null && storeInfo.storeBanner != ''">
+            <img :src="'https://images.weserv.nl/?url='+storeInfo.storeBanner" alt="">
+          </template>
+          <template v-else>
+            <img src="../../assets/images/shop/pic_shoplogo_default.png" alt="">
+          </template>
         </div>
         <div class="shop-name">
-          <img src="../../assets/images/index/icon_qi.png" alt="">
-          <span>迅即网络科技有限公司</span>
+          <template v-if="storeInfo.stype=='company'">
+            <img src="../../assets/images/index/icon_qi.png" alt="">
+          </template>
+          <template v-else>
+            <img src="../../assets/images/index/icon_ge.png" alt="">
+          </template>
+          <span>{{storeInfo.storeName}}</span>
         </div>
         <div class="shop-detail">
           <div class="shop-detail-item">
             <span class="title">联系人员</span>
-            <span class="value">卞先生</span>
+            <span class="value">{{storeInfo.ownerName}}</span>
           </div>
           <div class="shop-detail-item">
             <span class="title">联系电话</span>
-            <span class="value">15415469857</span>
+            <span class="value">{{storeInfo.tel}}</span>
           </div>
           <div class="shop-detail-item">
             <span class="title">所属分类</span>
@@ -24,10 +34,10 @@
           </div>
           <div class="shop-detail-item">
             <span class="title">公司地址</span>
-            <span class="value">浙江省杭州市余杭区 蓬莱路莲花稻谷园区 123号商铺</span>
+            <span class="value">{{storeInfo.regionName}}{{storeInfo.address}}</span>
           </div>
           <div class="map">
-            <v-amap></v-amap>
+            <v-amap :latitude="Number(storeInfo.latitude)" :longitude="Number(storeInfo.longitude)"></v-amap>
           </div>
         </div>
       </div>
@@ -47,8 +57,7 @@
           </div>
 
         </div>
-        <div>
-          浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包一级企业，公司注册资本10868万元，净资产达3、7亿多元。下辖上海蔚昕建设发展有限公司等分布在全国各地的九家分公司。集团公司具有建筑装修装饰工程、地基与基础工程、钢结构工程、市政公用工程施工总承包，环保施工等专业承包资质，是一家集建筑、房地产开发、建材经营等为一体的大型建筑企业，可承揽工业、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。
+        <div v-html="storeInfo.description">
         </div>
       </div>
 
@@ -64,7 +73,7 @@
             <i class="iconfont">&#xe63c;</i>
           </div>
         </div>
-        <good-item :grid5="grid5"></good-item>
+        <good-item :grid5="grid5" :goodsList="goodsDataList" @selectOnlyTab="selectOnlyTab"></good-item>
       </div>
       <!-- 供求信息 -->
       <div class="module goods">
@@ -78,7 +87,7 @@
             <i class="iconfont">&#xe63c;</i>
           </div>
         </div>
-        <demand-item :grid5="grid5"></demand-item>
+        <demand-item :grid5="grid5" :demandDataList="demandDataList" @selectOnlyTab="selectOnlyTab"></demand-item>
       </div>
       <!-- 荣誉证书 -->
       <div class="module certificate">
@@ -89,20 +98,8 @@
           </div>
         </div>
         <ul>
-          <li>
-            <img src="../../assets/images/shop/shop-certificate.png" alt="">
-          </li>
-          <li>
-            <img src="../../assets/images/shop/shop-certificate.png" alt="">
-          </li>
-          <li>
-            <img src="../../assets/images/shop/shop-certificate.png" alt="">
-          </li>
-          <li>
-            <img src="../../assets/images/shop/shop-certificate.png" alt="">
-          </li>
-          <li>
-            <img src="../../assets/images/shop/shop-certificate.png" alt="">
+          <li v-for="(item,index) in storeInfo.certificationList" :key="index">
+            <img :src="'https://images.weserv.nl/?url='+item">
           </li>
         </ul>
       </div>
@@ -115,20 +112,65 @@
   import goodItem from '../../pages/allGoods/goodItem.vue'
   import demandItem from '../../pages/shopDemand/demandItem.vue'
   import vAmap from '../../components/amaps.vue'
+  import {
+    mapGetters
+  } from 'vuex'
+  import {
+    goodsList
+  } from '@/api/goods'
+  import {
+    storeDetail
+  } from '@/api/store'
+  import {
+    articleList
+  } from '@/api/supplyDemand'
   export default {
+    computed: {
+      ...mapGetters([
+        'currentLookStoreId'
+      ])
+    },
     components: {
       storeRecommendation,
       goodItem,
       demandItem,
       vAmap
     },
+    // props: ['storeInfo'],
     data() {
       return {
+        storeInfo: '',
+        goodsDataList: [],
+        demandDataList: [],
         isShowTitleImg: false,
         grid5: true
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
+      getData() {
+        storeDetail({
+          storeId: this.currentLookStoreId
+        }).then(response => {
+          console.log("获取店铺详情：", response)
+          this.storeInfo = response.data
+        })
+        var page = {
+          pageNo: 1,
+          pageSize: 10,
+          storeId: this.currentLookStoreId
+        }
+        goodsList(page).then(response => {
+          console.log("获取店铺内商品列表:", response)
+          this.goodsDataList = response.data.list
+        })
+        articleList(page).then(response => {
+          console.log("获取店铺内需求列表:", response)
+          this.demandDataList = response.data.list
+        })
+      },
       toJump(path, index) {
         var params = {
           path,
@@ -136,6 +178,9 @@
         }
         document.documentElement.scrollTop = 0;
         this.$emit('selectTab', params)
+      },
+      selectOnlyTab(id) {
+        this.$emit('selectOnlyTab', '-1')
       }
     }
   }
@@ -168,7 +213,7 @@
           width: 100px;
           height: 100px;
           border-radius: 50%;
-          padding: 12px;
+          // padding: 12px;
           box-sizing: border-box;
           display: flex;
           justify-content: center;
@@ -178,8 +223,9 @@
           margin-bottom: 13px;
 
           img {
-            width: 82px;
-            height: 74px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
           }
         }
 
@@ -203,7 +249,10 @@
             font-family: Microsoft YaHei;
             font-weight: 400;
             color: #40A9FF;
-            line-height: 10px;
+            // line-height: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
 

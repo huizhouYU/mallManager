@@ -1,6 +1,6 @@
 <template>
   <div class="shop-detail-box">
-    <div class="location">{{goodsInfo.cateName}}</div>
+    <div class="location">{{categoryStr}}</div>
     <div class="shop-detail-main">
       <div class="shop-detail-content">
         <div class="shop-detail-img-info">
@@ -143,8 +143,6 @@
         </div>
         <!-- <img class="shop-details-img" src="../../assets/images/shop/pic_Details Page.png" alt=""> -->
         <img class="shop-details-img" :src="goodsInfo.longImage" alt="" v-if="goodsInfo.longImage != ''">
-
-
       </div>
       <!-- 店内推荐 -->
       <store-recommendation class="store-recommendation"></store-recommendation>
@@ -164,6 +162,7 @@
     data() {
       return {
         goodsId: '',
+        categoryStr:'',
         bigImgPath: '',
         num: 1,
         goodsInfo: {
@@ -188,11 +187,33 @@
         console.log("获取商品详情：", response)
         this.goodsInfo = response.data
         this.bigImgPath = this.goodsInfo.imageList[0]
-        console.log(this.goodsInfo.cateName)
         // this.goodsInfo.cateName = this.goodsInfo.cateName.replace("\\",">")
+        // this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
+        this.categoryStr = ''
+        if(this.goodsInfo.category != null && this.goodsInfo.category != ''){
+          this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
+          for(var index in this.goodsInfo.category){
+            if(index == 0){
+              this.categoryStr+=this.goodsInfo.category[index].label
+            }else{
+              this.categoryStr+='>'+this.goodsInfo.category[index].label
+            }
+          }
+        }else{
+          this.categoryStr = this.goodsInfo.cateName
+        }
+        this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
+          .then((response) => {
+           console.log("保存当前浏览的店铺ID：",response)
+          }).catch(() => {
+            console.log("保存当前浏览的店铺ID失败")
+          })
+           this.$emit("getStore",this.goodsInfo.storeId)
       })
     },
     methods: {
+      // ...mapActions(["setStoreId"])
+
       changeImg(imgPath) {
         this.bigImgPath = imgPath
       },

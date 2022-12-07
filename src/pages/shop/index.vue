@@ -13,7 +13,7 @@
         <div class="shop-info">
           <div class="shop-info-name">
             <img src="../../assets/images/shop/icon_shop.png" alt="">
-            <span>合肥迅即影像科技网络有限公司</span>
+            <span>{{storeInfo.storeName}}</span>
           </div>
           <div class="shop-info-right">
             <div class="item">
@@ -39,9 +39,8 @@
         </ul>
       </div>
       <div class="pages">
-        <router-view class="each-page" @selectTab="selectTab"></router-view>
+        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @getStore="getStore" :storeInfo="storeInfo"></router-view>
       </div>
-
       <index-bottom></index-bottom>
     </div>
 
@@ -52,15 +51,28 @@
   import headerTitle from '../../pages/index/headerTitle.vue'
   import indexHeader from '../../pages/index/indexHeader.vue'
   import indexBottom from '../../pages/index/indexBottom.vue'
+  import {
+    mapGetters
+  } from 'vuex'
+  import {
+    storeDetail
+  } from '@/api/store'
   export default {
     components: {
       headerTitle,
       indexHeader,
       indexBottom
     },
+    computed: {
+      ...mapGetters([
+        'currentLookStoreId'
+      ])
+    },
     data() {
       return {
+        storeId: '',
         selectedTab: '-1',
+        storeInfo:'',
         tabList: [{
             name: '店铺首页',
             path: '/shopHome'
@@ -93,15 +105,29 @@
       // this.selectedTab = 0
       // this.$router.replace({path:'/shopHome'})
     },
-    methods:{
-      changeTab(path,index){
-        this.selectedTab = path
-        this.$router.replace({path:path})
+    methods: {
+      getStore(){
+        storeDetail({storeId:this.currentLookStoreId}).then(response=>{
+          console.log("获取店铺详情：",response)
+          this.storeInfo = response.data
+        })
       },
-      selectTab(params){
-        this.changeTab(params.path,params.index)
+      changeTab(path, index) {
+        this.selectedTab = path
+        this.$router.replace({
+          path: path,
+          query:{
+            storeId: this.currentLookStoreId
+          }
+        })
+      },
+      selectTab(params) {
+        this.changeTab(params.path, params.index)
+      },
+      selectOnlyTab(id){
+        console.log("仅仅改变tabId：",id)
+        this.selectedTab=id
       }
-
     }
   }
 </script>
@@ -256,12 +282,14 @@
       }
     }
   }
-  .pages{
+
+  .pages {
     width: 100%;
     background-color: #f5f5f5;
     padding-bottom: 25px;
   }
-  .each-page{
+
+  .each-page {
     // width: 1200px;
     margin: auto;
   }

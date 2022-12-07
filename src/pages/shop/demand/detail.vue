@@ -52,20 +52,20 @@
         <div class="contact">
           <div class="item">
             <div class="key">联系人:</div>
-             <div class="value" v-if="token ==null">***</div>
+            <div class="value" v-if="token ==null || token ==''">***</div>
             <div class="value" v-else>{{demandInfo.linkMan}}</div>
           </div>
           <div class="item">
             <div class="key spacing">电话:</div>
-            <div class="value" v-if="token ==null">188*****888</div>
+            <div class="value" v-if="token ==null || token ==''">188*****888</div>
             <div class="value" v-else>{{demandInfo.linkTel}}</div>
           </div>
           <div class="item">
             <div class="key spacing">地区:</div>
-            <div class="value"  v-if="token ==null">*****</div>
-            <div class="value"  v-else>{{demandInfo.region}}</div>
+            <div class="value" v-if="token ==null || token ==''">*****</div>
+            <div class="value" v-else>{{demandInfo.region}}</div>
           </div>
-          <div class="btn-login">
+          <div class="btn-login" v-if="token ==null || token ==''" @click="toLogin">
             登录查看联系方式
           </div>
         </div>
@@ -130,10 +130,21 @@
         id: this.id
       }).then(response => {
         console.log("供求信息详情：", response)
-        console.log("token:",this.token)
+        // console.log("token：", this.token)
         this.demandInfo = response.data
-        this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://","<img src=\"https://images.weserv.nl/?url=http://")
+        this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
+          "<img src=\"https://images.weserv.nl/?url=http://")
+        if (this.demandInfo.region != null && this.demandInfo.region != '') {
+          this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
+        }
       })
+    },
+    methods: {
+      toLogin() {
+        this.$router.push({
+          path: '/login'
+        })
+      }
     }
   }
 </script>
@@ -223,7 +234,7 @@
         padding: 20px;
 
         .two-lines {
-          height: 80px;
+          // height: 80px;
           width: 910px;
           border: 1px solid #F5F5F5;
           display: flex;
@@ -234,7 +245,7 @@
 
           }
 
-          .two {}
+
 
           .one,
           .two {
@@ -251,6 +262,14 @@
               font-weight: 400;
               text-align: center;
             }
+          }
+
+          .one {
+            height: 40px;
+          }
+
+          .two {
+            padding: 4px 0px;
           }
         }
       }
@@ -299,7 +318,7 @@
       // 联系方式
       .contact {
         width: 100%;
-        height: 200px;
+        // height: 200px;
         background-color: #fff;
         margin-bottom: 20px;
         padding: 35px 20px;
@@ -325,9 +344,17 @@
             align-items: center;
           }
 
+          .value {
+            flex: 1;
+          }
+
           .spacing {
             letter-spacing: 6px;
           }
+        }
+
+        .item+.item {
+          margin-top: 14px;
         }
 
         .btn-login {

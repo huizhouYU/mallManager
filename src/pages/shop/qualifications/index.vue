@@ -3,18 +3,18 @@
     <!-- 公司信息 -->
     <div class="company">
       <div class="company-left">
-        <span class="company-name">迅即网络科技有限公司</span>
+        <span class="company-name">{{storeInfo.storeName}}</span>
         <div class="item">
           <span>联系人：</span>
-          <span>霍先生</span>
+          <span>{{storeInfo.ownerName}}</span>
         </div>
         <div class="item">
           <span>联系电话：</span>
-          <span>189 5687 2499</span>
+          <span>{{storeInfo.tel}}</span>
         </div>
         <div class="item-sort">
           <span>店铺分类：</span>
-          <span>医用冷疗|低温|冷藏设备及器具</span>
+          <span>待补充</span>
         </div>
       </div>
       <div class="company-right">
@@ -38,41 +38,73 @@
       </div>
     </div>
     <!-- 证书 -->
-      <ul class="qualifications">
-        <li>
+      <ul class="qualifications" v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
+        <li v-for="(item,index) in storeInfo.certificationList">
           <div class="img-div">
-            <img src="../../../assets/images/shop/pic_businessLicense_default.png" alt="">
+            <img :src="'https://images.weserv.nl/?url='+item" alt="">
           </div>
-          <span>营业执照</span>
-        </li>
-        <li>
-          <div class="img-div">
-            <img src="../../../assets/images/shop/pic_businessCertificate_default.png" alt="">
-          </div>
-          <span>经营许可证</span>
-        </li>
-        <li>
-          <div class="img-div">
-            <img src="../../../assets/images/shop/pic_productionLicense_default.png" alt="">
-          </div>
-          <span>生产许可证</span>
+          <!-- <span>营业执照</span> -->
         </li>
       </ul>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
-      <good-item></good-item>
+      <good-item :goodsList="goodsDataList"></good-item>
     </div>
   </div>
 </template>
 
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
-  export default{
-    components:{
-      goodItem
-    }
-  }
+ import {
+   mapGetters
+ } from 'vuex'
+ import {
+   goodsList
+ } from '@/api/goods'
+ import {
+   storeDetail
+ } from '@/api/store'
+ export default {
+   computed: {
+     ...mapGetters([
+       'currentLookStoreId'
+     ])
+   },
+   components: {
+     goodItem
+   },
+   data() {
+     return {
+       storeInfo: '',
+       goodsDataList: [],
+     }
+   },
+   mounted() {
+     this.getData()
+   },
+   methods: {
+     getData() {
+       storeDetail({
+         storeId: this.currentLookStoreId
+       }).then(response => {
+         console.log("获取店铺详情：", response)
+         this.storeInfo = response.data
+       })
+       var page = {
+         pageNo: 1,
+         pageSize: 10,
+         storeId: this.currentLookStoreId
+       }
+       goodsList(page).then(response => {
+         console.log("获取店铺内商品列表:", response)
+         this.goodsDataList = response.data.list
+       })
+
+     },
+
+   }
+ }
 </script>
 
 <style lang="less" scoped>

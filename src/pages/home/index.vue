@@ -21,10 +21,10 @@
               </div>
             </div>
           </ul>
-          <div class="more-brands">
+          <!-- <div class="more-brands">
             <p>更多分类</p>
             <img src="../../assets/images/index/double-right.png" alt="">
-          </div>
+          </div> -->
         </div>
         <!-- 右边内容-->
         <div>
@@ -58,15 +58,14 @@
                   <img :src="avatar" alt="" @click="personCenter">
                   <span @click="personCenter">{{name}}</span>
                 </div>
-
                 <!-- <el-button class="btn-demand">一键发布需求</el-button> -->
               </div>
-              <!-- 热门求购  + 设备维修-->
+              <!-- 热门求购  + 项目外包-->
               <div class="hot-shop-box">
                 <div class="hot-shop-box-tab">
                   <ul>
                     <li :class="{'actived':isHotTab}" @click="isHotTab=true">热门求购</li>
-                    <li :class="{'actived':!isHotTab}" @click="isHotTab=false">设备维修</li>
+                    <li :class="{'actived':!isHotTab}" @click="isHotTab=false">项目外包</li>
                   </ul>
                 </div>
                 <!-- 热门求购 -->
@@ -81,10 +80,10 @@
                         <div class="circle"></div>
                       </div>
                     </template>
-                    <span>{{item.title}}</span>
+                    <span @click="toDemandDetail(item.articleId)">{{item.title}}</span>
                   </li>
                 </ul>
-                <!-- 设备维修 -->
+                <!-- 项目外包 -->
                 <ul class="equipment-list" v-show="!isHotTab">
                   <li v-for="(item,index) in equipmentList">
                     <template v-if="index<4">
@@ -96,7 +95,7 @@
                         <div class="circle"></div>
                       </div>
                     </template>
-                    <span>{{item.title}}</span>
+                    <span @click="toDemandDetail(item.articleId)">{{item.title}}</span>
                   </li>
                 </ul>
               </div>
@@ -181,13 +180,13 @@
     data() {
       return {
         showTitle: true,
-        isHotTab: true, //true:选中'热门求购,false:选中'设备维修'
+        isHotTab: true, //true:选中'热门求购,false:选中'项目外包'
         recommendGoods: [], //九宫格推荐商品
         productList: [], //医疗器械
         companyList: [], //企业服务
         //热门求购列表
         hotList: [],
-        //设备维修列表
+        //项目外包列表
         equipmentList: [],
         //品牌logo
         brandsList: [],
@@ -227,7 +226,7 @@
           limit: 12,
           articleType: 2
         }).then(response => {
-          console.log('设备维修：', response)
+          console.log('项目外包：', response)
           this.equipmentList = response.data
         })
         //商品类型 material-配件  equipment-设备器械
@@ -307,6 +306,12 @@
         this.$router.push({
           path: '/cooperationBrand'
         })
+      },
+      toDemandDetail(articleId){
+        this.$router.push({
+          path:'/demandDetail',
+          query:{articleId}
+        })
       }
     },
 
@@ -329,7 +334,7 @@
       width: 240px;
       height: 100%;
       box-sizing: border-box;
-      padding-bottom: 10px;
+      // padding-bottom: 10px;
       display: flex;
       flex-direction: column;
       background-color: #fff;
@@ -342,7 +347,8 @@
       .brand-nav-box {
         position: relative;
         width: 100%;
-        height: 530px;
+        // height: 530px;
+        height: 600px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -740,6 +746,7 @@
               }
 
               span {
+                cursor: pointer;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -797,6 +804,7 @@
               }
 
               span {
+                cursor: pointer;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;

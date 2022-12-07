@@ -17,11 +17,11 @@
   export default {
     props: {
       longitude: { //经度
-        type: Number,
+        type: Number||string,
         default: 117.289758
       },
       latitude: { //纬度
-        type: Number,
+        type: Number||string,
         default: 31.867761
       }
       // longitude: String,
