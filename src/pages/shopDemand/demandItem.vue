@@ -67,7 +67,6 @@
     width: 180px;
     height: 188px;
     padding: 15px;
-    padding-bottom: 18px;
     box-sizing: border-box;
     border: 1px solid #F5F5F5;
     border-radius: 6px;
