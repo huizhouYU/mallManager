@@ -65,6 +65,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('SET_STOREID', storeId)
       // setToken(storeId)
+      console.log("保存的店铺ID：",storeId)
       resolve("保存当前浏览的店铺ID成功")
     })
   },

@@ -24,10 +24,18 @@ export function getInfo(token) {
     // params: { token }
   })
 }
-//发送手机短信
+//发送登录短信
 export function sendMsg(data) {
   return request({
-    url: '/user/sendMsg',
+    url: '/sms/sendMsg',
+    method: 'post',
+    data:data
+  })
+}
+//发送注册短信
+export function registerMsg(data) {
+  return request({
+    url: 'sms/registerMsg',
     method: 'post',
     data:data
   })

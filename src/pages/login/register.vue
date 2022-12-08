@@ -2,9 +2,9 @@
   <div class="flex-column-start-center register-content">
     <div class="flex-center-center  register-top">
       <div class="flex-between-center  register-top-main">
-        <img src="../../assets/images/logo.png" alt="">
+        <img src="../../assets/images/logo.png" alt=""  @click="toIndex">
         <ul class="flex-center-center">
-          <li>医界商城首页</li>
+          <li class="to-index" @click="toIndex">医界商城首页</li>
           <li>服务热线：400-8888-888</li>
         </ul>
       </div>
@@ -26,9 +26,9 @@
             </el-input>
           </el-form-item>
           <div class="agree-item">
-            <el-checkbox v-model="agree">阅读并同意<font class="bule-font">《服务条款》</font>和<font class="bule-font">《法律声明和隐私政策》
-              </font>
+            <el-checkbox v-model="agree">
             </el-checkbox>
+            <span>阅读并同意<font class="bule-font">《服务条款》</font>和<font class="bule-font">《法律声明和隐私政策》</font></span>
           </div>
           <el-button type="primary" @click="onSubmit('registerRuleForm')">注册</el-button>
         </el-form>
@@ -39,6 +39,9 @@
 </template>
 
 <script>
+  import {
+    registerMsg
+  } from '@/api/user'
   export default {
     data() {
       var validatePhone = (rule, value, callback) => {
@@ -92,9 +95,9 @@
         let data = {
           mobile: this.registerForm.mobile
         }
-        // sendMsg(data).then(response => {
-        //   console.log(response.data.data)
-        // })
+        registerMsg(data).then(response => {
+          console.log(response.data.data)
+        })
         // 验证码倒计时
         if (!this.timer) {
           this.countDown = 60;
@@ -135,6 +138,11 @@
           }
         });
       },
+      toIndex(){
+        this.$router.push({
+          path: '/',
+        })
+      },
       login() {
         this.$router.push({
           path: '/login',
@@ -167,7 +175,9 @@
       .register-top-main {
         width: 1200px;
         height: 100%;
-
+.to-index {
+          cursor: pointer;
+        }
         img {
           width: 145px;
           height: 49px;
@@ -263,6 +273,10 @@
 
           .agree-item {
             margin-bottom: 15px;
+            span{
+              font-size: 14px;
+              color: #515A6E;
+            }
           }
 
 
@@ -288,7 +302,7 @@
 
           /deep/.el-input__inner:focus {
             border-color: rgba(24, 144, 255, 1);
-            box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+            box-shadow: 0px 0px 2px 2px rgba(24, 144, 255, 0.3);
           }
 
           /deep/ .el-form-item {

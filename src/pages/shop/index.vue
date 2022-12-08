@@ -13,7 +13,7 @@
         <div class="shop-info">
           <div class="shop-info-name">
             <img src="../../assets/images/shop/icon_shop.png" alt="">
-            <span>{{storeInfo.storeName}}</span>
+            <span>{{storeInfo.storeName||'-'}}</span>
           </div>
           <div class="shop-info-right">
             <div class="item">
@@ -35,11 +35,11 @@
       <div class="tab-content">
         <ul>
           <li v-for="(item,index) in tabList" :key="index" :class="{'selected':item.path == selectedTab}"
-            @click="changeTab(item.path,index)">{{item.name}}</li>
+            @click="jumpTab(item.path,index)">{{item.name}}</li>
         </ul>
       </div>
       <div class="pages">
-        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab">
+        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @saveStoreId="saveStoreId">
         </router-view>
       </div>
       <index-bottom></index-bottom>
@@ -115,6 +115,12 @@
       }
     },
     methods: {
+      saveStoreId(id) {
+        this.storeId = id
+        if (this.storeInfo == '') {
+          this.getStore()
+        }
+      },
       getStore() {
         storeDetail({
           storeId: this.storeId
@@ -123,7 +129,7 @@
           this.storeInfo = response.data
         })
       },
-      changeTab(path, index) {
+      jumpTab(path, index) {
         this.selectedTab = path
         this.$router.replace({
           path: path,
@@ -133,10 +139,9 @@
         })
       },
       selectTab(params) {
-        this.changeTab(params.path, params.index)
+        this.jumpTab(params.path, params.index)
       },
       selectOnlyTab(id) {
-        console.log("仅仅改变tabId：", id)
         this.selectedTab = id
       }
     }

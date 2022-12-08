@@ -187,12 +187,7 @@
       }).then(response => {
         console.log("获取商品详情：", response)
         this.goodsInfo = response.data
-        this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
-          .then((response) => {
-            console.log("保存当前浏览的店铺ID：", response)
-          }).catch(() => {
-            console.log("保存当前浏览的店铺ID失败")
-          })
+
         this.bigImgPath = this.goodsInfo.imageList[0]
         this.categoryStr = ''
         if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
@@ -207,8 +202,14 @@
         } else {
           this.categoryStr = this.goodsInfo.cateName
         }
+        this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
+          .then((response) => {
+            console.log("保存当前浏览的店铺ID：", response)
+          }).catch(() => {
+            console.log("保存当前浏览的店铺ID失败")
+          })
 
-        // this.$emit("getStore",this.goodsInfo.storeId)
+        this.$emit("saveStoreId",this.goodsInfo.storeId)
       })
     },
     methods: {

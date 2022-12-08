@@ -26,7 +26,7 @@
         page:{
           pageNo:1,
           pageSize:12,
-          stroreId:''
+          storeId:''
         },
         isShowTitleImg: false,
         demandDataList:[]
@@ -34,7 +34,7 @@
     },
     mounted() {
       document.documentElement.scrollTop = 0;
-      this.page.stroreId  = this.$route.query.storeId
+      this.page.storeId  = this.$route.query.storeId
       this.getData()
     },
     methods:{

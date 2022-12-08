@@ -1,124 +1,87 @@
 <template>
   <div>
-    <div class=" flex-start-center services-item" v-for="(item,index) in list" :key="index" @click="toCompany">
+    <div class=" flex-start-center services-item" v-for="(item,index) in list" :key="index"
+      @click="toCompany(item.storeId)">
       <div class="flex-column-between-start services-item-info">
-        <div class="company-name">{{item.companyName}}</div>
+        <div class="company-name">{{item.storeName}}</div>
         <div class="flex-start-start info-item">
           <div class="key">公司简介</div>
-          <div class="value limit3">{{item.companyInfo}}</div>
+          <div class="value limit3">{{item.serviceContent}}</div>
         </div>
         <div class="flex-start-start info-item">
           <div class="key">店铺分类</div>
-          <div class="value">{{item.classification}}</div>
+          <div class="value">待补充</div>
         </div>
         <div class="flex-start-start info-item">
-          <div class="key">公司简介</div>
-          <div class="value limit1">{{item.address}}</div>
+          <div class="key">所在地区</div>
+          <div class="value limit1">{{item.regionName || item.address}}</div>
         </div>
       </div>
       <ul class="flex-between-center">
-        <li v-for="(imgItem,i) in item.imgList" :key="i">
-          <img :src="imgItem" alt="">
-          <div class="mask"><span>{{item.companyInfo}}</span></div>
+        <li v-for="(goods,i) in item.goodsList" :key="i" v-show="i<4" @click="toGoodsDetail(goods.goodsId)">
+          <img :src="'https://images.weserv.nl/?url='+goods.defaultImage" alt="">
+          <div class="mask"><span>{{goods.goodsName}}</span></div>
         </li>
       </ul>
     </div>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
+      :page-sizes="[10, 20, 30, 40]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
     </el-pagination>
   </div>
 </template>
 
 <script>
+  import {
+    storeList
+  } from '@/api/store'
   export default {
     data() {
       return {
-        currentPage4: 4,
-        list: [{
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金，微信，支付宝，对公转账等多种方式',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          },
-          {
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          },
-          {
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          },
-          {
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          },
-          {
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          },
-          {
-            companyName: '哈哈哈无限公司',
-            companyInfo: '本公司面向全国专业回收：变压器、配电柜、高低压电机、电线电缆、电河北二手气动冲床回收，上门回收，现金',
-            classification: '医用磁共振吧',
-            address: '浙江杭州',
-            imgList: [
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-              require('../../assets/images/index/demand/pic_gongqiu_qg.png'),
-            ]
-          }
-        ]
+        total: 0,
+        page: {
+          pageNo: 1,
+          pageSize: 10,
+          storeName: ''
+        },
+        list: []
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
+      getData() {
+        storeList(this.page).then(response => {
+          console.log("获取企业列表：", response)
+          this.list = response.data.list
+          this.page.pageNo = response.data.pageNum
+          this.page.pageSize = response.data.pageSize
+          this.total = response.data.totalCount
+        })
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.page.pageSize = val
+        this.getData()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.page.pageNo = val
+        this.getData()
       },
-      toCompany() {
+      toCompany(storeId) {
         this.$router.push({
-          path: '/shopHome'
+          path: '/shopHome',
+          query: {
+            storeId
+          }
+        })
+      },
+      toGoodsDetail(goodsId) {
+        this.$router.push({
+          path: '/goodDetail',
+          query:{goodsId}
         })
       }
     },
@@ -196,6 +159,7 @@
       li {
         position: relative;
         width: 170px;
+        height: 120px;
         overflow: hidden;
 
         img {
@@ -205,7 +169,6 @@
         }
 
         .mask {
-          // display: none;
           position: absolute;
           top: 100%;
           left: -100%;
@@ -221,6 +184,7 @@
           font-weight: 400;
           color: #FFFFFF;
           transition: top 1s, left 1s;
+          text-align: center;
 
           span {
             opacity: 0;

@@ -7,3 +7,11 @@ export function storeDetail(query) {
     params:query
   })
 }
+//店铺列表
+export function storeList(query) {
+  return request({
+    url: 'store/list',
+    method: 'get',
+    params:query
+  })
+}

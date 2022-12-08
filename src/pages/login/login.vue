@@ -2,9 +2,9 @@
   <div class="flex-column-start-center login-content">
     <div class="flex-center-center login-top">
       <div class="flex-between-center login-top-main">
-        <img src="../../assets/images/logo.png" alt="">
+        <img src="../../assets/images/logo.png" alt="" @click="toIndex">
         <ul class="flex-center-center">
-          <li>医界商城首页</li>
+          <li class="to-index" @click="toIndex">医界商城首页</li>
           <li>服务热线：400-8888-888</li>
         </ul>
       </div>
@@ -45,7 +45,7 @@
                   <img src="../../assets/images/login/pic_Alipay_white.png" alt="">
                 </div>
               </div>
-              <span class="span-register"  @click="register"> 没有账号？<font class="bule-font">注册</font> </span>
+              <span class="span-register" @click="register"> 没有账号？<font class="bule-font">注册</font> </span>
             </div>
           </el-form>
           <!-- 验证码登录 -->
@@ -58,7 +58,7 @@
               <el-input v-model="vCodeForm.vCode" :disabled="vCodeForm.mobile == ''">
                 <template slot="append">
                   <span class="flex-center-center get-v-code" @click="getCode" v-show="countDown == 0">获取验证码</span>
-                   <span class="flex-center-center count-down"  v-show="countDown>0">{{countDown}}s</span>
+                  <span class="flex-center-center count-down" v-show="countDown>0">{{countDown}}s</span>
                 </template>
               </el-input>
             </el-form-item>
@@ -78,7 +78,6 @@
             </div>
           </el-form>
         </div>
-
       </div>
     </div>
   </div>
@@ -86,7 +85,7 @@
 
 <script>
   import {
-   sendMsg
+    sendMsg
   } from '@/api/user'
   export default {
     data() {
@@ -105,7 +104,7 @@
         labelPosition: 'top',
         loginWay: 1,
         remember: false,
-        countDown:0,
+        countDown: 0,
         vCodeForm: {
           mobile: '',
           vCode: ''
@@ -206,21 +205,21 @@
         });
       },
       login() {
-        if(this.loginWay == 1){//用户名密码登录
-        //是否记住密码
-        if (this.remember) {
-          this.setCookie(this.loginForm.username, this.loginForm.password)
-        } else {
-          this.clearCookie();
-        }
+        if (this.loginWay == 1) { //用户名密码登录
+          //是否记住密码
+          if (this.remember) {
+            this.setCookie(this.loginForm.username, this.loginForm.password)
+          } else {
+            this.clearCookie();
+          }
           this.$store.dispatch('user/login', this.loginForm)
             .then((response) => {
-              if(response.code == 10000){
+              if (response.code == 10000) {
                 this.$router.replace({
                   path: this.redirect || '/',
                   query: this.otherQuery
                 })
-              }else{
+              } else {
                 this.$message.error(response.message)
               }
               this.loading = false
@@ -228,15 +227,15 @@
               this.loading = false
               console.log("失败")
             })
-        }else if (this.loginWay == 2){//短信验证码登录
+        } else if (this.loginWay == 2) { //短信验证码登录
           this.$store.dispatch('user/msgLogin', this.vCodeForm)
             .then((response) => {
-              if(response.code == 10000){
+              if (response.code == 10000) {
                 this.$router.replace({
                   path: this.redirect || '/',
                   query: this.otherQuery
                 })
-              }else{
+              } else {
                 this.$message.error(response.message)
               }
               this.loading = false
@@ -247,12 +246,17 @@
         }
 
       },
-      forget(){
+      forget() {
         this.$router.push({
           path: '/forgetPsd',
         })
       },
-      register(){
+      toIndex(){
+        this.$router.push({
+          path: '/',
+        })
+      },
+      register() {
         this.$router.push({
           path: '/register',
         })
@@ -280,7 +284,9 @@
         width: 1200px;
         height: 100%;
 
-        img {
+        .to-index {
+          cursor: pointer;
+        }        img {
           width: 145px;
           height: 49px;
         }
@@ -335,6 +341,7 @@
         50% {
           transform: translate(-50%, -50%);
         }
+
         100% {
           transform: translate(-50%, -55%);
         }
@@ -403,16 +410,19 @@
           /deep/ .el-input__inner {
             border-right: none;
           }
+
           /deep/.el-input__inner:focus {
-            border-right:1px solid rgba(24, 144, 255, 1);
-            box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+            border-right: 1px solid rgba(24, 144, 255, 1);
+            box-shadow: 0px 0px 2px 2px rgba(24, 144, 255, 0.3);
           }
-          /deep/.el-form-item .is-error .el-input__inner{
-             border-right:1px solid #f56c6c;
+
+          /deep/.el-form-item .is-error .el-input__inner {
+            border-right: 1px solid #f56c6c;
           }
 
           // 获取短信验证码
-          .get-v-code,.count-down {
+          .get-v-code,
+          .count-down {
             width: 90px;
             color: #495060;
             // padding-left: 10px;
@@ -420,13 +430,14 @@
             border-left: 1px solid #495060;
             cursor: pointer;
           }
-          .get-v-code{
+
+          .get-v-code {
             cursor: pointer;
           }
 
           .get-v-code:hover {
             color: #1890FF;
-             border-left: 1px solid #1890FF;
+            border-left: 1px solid #1890FF;
           }
 
         }
@@ -434,10 +445,10 @@
         .remember-forget {
           width: 100%;
 
-          /deep/ .el-checkbox__inner {
-            width: 16px;
-            height: 16px;
-          }
+          // /deep/ .el-checkbox__inner {
+          //   width: 16px;
+          //   height: 16px;
+          // }
         }
 
         .forget-password {
@@ -523,7 +534,7 @@
 
         /deep/.el-input__inner:focus {
           border-color: rgba(24, 144, 255, 1);
-          box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+          box-shadow: 0px 0px 2px 2px rgba(24, 144, 255, 0.3);
         }
 
         /deep/ .el-form-item {

@@ -2,9 +2,9 @@
   <div class="flex-column-start-center forget-content">
     <div class="flex-center-center  forget-top">
       <div class="flex-between-center  forget-top-main">
-        <img src="../../assets/images/logo.png" alt="">
+        <img src="../../assets/images/logo.png" alt="" @click="toIndex">
         <ul class="flex-center-center">
-          <li>医界商城首页</li>
+          <li class="to-index" @click="toIndex">医界商城首页</li>
           <li>服务热线：400-8888-888</li>
         </ul>
       </div>
@@ -26,7 +26,8 @@
           <el-form-item label="" prop="vCode" class="get-v-code-form-item">
             <el-input v-model="forgetForm.vCode" :disabled="countDown == 0">
               <template slot="append">
-                <span class="flex-center-center get-v-code" @click="getCode" v-show="forgetForm.mobile == ''">获取验证码</span>
+                <span class="flex-center-center get-v-code" @click="getCode"
+                  v-show="forgetForm.mobile == ''">获取验证码</span>
                 <span class="flex-center-center count-down" v-show="countDown>0">{{countDown}}s</span>
               </template>
             </el-input>
@@ -58,8 +59,8 @@
         countDown: 0,
         forgetForm: {
           mobile: '',
-          psd:'',
-          newPsd:'',
+          psd: '',
+          newPsd: '',
           vCode: ''
         },
         forgetFormRules: {
@@ -132,6 +133,11 @@
           }
         });
       },
+      toIndex() {
+        this.$router.push({
+          path: '/',
+        })
+      },
       login() {
         this.$router.push({
           path: '/login',
@@ -164,6 +170,10 @@
       .forget-top-main {
         width: 1200px;
         height: 100%;
+
+        .to-index {
+          cursor: pointer;
+        }
 
         img {
           width: 145px;
@@ -230,7 +240,7 @@
 
             /deep/.el-input__inner:focus {
               border-right: 1px solid rgba(24, 144, 255, 1);
-              box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+              box-shadow: 0px 0px 2px 2px rgba(24, 144, 255, 0.3);
             }
 
             /deep/.el-form-item .is-error .el-input__inner {
@@ -285,7 +295,7 @@
 
           /deep/.el-input__inner:focus {
             border-color: rgba(24, 144, 255, 1);
-            box-shadow: 0px 0px 6px rgba(24, 144, 255, 0.3);
+            box-shadow: 0px 0px 2px 2px rgba(24, 144, 255, 0.3);
           }
 
           /deep/ .el-form-item {
