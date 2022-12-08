@@ -1,7 +1,7 @@
 <!-- 配件专区 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more" v-if="showTitle"></titleMore>
+    <titleMore :title="title" class="title_more" v-if="showTitle" :morePath="morePath" :tabIndex="tabIndex" @changeTab="changeTab"></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
         <div class="flex-between-center item_top">
@@ -48,10 +48,12 @@
       titleMore
     },
     props: {
-      showTitle: Boolean
+      showTitle: Boolean,
+      tabIndex:Number
     },
     data() {
       return {
+        morePath:'/accessory',
         title: "配件专区",
         currentPage4: 4,
         accessoriesList: [{
@@ -179,6 +181,9 @@
       }
     },
     methods: {
+      changeTab(id){
+        this.$emit('changeTab',id)
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },

@@ -173,6 +173,7 @@
       }
     },
     mounted() {
+      this.goTop()
       var path = this.$route.fullPath
       for (var i in this.tabList) {
         if (this.tabList[i].path == path) {

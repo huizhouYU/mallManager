@@ -23,9 +23,9 @@
     components: {
       supplyDemandItem,recommendationsGoods
     },
-    // mounted() {
-    //   this.getData()
-    // },
+    mounted() {
+      document.documentElement.scrollTop = 0;
+    },
     data(){
       return{
       }

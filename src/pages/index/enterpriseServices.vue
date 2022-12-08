@@ -1,11 +1,11 @@
 <!-- 企业服务 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more"></titleMore>
+    <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex" @changeTab="changeTab"></titleMore>
     <div class="item_content">
       <div :class="['item','item'+index]" v-for="(item,index) in companyList">
         <!-- 第一个 -->
-        <div class="flex-column-around-center first-item" v-if="index == 0">
+        <div class="flex-column-around-center first-item" v-if="index == 0" @click="toCopmany(item.storeId)">
           <div class="flex-center-center img-div">             <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
            <!-- <el-carousel indicator-position="outside">
               <el-carousel-item v-for="imgSrc in item.imgList" :key="imgSrc">
@@ -50,7 +50,7 @@
                 <span>{{item.region}}{{item.address}}</span>
               </div>
             </div>
-            <div class="flex-center-center go-company">进入店铺</div>
+            <div class="flex-center-center go-company"  @click="toCopmany(item.storeId)">进入店铺</div>
           </div>
         </div>
       </div>
@@ -65,36 +65,22 @@
     components: {
       titleMore
     },
-    props: ['companyList'],
+    props: ['companyList','tabIndex'],
     data() {
       return {
+        morePath:'/enterpriseServices',
         title: "企业服务",
-        productList: [{
-            imgPath: require('../../../src/assets/images/index/pic_business.png'),
-            name: '欧莱博BY-D-I黄疸仪维修欧莱博BY-D-I黄疸仪维修',
-            price: "68.0"
-          },
-          {
-            imgPath: require('../../../src/assets/images/index/pic_business.png'),
-            name: '欧莱博BY-D-I黄疸仪维修',
-            price: ""
-          },
-          {
-            imgPath: require('../../../src/assets/images/index/pic_business.png'),
-            name: '欧莱博BY-D-I黄疸仪维修',
-            price: ""
-          },
-          {
-            imgPath: require('../../../src/assets/images/index/pic_business.png'),
-            name: '欧莱博BY-D-I黄疸仪维修',
-            price: ""
-          },
-          {
-            imgPath: require('../../../src/assets/images/index/pic_business.png'),
-            name: '欧莱博BY-D-I黄疸仪维修',
-            price: ""
-          }
-        ]
+      }
+    },
+    methods:{
+      changeTab(id){
+        this.$emit('changeTab',id)
+      },
+      toCopmany(storeId){
+        this.$router.push({
+          path:'/shopHome',
+          query:{storeId}
+        })
       }
     }
   }

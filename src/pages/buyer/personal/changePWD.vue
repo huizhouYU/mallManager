@@ -65,6 +65,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.form.username = this.name
       this.form.mobile = this.mobile
     },

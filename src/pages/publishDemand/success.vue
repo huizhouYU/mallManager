@@ -21,14 +21,12 @@
           path:'/publishDemandIndex',
           replace:true
         })
-        document.documentElement.scrollTop = 0;
       },
       indexHome(){
         this.$router.push({
           path:'/',
           replace:true
         })
-        document.documentElement.scrollTop = 0;
       }
     }
   }

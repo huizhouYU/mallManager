@@ -125,24 +125,27 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.id = this.$route.query.articleId
-      articleDetail({
-        id: this.id
-      }).then(response => {
-        console.log("供求信息详情：", response)
-        // console.log("token：", this.token)
-        this.demandInfo = response.data
-        this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
-          "<img src=\"https://images.weserv.nl/?url=http://")
-        if (this.demandInfo.region != null && this.demandInfo.region != '') {
-          this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
-        }
-      })
+      this.getData()
     },
     methods: {
       toLogin() {
         this.$router.push({
           path: '/login'
+        })
+      },
+      getData() {
+        articleDetail({
+          id: this.id
+        }).then(response => {
+          console.log("供求信息详情：", response)
+          this.demandInfo = response.data
+          this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
+            "<img src=\"https://images.weserv.nl/?url=http://")
+          if (this.demandInfo.region != null && this.demandInfo.region != '') {
+            this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
+          }
         })
       }
     }
@@ -234,7 +237,6 @@
         padding: 20px;
 
         .two-lines {
-          // height: 80px;
           width: 910px;
           border: 1px solid #F5F5F5;
           display: flex;

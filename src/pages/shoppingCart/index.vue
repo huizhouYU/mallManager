@@ -226,6 +226,9 @@
     directives: {
       Clickoutside
     },
+    mounted() {
+      document.documentElement.scrollTop = 0;
+    },
     methods: {
       outsideClick() {
         if (this.showChosedFlag) {

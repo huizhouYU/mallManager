@@ -127,11 +127,11 @@
       </div>
     </div>
     <!-- 配件专区 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle"></accessories-area>
+    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="1" @changeTab="changeTab"></accessories-area>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList"></product-show>
+    <product-show class="product-show" :productList="productList" :tabIndex="3" @changeTab="changeTab"></product-show>
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services" :companyList="companyList"></enterprise-services>
+    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="4" @changeTab="changeTab"></enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer"></personal-engineer>
     <!-- 模块六 两张大图 -->
@@ -174,6 +174,7 @@
       ])
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.getData()
     },
     props: ['brandList'],
@@ -258,7 +259,7 @@
         })
       },
       personCenter() {
-        this.$emit("changeTab", '-1')
+        this.changeTab('-1')
         this.$router.push({
           path: '/buyer',
           query: {
@@ -266,20 +267,17 @@
           }
         })
       },
+      changeTab(id){
+        this.$emit('changeTab',id)
+      },
       jumpAllGoods(id) {
-        this.$emit("changeTab", '-1')
-        // this.$router.push({
-        //   path: '/allGoods',
-        //   query: {
-        //     id: id
-        //   }
-        // })
-        console.log("id:",id)
+        this.changeTab('-1')
         this.$router.push({
           path: '/goodDetail',
-          query:{goodsId:id}
+          query: {
+            goodsId: id
+          }
         })
-
       },
       enterClass(index) {
         //根据id去请求classDatas数据
@@ -302,15 +300,17 @@
         })
       },
       toMoreBrand() {
-        this.$emit("changeTab", '7')
+        this.changeTab('7')
         this.$router.push({
           path: '/cooperationBrand'
         })
       },
-      toDemandDetail(articleId){
+      toDemandDetail(articleId) {
         this.$router.push({
-          path:'/demandDetail',
-          query:{articleId}
+          path: '/demandDetail',
+          query: {
+            articleId
+          }
         })
       }
     },

@@ -8,6 +8,8 @@ import {
 import {
   getToken,
   setToken,
+  // setStoreId,
+  // getStoreId,
   removeToken
 } from '../../utils/auth.js'
 
@@ -23,6 +25,7 @@ const state = {
   mobile: '',
   roles: [],
   currentLookStoreId: ''
+  // currentLookStoreId: getStoreId()
 }
 
 const mutations = {
@@ -58,9 +61,10 @@ const mutations = {
 
 const actions = {
   setStoreId({ commit }, storeId) {
-    
+
     return new Promise((resolve, reject) => {
       commit('SET_STOREID', storeId)
+      // setToken(storeId)
       resolve("保存当前浏览的店铺ID成功")
     })
   },

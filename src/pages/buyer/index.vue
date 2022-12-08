@@ -120,6 +120,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.chosedNav = this.$route.path.replace("/", "") + this.$route.query.id
     },
     methods: {
@@ -141,7 +142,6 @@
             replace: true
           })
         }
-        document.documentElement.scrollTop = 0;
 
       },
       changeChosedNav(key) {

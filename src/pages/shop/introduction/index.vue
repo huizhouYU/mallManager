@@ -45,9 +45,7 @@
       <template v-else>
         <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt="">
       </template>
-      <!-- <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt=""> -->
       <span v-html="storeInfo.description">
-        <!-- 浙江xx建设集团有限公司的前身是一家名不见经传的建筑工程队，历经四十余年的风雨兼程和顽强拚搏，已发展壮大为国家房屋建筑工程施工总承包一级企业，公司注册资本10868万元，净资产达3、7亿多元。下辖上海蔚昕建设发展有限公司等分布在全国各地的九家分公司。集团公司具有建筑装修装饰工程、地基与基础工程、钢结构工程、市政公用工程施工总承包，环保施工等专业承包资质，是一家集建筑、房地产开啊发、建材经营等为一体的大型建筑企业，可承揽工业、民用等大体量、高层次、大跨度、高标准、精装饰的建筑施工业务。 -->
       </span>
     </div>
     <!-- 店内推荐 -->
@@ -61,36 +59,31 @@
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
   import {
-    mapGetters
-  } from 'vuex'
-  import {
     goodsList
   } from '@/api/goods'
   import {
     storeDetail
   } from '@/api/store'
   export default {
-    computed: {
-      ...mapGetters([
-        'currentLookStoreId'
-      ])
-    },
     components: {
       goodItem
     },
     data() {
       return {
+        storeId:'',
         storeInfo: '',
         goodsDataList: [],
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
+      this.storeId = this.$route.query.storeId
       this.getData()
     },
     methods: {
       getData() {
         storeDetail({
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }).then(response => {
           console.log("获取店铺详情：", response)
           this.storeInfo = response.data
@@ -98,7 +91,7 @@
         var page = {
           pageNo: 1,
           pageSize: 10,
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }
         goodsList(page).then(response => {
           console.log("获取店铺内商品列表:", response)

@@ -39,7 +39,8 @@
         </ul>
       </div>
       <div class="pages">
-        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @getStore="getStore" :storeInfo="storeInfo"></router-view>
+        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab">
+        </router-view>
       </div>
       <index-bottom></index-bottom>
     </div>
@@ -72,7 +73,7 @@
       return {
         storeId: '',
         selectedTab: '-1',
-        storeInfo:'',
+        storeInfo: '',
         tabList: [{
             name: '店铺首页',
             path: '/shopHome'
@@ -101,14 +102,24 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.selectedTab = this.$route.path
-      // this.selectedTab = 0
-      // this.$router.replace({path:'/shopHome'})
+      var storeIdStr = this.$route.query.storeId
+      if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {
+        this.storeId = storeIdStr
+      } else {
+        this.storeId = this.currentLookStoreId
+      }
+      if (this.storeId != '') {
+        this.getStore()
+      }
     },
     methods: {
-      getStore(){
-        storeDetail({storeId:this.currentLookStoreId}).then(response=>{
-          console.log("获取店铺详情：",response)
+      getStore() {
+        storeDetail({
+          storeId: this.storeId
+        }).then(response => {
+          console.log("获取店铺详情：", response)
           this.storeInfo = response.data
         })
       },
@@ -116,17 +127,17 @@
         this.selectedTab = path
         this.$router.replace({
           path: path,
-          query:{
-            storeId: this.currentLookStoreId
+          query: {
+            storeId: this.storeId
           }
         })
       },
       selectTab(params) {
         this.changeTab(params.path, params.index)
       },
-      selectOnlyTab(id){
-        console.log("仅仅改变tabId：",id)
-        this.selectedTab=id
+      selectOnlyTab(id) {
+        console.log("仅仅改变tabId：", id)
+        this.selectedTab = id
       }
     }
   }
@@ -160,7 +171,6 @@
   .shop-main {
     padding-top: 140px;
     background-color: #f5f5f5;
-    // height: 20px;
 
     .shop-logo {
       width: 100%;

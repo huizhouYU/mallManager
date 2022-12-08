@@ -162,7 +162,7 @@
     data() {
       return {
         goodsId: '',
-        categoryStr:'',
+        categoryStr: '',
         bigImgPath: '',
         num: 1,
         goodsInfo: {
@@ -180,35 +180,35 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.goodsId = this.$route.query.goodsId
       goodsDetail({
         goodsId: this.goodsId
       }).then(response => {
         console.log("获取商品详情：", response)
         this.goodsInfo = response.data
-        this.bigImgPath = this.goodsInfo.imageList[0]
-        // this.goodsInfo.cateName = this.goodsInfo.cateName.replace("\\",">")
-        // this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
-        this.categoryStr = ''
-        if(this.goodsInfo.category != null && this.goodsInfo.category != ''){
-          this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
-          for(var index in this.goodsInfo.category){
-            if(index == 0){
-              this.categoryStr+=this.goodsInfo.category[index].label
-            }else{
-              this.categoryStr+='>'+this.goodsInfo.category[index].label
-            }
-          }
-        }else{
-          this.categoryStr = this.goodsInfo.cateName
-        }
         this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
           .then((response) => {
-           console.log("保存当前浏览的店铺ID：",response)
+            console.log("保存当前浏览的店铺ID：", response)
           }).catch(() => {
             console.log("保存当前浏览的店铺ID失败")
           })
-           this.$emit("getStore",this.goodsInfo.storeId)
+        this.bigImgPath = this.goodsInfo.imageList[0]
+        this.categoryStr = ''
+        if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
+          this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
+          for (var index in this.goodsInfo.category) {
+            if (index == 0) {
+              this.categoryStr += this.goodsInfo.category[index].label
+            } else {
+              this.categoryStr += '>' + this.goodsInfo.category[index].label
+            }
+          }
+        } else {
+          this.categoryStr = this.goodsInfo.cateName
+        }
+
+        // this.$emit("getStore",this.goodsInfo.storeId)
       })
     },
     methods: {

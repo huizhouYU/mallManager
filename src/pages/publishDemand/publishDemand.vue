@@ -172,7 +172,6 @@
             path: '/success',
             replace:true
           })
-          document.documentElement.scrollTop = 0;
         }
 
       }

@@ -99,6 +99,9 @@
         ]
       }
     },
+    mounted() {
+      document.documentElement.scrollTop = 0;
+    },
     methods: {
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -111,7 +114,6 @@
        this.$router.push({
          path:'/personDemandDetail'
        })
-        document.documentElement.scrollTop = 0;
       },
       deleteDemand(row){
         this.dialogDelVisible = true

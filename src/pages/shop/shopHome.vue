@@ -113,9 +113,6 @@
   import demandItem from '../../pages/shopDemand/demandItem.vue'
   import vAmap from '../../components/amaps.vue'
   import {
-    mapGetters
-  } from 'vuex'
-  import {
     goodsList
   } from '@/api/goods'
   import {
@@ -125,20 +122,15 @@
     articleList
   } from '@/api/supplyDemand'
   export default {
-    computed: {
-      ...mapGetters([
-        'currentLookStoreId'
-      ])
-    },
     components: {
       storeRecommendation,
       goodItem,
       demandItem,
       vAmap
     },
-    // props: ['storeInfo'],
     data() {
       return {
+        storeId:'',
         storeInfo: '',
         goodsDataList: [],
         demandDataList: [],
@@ -147,12 +139,14 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
+      this.storeId = this.$route.query.storeId
       this.getData()
     },
     methods: {
       getData() {
         storeDetail({
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }).then(response => {
           console.log("获取店铺详情：", response)
           this.storeInfo = response.data
@@ -160,7 +154,7 @@
         var page = {
           pageNo: 1,
           pageSize: 10,
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }
         goodsList(page).then(response => {
           console.log("获取店铺内商品列表:", response)
@@ -176,7 +170,6 @@
           path,
           index
         }
-        document.documentElement.scrollTop = 0;
         this.$emit('selectTab', params)
       },
       selectOnlyTab(id) {

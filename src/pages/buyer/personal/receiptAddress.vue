@@ -171,6 +171,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       for (var index in this.addressList) {
         if (this.addressList[index].default) {
           this.defaultAddress = this.addressList[index]

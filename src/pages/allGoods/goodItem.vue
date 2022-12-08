@@ -42,7 +42,6 @@
           path: '/goodDetail',
           query:{goodsId}
         })
-        document.documentElement.scrollTop = 0;
         this.$emit('selectOnlyTab', '-1')
       }
     }

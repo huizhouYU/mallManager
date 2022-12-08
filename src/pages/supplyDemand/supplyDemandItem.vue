@@ -98,7 +98,6 @@
             articleId
           }
         })
-        document.documentElement.scrollTop = 0;
       }
     },
   }

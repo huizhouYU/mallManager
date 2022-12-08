@@ -18,6 +18,13 @@
  </div>
   </div>
 </template>
+<script>
+  export default{
+    mounted() {
+      document.documentElement.scrollTop = 0;
+    }
+  }
+</script>
 <style lang="less" scoped>
   .article-content {
     padding: 15px 25px;

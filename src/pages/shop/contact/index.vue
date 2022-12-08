@@ -39,37 +39,32 @@
   import goodItem from '../../../pages/allGoods/goodItem.vue'
   import vAmap from '../../../components/amaps.vue'
   import {
-    mapGetters
-  } from 'vuex'
-  import {
     goodsList
   } from '@/api/goods'
   import {
     storeDetail
   } from '@/api/store'
   export default {
-    computed: {
-      ...mapGetters([
-        'currentLookStoreId'
-      ])
-    },
     components: {
       goodItem,
       vAmap
     },
     data() {
       return {
+        storeId: '',
         storeInfo: '',
         goodsDataList: [],
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
+      this.storeId = this.$route.query.storeId
       this.getData()
     },
     methods: {
       getData() {
         storeDetail({
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }).then(response => {
           console.log("获取店铺详情：", response)
           this.storeInfo = response.data
@@ -77,7 +72,7 @@
         var page = {
           pageNo: 1,
           pageSize: 10,
-          storeId: this.currentLookStoreId
+          storeId: this.storeId
         }
         goodsList(page).then(response => {
           console.log("获取店铺内商品列表:", response)

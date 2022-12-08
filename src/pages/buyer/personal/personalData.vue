@@ -48,6 +48,7 @@
       ])
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.form.username = this.name
       this.form.avatar = this.avatar
       this.form.mobile = this.mobile

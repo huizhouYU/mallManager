@@ -16,15 +16,7 @@
   import {
     articleList
   } from '@/api/supplyDemand'
-  import {
-    mapGetters
-  } from 'vuex'
   export default {
-    computed: {
-      ...mapGetters([
-        'currentLookStoreId'
-      ])
-    },
     components: {
       demandItem
     },
@@ -41,7 +33,8 @@
       }
     },
     mounted() {
-      this.page.stroreId = this.currentLookStoreId
+      document.documentElement.scrollTop = 0;
+      this.page.stroreId  = this.$route.query.storeId
       this.getData()
     },
     methods:{

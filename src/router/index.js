@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../pages/login/login.vue'
-import Home from '../pages/home/home.vue'
-import Index from '../pages/index/index.vue'
 Vue.use(Router)
 //解决vue路由重复导航错误
 //获取原型对象上的push函数
@@ -20,7 +17,7 @@ export default new Router({
     {
       name: 'index',
       path: '/',
-      component: Index,
+      component: () => import('../pages/index/index.vue'),
       redirect: '/home',
       children: [{
           path: '/home',
@@ -157,7 +154,7 @@ export default new Router({
     {
       name: 'login',
       path: '/login',//登录
-      component: Login
+      component:  () => import('../pages/login/login.vue')
     },
     {
       path: '/register',

@@ -298,6 +298,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       //默认地址选中
       for (var index in this.addressList) {
         if (this.addressList[index].default) {

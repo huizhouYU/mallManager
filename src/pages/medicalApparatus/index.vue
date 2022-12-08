@@ -161,6 +161,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       // 品牌
       if (this.selectItem.classification.length > 15) {
         this.isClassificationShow = true

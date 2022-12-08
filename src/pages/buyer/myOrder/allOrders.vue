@@ -333,6 +333,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
       this.selectedStaute = this.$route.query.id
     },
     methods: {

@@ -50,6 +50,7 @@
       }
     },
     mounted() {
+      document.documentElement.scrollTop = 0;
     },
     methods: {
       isCellPhone(val) {

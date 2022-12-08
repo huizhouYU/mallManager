@@ -71,9 +71,6 @@
 
 <script>
   import goodItem from '../../pages/allGoods/goodItem.vue'
-import {
-    mapGetters
-  } from 'vuex'
   import {
     goodsList
   } from '@/api/goods'
@@ -81,14 +78,8 @@ import {
     components: {
       goodItem
     },
-    computed: {
-      ...mapGetters([
-        'currentLookStoreId'
-      ])
-    },
     data() {
       return {
-
         total: 0, //总条数
         page: {
           pageNo: 1,
@@ -132,7 +123,28 @@ import {
         }
       }
     },
-
+  mounted() {
+      document.documentElement.scrollTop = 0;
+      // 品牌
+      if (this.selectItem.brandLogo.length > 8) {
+        this.isBrandLogoShow = true
+      }
+      //设备
+      if (this.selectItem.equipment.length > 15) {
+        this.isEquipmentShow = true
+      }
+      //型号
+      if (this.selectItem.model.length > 15) {
+        this.isModelShow = true
+      }
+      this.page.storeId = this.$route.query.storeId
+      // if(storeIdStr!=undefined && storeIdStr!=null && storeIdStr!=''){
+      //   this.page.stroreId  = storeIdStr
+      // }else{
+      //   this.page.stroreId  = this.currentLookStoreId
+      // }
+      this.getData()
+    },
     methods: {
       getData() {
         // "keyType": 0,          // "keyword": "",
@@ -156,22 +168,7 @@ import {
         this.getData()
       }
     },
-    mounted() {
-      // 品牌
-      if (this.selectItem.brandLogo.length > 8) {
-        this.isBrandLogoShow = true
-      }
-      //设备
-      if (this.selectItem.equipment.length > 15) {
-        this.isEquipmentShow = true
-      }
-      //型号
-      if (this.selectItem.model.length > 15) {
-        this.isModelShow = true
-      }
-      this.page.storeId = this.currentLookStoreId
-      this.getData()
-    }
+
   }
 </script>
 

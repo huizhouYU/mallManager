@@ -5,7 +5,7 @@
       <div class="bule"></div>
       <div class="name">{{title}}</div>
     </div>
-    <div class="more">
+    <div class="more" @click="toMore">
       <span>查看更多</span>
       <i class="iconfont">&#xe63c;</i>
     </div>
@@ -14,9 +14,17 @@
 
 <script>
   export default {
-    props: ['title'],
+    props: ['title','morePath',"tabIndex"],
     data() {
       return {}
+    },
+    methods:{
+      toMore(){
+        this.$emit("changeTab",this.tabIndex)
+        this.$router.push({
+          path:this.morePath
+        })
+      }
     }
   }
 </script>

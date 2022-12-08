@@ -40,7 +40,6 @@
           path: '/demandDetail',
           query:{articleId}
         })
-        document.documentElement.scrollTop = 0;
         this.$emit('selectOnlyTab', '-1')
       }
     }
