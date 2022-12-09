@@ -17,8 +17,8 @@
           <el-form-item label="" prop="mobile">
             <el-input type="text" v-model="registerForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="vCode" class="get-v-code-form-item">
-            <el-input v-model="registerForm.vCode" :disabled="registerForm.mobile == ''">
+          <el-form-item label="" prop="captcha" class="get-v-code-form-item">
+            <el-input v-model="registerForm.captcha" :disabled="registerForm.mobile == ''">
               <template slot="append">
                 <span class="flex-center-center get-v-code" @click="getCode" v-show="countDown == 0">获取验证码</span>
                 <span class="flex-center-center count-down" v-show="countDown>0">{{countDown}}s</span>
@@ -60,8 +60,9 @@
         labelPosition: 'top',
         countDown: 0,
         registerForm: {
-          mobile: '',
-          vCode: ''
+          mobile:'',
+          captcha:'',
+          activation:''
         },
         registerFormRules: {
           mobile: [{
@@ -69,7 +70,7 @@
             validator: validatePhone,
             trigger: 'blur'
           }],
-          vCode: [{
+          captcha: [{
             required: true,
             message: '请输入验证码',
             trigger: 'blur'
@@ -101,12 +102,10 @@
         // 验证码倒计时
         if (!this.timer) {
           this.countDown = 60;
-          // this.showRegisterGetVCode = false;
           this.timer = setInterval(() => {
             if (this.countDown > 0 && this.countDown <= 60) {
               this.countDown--;
             } else {
-              // this.showRegisterGetVCode = true;
               clearInterval(this.timer);
               this.timer = null;
             }
@@ -118,7 +117,22 @@
       onSubmit(ruleForm) {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
-            conso.log("去注册")
+            this.$store.dispatch('user/register', this.registerForm)
+              .then((response) => {
+                if (response.code == 10000) {
+                  this.$router.replace({
+                    path: this.redirect || '/',
+                    query: this.otherQuery
+                  })
+                } else {
+                  this.$message.error(response.message)
+                }
+                this.loading = false
+              }).catch(() => {
+                this.loading = false
+                console.log("失败")
+              })
+
             // this.$store.dispatch('user/login', this.loginForm)
             //   .then(() => {
             //     console.log("登录成功！")

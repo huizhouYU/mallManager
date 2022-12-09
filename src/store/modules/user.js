@@ -20,6 +20,7 @@ import {
 const state = {
   token: getToken(),
   name: '',
+  userid:'',
   avatar: '',
   introduction: '',
   mobile: '',
@@ -44,6 +45,9 @@ const mutations = {
   SET_NAME: (state, name) => {
     // console.log("保存name")
     state.name = name
+  },
+  SET_USERID: (state, userid) => {
+    state.userid = userid
   },
   SET_AVATAR: (state, avatar) => {
     // console.log("保存avatar")
@@ -150,14 +154,13 @@ const actions = {
         activation: activation.trim()
       }).then(response => {
         console.log("注册接口返回：", response)
-        console.log("将返回的token保存到store中")
-        // const {
-        //   data
-        // } = response.data
-        // console.log("setToken:",data)
-        // commit('SET_TOKEN', data)
-        // setToken(data)
-        resolve()
+        const {
+          data
+        } = response.data
+        console.log("setToken:",data)
+        commit('SET_TOKEN', data)
+        setToken(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
@@ -180,10 +183,18 @@ const actions = {
           } = response
           console.log(data)
           commit('SET_NAME', data.user.username)
+          commit('SET_USERID',  data.user.userid)
           commit('SET_AVATAR',
             "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
           commit('SET_INTRODUCTION', "固定无")
-          commit('SET_MOBILE', "18154526542")
+          var mobile = ''
+          if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){
+            mobile = '13329019580'
+          }else{
+            mobile = data.user.mobile
+          }
+          commit('SET_MOBILE', mobile)
+
         } else {
           commit('SET_TOKEN', '')
           removeToken()

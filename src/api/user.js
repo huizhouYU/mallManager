@@ -48,8 +48,36 @@ export function register(data) {
     data:data
   })
 }
-
-
+//更新用户信息
+export function updateInfo(token) {
+  return request({
+    url: 'user/updateInfo',
+    method: 'get',
+  })
+}
+//发送修改资料短信
+export function sendUpdateMsg(data) {
+  return request({
+    url: 'sms/sendUpdateMsg',
+    method: 'post',
+    data:data
+  })
+}
+//修改用户密码
+export function updatePwd(token) {
+  return request({
+    url: 'user/updatePwd',
+    method: 'get',
+  })
+}
+//发送修改密码短信
+export function sendPwdMsg(data) {
+  return request({
+    url: 'sms/sendPwdMsg',
+    method: 'post',
+    data:data
+  })
+}
 //退出登录
 export function logout() {
   return request({

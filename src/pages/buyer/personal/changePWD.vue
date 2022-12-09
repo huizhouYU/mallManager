@@ -1,14 +1,14 @@
 <template>
   <div class="change-pwd-box">
-    <el-form ref="form" :model="form" label-width="90px" label-position="left">
+    <el-form ref="ruleForm" :model="form" label-width="90px" label-position="left" :rules="formRules">
       <el-form-item label="用户名：">
         <el-input size="small" v-model="form.username" disabled></el-input>
       </el-form-item>
-      <el-form-item label="新密码：">
+      <el-form-item label="新密码："  prop="password">
         <el-input size="small" v-model="form.password"></el-input>
       </el-form-item>
-      <el-form-item label="确认密码:">
-        <el-input size="small" v-model="form.againPassword"></el-input>
+      <el-form-item label="确认密码:" prop="newPassword">
+        <el-input size="small" v-model="form.newPassword"></el-input>
       </el-form-item>
       <el-form-item label="手机号:">
         <el-input size="small" v-model="form.mobile" disabled></el-input>
@@ -30,12 +30,13 @@
             <input :class="{'g-code-input_color': aCheckCodeInputComputed[5] !== ''}" max="9" min="0" maxlength="1"
               data-index="5" v-model.trim.number="aCheckCodeInputComputed[5]" type="number" />
           </div>
-          <span class="get-code">获取验证码</span>
+          <span class="get-code" @click="getCode" v-show="countDown == 0">获取验证码</span>
+          <span class="count-down" v-show="countDown>0">{{countDown}}s</span>
         </div>
 
       </el-form-item>
       <el-form-item class="submit">
-        <el-button type="primary" @click="onSubmit">保存</el-button>
+        <el-button type="primary" @click="onSubmit('ruleForm')">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -45,6 +46,9 @@
   import {
     mapGetters
   } from 'vuex'
+  import {
+    updatePwd,sendPwdMsg
+  } from '@/api/user'
   export default {
     computed: {
       ...mapGetters([
@@ -71,14 +75,27 @@
     },
     data() {
       return {
+        countDown: 0,
         aCheckCodeInput: ['', '', '', '', '', ''], // 存储输入验证码内容
         aCheckCodePasteResult: [], // 粘贴的验证码
         form: {
           username: '',
           password: '',
-          againPassword: '',
+          newPassword: '',
           mobile: '',
-          code: ''
+          captcha: ''
+        },
+        formRules: {
+          password: [{
+            required: true,
+            message: '请输入新密码',
+            trigger: 'blur'
+          }],
+          newPassword: [{
+            required: true,
+            message: '请再次输入密码',
+            trigger: 'blur'
+          }],
         }
       }
     },
@@ -156,8 +173,66 @@
           }
         });
       },
-      onSubmit() {
-        console.log('submit!');
+      isCellPhone(val) {
+        if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+          return false
+        } else {
+          return true
+        }
+      },
+      //获取手机短信验证码
+      getCode() {
+        if (!this.isCellPhone(this.form.mobile)) {
+          this.$message.error('请先输入正确的手机号码！')
+          return
+        }
+        //axios请求
+        let data = {
+          mobile: this.form.mobile
+          // mobile: '18110941121'
+        }
+        console.log("this.form.mobile:",this.form.mobile)
+        sendPwdMsg(data).then(response => {
+          console.log(response.data.data)
+        })
+        // 验证码倒计时
+        if (!this.timer) {
+          this.countDown = 60;
+          // this.showRegisterGetVCode = false;
+          this.timer = setInterval(() => {
+            if (this.countDown > 0 && this.countDown <= 60) {
+              this.countDown--;
+            } else {
+              // this.showRegisterGetVCode = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+      },
+      onSubmit(ruleForm) {
+        this.$refs[ruleForm].validate((valid) => {
+          if (valid) {
+            this.form.captcha = this.aCheckCodeInput.join('')
+            console.log("this.form:",this.form)
+            if(this.form.captcha == ''){
+              this.$message.error("请填写短信验证码！")
+              return false
+            }else{
+              updatePwd(this.form).then(response => {
+                console.log(response)
+              })
+            }
+
+
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+
+
+
       }
     }
   }
@@ -228,14 +303,17 @@
       }
 
 
-      .get-code {
-        margin-left: 30px;
-        cursor: pointer;
-        font-size: 12px;
-        font-family: Microsoft YaHei;
-        font-weight: 400;
-        color: #40A9FF;
-      }
+     .get-code,.count-down {
+       margin-left: 30px;
+       cursor: pointer;
+       font-size: 12px;
+       font-family: Microsoft YaHei;
+       font-weight: 400;
+       color: #40A9FF;
+     }
+     .count-down{
+       color: #495060;
+     }
     }
 
 
