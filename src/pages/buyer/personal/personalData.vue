@@ -21,9 +21,6 @@
       <el-form-item label="真实姓名:">
         <el-input size="small" v-model="form.realName"></el-input>
       </el-form-item>
-      <el-form-item label="手机号:">
-        <el-input size="small" v-model="form.mobile" disabled></el-input>
-      </el-form-item>
       <el-form-item label="邮箱:">
         <el-input size="small" v-model="form.email"></el-input>
       </el-form-item>
@@ -63,15 +60,18 @@
     mapGetters
   } from 'vuex'
   import {
-    updateInfo,sendUpdateMsg
+    updateInfo,
+    sendUpdateMsg
   } from '@/api/user'
+  import {
+    uploadImage
+  } from '@/api/public'
   export default {
     computed: {
       ...mapGetters([
         'name',
         'userid',
         'avatar',
-        'mobile'
       ]),
       // 验证码计算属性
       aCheckCodeInputComputed() {
@@ -91,21 +91,20 @@
       document.documentElement.scrollTop = 0;
       this.form.username = this.name
       this.form.avatar = this.avatar
-      this.form.mobile = this.mobile
     },
     data() {
       return {
         countDown: 0,
         aCheckCodeInput: ['', '', '', '', '', ''], // 存储输入验证码内容
         aCheckCodePasteResult: [], // 粘贴的验证码
+        imgFile: '',
         form: {
           avatar: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
           username: '',
-          userId:'',
+          userId: '',
           realName: '',
-          mobile: '',
           email: '',
-          captcha:''
+          captcha: ''
         }
       }
     },
@@ -119,17 +118,8 @@
       },
       //获取手机短信验证码
       getCode() {
-        if (!this.isCellPhone(this.form.mobile)) {
-          this.$message.error('请先输入正确的手机号码！')
-          return
-        }
         //axios请求
-        let data = {
-          // mobile: this.form.mobile
-          // mobile: '18110941121'
-        }
-        console.log("this.form.mobile:",this.form.mobile)
-        sendUpdateMsg(data).then(response => {
+        sendUpdateMsg().then(response => {
           console.log(response.data.data)
         })
         // 验证码倒计时
@@ -169,6 +159,8 @@
               // 法1
               // this.$refs.imgRef.src = e.target.result
               // 法2
+              // _this.form.avatar = e.target.result
+              _this.imgFile = files[0]
               _this.form.avatar = e.target.result
             } else {
               _this.$message.warning({
@@ -180,15 +172,27 @@
           }
         }
       },
-      onSubmit() {
+      async onSubmit() {
+        let _this = this;
         this.form.captcha = this.aCheckCodeInput.join('')
         this.form.userId = this.userid
-        console.log("this.form:",this.form)
-        if(this.form.captcha == ''){
+
+        if (this.form.captcha == '') {
           this.$message.error("请填写短信验证码！")
           return false
-        }else{
-          updateInfo(this.form).then(response => {
+        } else {
+          let param = new FormData(); //创建form对象
+          param.append('file', this.imgFile); //通过append向form对象添加数据
+          //上传图片
+          console.log("this.imgFile :", this.imgFile)
+          if (this.imgFile != '') {
+            await uploadImage(param).then(response => {
+              this.form.avatar = response.data
+            })
+          }
+          console.log("this.form:", this.form)
+          //信息提交
+          await updateInfo(this.form).then(response => {
             console.log(response)
           })
         }
@@ -381,7 +385,8 @@
       }
 
 
-      .get-code,.count-down {
+      .get-code,
+      .count-down {
         margin-left: 30px;
         cursor: pointer;
         font-size: 12px;
@@ -389,7 +394,8 @@
         font-weight: 400;
         color: #40A9FF;
       }
-      .count-down{
+
+      .count-down {
         color: #495060;
       }
     }

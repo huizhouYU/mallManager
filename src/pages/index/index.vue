@@ -218,10 +218,22 @@
         } else {
           this.isShowContent = false
         }
-        this.$router.push({
-          path: path,
-          replace: true
-        })
+        if(path =='/medicalApparatus'){
+          console.log("医疗器械")
+          this.$router.push({
+            path: path,
+            query:{goodsType:'equipment'},
+            replace: true
+          })
+        }else{
+          this.$router.push({
+            path: path,
+            replace: true
+          })
+        }
+        // this.$router.push({
+        //    path: path,
+        //    replace: true        //  })
 
       },
       toShoppingcart() {
@@ -531,6 +543,7 @@
         .more-classification::-webkit-scrollbar {
           width: 6px;
         }
+
         .more-classification::-webkit-scrollbar-thumb {
           border-radius: 10px;
           box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);

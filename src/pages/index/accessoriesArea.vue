@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="item_bottom">
-          <div class="flex-column-between-center individual" v-for="(option,ind) in item.optionList" :key="ind">
+          <div class="flex-column-between-center individual" v-for="(option,ind) in item.optionList" :key="ind" @click="toGoods(item)">
             <div class="individual_img">
               <img :src="option.imgPath" alt="">
             </div>
@@ -49,7 +49,7 @@
     },
     props: {
       showTitle: Boolean,
-      tabIndex:Number
+      tabIndex:Number,
     },
     data() {
       return {
@@ -181,6 +181,14 @@
       }
     },
     methods: {
+      toGoods(item){
+        this.$router.push({
+          path:'/medicalApparatus',
+          query:{
+            goodsType:'material'
+          }
+        })
+      },
       changeTab(id){
         this.$emit('changeTab',id)
       },

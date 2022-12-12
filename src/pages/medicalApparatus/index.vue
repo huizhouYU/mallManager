@@ -17,9 +17,33 @@
           </div>
         </div>
         <div class="select-item">
+          <div class="title">类型</div>
+          <ul :class="['item']">
+            <li v-for="(item,index) in selectItem.goodsType" :key="index">
+              <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="select-item">
+          <div class="title">品牌</div>
+          <ul :class="[{'minHeight':!isBrandStow},'item']">
+            <li v-for="(item,index) in selectItem.brand" :key="index" @click="page.brandName = item.brandName">
+              <img :src="item.brandLogo" alt="">
+              <!-- <span :class="{'bule':item == currentSelected.classification}">{{item}}</span> -->
+            </li>
+          </ul>
+          <template v-if="isBrandShow">
+            <span v-show="isBrandStow" class="isStow" @click="isBrandStow= false">收起<i
+                class="iconfont">&#xe733;</i></span>
+            <span v-show="!isBrandStow" class="isStow" @click="isBrandStow= true">展开<i
+                class="iconfont">&#xe601;</i></span>
+          </template>
+        </div>
+        <div class="select-item">
           <div class="title">分类</div>
           <ul :class="[{'minHeight':!isClassificationStow},'item']">
-            <li v-for="(item,index) in selectItem.classification" :key="index" @click="currentSelected.classification = item">
+            <li v-for="(item,index) in selectItem.classification" :key="index"
+              @click="currentSelected.classification = item">
               <!-- <img :src="item" alt=""> -->
               <span :class="{'bule':item == currentSelected.classification}">{{item}}</span>
             </li>
@@ -91,6 +115,9 @@
   import {
     goodsList
   } from '@/api/goods'
+  import {
+    getBrandsList
+  } from '@/api/index'
   export default {
     components: {
       goodItem
@@ -101,8 +128,12 @@
         page: {
           pageNo: 1,
           pageSize: 12,
-          goodsType:'equipment'//商品类型 material-配件 equipment-设备器械
+          goodsType: '', //商品类型 material-配件 equipment-设备器械
+          brandName: '', //品牌
+          categoryId: '', //分类ID
         },
+        isBrandStow: true,
+        isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
         isClassificationStow: true,
         isClassificationShow: false, //【分类】是否显示‘收起’、‘展开’
         isEquipmentStow: true,
@@ -113,11 +144,23 @@
         isModelShow: false, //【型号】是否显示‘收起’、‘展开’
         currentSelected: {
           classification: '',
-          category:'',
+          category: '',
           equipment: '',
           model: ''
         },
         selectItem: {
+          // 商品类型 material-配件 equipment-设备器械
+          goodsType: [{
+              id: 'material',
+              name: '配件专区'
+            },
+            {
+              id: 'equipment',
+              name: '医疗器械'
+            }
+          ],
+          //品牌
+          brand: [],
           //分类
           classification: [
             '全部', '手术刀柄和刀片', '皮片刀', '疣体剥离刀', '柳叶刀', '铲刀', '普通手术剪', '组织剪', '综合组织剪', '拆线剪', '教育用手术剪', '教学用直尖针',
@@ -136,28 +179,7 @@
 
           // model:['全部','手术刀柄和刀片','皮片刀','疣体剥离刀','柳叶刀','铲刀','普通手术剪','组织剪','综合组织剪','拆线剪','教育用手术剪','教学用直尖针','普通持针钳','创夹缝拆钳','皮肤轧钳','子弹钳','纱布剥离钳']
         },
-        goodsDataList:[]
-      }
-    },
-    methods: {
-      getData(){
-        goodsList(this.page).then(response=>{
-          console.log("获取医疗器械商品列表：",response)
-          this.total = response.data.totalCount
-          this.page.pageNo = response.data.pageNum
-          this.page.pageSize =response.data.pageSize
-          this.goodsDataList = response.data.list
-        })
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.page.pageSize = val
-        this.getData()
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.page.pageNo = val
-        this.getData()
+        goodsDataList: []
       }
     },
     mounted() {
@@ -179,7 +201,44 @@
         this.isModelShow = true
       }
       this.getData()
-    }
+    },
+    methods: {
+      getData() {
+        console.log("this.$route.query:",this.$route)
+        this.page.goodsType = this.$route.query.goodsType
+        //获取品牌列表
+        getBrandsList({
+          limit: 999
+        }).then(response => {
+          console.log("获取分类：", response)
+          this.selectItem.brand = response.data
+          for (var index in this.selectItem.brand) {
+            if (this.selectItem.brand[index].brandLogo.indexOf("http://") == -1) {
+              this.selectItem.brand[index].brandLogo = 'http://www.yijiequan.cn/' + this.selectItem.brand[index]
+                .brandLogo
+            }
+          }
+        })
+        goodsList(this.page).then(response => {
+          console.log("获取医疗器械商品列表：", response)
+          this.total = response.data.totalCount
+          this.page.pageNo = response.data.pageNum
+          this.page.pageSize = response.data.pageSize
+          this.goodsDataList = response.data.list
+        })
+      },
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.page.pageSize = val
+        this.getData()
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.page.pageNo = val
+        this.getData()
+      }
+    },
+
   }
 </script>
 

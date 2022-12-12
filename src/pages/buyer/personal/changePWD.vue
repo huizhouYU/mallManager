@@ -5,13 +5,10 @@
         <el-input size="small" v-model="form.username" disabled></el-input>
       </el-form-item>
       <el-form-item label="新密码："  prop="password">
-        <el-input size="small" v-model="form.password"></el-input>
+        <el-input size="small" v-model="form.password" type="password"></el-input>
       </el-form-item>
       <el-form-item label="确认密码:" prop="newPassword">
-        <el-input size="small" v-model="form.newPassword"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号:">
-        <el-input size="small" v-model="form.mobile" disabled></el-input>
+        <el-input size="small" v-model="form.newPassword"  type="password"></el-input>
       </el-form-item>
       <el-form-item label="验证码:">
         <div class="get-code-item">
@@ -52,8 +49,7 @@
   export default {
     computed: {
       ...mapGetters([
-        'name',
-        'mobile'
+        'name'
       ]),
       // 验证码计算属性
       aCheckCodeInputComputed() {
@@ -71,7 +67,6 @@
     mounted() {
       document.documentElement.scrollTop = 0;
       this.form.username = this.name
-      this.form.mobile = this.mobile
     },
     data() {
       return {
@@ -82,7 +77,6 @@
           username: '',
           password: '',
           newPassword: '',
-          mobile: '',
           captcha: ''
         },
         formRules: {
@@ -182,17 +176,8 @@
       },
       //获取手机短信验证码
       getCode() {
-        if (!this.isCellPhone(this.form.mobile)) {
-          this.$message.error('请先输入正确的手机号码！')
-          return
-        }
         //axios请求
-        let data = {
-          mobile: this.form.mobile
-          // mobile: '18110941121'
-        }
-        console.log("this.form.mobile:",this.form.mobile)
-        sendPwdMsg(data).then(response => {
+        sendPwdMsg().then(response => {
           console.log(response.data.data)
         })
         // 验证码倒计时
@@ -221,10 +206,11 @@
             }else{
               updatePwd(this.form).then(response => {
                 console.log(response)
+                if(response.code == 10000){
+                  this.$message.success("密码修改成功！")
+                }
               })
             }
-
-
           } else {
             console.log('error submit!!');
             return false;

@@ -187,13 +187,13 @@ const actions = {
           commit('SET_AVATAR',
             "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
           commit('SET_INTRODUCTION', "固定无")
-          var mobile = ''
-          if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){
-            mobile = '13329019580'
-          }else{
-            mobile = data.user.mobile
-          }
-          commit('SET_MOBILE', mobile)
+          // var mobile = ''
+          // if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){
+          //   mobile = '13329019580'
+          // }else{
+          //   mobile = data.user.mobile
+          // }
+          // commit('SET_MOBILE', mobile)
 
         } else {
           commit('SET_TOKEN', '')

@@ -47,3 +47,12 @@ export function storeList(query) {
     params:query
   })
 }
+
+// 关键字列表
+export function searchKeys(query) {
+  return request({
+    url: 'common/searchKeys',
+    method: 'get',
+    params:query
+  })
+}

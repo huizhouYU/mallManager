@@ -3,7 +3,7 @@ import axios from '@/utils/axios'
 //上传图片
 export function uploadImage(data) {
   return axios({
-    url: '/attach/uploadImage',
+    url: 'attach/uploadImage',
     method: 'post',
     data
   })

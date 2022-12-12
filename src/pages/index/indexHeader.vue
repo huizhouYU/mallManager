@@ -27,6 +27,9 @@
 </template>
 
 <script>
+  import {
+    searchKeys
+  } from '@/api/index'
   export default {
     data() {
       return {
@@ -45,7 +48,15 @@
         hotWords: ['核磁共振', '骨密度器', '西门子', '血压仪']
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
+      getData(){
+        searchKeys({typeId:1}).then(response=>{
+          console.log("获取关键字列表：",response)
+        })
+      },
       publishDemand() {
         this.$router.push({
           path: '/publishDemandIndex'
