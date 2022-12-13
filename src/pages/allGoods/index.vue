@@ -2,57 +2,41 @@
   <div class="whole">
     <div class="content">
       <div class="select-content">
-        <div class="current-selected" v-show="currentSelected.equipment != ''||currentSelected.model != ''">
+        <div class="current-selected" v-show="page.goodsTypeName != ''||page.degreeName != ''">
           <div class="title">当前筛选结果</div>
           <div class="value">
-            <template v-if="currentSelected.equipment != ''">
-              {{currentSelected.equipment}}
+            <template v-if="page.goodsTypeName != ''">
+              {{page.goodsTypeName}}
             </template>
-            <template v-if="currentSelected.equipment != ''&&currentSelected.model != ''">
+            <template v-if="page.goodsTypeName != ''&&page.degreeName != ''">
               /
             </template>
-            <template v-if="currentSelected.model != ''">
-              {{currentSelected.model}}
+            <template v-if="page.degreeName != ''">
+              {{page.degreeName}}
             </template>
           </div>
         </div>
         <div class="select-item">
-          <div class="title">品牌</div>
-          <ul :class="[{'minImgHeight':!isBrandLogoStow},'item']">
-            <li v-for="(item,index) in selectItem.brandLogo" :key="index"><img :src="item" alt=""></li>
-          </ul>
-          <template v-if="isBrandLogoShow">
-            <span v-show="isBrandLogoStow" class="isStow" @click="isBrandLogoStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isBrandLogoStow" class="isStow" @click="isBrandLogoStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
-        </div>
-        <div class="select-item">
-          <div class="title">设备</div>
-          <ul :class="[{'minHeight':!isEquipmentStow},'item']">
-            <li v-for="(item,index) in selectItem.equipment" :key="index" @click="currentSelected.equipment = item">
-              <span :class="{'bule':item == currentSelected.equipment}">{{item}}</span>
+          <div class="title">类型</div>
+          <ul :class="['item']">
+            <li @click="changeGoodsType('','')"><span>全部</span></li>
+            <li v-for="(item,index) in selectItem.goodsType" :key="index" @click="changeGoodsType(item.id,item.name)">
+              <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
             </li>
           </ul>
-          <template v-if="isEquipmentShow">
-            <span v-show="isEquipmentStow" class="isStow" @click="isEquipmentStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isEquipmentStow" class="isStow" @click="isEquipmentStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
         </div>
         <div class="select-item">
-          <div class="title">型号</div>
-          <ul :class="[{'minHeight':!isModelStow},'item']">
-            <li v-for="(item,index) in selectItem.model" :key="index" @click="currentSelected.model = item">
-              <span :class="{'bule':item == currentSelected.model}">{{item}}</span>
+          <div class="title">新旧程度</div>
+          <ul :class="[{'minHeight':!isDegreeStow},'item']">
+            <li @click="changeDegree('','')"><span>全部</span></li>
+            <li v-for="(item,index) in selectItem.degree" :key="index" @click="changeDegree(item.degree,item.name)">
+              <span :class="{'bule':item.degree == page.degree}">{{item.name}}</span>
             </li>
           </ul>
-          <template v-if="isModelShow">
-            <span v-show="isModelStow" class="isStow" @click="isModelStow= false">收起<i
+          <template v-if="isDegreeShow">
+            <span v-show="isDegreeStow" class="isStow" @click="isDegreeStow= false">收起<i
                 class="iconfont">&#xe733;</i></span>
-            <span v-show="!isModelStow" class="isStow" @click="isModelStow= true">展开<i
+            <span v-show="!isDegreeStow" class="isStow" @click="isDegreeStow= true">展开<i
                 class="iconfont">&#xe601;</i></span>
           </template>
         </div>
@@ -84,78 +68,94 @@
         page: {
           pageNo: 1,
           pageSize: 12,
-          storeId:''
+          goodsType: '',
+          goodsTypeName: '',
+          storeId: '',
+          degree: '', //新旧程度
+          degreeName: '', //新旧程度
         },
-        goodsDataList:[],
-        isBrandLogoStow: true,
-        isBrandLogoShow: false, //【品牌】是否显示‘收起’、‘展开’
-        isEquipmentStow: true,
-        isEquipmentShow: false, //【设备】是否显示‘收起’、‘展开’
-        isModelStow: true,
-        isModelShow: false, //【型号】是否显示‘收起’、‘展开’
-        currentSelected: {
-          equipment: '',
-          model: ''
-        },
+        goodsDataList: [],
         selectItem: {
-          // 品牌
-          brandLogo: [
-            require('../../assets/images/index/brands/logo_安科.png'),
-            require('../../assets/images/index/brands/logo_佳能.png'),
-            require('../../assets/images/index/brands/logo_安科.png'),
-            require('../../assets/images/index/brands/logo_佳能.png'),
-            require('../../assets/images/index/brands/logo_安科.png'),
-            require('../../assets/images/index/brands/logo_佳能.png'),
-            require('../../assets/images/index/brands/logo_安科.png'),
-            require('../../assets/images/index/brands/logo_安科.png'),
-            require('../../assets/images/index/brands/logo_佳能.png')
+          // 商品类型 material-配件 equipment-设备器械
+          goodsType: [{
+              id: 'material',
+              name: '配件专区'
+            },
+            {
+              id: 'equipment',
+              name: '医疗器械'
+            }
           ],
-          //设备
-          equipment: [
-            '全部', '基础外科用刀', '手术刀柄和刀片', '基础外科用剪'
+          //新旧程度
+          degree: [{
+              degree: 1,
+              name: '一成新'
+            },
+            {
+              degree: 2,
+              name: '两成新'
+            },
+            {
+              degree: 3,
+              name: '三成新'
+            },
+            {
+              degree: 4,
+              name: '四成新'
+            },
+            {
+              degree: 5,
+              name: '五成新'
+            },
+            {
+              degree: 6,
+              name: '六成新'
+            },
+            {
+              degree: 7,
+              name: '七成新'
+            },
+            {
+              degree: 8,
+              name: '八成新'
+            },
+            {
+              degree: 9,
+              name: '九成新'
+            },
+            {
+              degree: 10,
+              name: '十成新'
+            }
           ],
-          //型号
-          model: ['全部', '手术刀柄和刀片', '皮片刀', '疣体剥离刀', '柳叶刀', '铲刀', '普通手术剪', '组织剪', '综合组织剪', '拆线剪', '教育用手术剪', '教学用直尖针',
-            '普通持针钳', '创夹缝拆钳', '皮肤轧钳', '子弹钳', '纱布剥离钳'
-          ]
 
-          // model:['全部','手术刀柄和刀片','皮片刀','疣体剥离刀','柳叶刀','铲刀','普通手术剪','组织剪','综合组织剪','拆线剪','教育用手术剪','教学用直尖针','普通持针钳','创夹缝拆钳','皮肤轧钳','子弹钳','纱布剥离钳']
         }
       }
     },
-  mounted() {
+    mounted() {
       document.documentElement.scrollTop = 0;
-      // 品牌
-      if (this.selectItem.brandLogo.length > 8) {
-        this.isBrandLogoShow = true
-      }
-      //设备
-      if (this.selectItem.equipment.length > 15) {
-        this.isEquipmentShow = true
-      }
-      //型号
-      if (this.selectItem.model.length > 15) {
-        this.isModelShow = true
-      }
       this.page.storeId = this.$route.query.storeId
-      // if(storeIdStr!=undefined && storeIdStr!=null && storeIdStr!=''){
-      //   this.page.stroreId  = storeIdStr
-      // }else{
-      //   this.page.stroreId  = this.currentLookStoreId
-      // }
       this.getData()
     },
     methods: {
       getData() {
-        // "keyType": 0,          // "keyword": "",
-        // "pageNo": 1,          // "pageSize": 10
         goodsList(this.page).then(response => {
           console.log("获取商品列表:", response)
           this.total = response.data.totalCount
           this.page.pageNo = response.data.pageNum
-          this.page.pageSize =response.data.pageSize
+          this.page.pageSize = response.data.pageSize
           this.goodsDataList = response.data.list
         })
+      },
+      changeGoodsType(goodsType,goodsTypeName) {
+        this.page.goodsType = goodsType
+        this.page.goodsTypeName = goodsTypeName
+        this.getData()
+      },
+      changeDegree(degree,name) {
+        this.page.degree = degree
+        this.page.degreeName = name
+        this.getData()
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);

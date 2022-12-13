@@ -3,7 +3,7 @@
     <div class="contact-info">
       <div class="contact-info-left">
         <div class="contact-info-item">
-          <span class="item-left">{{storeInfo.ownerName}}</span>
+          <span class="item-left" :title="storeInfo.ownerName">{{storeInfo.ownerName}}</span>
           <span class="phone">{{storeInfo.tel}}</span>
         </div>
         <div class="contact-info-item">
@@ -110,6 +110,7 @@
         .contact-info-item {
           display: flex;
           justify-content: flex-start;
+          align-items: center;
           margin-bottom: 15px;
 
           .item-left {
@@ -119,6 +120,9 @@
             font-weight: 400;
             color: #333333;
             margin-right: 22px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           .phone {

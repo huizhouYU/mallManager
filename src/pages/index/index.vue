@@ -60,20 +60,15 @@
                 <!-- 左侧导航条悬浮显示的内容 -->
                 <div class="more-classification">
                   <div class="item" v-for="(item,index) in classDatas" :key="index">
-                    <div class="title">{{item.cateName}}</div>
+                    <div class="title" @click="jumpToGood(item,'2')">{{item.cateName}}</div>
                     <ul>
-                      <li v-for="(child,ind) in item.children" :key="ind">{{child.cateName}}</li>
+                      <li v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">{{child.cateName}}
+                      </li>
                     </ul>
                   </div>
                 </div>
               </ul>
-
-              <div class="flex-between-center more-brands">
-                <p>更多分类</p>
-                <img src="../../assets/images/index/double-right.png" alt="">
-              </div>
             </div>
-
           </div>
         </el-popover>
         <div slot="reference" class="main-tab-content-left" v-show="!isShowContent">
@@ -82,8 +77,8 @@
         </div>
         <div class="main-tab-content-right">
           <ul class="flex-start-center">
-            <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==index}"
-              @click="jumpTab(item.path,index)">{{item.title}}
+            <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==item.path}"
+              @click="jumpTab(item.path)">{{item.title}}
               <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
               <img src="../../assets/images/index/icon_new_red.png" alt="" v-else-if="item.isNew">
             </li>
@@ -140,7 +135,7 @@
             title: '医疗器械',
             isHot: false,
             isNew: false,
-            path: '/medicalApparatus'
+            path: '/medicalApparatus?goodsType=equipment'
           },
           {
             title: '企业服务',
@@ -169,18 +164,15 @@
         // isShow: false,
         isShowContent: false,
         brandList: [],
-        classDatas: []
+        classDatas: [],
+        chosedLevel: []
       }
     },
     mounted() {
       this.goTop()
+      console.log("jh:",this.$route)
       var path = this.$route.fullPath
-      for (var i in this.tabList) {
-        if (this.tabList[i].path == path) {
-          this.changeTab(i)
-          break
-        }
-      }
+      this.chooseTab = path
       this.getData()
     },
     methods: {
@@ -195,6 +187,39 @@
           }
         })
       },
+      jumpToGood(item, level) {
+        this.getChosedLevel(item.cateName, item.parentId, level)
+        this.$router.push({
+          path: '/medicalApparatus',
+          query: {
+            cateId: item.cateId,
+            goodsType: item.goodsType,
+            chosedLevel:this.chosedLevel.join(' / ')
+          }
+        })
+        this.chooseTab = '-1'
+      },
+      getChosedLevel(name, parerntId, level) {
+        this.chosedLevel = []
+        for (var i in this.brandList) {
+          if (level == '3') {
+            for (var y in this.brandList[i].children) {
+              if (this.brandList[i].children[y].cateId == parerntId) {
+                this.chosedLevel.push(this.brandList[i].cateName)
+                this.chosedLevel.push(this.brandList[i].children[y].cateName)
+                this.chosedLevel.push(name)
+                return
+              }
+            }
+          } else if (level == '2') {
+            if (this.brandList[i].cateId == parerntId) {
+              this.chosedLevel.push(this.brandList[i].cateName)
+              this.chosedLevel.push(name)
+              return
+            }
+          }
+        }
+      },
       enterClass(index) {
         //根据id去请求classDatas数据
         if (this.brandList[index].children != undefined && this.brandList[index].children.length > 0) {
@@ -205,35 +230,36 @@
       },
       changeTab(key) {
         this.chooseTab = key
-        if (this.chooseTab != '0') {
+        if (this.chooseTab != '/home') {
           this.isShowContent = true
         } else {
           this.isShowContent = false
         }
       },
-      jumpTab(path, index) {
-        this.chooseTab = index
-        if (this.chooseTab != '0') {
+      jumpTab(path) {
+        this.chooseTab = path
+        if (this.chooseTab != '/home') {
           this.isShowContent = true
         } else {
           this.isShowContent = false
         }
-        if(path =='/medicalApparatus'){
-          console.log("医疗器械")
-          this.$router.push({
-            path: path,
-            query:{goodsType:'equipment'},
-            replace: true
-          })
-        }else{
-          this.$router.push({
-            path: path,
-            replace: true
-          })
-        }
-        // this.$router.push({
-        //    path: path,
-        //    replace: true        //  })
+        // if(path =='/medicalApparatus'){
+        //   console.log("医疗器械")
+        //   this.$router.push({
+        //     path: path,
+        //     query:{goodsType:'equipment'},
+        //     replace: true
+        //   })
+        // }else{
+        //   this.$router.push({
+        //     path: path,
+        //     replace: true
+        //   })
+        // }
+        this.$router.push({
+          path: path,
+          replace: true
+        })
 
       },
       toShoppingcart() {
@@ -519,7 +545,7 @@
       .brand-nav-box {
         position: relative;
         width: 100%;
-        height: 530px;
+        height: 590px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;

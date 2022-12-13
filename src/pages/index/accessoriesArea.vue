@@ -49,7 +49,7 @@
     },
     props: {
       showTitle: Boolean,
-      tabIndex:Number,
+      tabIndex:String,
     },
     data() {
       return {

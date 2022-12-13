@@ -5,7 +5,7 @@
         <img src="../../assets/images/logo.png" alt=""  @click="toIndex">
         <ul class="flex-center-center">
           <li class="to-index" @click="toIndex">医界商城首页</li>
-          <li>服务热线：400-8888-888</li>
+          <!-- <li>服务热线：400-8888-888</li> -->
         </ul>
       </div>
     </div>

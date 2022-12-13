@@ -4,7 +4,12 @@
       <el-form-item label="头像：">
         <label>
           <div class="upload-img">
-            <img :src="form.avatar" alt="">
+            <template v-if="showImgUrl.indexOf('https://')=='-1'">
+              <img :src="showImgUrl" alt="">
+            </template>
+            <template v-else>
+              <img :src="'https://images.weserv.nl/?url='+showImgUrl" alt="">
+            </template>
             <span class="edit-span">编辑头像</span>
             <input type="file" id="inputFile" accept="image/png, image/jpeg, image/gif, image/jpg" @change="previewFile"
               class="hiddenInput" multiple="multiple">
@@ -45,9 +50,7 @@
           <span class="get-code" @click="getCode" v-show="countDown == 0">获取验证码</span>
           <span class="count-down" v-show="countDown>0">{{countDown}}s</span>
         </div>
-
       </el-form-item>
-
       <el-form-item class="submit">
         <el-button type="primary" @click="onSubmit">保存</el-button>
       </el-form-item>
@@ -60,6 +63,7 @@
     mapGetters
   } from 'vuex'
   import {
+    getInfo,
     updateInfo,
     sendUpdateMsg
   } from '@/api/user'
@@ -68,11 +72,11 @@
   } from '@/api/public'
   export default {
     computed: {
-      ...mapGetters([
-        'name',
-        'userid',
-        'avatar',
-      ]),
+      // ...mapGetters([
+      //   'name',
+      //   'userid',
+      //   'avatar',
+      // ]),
       // 验证码计算属性
       aCheckCodeInputComputed() {
         if (this.aCheckCodePasteResult.length === 6) {
@@ -89,8 +93,9 @@
 
     mounted() {
       document.documentElement.scrollTop = 0;
-      this.form.username = this.name
-      this.form.avatar = this.avatar
+      // this.form.username = this.name
+      // this.form.avatar = this.avatar
+      this.getData()
     },
     data() {
       return {
@@ -98,8 +103,10 @@
         aCheckCodeInput: ['', '', '', '', '', ''], // 存储输入验证码内容
         aCheckCodePasteResult: [], // 粘贴的验证码
         imgFile: '',
+        showImgUrl: '',
         form: {
-          avatar: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+          // avatar: 'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+          portrait: '',
           username: '',
           userId: '',
           realName: '',
@@ -116,10 +123,17 @@
           return true
         }
       },
+      getData() {
+        getInfo().then(response => {
+          console.log("获取用户信息：", response)
+          this.form = response.data.user
+          this.showImgUrl = this.form.portrait
+        })
+      },
       //获取手机短信验证码
       getCode() {
         //axios请求
-        sendUpdateMsg().then(response => {
+        sendUpdateMsg({}).then(response => {
           console.log(response.data.data)
         })
         // 验证码倒计时
@@ -161,7 +175,7 @@
               // 法2
               // _this.form.avatar = e.target.result
               _this.imgFile = files[0]
-              _this.form.avatar = e.target.result
+              _this.showImgUrl = e.target.result
             } else {
               _this.$message.warning({
                 message: '上传文件的图片大小不能超过500kb!',
@@ -187,13 +201,17 @@
           console.log("this.imgFile :", this.imgFile)
           if (this.imgFile != '') {
             await uploadImage(param).then(response => {
-              this.form.avatar = response.data
+              this.form.portrait = response.data
             })
           }
           console.log("this.form:", this.form)
           //信息提交
           await updateInfo(this.form).then(response => {
             console.log(response)
+            if (response.code == 10000) {
+              this.$message.success("信息修改成功！")
+              this.getData()
+            }
           })
         }
       },

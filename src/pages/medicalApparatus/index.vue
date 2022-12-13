@@ -2,20 +2,27 @@
   <div class="whole">
     <div class="content">
       <div class="select-content">
-        <div class="current-selected" v-show="currentSelected.equipment != ''||currentSelected.model != ''">
+        <div class="current-selected" v-show="page.brandName != ''||page.degreeName != ''">
           <div class="title">当前筛选结果</div>
           <div class="value">
-            <template v-if="currentSelected.equipment != ''">
-              {{currentSelected.equipment}}
+            <template v-if="page.brandName != ''">
+              {{page.brandName}}
             </template>
-            <template v-if="currentSelected.equipment != ''&&currentSelected.model != ''">
+            <template v-if="page.brandName != ''&&page.degreeName != ''">
               /
             </template>
-            <template v-if="currentSelected.model != ''">
-              {{currentSelected.model}}
+            <template v-if="page.degreeName != ''">
+              {{page.degreeName}}
             </template>
           </div>
         </div>
+        <div class="current-selected" v-show="page.brandName == ''&&page.degreeName == '' && chosedLevel != ''">
+          <div class="title">当前筛选结果</div>
+          <div class="value">{{chosedLevel}}</div>
+        </div>
+
+
+
         <div class="select-item">
           <div class="title">类型</div>
           <ul :class="['item']">
@@ -26,10 +33,9 @@
         </div>
         <div class="select-item">
           <div class="title">品牌</div>
-          <ul :class="[{'minHeight':!isBrandStow},'item']">
-            <li v-for="(item,index) in selectItem.brand" :key="index" @click="page.brandName = item.brandName">
-              <img :src="item.brandLogo" alt="">
-              <!-- <span :class="{'bule':item == currentSelected.classification}">{{item}}</span> -->
+          <ul :class="[{'minImgHeight':!isBrandStow},'item']">
+            <li v-for="(item,index) in selectItem.brand" :key="index" @click="changeBrandName(item.brandName)">
+              <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="">
             </li>
           </ul>
           <template v-if="isBrandShow">
@@ -40,60 +46,17 @@
           </template>
         </div>
         <div class="select-item">
-          <div class="title">分类</div>
-          <ul :class="[{'minHeight':!isClassificationStow},'item']">
-            <li v-for="(item,index) in selectItem.classification" :key="index"
-              @click="currentSelected.classification = item">
-              <!-- <img :src="item" alt=""> -->
-              <span :class="{'bule':item == currentSelected.classification}">{{item}}</span>
+          <div class="title">新旧程度</div>
+          <ul :class="[{'minHeight':!isDegreeStow},'item']">
+            <li @click="changeDegree('','')"><span>全部</span></li>
+            <li v-for="(item,index) in selectItem.degree" :key="index" @click="changeDegree(item.degree,item.name)">
+              <span :class="{'bule':item.degree == page.degree}">{{item.name}}</span>
             </li>
           </ul>
-          <template v-if="isClassificationShow">
-            <span v-show="isClassificationStow" class="isStow" @click="isClassificationStow= false">收起<i
+          <template v-if="isDegreeShow">
+            <span v-show="isDegreeStow" class="isStow" @click="isDegreeStow= false">收起<i
                 class="iconfont">&#xe733;</i></span>
-            <span v-show="!isClassificationStow" class="isStow" @click="isClassificationStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
-        </div>
-        <div class="select-item">
-          <div class="title">设备</div>
-          <ul :class="[{'minHeight':!isEquipmentStow},'item']">
-            <li v-for="(item,index) in selectItem.equipment" :key="index" @click="currentSelected.equipment = item">
-              <span :class="{'bule':item == currentSelected.equipment}">{{item}}</span>
-            </li>
-          </ul>
-          <template v-if="isEquipmentShow">
-            <span v-show="isEquipmentStow" class="isStow" @click="isEquipmentStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isEquipmentStow" class="isStow" @click="isEquipmentStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
-        </div>
-        <div class="select-item">
-          <div class="title">类别</div>
-          <ul :class="[{'minHeight':!isCategoryStow},'item']">
-            <li v-for="(item,index) in selectItem.category" :key="index" @click="currentSelected.category = item">
-              <span :class="{'bule':item == currentSelected.category}">{{item}}</span>
-            </li>
-          </ul>
-          <template v-if="isCategoryShow">
-            <span v-show="isCategoryStow" class="isStow" @click="isCategoryStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isCategoryStow" class="isStow" @click="isCategoryStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
-        </div>
-        <div class="select-item">
-          <div class="title">型号</div>
-          <ul :class="[{'minHeight':!isModelStow},'item']">
-            <li v-for="(item,index) in selectItem.model" :key="index" @click="currentSelected.model = item">
-              <span :class="{'bule':item == currentSelected.model}">{{item}}</span>
-            </li>
-          </ul>
-          <template v-if="isModelShow">
-            <span v-show="isModelStow" class="isStow" @click="isModelStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isModelStow" class="isStow" @click="isModelStow= true">展开<i
+            <span v-show="!isDegreeStow" class="isStow" @click="isDegreeStow= true">展开<i
                 class="iconfont">&#xe601;</i></span>
           </template>
         </div>
@@ -116,7 +79,8 @@
     goodsList
   } from '@/api/goods'
   import {
-    getBrandsList
+    getBrandsList,
+    listByPid
   } from '@/api/index'
   export default {
     components: {
@@ -124,30 +88,22 @@
     },
     data() {
       return {
+        chosedLevel:'',
         total: 0, //总条数
         page: {
           pageNo: 1,
           pageSize: 12,
           goodsType: '', //商品类型 material-配件 equipment-设备器械
           brandName: '', //品牌
+          degree:'',//新旧程度
+          degreeName:'',//新旧程度
           categoryId: '', //分类ID
+          cateName: '', //分类名称
         },
         isBrandStow: true,
         isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
-        isClassificationStow: true,
-        isClassificationShow: false, //【分类】是否显示‘收起’、‘展开’
-        isEquipmentStow: true,
-        isEquipmentShow: false, //【设备】是否显示‘收起’、‘展开’
-        isCategoryStow: true,
-        isCategoryShow: false, //【类别】是否显示‘收起’、‘展开’
-        isModelStow: true,
-        isModelShow: false, //【型号】是否显示‘收起’、‘展开’
-        currentSelected: {
-          classification: '',
-          category: '',
-          equipment: '',
-          model: ''
-        },
+        isDegreeStow: true,
+        isDegreeShow: false, //【新旧程度】是否显示‘收起’、‘展开’
         selectItem: {
           // 商品类型 material-配件 equipment-设备器械
           goodsType: [{
@@ -161,56 +117,71 @@
           ],
           //品牌
           brand: [],
-          //分类
-          classification: [
-            '全部', '手术刀柄和刀片', '皮片刀', '疣体剥离刀', '柳叶刀', '铲刀', '普通手术剪', '组织剪', '综合组织剪', '拆线剪', '教育用手术剪', '教学用直尖针',
-            '普通持针钳', '创夹缝拆钳', '皮肤轧钳', '子弹钳', '纱布剥离钳'
-          ],
-          //类别
-          category: ['全部', 'Ⅰ级', 'Ⅱ级'],
-          //设备
-          equipment: [
-            '全部', '基础外科用刀', '手术刀柄和刀片', '基础外科用剪'
-          ],
-          //型号
-          model: ['全部', '手术刀柄和刀片', '皮片刀', '疣体剥离刀', '柳叶刀', '铲刀', '普通手术剪', '组织剪', '综合组织剪', '拆线剪', '教育用手术剪', '教学用直尖针',
-            '普通持针钳', '创夹缝拆钳', '皮肤轧钳', '子弹钳', '纱布剥离钳'
-          ]
-
-          // model:['全部','手术刀柄和刀片','皮片刀','疣体剥离刀','柳叶刀','铲刀','普通手术剪','组织剪','综合组织剪','拆线剪','教育用手术剪','教学用直尖针','普通持针钳','创夹缝拆钳','皮肤轧钳','子弹钳','纱布剥离钳']
+          //新旧程度
+          degree: [{
+            degree:1,
+            name:'一成新'
+          },
+          {
+            degree:2,
+            name:'两成新'
+          },
+          {
+            degree:3,
+            name:'三成新'
+          },
+          {
+            degree:4,
+            name:'四成新'
+          },
+          {
+            degree:5,
+            name:'五成新'
+          },
+          {
+            degree:6,
+            name:'六成新'
+          },
+          {
+            degree:7,
+            name:'七成新'
+          },
+          {
+            degree:8,
+            name:'八成新'
+          },
+          {
+            degree:9,
+            name:'九成新'
+          },
+          {
+            degree:10,
+            name:'十成新'
+          }],
         },
         goodsDataList: []
       }
     },
     mounted() {
       document.documentElement.scrollTop = 0;
-      // 品牌
-      if (this.selectItem.classification.length > 15) {
-        this.isClassificationShow = true
-      }
-      //类别
-      if (this.selectItem.category.length > 15) {
-        this.isCategoryShow = true
-      }
-      //设备
-      if (this.selectItem.equipment.length > 15) {
-        this.isEquipmentShow = true
-      }
-      //型号
-      if (this.selectItem.model.length > 15) {
-        this.isModelShow = true
-      }
       this.getData()
+    },
+    watch:{
+      $route(to,from){
+        if(to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId){
+          this.getData()
+        }
+      }
     },
     methods: {
       getData() {
-        console.log("this.$route.query:",this.$route)
         this.page.goodsType = this.$route.query.goodsType
+        this.page.categoryId = this.$route.query.cateId
+        this.chosedLevel = this.$route.query.chosedLevel
         //获取品牌列表
         getBrandsList({
           limit: 999
         }).then(response => {
-          console.log("获取分类：", response)
           this.selectItem.brand = response.data
           for (var index in this.selectItem.brand) {
             if (this.selectItem.brand[index].brandLogo.indexOf("http://") == -1) {
@@ -218,24 +189,51 @@
                 .brandLogo
             }
           }
+          // 品牌
+          if (this.selectItem.brand.length > 8) {
+            this.isBrandShow = true
+          }
         })
+        // //根据Pid查找下级分类
+        // listByPid({
+        //   pid: 0
+        // }).then(response => {
+        //   this.selectItem.cate = response.data
+        //   //分类
+        //   if (this.selectItem.cate.length > 15) {
+        //     this.isDegreeShow = true
+        //   }
+        // })
+        this.getDataList()
+      },
+      getDataList() {
         goodsList(this.page).then(response => {
-          console.log("获取医疗器械商品列表：", response)
           this.total = response.data.totalCount
           this.page.pageNo = response.data.pageNum
           this.page.pageSize = response.data.pageSize
           this.goodsDataList = response.data.list
         })
       },
+      changeBrandName(brandName) {
+        this.page.brandName = brandName
+        this.page.categoryId = ''
+        this.getDataList()
+      },
+      changeDegree(degree,name) {
+        this.page.degree = degree
+        this.page.degreeName = name
+        this.page.categoryId = ''
+        this.getDataList()
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         this.page.pageSize = val
-        this.getData()
+        this.getDataList()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         this.page.pageNo = val
-        this.getData()
+        this.getDataList()
       }
     },
 
@@ -287,6 +285,11 @@
 
     .minImgHeight {
       height: 50px;
+      overflow: hidden;
+    }
+
+    .minImgHeight {
+      height: 60px;
       overflow: hidden;
     }
 

@@ -81,15 +81,17 @@
             <div class="info-item">
               <span class="title letterSpacing"></span>
               <div class="btns">
-                <div class="buy-now" @click="buyNow">
-                  <template v-if="goodsInfo.goodType == 0">
-                    提交申请
-                  </template>
-                  <template v-else>
+                <template v-if="goodsInfo.saleType == 2">
+                  <div class="buy-now">
+                    联系客服
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="buy-now" @click="buyNow">
                     立即购买
-                  </template>
-                </div>
-                <div class="add-to-cart" @click="addToCart">
+                  </div>
+                </template>
+                <div class="add-to-cart" @click="addToCart" v-if="goodsInfo.saleType != 2">
                   <img src="../../assets/images/shop/icon_shoppingcart_add.png" alt="">
                   加入购物车
                 </div>
@@ -209,7 +211,7 @@
             console.log("保存当前浏览的店铺ID失败")
           })
 
-        this.$emit("saveStoreId",this.goodsInfo.storeId)
+        this.$emit("saveStoreId", this.goodsInfo.storeId)
       })
     },
     methods: {

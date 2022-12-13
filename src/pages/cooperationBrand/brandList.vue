@@ -10,119 +10,70 @@
       </div>
       <div class="line"></div>
       <div class="brands-list">
-        <div class="brands-item" v-for="(item,index) in brandList" :key="index">
-          <img :src="item.logo" alt="">
-          <span>{{item.name}}</span>
-        </div>
+        <a class="brands-item" v-for="(item,index) in brandList" :key="index" :href="item.linkUrl">
+          <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="">
+          <span>{{item.brandName}}</span>
+        </a>
       </div>
     </div>
     <div class="pagination">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+      <el-pagination @size-change="page.pageSize" @current-change="handleCurrentChange" :current-page="page.pageNo"
+        :page-sizes="[10, 20, 30, 40]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+  import {
+    getBrandsList
+  } from '@/api/index'
   export default {
     data() {
       return {
-        currentPage4: 4,
+        total: 0, //总条数
+        page: {
+          pageNo: 1,
+          pageSize: 12,
+          limit:999
+        },
         selectedKey: '全部',
         zmList: ['全部', 'A ', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
           'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         ],
-        brandList: [{
-            logo: require('../../assets/images/index/brands/logo_联影.png'),
-            name: '联影'
-          }, {
-            logo: require('../../assets/images/index/brands/logo_西门子_处理.png'),
-            name: '西门子'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_佳能.png'),
-            name: '佳能'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_奥泰.png'),
-            name: '奥泰'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_安科.png'),
-            name: '安科'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_康达洲际.png'),
-            name: '康达洲际'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_明峰.png'),
-            name: '明峰'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_朗润.png'),
-            name: '朗润'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_飞利浦.png'),
-            name: '飞利浦'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_佳能.png'),
-            name: '佳能'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_西门子_处理.png'),
-            name: '西门子'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_佳能.png'),
-            name: '佳能'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_奥泰.png'),
-            name: '奥泰'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_安科.png'),
-            name: '安科'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_康达洲际.png'),
-            name: '康达洲际'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_明峰.png'),
-            name: '明峰'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_朗润.png'),
-            name: '朗润'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_联影.png'),
-            name: '联影'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_飞利浦.png'),
-            name: '飞利浦'
-          },
-          {
-            logo: require('../../assets/images/index/brands/logo_佳能.png'),
-            name: '佳能'
-          }
-
-        ]
+        brandList: []
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
+      getData(){
+        //获取品牌列表
+        getBrandsList({
+          limit: 999
+        }).then(response => {
+          this.brandList = response.data
+          for (var index in this.brandList) {
+            if (this.brandList[index].brandLogo.indexOf("http://") == -1) {
+              this.brandList[index].brandLogo = 'http://www.yijiequan.cn/' + this.brandList[index].brandLogo
+            }
+          }
+        })
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.page.pageSize = val
+        this.getData()
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.page.pageNo = val
+        this.getData()
+      },
+      toBrand(url){
+        console.log("跳转到对应的公司地址")
       }
     },
   }
@@ -189,6 +140,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
+      text-decoration: none;
 
       img {
         width: 100%;
@@ -199,6 +151,7 @@
       }
 
       span {
+        text-decoration: none;
         font-size: 12px;
         font-family: Microsoft YaHei;
         font-weight: 400;

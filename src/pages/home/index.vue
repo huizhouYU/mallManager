@@ -14,17 +14,14 @@
             <!-- 左侧导航条悬浮显示的内容 -->
             <div class="more-classification">
               <div class="item" v-for="(item,index) in classDatas" :key="index">
-                <div class="title">{{item.cateName}}</div>
+                <div class="title" @click="jumpToGood(item,'2')">{{item.cateName}}</div>
                 <ul>
-                  <li v-for="(child,ind) in item.children" :key="ind">{{child.cateName}}</li>
+                  <li v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">{{child.cateName}}
+                  </li>
                 </ul>
               </div>
             </div>
           </ul>
-          <!-- <div class="more-brands">
-            <p>更多分类</p>
-            <img src="../../assets/images/index/double-right.png" alt="">
-          </div> -->
         </div>
         <!-- 右边内容-->
         <div>
@@ -55,7 +52,7 @@
                 </div>
                 <!-- 已登录样式 -->
                 <div class="logined-info" v-show="name">
-                  <img :src="avatar" alt="" @click="personCenter">
+                  <img :src="'https://images.weserv.nl/?url='+avatar" alt="" @click="personCenter">
                   <span @click="personCenter">{{name}}</span>
                 </div>
                 <!-- <el-button class="btn-demand">一键发布需求</el-button> -->
@@ -114,7 +111,7 @@
           <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="图片加载失败">
           <div class="mask">
             <span>{{item.brandName}}</span>
-            <div class=" flex-center-center btn-logo">进入品牌</div>
+            <a class=" flex-center-center btn-logo" :href="item.linkUrl">进入品牌</a>
           </div>
         </li>
         <li @click="toMoreBrand">
@@ -127,11 +124,14 @@
       </div>
     </div>
     <!-- 配件专区 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="1" @changeTab="changeTab"></accessories-area>
+    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory" @changeTab="changeTab">
+    </accessories-area>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList" :tabIndex="3" @changeTab="changeTab"></product-show>
+    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" @changeTab="changeTab">
+    </product-show>
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="4" @changeTab="changeTab"></enterprise-services>
+    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices"
+      @changeTab="changeTab"></enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer"></personal-engineer>
     <!-- 模块六 两张大图 -->
@@ -180,6 +180,9 @@
     props: ['brandList'],
     data() {
       return {
+        accessory: '/accessory',
+        medicalApparatus: '/medicalApparatus?goodsType=equipment',
+        enterpriseServices: '/enterpriseServices',
         showTitle: true,
         isHotTab: true, //true:选中'热门求购,false:选中'项目外包'
         recommendGoods: [], //九宫格推荐商品
@@ -192,6 +195,7 @@
         //品牌logo
         brandsList: [],
         classDatas: [],
+        chosedLevel: []
       }
     },
     methods: {
@@ -267,8 +271,41 @@
           }
         })
       },
-      changeTab(id){
-        this.$emit('changeTab',id)
+      jumpToGood(item, level) {
+        this.getChosedLevel(item.cateName, item.parentId, level)
+        this.$router.push({
+          path: '/medicalApparatus',
+          query: {
+            cateId: item.cateId,
+            goodsType: item.goodsType,
+            chosedLevel:this.chosedLevel.join(' / ')
+          }
+        })
+         this.changeTab('-1')
+      },
+      getChosedLevel(name, parerntId, level) {
+        this.chosedLevel = []
+        for (var i in this.brandList) {
+          if (level == '3') {
+            for (var y in this.brandList[i].children) {
+              if (this.brandList[i].children[y].cateId == parerntId) {
+                this.chosedLevel.push(this.brandList[i].cateName)
+                this.chosedLevel.push(this.brandList[i].children[y].cateName)
+                this.chosedLevel.push(name)
+                return
+              }
+            }
+          } else if (level == '2') {
+            if (this.brandList[i].cateId == parerntId) {
+              this.chosedLevel.push(this.brandList[i].cateName)
+              this.chosedLevel.push(name)
+              return
+            }
+          }
+        }
+      },
+      changeTab(id) {
+        this.$emit('changeTab', id)
       },
       jumpAllGoods(id) {
         this.changeTab('-1')
@@ -300,7 +337,7 @@
         })
       },
       toMoreBrand() {
-        this.changeTab('7')
+        this.changeTab('/cooperationBrand')
         this.$router.push({
           path: '/cooperationBrand'
         })
@@ -936,6 +973,8 @@
           color: #FFFFFF;
 
           .btn-logo {
+            text-decoration: none;
+            color: #fff;
             margin-top: 8px;
             width: 77px;
             height: 22px;

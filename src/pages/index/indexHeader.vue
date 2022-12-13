@@ -6,12 +6,15 @@
     <div class="search-box">
       <div class="flex-between-center search-box-top">
         <div class="search">
-          <el-select :popper-append-to-body="false" v-model="searchData.item" placeholder="请选择" class="search-select">
+          <el-select :popper-append-to-body="false" v-model="searchData.typeId" placeholder="请选择" class="search-select"
+            @change="changeType">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
           <el-input v-model="searchData.key" class="search-input" placeholder="输入相关产品名或企业名"></el-input>
-          <el-button class="flex-around-center search-btn"><i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span></el-button>
+          <el-button class="flex-around-center search-btn" @click="toSearch">
+            <i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span>
+          </el-button>
         </div>
         <!-- <span class="font-6">或</span> -->
         <button class="btn-demand" @click="publishDemand">快速发布需求</button>
@@ -19,7 +22,7 @@
       <div class="search-box-bottom">
         <span class="hot-word">热搜词：</span>
         <ul>
-          <li v-for="(item,index) in hotWords" :key="index">{{item}}</li>
+          <li v-for="(item,index) in hotWords" :key="index" @click="toJump(item.keyword)">{{item.keyword}}</li>
         </ul>
       </div>
     </div>
@@ -34,28 +37,65 @@
     data() {
       return {
         options: [{
-          value: '1',
-          label: '设备'
-        }, {
-          value: '2',
-          label: '维修服务'
-        }],
+            value: '1',
+            path: '/medicalApparatus?goodsType=material',
+            label: '配件专区'
+          }, {
+            value: '2',
+            path: '/supplyDemand',
+            label: '供求信息'
+          },
+          {
+            value: '3',
+            path: '/medicalApparatus?goodsType=equipment',
+            label: '医疗器械'
+          }
+        ],
         searchData: {
-          item: '1',
+          typeId: '1',
+          path: '',
           key: ''
         },
         //热搜词
-        hotWords: ['核磁共振', '骨密度器', '西门子', '血压仪']
+        hotWords: []
       }
     },
     mounted() {
       this.getData()
     },
     methods: {
-      getData(){
-        searchKeys({typeId:1}).then(response=>{
-          console.log("获取关键字列表：",response)
+      getData() {
+        searchKeys({
+          typeId: this.searchData.typeId
+        }).then(response => {
+          console.log("获取关键字列表：", response)
+          this.hotWords = response.data
         })
+      },
+      changeType(e) {
+        this.getData()
+      },
+      toSearch() {
+        for (var index in this.options) {
+          if (this.options[index].value == this.searchData.typeId) {
+            this.searchData.path = this.options[index].path
+          }
+        }
+        if (this.searchData.key != '') {
+          this.toJump('')
+        }
+      },
+      toJump(key) {
+        if (key == '') {
+          key = this.searchData.key
+        }
+        this.$router.push({
+          path: this.searchData.path,
+          query: {
+            value: key
+          }
+        })
+        this.$emit("changeTab", '-1')
       },
       publishDemand() {
         this.$router.push({
@@ -65,9 +105,9 @@
       toIndex() {
         this.$router.push({
           path: '/',
-          replace:true
+          replace: true
         })
-        this.$emit("changeTab",'0')
+        this.$emit("changeTab", '/home')
       }
     }
   }

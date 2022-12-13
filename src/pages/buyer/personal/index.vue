@@ -4,7 +4,13 @@
       <div class="user">
         <div class="img-name">
           <vue-hover-mask @click="toPersonalData">
-            <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">
+            <template v-if="avatar !=''">
+              <img :src="'https://images.weserv.nl/?url='+avatar" alt="">
+            </template>
+            <template v-else>
+              <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">
+            </template>
+            
             <!-- action插槽 -->
             <template v-slot:action>
               <i class="iconfont icon-bianji-copy">编辑资料</i>
@@ -172,7 +178,17 @@
 
 <script>
   import VueHoverMask from 'vue-hover-mask'
+  import {
+    mapGetters
+  } from 'vuex'
   export default {
+    computed: {
+      ...mapGetters([
+        'name',
+        'avatar',
+        'mobile'
+      ])
+    },
     components: {
       VueHoverMask
     },

@@ -69,7 +69,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('SET_STOREID', storeId)
       // setToken(storeId)
-      console.log("保存的店铺ID：",storeId)
       resolve("保存当前浏览的店铺ID成功")
     })
   },
@@ -83,15 +82,10 @@ const actions = {
       password
     } = userInfo
     return new Promise((resolve, reject) => {
-      console.log("假设请求登录接口，并且登录成功了")
-      // commit('SET_TOKEN', "iuhdusfpo0bphjihoihojihiohih")
-      // setToken("iuhdusfpo0bphjihoihojihiohih")
-      // resolve()
       login({
         username: username.trim(),
         password: password
       }).then(response => {
-
         if (response.code == 10000) {
           const {
             data
@@ -110,16 +104,11 @@ const actions = {
   msgLogin({
     commit
   }, userInfo) {
-    console.log("请求登录接口")
     const {
       mobile,
       vCode
     } = userInfo
     return new Promise((resolve, reject) => {
-      console.log("假设请求登录接口，并且登录成功了")
-      // commit('SET_TOKEN', "iuhdusfpo0bphjihoihojihiohih")
-      // setToken("iuhdusfpo0bphjihoihojihiohih")
-      // resolve()
       msgLogin({
         mobile: mobile.trim(),
         captcha: vCode
@@ -128,7 +117,6 @@ const actions = {
           const {
             data
           } = response
-          console.log("setToken:", data)
           commit('SET_TOKEN', data)
           setToken(data)
         }
@@ -153,11 +141,9 @@ const actions = {
         captcha: captcha.trim(),
         activation: activation.trim()
       }).then(response => {
-        console.log("注册接口返回：", response)
         const {
           data
         } = response.data
-        console.log("setToken:",data)
         commit('SET_TOKEN', data)
         setToken(data)
         resolve(response)
@@ -176,7 +162,6 @@ const actions = {
       const roles = ["admin"]
       const token = getToken()
       getInfo().then(response => {
-        console.log("getInfo:", response)
         if (response.code == 10000) {
           const {
             data
@@ -184,8 +169,7 @@ const actions = {
           console.log(data)
           commit('SET_NAME', data.user.username)
           commit('SET_USERID',  data.user.userid)
-          commit('SET_AVATAR',
-            "https://img2.baidu.com/it/u=631618391,2322805080&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500")
+          commit('SET_AVATAR',data.user.portrait)
           commit('SET_INTRODUCTION', "固定无")
           // var mobile = ''
           // if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){
@@ -262,23 +246,18 @@ const actions = {
     dispatch
   }, role) {
     const token = role + '-token'
-
     commit('SET_TOKEN', token)
     setToken(token)
-
     const {
       roles
     } = await dispatch('getInfo')
-
     // resetRouter()
-
     // generate accessible routes map based on roles
     const accessRoutes = await dispatch('permission/generateRoutes', roles, {
       root: true
     })
     // dynamically add accessible routes
     router.addRoutes(accessRoutes)
-
     // reset visited views and cached views
     dispatch('tagsView/delAllViews', null, {
       root: true

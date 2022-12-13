@@ -19,7 +19,7 @@
                 <li @click="logout">退出</li>
               </ul>
               <div class="flex-start-center logo-name-div">
-                <img :src="avatar" alt="">
+                <img :src="'https://images.weserv.nl/?url='+avatar" alt="">
                 <div class="flex-column-around-start name-info-div">
                   <span>
                     {{name}}
@@ -31,7 +31,6 @@
           </li>
         </template>
 
-        <li>客服热线：400-010-1866</li>
       </ul>
     </div>
     <div class="shop-content-item shop-content-right">
@@ -97,7 +96,7 @@
 
 
       toIndex() {
-        this.$emit("changeTab", '0')
+        this.$emit("changeTab", '/home')
         this.$router.push({
           path: '/',
           replace:true
