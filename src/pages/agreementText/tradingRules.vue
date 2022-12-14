@@ -1,7 +1,7 @@
 <template>
   <div class="article-content">
     <div class="title">
-      交易<font>规则</font>Trading rules
+      交易<font>规则</font>
       <div class="english">TRADING RULES</div>
     </div>
     <div class="content">
