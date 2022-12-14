@@ -1,7 +1,7 @@
 <!-- 企业服务 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex" @changeTab="changeTab"></titleMore>
+    <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex"></titleMore>
     <div class="item_content">
       <div :class="['item','item'+index]" v-for="(item,index) in companyList">
         <!-- 第一个 -->
@@ -73,9 +73,6 @@
       }
     },
     methods:{
-      changeTab(id){
-        this.$emit('changeTab',id)
-      },
       toCopmany(storeId){
         this.$router.push({
           path:'/shopHome',

@@ -38,7 +38,7 @@
       return {
         options: [{
             value: '1',
-            path: '/medicalApparatus?goodsType=material',
+            path: '/medicalApparatus',
             label: '配件专区'
           }, {
             value: '2',
@@ -47,7 +47,7 @@
           },
           {
             value: '3',
-            path: '/medicalApparatus?goodsType=equipment',
+            path: '/medicalApparatus',
             label: '医疗器械'
           }
         ],
@@ -81,21 +81,28 @@
             this.searchData.path = this.options[index].path
           }
         }
-        if (this.searchData.key != '') {
-          this.toJump('')
-        }
+        // if (this.searchData.key != '') {
+        //   this.toJump('')
+        // }
+        this.toJump('')
       },
       toJump(key) {
-        if (key == '') {
-          key = this.searchData.key
+        if (key != '') {
+          this.searchData.key = key
+        }
+        var params = {
+          keyword: key,
+          goodsType: ''
+        }
+        if (this.searchData.typeId == 1) {
+          params.goodsType = 'material'
+        } else if (this.searchData.typeId == 3) {
+          params.goodsType = 'equipment'
         }
         this.$router.push({
           path: this.searchData.path,
-          query: {
-            value: key
-          }
+          query: params
         })
-        this.$emit("changeTab", '-1')
       },
       publishDemand() {
         this.$router.push({
@@ -107,7 +114,6 @@
           path: '/',
           replace: true
         })
-        this.$emit("changeTab", '/home')
       }
     }
   }

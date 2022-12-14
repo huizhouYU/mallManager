@@ -35,16 +35,23 @@
       </div>
     </div>
     <div class="flex-center-center bottom-four-model">
-      <router-link tag="a" class="flex-center-center item" target="_blank" to="./aboutUs">关于我们</router-link>
-      <router-link tag="a" class="flex-center-center item" target="_blank" to="./residencyAgreement">入驻协议</router-link>
-      <router-link tag="a" class="flex-center-center item" target="_blank" to="./tradingRules">交易规则</router-link>
-      <router-link tag="a" class="flex-center-center item" target="_blank" to="./legalStatement">法律声明</router-link>
+      <router-link tag="a" class="flex-center-center item" to="./aboutUs">关于我们</router-link>
+      <router-link tag="a" class="flex-center-center item" to="./residencyAgreement">入驻协议</router-link>
+      <router-link tag="a" class="flex-center-center item" to="./tradingRules">交易规则</router-link>
+      <router-link tag="a" class="flex-center-center item" to="./legalStatement">法律声明</router-link>
     </div>
     <!-- 模块九 底部链接 -->
     <div class="flex-column-around-center modle9-bottom">
-      <p class="item1"> ©2019-2021 yijiequan.cn版权所有 </p>
-      <p class="item2">京ICP备08010314号-6</p>
-      <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p>
+      <p class="item1"> ©2022-至今 <a href="http://web.yijiequan.cn/">医界圈 yijiequan.cn版权所有 </a></p>
+      <p class="item2">
+        <a target="_blank" href="https://beian.miit.gov.cn/">皖ICP备2022012747-6 </a> |
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34019102001080">皖公网备案 34019102001080</a>
+      </p>
+      <p class="item3">
+        <a target="_blank" href="https://images.weserv.nl/?url=https://image.yijiequan.cn/yijiequan-client/attach/qualification.jpg">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a> |
+        <a target="_blank" href="#">增值电信业务经营许可证：皖B2-20220523</a>
+      </p>
+      <!-- <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p> -->
     </div>
 
   </div>
@@ -122,17 +129,20 @@
       padding: 0px 40px;
       text-decoration: none;
     }
-    .item:hover{
+
+    .item:hover {
       color: #40A9FF;
     }
 
     .item+.item {
       border-left: 1px solid #CCCCCC;
     }
-    .item:first-child{
+
+    .item:first-child {
       padding-left: 0px;
     }
-    .item:last-child{
+
+    .item:last-child {
       padding-right: 0px;
     }
   }
@@ -150,6 +160,11 @@
       font-size: 12px;
       color: #999;
       text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #999;
     }
 
   }

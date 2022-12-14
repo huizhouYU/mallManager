@@ -111,7 +111,7 @@
           <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="图片加载失败">
           <div class="mask">
             <span>{{item.brandName}}</span>
-            <a class=" flex-center-center btn-logo" :href="item.linkUrl">进入品牌</a>
+            <div class=" flex-center-center btn-logo" @click="toGoods(item.brandName)">进入品牌</div>
           </div>
         </li>
         <li @click="toMoreBrand">
@@ -124,14 +124,13 @@
       </div>
     </div>
     <!-- 配件专区 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory" @changeTab="changeTab">
+    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory">
     </accessories-area>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" @changeTab="changeTab">
+    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus">
     </product-show>
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices"
-      @changeTab="changeTab"></enterprise-services>
+    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices"></enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer"></personal-engineer>
     <!-- 模块六 两张大图 -->
@@ -262,8 +261,15 @@
           this.companyList = response.data
         })
       },
+      toGoods(brandName){
+        this.$router.push({
+          path:'/medicalApparatus',
+          query:{
+            brandName
+          }
+        })
+      },
       personCenter() {
-        this.changeTab('-1')
         this.$router.push({
           path: '/buyer',
           query: {
@@ -278,10 +284,9 @@
           query: {
             cateId: item.cateId,
             goodsType: item.goodsType,
-            chosedLevel:this.chosedLevel.join(' / ')
+            chosedLevel: this.chosedLevel.join(' / ')
           }
         })
-         this.changeTab('-1')
       },
       getChosedLevel(name, parerntId, level) {
         this.chosedLevel = []
@@ -304,11 +309,7 @@
           }
         }
       },
-      changeTab(id) {
-        this.$emit('changeTab', id)
-      },
       jumpAllGoods(id) {
-        this.changeTab('-1')
         this.$router.push({
           path: '/goodDetail',
           query: {
@@ -337,7 +338,6 @@
         })
       },
       toMoreBrand() {
-        this.changeTab('/cooperationBrand')
         this.$router.push({
           path: '/cooperationBrand'
         })
@@ -783,6 +783,7 @@
               }
 
               span {
+                flex: 1;
                 cursor: pointer;
                 white-space: nowrap;
                 overflow: hidden;
@@ -841,6 +842,7 @@
               }
 
               span {
+                flex: 1;
                 cursor: pointer;
                 white-space: nowrap;
                 overflow: hidden;

@@ -2,31 +2,30 @@
   <div class="whole">
     <div class="content">
       <div class="select-content">
-        <div class="current-selected" v-show="page.brandName != ''||page.degreeName != ''">
+        <div class="current-selected" v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">
-            <template v-if="page.brandName != ''">
+            <template v-if="page.brandName != '' && page.brandName != undefined">
               {{page.brandName}}
             </template>
-            <template v-if="page.brandName != ''&&page.degreeName != ''">
+            <template v-if="(page.brandName != '' && page.brandName != undefined)&&(page.degreeName != ''&& page.degreeName != undefined)">
               /
             </template>
-            <template v-if="page.degreeName != ''">
+            <template v-if="page.degreeName != ''&& page.degreeName != undefined">
               {{page.degreeName}}
             </template>
           </div>
         </div>
-        <div class="current-selected" v-show="page.brandName == ''&&page.degreeName == '' && chosedLevel != ''">
+        <div class="current-selected" v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">{{chosedLevel}}</div>
         </div>
 
-
-
         <div class="select-item">
           <div class="title">类型</div>
           <ul :class="['item']">
-            <li v-for="(item,index) in selectItem.goodsType" :key="index">
+            <li @click="changeGoodsType('')"><span>全部</span></li>
+            <li v-for="(item,index) in selectItem.goodsType" :key="index" @click="changeGoodsType(item.id)">
               <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
             </li>
           </ul>
@@ -88,17 +87,19 @@
     },
     data() {
       return {
-        chosedLevel:'',
+        chosedLevel: '',
         total: 0, //总条数
         page: {
           pageNo: 1,
           pageSize: 12,
           goodsType: '', //商品类型 material-配件 equipment-设备器械
           brandName: '', //品牌
-          degree:'',//新旧程度
-          degreeName:'',//新旧程度
+          degree: '', //新旧程度
+          degreeName: '', //新旧程度
           categoryId: '', //分类ID
           cateName: '', //分类名称
+          keyType:1,
+          keyword:''
         },
         isBrandStow: true,
         isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
@@ -119,45 +120,46 @@
           brand: [],
           //新旧程度
           degree: [{
-            degree:1,
-            name:'一成新'
-          },
-          {
-            degree:2,
-            name:'两成新'
-          },
-          {
-            degree:3,
-            name:'三成新'
-          },
-          {
-            degree:4,
-            name:'四成新'
-          },
-          {
-            degree:5,
-            name:'五成新'
-          },
-          {
-            degree:6,
-            name:'六成新'
-          },
-          {
-            degree:7,
-            name:'七成新'
-          },
-          {
-            degree:8,
-            name:'八成新'
-          },
-          {
-            degree:9,
-            name:'九成新'
-          },
-          {
-            degree:10,
-            name:'十成新'
-          }],
+              degree: 1,
+              name: '一成新'
+            },
+            {
+              degree: 2,
+              name: '两成新'
+            },
+            {
+              degree: 3,
+              name: '三成新'
+            },
+            {
+              degree: 4,
+              name: '四成新'
+            },
+            {
+              degree: 5,
+              name: '五成新'
+            },
+            {
+              degree: 6,
+              name: '六成新'
+            },
+            {
+              degree: 7,
+              name: '七成新'
+            },
+            {
+              degree: 8,
+              name: '八成新'
+            },
+            {
+              degree: 9,
+              name: '九成新'
+            },
+            {
+              degree: 10,
+              name: '十成新'
+            }
+          ],
         },
         goodsDataList: []
       }
@@ -166,9 +168,17 @@
       document.documentElement.scrollTop = 0;
       this.getData()
     },
-    watch:{
-      $route(to,from){
-        if(to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId){
+    // watch: {
+    //   $route(to, from) {
+    //     if (to.query.keyword != from.query.keyword) {
+    //       this.getData()
+    //     }
+    //   }
+    // },
+
+    watch: {
+      $route(to, from) {
+        if (to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId || to.query.keyword != from.query.keyword) {
           this.getData()
         }
       }
@@ -178,6 +188,10 @@
         this.page.goodsType = this.$route.query.goodsType
         this.page.categoryId = this.$route.query.cateId
         this.chosedLevel = this.$route.query.chosedLevel
+        this.page.keyword = this.$route.query.keyword
+        if (this.$route.query.brandName != undefined && this.$route.query.brandName != null) {
+          this.page.brandName = this.$route.query.brandName
+        }
         //获取品牌列表
         getBrandsList({
           limit: 999
@@ -214,12 +228,17 @@
           this.goodsDataList = response.data.list
         })
       },
+      changeGoodsType(goodsType) {
+        this.page.goodsType = goodsType
+        // this.page.categoryId = ''
+        this.getDataList()
+      },
       changeBrandName(brandName) {
         this.page.brandName = brandName
         this.page.categoryId = ''
         this.getDataList()
       },
-      changeDegree(degree,name) {
+      changeDegree(degree, name) {
         this.page.degree = degree
         this.page.degreeName = name
         this.page.categoryId = ''

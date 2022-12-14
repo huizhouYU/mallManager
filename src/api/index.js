@@ -24,6 +24,16 @@ export function getBrandsList(query) {
     params: query
   })
 }
+
+//品牌列表分页
+export function getBrandsListPage(query) {
+  return request({
+    url: 'brand/listPage',
+    method: 'get',
+    params: query
+  })
+}
+
 //九宫格推荐商品
 export function recommendGoods(query) {
   return request({

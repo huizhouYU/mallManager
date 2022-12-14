@@ -46,6 +46,14 @@
           <!-- <span>营业执照</span> -->
         </li>
       </ul>
+      <ul class="qualifications" v-else>
+        <li v-for="(item,index) in defaultCertificationList">
+          <div class="img-div">
+            <img :src="item" alt="">
+          </div>
+          <!-- <span>营业执照</span> -->
+        </li>
+      </ul>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
@@ -71,6 +79,11 @@
        storeId:'',
        storeInfo: '',
        goodsDataList: [],
+       defaultCertificationList:[
+         require('../../../assets/images/shop/pic_businessCertificate_default.png'),
+         require('../../../assets/images/shop/pic_businessLicense_default.png'),
+         require('../../../assets/images/shop/pic_productionLicense_default.png'),
+       ]
      }
    },
    mounted() {

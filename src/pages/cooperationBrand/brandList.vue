@@ -10,15 +10,15 @@
       </div>
       <div class="line"></div>
       <div class="brands-list">
-        <a class="brands-item" v-for="(item,index) in brandList" :key="index" :href="item.linkUrl">
+        <div class="brands-item" v-for="(item,index) in brandList" :key="index" @click="toGoods(item.brandName)">
           <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="">
           <span>{{item.brandName}}</span>
-        </a>
+        </div>
       </div>
     </div>
     <div class="pagination">
-      <el-pagination @size-change="page.pageSize" @current-change="handleCurrentChange" :current-page="page.pageNo"
-        :page-sizes="[10, 20, 30, 40]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
+        :page-sizes="[16, 32, 48, 64]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </div>
@@ -27,7 +27,7 @@
 
 <script>
   import {
-    getBrandsList
+    getBrandsListPage
   } from '@/api/index'
   export default {
     data() {
@@ -35,8 +35,7 @@
         total: 0, //总条数
         page: {
           pageNo: 1,
-          pageSize: 12,
-          limit:999
+          pageSize: 16
         },
         selectedKey: '全部',
         zmList: ['全部', 'A ', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
@@ -51,14 +50,23 @@
     methods: {
       getData(){
         //获取品牌列表
-        getBrandsList({
-          limit: 999
-        }).then(response => {
-          this.brandList = response.data
+        getBrandsListPage(this.page).then(response => {
+          this.brandList = response.data.list
+          // this.page.pageNo = response.data.pageNum
+          // this.page.pageSize  = response.data.pageSize
+          this.total = response.data.totalCount
           for (var index in this.brandList) {
             if (this.brandList[index].brandLogo.indexOf("http://") == -1) {
               this.brandList[index].brandLogo = 'http://www.yijiequan.cn/' + this.brandList[index].brandLogo
             }
+          }
+        })
+      },
+      toGoods(brandName){
+        this.$router.push({
+          path:'/medicalApparatus',
+          query:{
+            brandName
           }
         })
       },

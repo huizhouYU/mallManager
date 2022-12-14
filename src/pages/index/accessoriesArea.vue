@@ -1,7 +1,7 @@
 <!-- 配件专区 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more" v-if="showTitle" :morePath="morePath" :tabIndex="tabIndex" @changeTab="changeTab"></titleMore>
+    <titleMore :title="title" class="title_more" v-if="showTitle" :morePath="morePath" :tabIndex="tabIndex"></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
         <div class="flex-between-center item_top">
@@ -10,10 +10,10 @@
             <ul>
               <li v-for="(k,inde) in item.keyValue" :key="inde">{{k}}</li>
             </ul>
-            <div class="flex-start-center more">
+            <!-- <div class="flex-start-center more">
               <span>更多</span>
               <i class="iconfont">&#xe63c;</i>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="item_bottom">
@@ -189,9 +189,6 @@
           }
         })
       },
-      changeTab(id){
-        this.$emit('changeTab',id)
-      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
@@ -263,7 +260,7 @@
   // }
 
   .item {
-    position: relative;
+    // position: relative;
     width: 595px;
     height: 280px;
     padding: 14px 0px 25px 0px;

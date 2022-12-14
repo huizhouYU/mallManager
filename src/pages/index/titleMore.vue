@@ -20,7 +20,6 @@
     },
     methods:{
       toMore(){
-        this.$emit("changeTab",this.tabIndex)
         this.$router.push({
           path:this.morePath
         })

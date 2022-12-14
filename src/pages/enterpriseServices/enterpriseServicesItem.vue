@@ -18,7 +18,7 @@
         </div>
       </div>
       <ul class="flex-between-center">
-        <li v-for="(goods,i) in item.goodsList" :key="i" v-show="i<4" @click="toGoodsDetail(goods.goodsId)">
+        <li v-for="(goods,i) in item.goodsList" :key="i" v-show="i<4" @click="toGoodsDetail(goods.goodsId)" class="myli">
           <img :src="'https://images.weserv.nl/?url='+goods.defaultImage" alt="">
           <div class="mask"><span>{{goods.goodsName}}</span></div>
         </li>
@@ -156,7 +156,7 @@
       flex: 1;
       padding: 5px 0px 5px 25px;
 
-      li {
+      .myli {
         position: relative;
         width: 170px;
         height: 120px;

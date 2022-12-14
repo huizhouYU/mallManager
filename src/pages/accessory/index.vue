@@ -19,7 +19,7 @@
     },
     data(){
       return{
-        showTitle:false
+        showTitle:true
       }
     }
   }

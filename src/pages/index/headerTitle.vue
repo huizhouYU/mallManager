@@ -68,7 +68,7 @@
           replace: true
         })
       },
-      register(){
+      register() {
         this.$router.push({
           path: '/register',
         })
@@ -96,20 +96,17 @@
 
 
       toIndex() {
-        this.$emit("changeTab", '/home')
         this.$router.push({
           path: '/',
-          replace:true
+          replace: true
         })
       },
       toShopCart() {
-        this.$emit("changeTab", '-1')
         this.$router.push({
           path: '/shoppingCart'
         })
       },
       personCenter() {
-        this.$emit("changeTab", '-1')
         this.$router.push({
           path: '/buyer',
           query: {
@@ -129,7 +126,7 @@
     background-color: #f5f5f5;
     display: flex;
     width: 1200px;
-    height: 100%;
+    height: 100%;     align-items: center;
 
     .shop-content-item {
       flex: 1;
@@ -213,7 +210,8 @@
               li+li {
                 border-left: 1px solid #DDDDDD;
               }
-              li:hover{
+
+              li:hover {
                 color: #40A9FF;
               }
             }

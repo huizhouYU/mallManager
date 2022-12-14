@@ -67,12 +67,22 @@
         page: {
           pageNo: 1,
           pageSize: 10,
+          keyType:'title',
+          keyword:''
         },
         demandsList: []
       }
     },
+    watch: {
+      $route(to, from) {
+        if (to.query.keyword != from.query.keyword) {
+          this.getData()
+        }
+      }
+    },
     methods: {
       getData() {
+        this.page.keyword = this.$route.query.keyword
         articleList(this.page).then(response => {
           console.log('供求信息-需求列表：', response)
           this.page.pageNo = response.data.pageNum

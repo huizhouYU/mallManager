@@ -1,7 +1,8 @@
 <template>
   <div class="article-content">
     <div class="title">
-      交易规则
+      交易<font>规则</font>Trading rules
+      <div class="english">TRADING RULES</div>
     </div>
     <div class="content">
       <h4> 医界圈商城交易规则</h4>
@@ -160,24 +161,44 @@
 </script>
 <style lang="less" scoped>
   .article-content {
-    padding: 15px 25px;
+    padding: 15px 25px 63px;
     line-height: 30px;
-    font-size: 14px;
-    color: #000;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    color: #333333;
 
     .title {
-      padding: 20px 0px;
+      position: relative;
+      padding: 43px 0px;
       height: 20px;
       height: 100%;
       text-align: center;
-      font-size: 16px;
-      color: #333;
-      border-bottom: 1px solid #ccc;
+      font-size: 28px;
+      font-family: Microsoft YaHei;
+      font-weight: bold;
+      color: #333333;
+
+      font {
+        color: #40A9FF;
+       }
+       .english{
+         position: absolute;
+         font-size: 40px;
+         font-family: Microsoft YaHei;
+         font-weight: 400;
+         color: #333333;
+         line-height: 24px;
+         opacity: 0.1;
+         left: 50%;
+         transform: translate(-50%,-20%);
+       }
     }
 
     .content {
-      padding-top: 20px;
-      h4{
+      padding-top: 30px;
+
+      h4 {
         width: 100%;
         text-align: center;
       }

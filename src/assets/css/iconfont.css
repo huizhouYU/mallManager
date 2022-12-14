@@ -13,11 +13,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-kefuerji:before {
+  content: "\e61e";
+}
+
 .icon-jia:before {
   content: "\e600";
-}
-.icon-kefu1:before {
-  content: "\e645";
 }
 
 .icon-back-top1:before {
@@ -27,6 +28,7 @@
 .icon-gouwuche1:before {
   content: "\e60f";
 }
+
 .icon-xiashuangjiantou:before {
   content: "\e646";
 }

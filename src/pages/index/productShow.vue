@@ -1,7 +1,7 @@
 <!-- 医疗器械 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex" @changeTab="changeTab"></titleMore>
+    <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex"></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in productList" :key="index" @click="toDetail(item.goodsId)">
         <div class="product_img">
@@ -39,9 +39,6 @@
       }
     },
     methods: {
-      changeTab(id){
-        this.$emit('changeTab',id)
-      },
       toDetail(goodsId) {
         this.$router.push({           path: '/goodDetail',           query: { goodsId }
         })
