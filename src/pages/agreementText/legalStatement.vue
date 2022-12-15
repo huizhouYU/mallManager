@@ -50,6 +50,7 @@
         color: #40A9FF;
        }
        .english{
+         width: 100%;
          position: absolute;
          font-size: 40px;
          font-family: Microsoft YaHei;

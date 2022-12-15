@@ -1,15 +1,13 @@
 <template>
   <div class="flex-column-start-center agreementText-index">
     <!-- 顶部模块 购物车 -->
-    <div class="flex-center-center shop-box">
+   <!-- <div class="flex-center-center shop-box">
       <header-title></header-title>
     </div>
-    <!-- 模块一 -->
-    <!-- 头部搜索一栏 -->
     <div class="search-header">
       <index-header class="index-header"></index-header>
     </div>
-    <index-tab></index-tab>
+    <index-tab></index-tab> -->
     <div class="flex-column-start-start module-box">
       <div class="flex-start-center navigation-bar">首页 > {{current.name}}</div>
       <div class="flex-start-start module-main">
@@ -22,26 +20,11 @@
         <router-view class="module-item"></router-view>
       </div>
     </div>
-    <div class="flex-center-center bottom">
-      <index-bottom></index-bottom>
-    </div>
-
-
   </div>
 </template>
 
 <script>
-  import indexHeader from '../../pages/index/indexHeader.vue'
-  import headerTitle from '../../pages/index/headerTitle.vue'
-  import indexTab from '../../pages/index/indexTab.vue'
-  import indexBottom from '../../pages/index/indexBottom.vue'
   export default {
-    components: {
-      indexHeader,
-      headerTitle,
-      indexTab,
-      indexBottom
-    },
     data() {
       return {
         current: {
@@ -75,6 +58,7 @@
       }
     },
     mounted() {
+      this.$emit('topImg',true)
       this.refreshData(this.$route.fullPath)
     },
     methods: {
@@ -104,34 +88,11 @@
     background-color: #f5f5f5;
   }
 
-  .shop-box {
-    width: 100%;
-    height: 30px;
-    z-index: 99;
-    background-color: #f5f5f5;
-    position: sticky;
-    top: 0px;
-  }
-
-  .search-header {
-    position: sticky;
-    top: 30px;
-    width: 100%;
-    height: 105px;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    z-index: 99;
-
-    .el-header {
-      margin: auto;
-      padding: 0;
-    }
-  }
 
   .module-box {
     width: 1200px;
     box-sizing: border-box;
+    margin-bottom: 40px;
 
     .navigation-bar {
       box-sizing: border-box;
@@ -204,11 +165,5 @@
         background-color: #fff;
       }
     }
-  }
-
-  .bottom {
-    margin-top: 60px;
-    width: 100%;
-    background-color: #fff;
   }
 </style>

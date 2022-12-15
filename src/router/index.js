@@ -92,7 +92,35 @@ export default new Router({
               component: () => import('../pages/buyer/personal/supplyDemandInfo.vue')
             },
           ]
-        }
+        },
+        {
+         name:'AgreementText' ,
+         path:'/agreementText',
+         redirect: '/aboutUs',
+         component:() => import('../../src/pages/agreementText/index.vue'),
+         children: [
+           {
+             name: 'ResidencyAgreement',
+             path: '/residencyAgreement', //入驻协议
+             component: () => import('../../src/pages/agreementText/residencyAgreement.vue')
+           },
+           {
+             name: 'TradingRules',
+             path: '/tradingRules', //交易规则
+             component: () => import('../../src/pages/agreementText/tradingRules.vue')
+           },
+           {
+             name: 'AboutUs',
+             path: '/aboutUs', //关于我们
+             component: () => import('../../src/pages/agreementText/aboutUs.vue')
+           },
+           {
+             name: 'LegalStatement',
+             path: '/legalStatement', //法律声明
+             component: () => import('../../src/pages/agreementText/legalStatement.vue')
+           }
+         ]
+        },
       ]
     },
     {
@@ -188,33 +216,33 @@ export default new Router({
       name: 'PersonDemandDetail', //个人发布的需求详情页
       component: () => import('../../src/pages/publishDemand/demandDetail.vue')
     },
-    {
-     name:'AgreementText' ,
-     path:'/agreementText',
-     component:() => import('../../src/pages/agreementText/index.vue'),
-     children: [
-       {
-         name: 'ResidencyAgreement',
-         path: '/residencyAgreement', //入驻协议
-         component: () => import('../../src/pages/agreementText/residencyAgreement.vue')
-       },
-       {
-         name: 'TradingRules',
-         path: '/tradingRules', //交易规则
-         component: () => import('../../src/pages/agreementText/tradingRules.vue')
-       },
-       {
-         name: 'AboutUs',
-         path: '/aboutUs', //关于我们
-         component: () => import('../../src/pages/agreementText/aboutUs.vue')
-       },
-       {
-         name: 'LegalStatement',
-         path: '/legalStatement', //法律声明
-         component: () => import('../../src/pages/agreementText/legalStatement.vue')
-       }
-     ]
-    },
+    // {
+    //  name:'AgreementText' ,
+    //  path:'/agreementText',
+    //  component:() => import('../../src/pages/agreementText/index.vue'),
+    //  children: [
+    //    {
+    //      name: 'ResidencyAgreement',
+    //      path: '/residencyAgreement', //入驻协议
+    //      component: () => import('../../src/pages/agreementText/residencyAgreement.vue')
+    //    },
+    //    {
+    //      name: 'TradingRules',
+    //      path: '/tradingRules', //交易规则
+    //      component: () => import('../../src/pages/agreementText/tradingRules.vue')
+    //    },
+    //    {
+    //      name: 'AboutUs',
+    //      path: '/aboutUs', //关于我们
+    //      component: () => import('../../src/pages/agreementText/aboutUs.vue')
+    //    },
+    //    {
+    //      name: 'LegalStatement',
+    //      path: '/legalStatement', //法律声明
+    //      component: () => import('../../src/pages/agreementText/legalStatement.vue')
+    //    }
+    //  ]
+    // },
 
   ]
 })
