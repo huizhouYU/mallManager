@@ -51,6 +51,16 @@ export function articleList(query) {
     params: query
   })
 }
+
+//查询配件分类
+export function listByGroup(query) {
+  return request({
+    url: 'goodsCategory/listByGroup',
+    method: 'get',
+    params: query
+  })
+}
+
 // 获取医疗器械
 export function equipmentList(query) {
   return request({

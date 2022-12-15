@@ -4,7 +4,7 @@
       <img src="../../assets/images/accessory/pic_banner_1250-500.png" alt="">
     </div>
   <!-- 配件专区 -->
-  <accessories-area class="accessories_area" :showTitle="showTitle"></accessories-area>
+  <accessories-area class="accessories_area" :showTitle="showTitle" :showPage="showPage"></accessories-area>
   </div>
 </template>
 
@@ -19,7 +19,8 @@
     },
     data(){
       return{
-        showTitle:true
+        showTitle:false,
+        showPage:false
       }
     }
   }

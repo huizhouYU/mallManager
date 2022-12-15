@@ -16,7 +16,7 @@
             </template>
           </div>
         </div>
-        <div class="current-selected" v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
+        <div class="current-selected" v-show="(chosedLevel != '' && chosedLevel != undefined)&&(page.brandName == '' || page.brandName == undefined)&&(page.degreeName == ''|| page.degreeName == undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">{{chosedLevel}}</div>
         </div>
@@ -168,14 +168,6 @@
       document.documentElement.scrollTop = 0;
       this.getData()
     },
-    // watch: {
-    //   $route(to, from) {
-    //     if (to.query.keyword != from.query.keyword) {
-    //       this.getData()
-    //     }
-    //   }
-    // },
-
     watch: {
       $route(to, from) {
         if (to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId || to.query.keyword != from.query.keyword) {

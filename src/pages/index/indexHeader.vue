@@ -68,7 +68,6 @@
         searchKeys({
           typeId: this.searchData.typeId
         }).then(response => {
-          console.log("获取关键字列表：", response)
           this.hotWords = response.data
         })
       },
@@ -84,12 +83,10 @@
         // if (this.searchData.key != '') {
         //   this.toJump('')
         // }
-        this.toJump('')
+        this.toJump(this.searchData.key)
       },
       toJump(key) {
-        if (key != '') {
-          this.searchData.key = key
-        }
+        this.searchData.key = key
         var params = {
           keyword: key,
           goodsType: ''

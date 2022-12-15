@@ -153,6 +153,7 @@
   import {
     recommendGoods,
     getBrandsList,
+    listByGroup,
     articleList,
     equipmentList,
     storeList
@@ -203,14 +204,12 @@
         recommendGoods({
           limit: 9
         }).then(response => {
-          console.log("九宫格推荐商品：", response)
           this.recommendGoods = response.data
         })
         //获取品牌列表
         getBrandsList({
           limit: 9
         }).then(response => {
-          console.log("获取分类：", response)
           this.brandsList = response.data
           for (var index in this.brandsList) {
             if (this.brandsList[index].brandLogo.indexOf("http://") == -1) {
@@ -223,16 +222,18 @@
           limit: 12,
           articleType: 1
         }).then(response => {
-          console.log('热门求购：', response)
           this.hotList = response.data
         })
         articleList({
           limit: 12,
           articleType: 2
         }).then(response => {
-          console.log('项目外包：', response)
           this.equipmentList = response.data
         })
+        // // 查询配件分类
+        // listByGroup({limit:99}).then(response=>{
+        //   console.log("查询配件分类：",response)
+        // })
         //商品类型 material-配件  equipment-设备器械
         equipmentList({
           goodsType: 'equipment',
@@ -243,21 +244,19 @@
           } else {
             this.productList = []
           }
-          console.log('医疗器械：', response)
         })
-        equipmentList({
-          goodsType: 'material',
-          limit: 10
-        }).then(response => {
-          console.log('配件专区：', response)
-        })
+        // equipmentList({
+        //   goodsType: 'material',
+        //   limit: 10
+        // }).then(response => {
+        //   console.log('配件专区：', response)
+        // })
         //获取企业服务-个人工程师
         // 店铺类型 personal-个人 company-企业
         storeList({
           limit: 5,
           storeType: 'company'
         }).then(response => {
-          console.log('企业服务：', response)
           this.companyList = response.data
         })
       },

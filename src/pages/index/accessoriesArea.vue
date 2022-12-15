@@ -5,10 +5,12 @@
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
         <div class="flex-between-center item_top">
-          <span class="item_top_title">{{item.title}}</span>
+          <span class="item_top_title">{{item.cateName}}</span>
           <div class="item_more">
             <ul>
-              <li v-for="(k,inde) in item.keyValue" :key="inde">{{k}}</li>
+              <template v-for="(k,inde) in item.children">
+                <li v-if="inde>2&& inde<7" @click="toGoods(k)">{{k.cateName}}</li>
+              </template>
             </ul>
             <!-- <div class="flex-start-center more">
               <span>更多</span>
@@ -17,177 +19,107 @@
           </div>
         </div>
         <div class="item_bottom">
-          <div class="flex-column-between-center individual" v-for="(option,ind) in item.optionList" :key="ind" @click="toGoods(item)">
-            <div class="individual_img">
-              <img :src="option.imgPath" alt="">
-            </div>
-            <div class="flex-column-around-center individual_name">
-              <span class="name">{{option.name}}</span>
-              <ul class="flex-center-center">
+          <template v-for="(option,ind) in item.children">
+            <div class="flex-column-between-center individual" @click="toGoods(option)" v-if="ind<3">
+              <div class="individual_img">
+                <img :src="'https://images.weserv.nl/?url='+option.image" alt="">
+              </div>
+              <div class="flex-column-around-center individual_name">
+                <span class="name">{{option.cateName}}</span>
+                <!-- <ul class="flex-center-center">
                 <li v-for="(x,i) in option.label" :key="i">{{x}}</li>
-              </ul>
+              </ul> -->
+              </div>
             </div>
-          </div>
+          </template>
         </div>
       </div>
     </div>
-    <div v-show="!showTitle" class="flex-center-center pagination">
+    <div v-show="showPage" class="flex-center-center pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
         :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper"
         :total="400">
       </el-pagination>
     </div>
-
   </div>
 </template>
 
 <script>
   import titleMore from '../../pages/index/titleMore.vue'
+  import {
+    listByGroup
+  } from '@/api/index'
   export default {
     components: {
       titleMore
     },
     props: {
       showTitle: Boolean,
-      tabIndex:String,
+      tabIndex: String,
+      showPage:{
+        type:Boolean,
+        default:false
+      }
     },
     data() {
       return {
-        morePath:'/accessory',
+        morePath: '/accessory',
         title: "配件专区",
         currentPage4: 4,
-        accessoriesList: [{
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-          {
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-          {
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-          {
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-          {
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-          {
-            title: '飞利浦核磁/CT',
-            keyValue: ['线圈', '主机', '梯度', '线圈'],
-            optionList: [{
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian1.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian2.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              },
-              {
-                imgPath: require('../../../src/assets/images/index/peijian/pic_peijian3.png'),
-                name: '主机',
-                label: ['电子设备', '低温设备']
-              }
-            ]
-          },
-
-        ]
+        accessoriesList: [],
+        chosedLevel:[]
       }
     },
+    mounted() {
+      this.getData()
+    },
     methods: {
-      toGoods(item){
+      getData() {
+        console.log("jjj：",this.showTitle)
+        var params = {
+          limit: 6
+        }
+        if (!this.showTitle) {
+          params.limit = 99
+        } else {
+          params.limit = 6
+        }
+        // 查询配件分类
+        listByGroup(params).then(response => {
+          this.accessoriesList = response.data
+        })
+      },
+      toGoods(item) {
+        this.getChosedLevel(item.cateName,item.parentId,'2')
         this.$router.push({
-          path:'/medicalApparatus',
-          query:{
-            goodsType:'material'
+          path: '/medicalApparatus',
+          query: {
+            goodsType: 'material',
+            cateId:item.cateId,
+            chosedLevel: this.chosedLevel.join(' / ')
           }
         })
+      },
+      getChosedLevel(name, parerntId, level) {
+        this.chosedLevel = []
+        for (var i in this.accessoriesList) {
+          if (level == '3') {
+            for (var y in this.accessoriesList[i].children) {
+              if (this.accessoriesList[i].children[y].cateId == parerntId) {
+                this.chosedLevel.push(this.accessoriesList[i].cateName)
+                this.chosedLevel.push(this.accessoriesList[i].children[y].cateName)
+                this.chosedLevel.push(name)
+                return
+              }
+            }
+          } else if (level == '2') {
+            if (this.accessoriesList[i].cateId == parerntId) {
+              this.chosedLevel.push(this.accessoriesList[i].cateName)
+              this.chosedLevel.push(name)
+              return
+            }
+          }
+        }
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -209,55 +141,6 @@
     grid-template-columns: repeat(2, auto);
     grid-gap: 10px;
   }
-
-  // .item:hover {
-
-  //   ::after,
-  //   ::before {
-  //     /* 固定在div下 */
-  //     // z-index: -1;
-  //     position: absolute;
-  //     top: 0;
-  //     right: 0;
-  //     bottom: 0;
-  //     left: 0;
-  //     /* 撑开一点大小 */
-  //     // margin: -5%;
-  //     box-shadow: inset 0px 0px 1px #40A9FF;
-  //     animation: clipMe 10s linear infinite;
-  //   }
-
-  //   ::before {
-  //     content: "";
-  //   }
-
-  //   ::after {
-  //     content: "";
-  //     /* 提前运动4s */
-  //     animation-delay: -4s;
-  //   }
-  // }
-
-
-  // @keyframes clipMe {
-
-  //   0%,
-  //   100% {
-  //     clip: rect(0px, 595px, 10px, 0px);
-  //   }
-
-  //   25% {
-  //     clip: rect(0px, 10px, 280.0px, 0px);
-  //   }
-
-  //   50% {
-  //     clip: rect(250px, 595px, 280px, 0px);
-  //   }
-
-  //   75% {
-  //     clip: rect(0px, 595px, 280px, 585.0px);
-  //   }
-  // }
 
   .item {
     // position: relative;
@@ -322,6 +205,7 @@
 
       .individual:hover {
         cursor: pointer;
+
         .individual_name {
 
           .name,

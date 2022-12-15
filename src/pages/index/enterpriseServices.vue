@@ -224,6 +224,7 @@
         .other-info {
           height: 100%;
           box-sizing: border-box;
+          flex:1;
 
           .company-name {
             font-size: 14px;

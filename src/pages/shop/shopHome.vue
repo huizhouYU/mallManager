@@ -30,7 +30,7 @@
           </div>
           <div class="shop-detail-item">
             <span class="title">所属分类</span>
-            <span class="value">医疗器械二类</span>
+            <span class="value">待补充</span>
           </div>
           <div class="shop-detail-item">
             <span class="title">公司地址</span>

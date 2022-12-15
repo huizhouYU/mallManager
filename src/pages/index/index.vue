@@ -122,7 +122,7 @@
             title: '医疗器械',
             isHot: false,
             isNew: false,
-            path: '/medicalApparatus?goodsType=equipment'
+            path: '/medicalApparatus'
           },
           {
             title: '企业服务',
@@ -130,17 +130,17 @@
             isNew: true,
             path: '/enterpriseServices'
           },
-          {
-            title: '学习园地',
-            isHot: false,
-            path: ''
-          },
-          {
-            title: '工程师服务',
-            isHot: false,
-            isNew: false,
-            path: ''
-          },
+          // {
+          //   title: '学习园地',
+          //   isHot: false,
+          //   path: ''
+          // },
+          // {
+          //   title: '工程师服务',
+          //   isHot: false,
+          //   isNew: false,
+          //   path: ''
+          // },
           {
             title: '合作品牌',
             isHot: false,
@@ -205,7 +205,6 @@
         } else {
           this.isShowContent = false
         }
-        console.log("H:", this.isShowContent)
         var params = {}
         if (path == '/medicalApparatus') {
           params = {

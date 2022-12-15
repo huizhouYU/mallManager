@@ -42,8 +42,8 @@
           <img src="../../assets/images/index/icon_vip.png" alt="">
           会员中心
         </li>
-        <li>管理后台</li>
-        <li class="bule_font">供应商入驻</li>
+        <li><a href="http://seller.yijiequan.cn" target="_blank">管理后台</a></li>
+        <li class="bule_font"><a href="http://seller.yijiequan.cn/#/shop/storeAuthentication" target="_blank">供应商入驻</a></li>
       </ul>
     </div>
   </div>
@@ -290,6 +290,10 @@
         li {
           padding-right: 0px;
           padding-left: 10px;
+          a{
+            text-decoration: none;
+            color: #696969;
+          }
         }
       }
     }
