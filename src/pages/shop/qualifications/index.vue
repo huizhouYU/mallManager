@@ -14,7 +14,7 @@
         </div>
         <div class="item-sort">
           <span>店铺分类：</span>
-          <span>待补充</span>
+          <span>{{storeInfo.categoryName}}</span>
         </div>
       </div>
       <div class="company-right">

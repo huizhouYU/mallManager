@@ -31,12 +31,12 @@
                 path: '/personalData',
                 params: '',
               },
-              {
-                id: 'receiptAddress',
-                name: '收货地址',
-                path: '/receiptAddress',
-                params: '',
-              },
+              // {
+              //   id: 'receiptAddress',
+              //   name: '收货地址',
+              //   path: '/receiptAddress',
+              //   params: '',
+              // },
               {
                 id: 'changePWD',
                 name: '修改密码',
@@ -45,77 +45,77 @@
               }
             ]
           },
-          {
-            id: 'shoppingCart',
-            name: '购物车',
-            path: '/shoppingCart',
-            params: '',
-            child: []
-          },
-          {
-            id: 'allOrders0',
-            name: '我的订单',
-            path: '/allOrders',
-            params: {
-              id: 0
-            },
-            child: [{
-                id: 'allOrders2',
-                name: '待付款',
-                path: '/allOrders',
-                params: {
-                  id: 2
-                },
-              },
-              {
-                id: 'allOrders1',
-                name: '待审核',
-                path: '/allOrders',
-                params: {
-                  id: 1
-                },
-              },
-              {
-                id: 'allOrders3',
-                name: '待发货',
-                path: '/allOrders',
-                params: {
-                  id: 3
-                },
-              },
-              {
-                id: 'allOrders4',
-                name: '待收货',
-                path: '/allOrders',
-                params: {
-                  id: 4
-                },
-              }
-            ]
-          },
-          {
-            name: '退款订单',
-            path: '',
-            params: {},
-            child: [{
-                name: '退款中',
-                path: '',
-                params: {},
-              },
-              {
-                name: '已退款',
-                path: '',
-                params: {},
-              }
-            ]
-          },
-          {
-            id: 'supplyDemandInfo',
-            name: '供求信息',
-            path: '/supplyDemandInfo',
-            params: '',
-            child: []
-          },
+          // {
+          //   id: 'shoppingCart',
+          //   name: '购物车',
+          //   path: '/shoppingCart',
+          //   params: '',
+          //   child: []
+          // },
+          // {
+          //   id: 'allOrders0',
+          //   name: '我的订单',
+          //   path: '/allOrders',
+          //   params: {
+          //     id: 0
+          //   },
+          //   child: [{
+          //       id: 'allOrders2',
+          //       name: '待付款',
+          //       path: '/allOrders',
+          //       params: {
+          //         id: 2
+          //       },
+          //     },
+          //     {
+          //       id: 'allOrders1',
+          //       name: '待审核',
+          //       path: '/allOrders',
+          //       params: {
+          //         id: 1
+          //       },
+          //     },
+          //     {
+          //       id: 'allOrders3',
+          //       name: '待发货',
+          //       path: '/allOrders',
+          //       params: {
+          //         id: 3
+          //       },
+          //     },
+          //     {
+          //       id: 'allOrders4',
+          //       name: '待收货',
+          //       path: '/allOrders',
+          //       params: {
+          //         id: 4
+          //       },
+          //     }
+          //   ]
+          // },
+          // {
+          //   name: '退款订单',
+          //   path: '',
+          //   params: {},
+          //   child: [{
+          //       name: '退款中',
+          //       path: '',
+          //       params: {},
+          //     },
+          //     {
+          //       name: '已退款',
+          //       path: '',
+          //       params: {},
+          //     }
+          //   ]
+          // },
+          // {
+          //   id: 'supplyDemandInfo',
+          //   name: '供求信息',
+          //   path: '/supplyDemandInfo',
+          //   params: '',
+          //   child: []
+          // },
         ]
       }
     },

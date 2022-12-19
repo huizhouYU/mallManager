@@ -37,10 +37,10 @@
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
                   <span>议价</span>
-                  <div class="remark">
+                  <!-- <div class="remark">
                     <img src="../../assets/images/shop/icon_remark_warning.png" alt="">
                     议价订单提交申请后可在全部订单中查看该订单是否审核通过
-                  </div>
+                  </div> -->
                 </template>
                 <template v-else>
                   <span>{{goodsInfo.price}}</span>

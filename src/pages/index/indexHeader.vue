@@ -123,6 +123,7 @@
     display: flex;
 
     .log-box {
+      cursor: pointer;
       width: 240px;
       height: 100%;
 

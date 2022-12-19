@@ -18,10 +18,10 @@
             <div class="key">联系人:</div>
             <div class="value">{{item.ownerName}}</div>
           </div>
-          <div class="flex-start-start company-info-item">
+          <!-- <div class="flex-start-start company-info-item">
             <div class="key">所属分类：</div>
-            <div class="value">{{item.type}}</div>
-          </div>
+            <div class="value">{{item.cateName}}</div>
+          </div> -->
           <div class="flex-start-start company-info-item">
             <div class="key">公司地址：</div>
             <div class="value address">
@@ -40,10 +40,10 @@
           <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
           <div class="flex-column-between-start other-info">
             <div class="company-name">{{item.storeName}}</div>
-            <div class="flex-start-start company-info-item">
+            <!-- <div class="flex-start-start company-info-item">
               <div class="key">所属分类：</div>
-              <div class="value">{{item.type}}</div>
-            </div>
+              <div class="value">{{item.cateName}}</div>
+            </div> -->
             <div class="flex-start-start company-info-item">
               <div class="key">公司地址：</div>
               <div class="value address">

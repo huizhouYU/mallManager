@@ -32,6 +32,15 @@ export function sendMsg(data) {
     data: data
   })
 }
+//发送忘记密码短信
+export function sendForgetPwd(data) {
+  return request({
+    url: '/sms/sendForgetPwd',
+    method: 'post',
+    data: data
+  })
+}
+
 //发送注册短信
 export function registerMsg(data) {
   return request({
@@ -52,6 +61,14 @@ export function register(data) {
 export function updateInfo(data) {
   return request({
     url: 'user/updateInfo',
+    method: 'post',
+    data: data
+  })
+}
+//用户找回密码
+export function findPwd(data) {
+  return request({
+    url: '/findPwd',
     method: 'post',
     data: data
   })
@@ -87,4 +104,3 @@ export function logout() {
     method: 'post'
   })
 }
-

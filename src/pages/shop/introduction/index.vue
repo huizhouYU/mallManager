@@ -14,7 +14,7 @@
         </div>
         <div class="item-sort">
           <span>店铺分类：</span>
-          <span>待补充</span>
+          <span>{{storeInfo.categoryName}}</span>
         </div>
       </div>
       <div class="company-right">
@@ -39,8 +39,8 @@
     </div>
     <!-- 公司简介 -->
     <div class="introduction">
-      <template v-if="storeInfo.storeBanner != null && storeInfo.storeBanner != ''">
-        <img :src="'https://images.weserv.nl/?url='+storeInfo.storeBanner" alt="">
+      <template v-if="storeInfo.storeLogo != null && storeInfo.storeLogo != ''">
+        <img :src="'https://images.weserv.nl/?url='+storeInfo.storeLogo" alt="">
       </template>
       <template v-else>
         <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt="">

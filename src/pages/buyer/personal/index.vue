@@ -10,7 +10,7 @@
             <template v-else>
               <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">
             </template>
-            
+
             <!-- action插槽 -->
             <template v-slot:action>
               <i class="iconfont icon-bianji-copy">编辑资料</i>
@@ -19,12 +19,12 @@
           <span>用户昵称啊</span>
         </div>
         <ul class="address-myinfo">
-          <li @click="toReceiptAddress">我的收货地址</li>
+          <!-- <li @click="toReceiptAddress">我的收货地址</li> -->
           <li @click="toPersonalData">我的信息</li>
         </ul>
       </div>
       <!-- 订单模块 -->
-      <div class="order">
+      <div class="order" v-if="false">
         <div class="order-state">
           <div class="order-state-item">
             <div class="img-box">
@@ -103,7 +103,7 @@
         </div>
       </div>
       <!-- 猜你喜欢 -->
-      <div class="guess">
+      <div class="guess"v-if="false">
         <div class="guess-top">根据浏览，猜你需要</div>
         <div class="guess-main">
           <div class="guess-main-left">

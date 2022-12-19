@@ -17,17 +17,16 @@
           <el-form-item label="" prop="mobile">
             <el-input type="text" v-model="forgetForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="psd">
-            <el-input type="password" v-model="forgetForm.psd" autocomplete="off" placeholder="设置新密码"></el-input>
+          <el-form-item label="" prop="password">
+            <el-input type="password" v-model="forgetForm.password" autocomplete="off" placeholder="设置新密码"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="newPsd">
-            <el-input type="password" v-model="forgetForm.newPsd" autocomplete="off" placeholder="请重新输入新密码"></el-input>
+          <el-form-item label="" prop="newPassword">
+            <el-input type="password" v-model="forgetForm.newPassword" autocomplete="off" placeholder="请重新输入新密码"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="vCode" class="get-v-code-form-item">
-            <el-input v-model="forgetForm.vCode" :disabled="countDown == 0">
+          <el-form-item label="" prop="captcha" class="get-v-code-form-item">
+            <el-input v-model="forgetForm.captcha" :disabled="countDown == 0">
               <template slot="append">
-                <span class="flex-center-center get-v-code" @click="getCode"
-                  v-show="forgetForm.mobile == ''">获取验证码</span>
+                <span class="flex-center-center get-v-code" @click="getCode" v-show="countDown==0">获取验证码</span>
                 <span class="flex-center-center count-down" v-show="countDown>0">{{countDown}}s</span>
               </template>
             </el-input>
@@ -40,6 +39,9 @@
 </template>
 
 <script>
+  import {
+    sendForgetPwd,findPwd
+  } from '@/api/user'
   export default {
     data() {
       var validatePhone = (rule, value, callback) => {
@@ -59,9 +61,9 @@
         countDown: 0,
         forgetForm: {
           mobile: '',
-          psd: '',
-          newPsd: '',
-          vCode: ''
+          password: '',
+          newPassword: '',
+          captcha: ''
         },
         forgetFormRules: {
           mobile: [{
@@ -69,17 +71,17 @@
             validator: validatePhone,
             trigger: 'blur'
           }],
-          psd: [{
+          password: [{
             required: true,
             message: '请输入新密码',
             trigger: 'blur'
           }],
-          newPsd: [{
+          newPassword: [{
             required: true,
             message: '请再次输入密码',
             trigger: 'blur'
           }],
-          vCode: [{
+          captcha: [{
             required: true,
             message: '请输入验证码',
             trigger: 'blur'
@@ -105,9 +107,9 @@
         let data = {
           mobile: this.forgetForm.mobile
         }
-        // sendMsg(data).then(response => {
-        //   console.log(response.data.data)
-        // })
+        sendForgetPwd(data).then(response => {
+          console.log(response.data.data)
+        })
         // 验证码倒计时
         if (!this.timer) {
           this.countDown = 60;
@@ -126,7 +128,13 @@
       onSubmit(ruleForm) {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
-            conso.log("去提交")
+            findPwd(this.forgetForm).then(response=>{
+              if(response.code ==10000){
+                this.$message.success("密码修改成功！")
+              }else{
+                this.$message.error(response.message)
+              }
+            })
           } else {
             console.log('error submit!!');
             return false;

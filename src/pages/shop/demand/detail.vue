@@ -46,7 +46,7 @@
             <img src="../../../assets/images/index/demand/pic_gongqiu_tj.png" alt=""> -->
           </div>
         </div>
-        <div class="remark">请主动联系我，联系时请说明是在“医界商城”看到的，谢谢！</div>
+        <div class="remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
       </div>
       <div class="right-box">
         <div class="contact">
@@ -70,7 +70,8 @@
           </div>
         </div>
         <!-- 店内相关求购 -->
-        <div class="shop-demand" v-if="isShop">
+        <!-- <div class="shop-demand" v-if="isShop"> -->
+        <div class="shop-demand" v-if="false">
           <div class="title">店内相关求购</div>
           <ul>
             <li>急需一个封魔盒，求</li>
@@ -82,7 +83,8 @@
           </ul>
         </div>
         <!-- 其他相关求购 -->
-        <div class="shop-demand" v-if="isShop">
+        <!-- <div class="shop-demand" v-if="isShop"> -->
+        <div class="shop-demand" v-if="false">
           <div class="title">其他相关求购</div>
           <ul>
             <li>要碗牛肉面，只要牛肉，不要面，满满的牛肉</li>
@@ -144,7 +146,11 @@
           this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
             "<img src=\"https://images.weserv.nl/?url=http://")
           if (this.demandInfo.region != null && this.demandInfo.region != '') {
-            this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
+            console.log("this.demandInfo.region：", JSON.parse(this.demandInfo.region))
+            if (JSON.parse(this.demandInfo.region) != '' && JSON.parse(this.demandInfo.region)[0] != '' && JSON
+              .parse(this.demandInfo.region)[0].name != undefined) {
+              this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
+            }
           }
           this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
             .then((response) => {
@@ -152,8 +158,8 @@
             }).catch(() => {
               console.log("保存当前浏览的店铺ID失败")
             })
-          
-          this.$emit("saveStoreId",this.demandInfo.storeId)
+
+          this.$emit("saveStoreId", this.demandInfo.storeId)
         })
       }
     }

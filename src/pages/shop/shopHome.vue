@@ -3,8 +3,8 @@
     <div class="shop-home-box-left">
       <div class="left-top">
         <div class="shop-logo">
-          <template v-if="storeInfo.storeBanner != null && storeInfo.storeBanner != ''">
-            <img :src="'https://images.weserv.nl/?url='+storeInfo.storeBanner" alt="">
+          <template v-if="storeInfo.storeLogo != null && storeInfo.storeLogo != ''">
+            <img :src="'https://images.weserv.nl/?url='+storeInfo.storeLogo" alt="">
           </template>
           <template v-else>
             <img src="../../assets/images/shop/pic_shoplogo_default.png" alt="">
@@ -30,7 +30,7 @@
           </div>
           <div class="shop-detail-item">
             <span class="title">所属分类</span>
-            <span class="value">待补充</span>
+            <span class="value">{{storeInfo.categoryName}}</span>
           </div>
           <div class="shop-detail-item">
             <span class="title">公司地址</span>

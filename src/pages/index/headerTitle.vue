@@ -36,7 +36,7 @@
     <div class="shop-content-item shop-content-right">
       <ul>
         <li @click="toIndex">医界圈首页</li>
-        <li @click="toShopCart">购物车</li>
+        <!-- <li @click="toShopCart">购物车</li> -->
         <!-- <li>我的收藏</li> -->
         <li class="yellow_font" @click="personCenter">
           <img src="../../assets/images/index/icon_vip.png" alt="">

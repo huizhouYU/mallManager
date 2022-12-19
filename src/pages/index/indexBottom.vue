@@ -49,7 +49,7 @@
       </p>
       <p class="item3">
         <a target="_blank" href="https://images.weserv.nl/?url=https://image.yijiequan.cn/yijiequan-client/attach/qualification.jpg">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a> |
-        <a target="_blank" href="#">增值电信业务经营许可证：皖B2-20220523</a>
+        <a target="_blank" href="https://images.weserv.nl/?url=https://image.yijiequan.cn/yijiequan-client/attach/vualeAdd.png">增值电信业务经营许可证：皖B2-20220523</a>
       </p>
       <!-- <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p> -->
     </div>

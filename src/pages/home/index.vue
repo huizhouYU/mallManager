@@ -132,7 +132,7 @@
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices"></enterprise-services>
     <!-- 个人工程师 -->
-    <personal-engineer class="personal-engineer"></personal-engineer>
+    <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>
     <!-- 模块六 两张大图 -->
     <div class="modle6-pic">
       <img src="../../assets/images/index/pic_jineng.png" alt="">
