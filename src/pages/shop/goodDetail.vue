@@ -5,9 +5,10 @@
       <div class="shop-detail-content">
         <div class="shop-detail-img-info">
           <div class="img-list">
-            <img class="big-img" :src="'https://images.weserv.nl/?url='+ bigImgPath" alt="">
+            <look-img :imgUrlList="goodsInfo.imageList" :mainImgUrl="goodsInfo.imageList[0]"></look-img>
+           <!-- <img class="big-img" :src="'https://images.weserv.nl/?url='+ bigImgPath" alt="">
             <div class="img-ul">
-              <span>
+              <span @click="changeLeftPos">
                 <i class="iconfont">&#xe642;</i>
               </span>
               <ul>
@@ -15,10 +16,10 @@
                   <img :src="'https://images.weserv.nl/?url='+item" alt="" @click="changeImg(item)">
                 </li>
               </ul>
-              <span>
+              <span @click="changeRightPos">
                 <i class="iconfont">&#xe641;</i>
               </span>
-            </div>
+            </div> -->
           </div>
           <div class="goods-info">
             <!-- 商品名称 -->
@@ -153,16 +154,20 @@
 </template>
 
 <script>
+  import lookImg from '../../../src/components/lookImg.vue'
   import storeRecommendation from '../../pages/shop/storeRecommendation.vue'
   import {
     goodsDetail
   } from '@/api/goods'
   export default {
     components: {
-      storeRecommendation
+      storeRecommendation,lookImg
     },
     data() {
       return {
+        imgActiveIndex: 0, // 当前移动图片的索引值
+        imgDistance: 0, // 移动的距离
+        allDistance: 0, // 总移动距离
         goodsId: '',
         categoryStr: '',
         bigImgPath: '',
@@ -215,6 +220,15 @@
       })
     },
     methods: {
+      initPos() {
+
+      },
+      changeLeftPos() {
+
+      },
+      changeRightPos() {
+
+      },
       // ...mapActions(["setStoreId"])
 
       changeImg(imgPath) {
@@ -300,6 +314,8 @@
             }
 
             ul {
+              width: 300px;
+              overflow: hidden;
               display: flex;
               justify-content: flex-start;
               align-items: center;

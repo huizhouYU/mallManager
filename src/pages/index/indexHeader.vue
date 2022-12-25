@@ -75,11 +75,11 @@
         this.getData()
       },
       toSearch() {
-        for (var index in this.options) {
-          if (this.options[index].value == this.searchData.typeId) {
-            this.searchData.path = this.options[index].path
-          }
-        }
+        // for (var index in this.options) {
+        //   if (this.options[index].value == this.searchData.typeId) {
+        //     this.searchData.path = this.options[index].path
+        //   }
+        // }
         // if (this.searchData.key != '') {
         //   this.toJump('')
         // }
@@ -95,6 +95,11 @@
           params.goodsType = 'material'
         } else if (this.searchData.typeId == 3) {
           params.goodsType = 'equipment'
+        }
+        for (var index in this.options) {
+          if (this.options[index].value == this.searchData.typeId) {
+            this.searchData.path = this.options[index].path
+          }
         }
         this.$router.push({
           path: this.searchData.path,

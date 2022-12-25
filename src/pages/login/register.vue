@@ -28,7 +28,7 @@
           <div class="agree-item">
             <el-checkbox v-model="agree">
             </el-checkbox>
-            <span>阅读并同意<font class="bule-font">《服务条款》</font>和<font class="bule-font">《法律声明和隐私政策》</font></span>
+            <span>阅读并同意<font class="cus-point bule-font" @click="toRZ">《服务条款》</font>和<font class="cus-point bule-font" @click="toFL">《法律声明和隐私政策》</font></span>
           </div>
           <el-button type="primary" @click="onSubmit('registerRuleForm')">注册</el-button>
         </el-form>
@@ -85,6 +85,18 @@
         } else {
           return true
         }
+      },
+      toRZ(){
+        this.$router.push({
+          path: '/residencyAgreement',
+          replace: true
+        })
+      },
+      toFL(){
+        this.$router.push({
+          path: '/legalStatement',
+          replace: true
+        })
       },
       //获取手机短信验证码
       getCode() {
@@ -178,6 +190,9 @@
 
     .bule-font {
       color: #1890FF !important;
+    }
+    .cus-point{
+      cursor: pointer;
     }
 
     .register-top {

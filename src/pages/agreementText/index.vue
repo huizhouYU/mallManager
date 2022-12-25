@@ -37,7 +37,7 @@
           },
           {
             path: '/residencyAgreement',
-            name: '入住协议'
+            name: '入驻协议'
           },
           {
             path: '/tradingRules',

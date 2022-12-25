@@ -2,13 +2,15 @@
   <div class="whole">
     <div class="content">
       <div class="select-content">
-        <div class="current-selected" v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
+        <div class="current-selected"
+          v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">
             <template v-if="page.brandName != '' && page.brandName != undefined">
               {{page.brandName}}
             </template>
-            <template v-if="(page.brandName != '' && page.brandName != undefined)&&(page.degreeName != ''&& page.degreeName != undefined)">
+            <template
+              v-if="(page.brandName != '' && page.brandName != undefined)&&(page.degreeName != ''&& page.degreeName != undefined)">
               /
             </template>
             <template v-if="page.degreeName != ''&& page.degreeName != undefined">
@@ -16,7 +18,8 @@
             </template>
           </div>
         </div>
-        <div class="current-selected" v-show="(chosedLevel != '' && chosedLevel != undefined)&&(page.brandName == '' || page.brandName == undefined)&&(page.degreeName == ''|| page.degreeName == undefined)">
+        <div class="current-selected"
+          v-show="(chosedLevel != '' && chosedLevel != undefined)&&(page.brandName == '' || page.brandName == undefined)&&(page.degreeName == ''|| page.degreeName == undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">{{chosedLevel}}</div>
         </div>
@@ -98,8 +101,8 @@
           degreeName: '', //新旧程度
           categoryId: '', //分类ID
           cateName: '', //分类名称
-          keyType:1,
-          keyword:''
+          keyType: 1,
+          keyword: ''
         },
         isBrandStow: true,
         isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
@@ -120,30 +123,6 @@
           brand: [],
           //新旧程度
           degree: [{
-              degree: 1,
-              name: '一成新'
-            },
-            {
-              degree: 2,
-              name: '两成新'
-            },
-            {
-              degree: 3,
-              name: '三成新'
-            },
-            {
-              degree: 4,
-              name: '四成新'
-            },
-            {
-              degree: 5,
-              name: '五成新'
-            },
-            {
-              degree: 6,
-              name: '六成新'
-            },
-            {
               degree: 7,
               name: '七成新'
             },
@@ -165,12 +144,14 @@
       }
     },
     mounted() {
+      console.log(window.location.host)
       document.documentElement.scrollTop = 0;
       this.getData()
     },
     watch: {
       $route(to, from) {
-        if (to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId || to.query.keyword != from.query.keyword) {
+        if (to.query.goodsType != from.query.goodsType || to.query.cateId != from.query.cateId || to.query.keyword !=
+          from.query.keyword) {
           this.getData()
         }
       }
