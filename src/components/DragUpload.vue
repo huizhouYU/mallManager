@@ -166,7 +166,7 @@
           for (var item of newVal) {
             var temp = {
               file: '',
-              imgUrl: 'https://images.weserv.nl/?url=' + item,
+              imgUrl: item,
               orderNumber: this.allListChild.length
             };
             this.allListChild.push(temp) // 启动拖拽功能

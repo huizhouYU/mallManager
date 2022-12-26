@@ -118,6 +118,11 @@ export default new Router({
              name: 'LegalStatement',
              path: '/legalStatement', //法律声明
              component: () => import('../../src/pages/agreementText/legalStatement.vue')
+           },
+           {
+             name: 'registerProcess',
+             path: '/RegisterProcess', //注册流程
+             component: () => import('../../src/pages/agreementText/registerProcess.vue')
            }
          ]
         },

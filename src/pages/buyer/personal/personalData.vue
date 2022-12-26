@@ -8,7 +8,7 @@
               <img :src="showImgUrl" alt="">
             </template>
             <template v-else>
-              <img :src="'https://images.weserv.nl/?url='+showImgUrl" alt="">
+              <img :src="showImgUrl" alt="">
             </template>
             <span class="edit-span">编辑头像</span>
             <input type="file" id="inputFile" accept="image/png, image/jpeg, image/gif, image/jpg" @change="previewFile"
@@ -117,7 +117,7 @@
     },
     methods: {
       isCellPhone(val) {
-        if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
           return false
         } else {
           return true
@@ -134,7 +134,11 @@
       getCode() {
         //axios请求
         sendUpdateMsg({}).then(response => {
-          console.log(response.data.data)
+          if(response.code != 10000){
+            this.$message.error(response.message)
+          }else{
+            this.$message.success(response.data)
+          }
         })
         // 验证码倒计时
         if (!this.timer) {

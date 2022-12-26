@@ -41,7 +41,7 @@
       <ul class="qualifications" v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
         <li v-for="(item,index) in storeInfo.certificationList">
           <div class="img-div">
-            <img :src="'https://images.weserv.nl/?url='+item" alt="">
+            <img :src="item" alt="">
           </div>
           <!-- <span>营业执照</span> -->
         </li>

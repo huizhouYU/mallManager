@@ -86,7 +86,6 @@
     data() {
       var validatePhone = (rule, value, callback) => {
         if (value === '') {
-          // let phoneReg = /(^1[3|4|5|6|7|8|9]\d{9}$)|(^09\d{8}$)/; if (value === '') {
           callback(new Error('请输入手机号'))
         } else if (!this.isCellPhone(
             value)) { // 引入methods中封装的检查手机格式的方法 callback(new Error('请输入正确的手机号!'))          } else {
@@ -182,7 +181,7 @@
     },
     methods: {
       isCellPhone(val) {
-        if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
           return false
         } else {
           return true

@@ -174,7 +174,6 @@
     },
     methods: {
       getData() {
-        console.log("index获取分类：")
         if (this.chooseTab != '/home') {
           this.isShowContent = true
         } else {
@@ -211,16 +210,17 @@
             goodsType: 'equipment'
           }
         }
-        this.$router.push({
+        var newPath =  this.$router.resolve({
           path: path,
           query: params,
           replace: true
         })
+        window.open(newPath.href,'_blank')
 
       },
       jumpToGood(item, level) {
         this.getChosedLevel(item.cateName, item.parentId, level)
-        this.$router.push({
+        var newPath =  this.$router.resolve({
           path: '/medicalApparatus',
           query: {
             cateId: item.cateId,
@@ -229,6 +229,8 @@
           }
         })
         this.chooseTab = '-1'
+        console.log("hhh")
+        window.open(newPath.href,'_blank')
       },
       getChosedLevel(name, parerntId, level) {
         this.chosedLevel = []

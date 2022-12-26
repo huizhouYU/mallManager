@@ -22,7 +22,7 @@
           <template v-for="(option,ind) in item.children">
             <div class="flex-column-between-center individual" @click="toGoods(option)" v-if="ind<3">
               <div class="individual_img">
-                <img :src="'https://images.weserv.nl/?url='+option.image" alt="">
+                <img :src="option.image" alt="">
               </div>
               <div class="flex-column-around-center individual_name">
                 <span class="name">{{option.cateName}}</span>
@@ -75,7 +75,6 @@
     },
     methods: {
       getData() {
-        console.log("jjj：",this.showTitle)
         var params = {
           limit: 6
         }

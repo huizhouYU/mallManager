@@ -19,7 +19,7 @@
                 <li @click="logout">退出</li>
               </ul>
               <div class="flex-start-center logo-name-div">
-                <img :src="'https://images.weserv.nl/?url='+avatar" alt="">
+                <img :src="avatar" alt="">
                 <div class="flex-column-around-start name-info-div">
                   <span>
                     {{name}}

@@ -6,20 +6,6 @@
         <div class="shop-detail-img-info">
           <div class="img-list">
             <look-img :imgUrlList="goodsInfo.imageList" :mainImgUrl="goodsInfo.imageList[0]"></look-img>
-           <!-- <img class="big-img" :src="'https://images.weserv.nl/?url='+ bigImgPath" alt="">
-            <div class="img-ul">
-              <span @click="changeLeftPos">
-                <i class="iconfont">&#xe642;</i>
-              </span>
-              <ul>
-                <li v-for="(item,index) in goodsInfo.imageList" :key="index">
-                  <img :src="'https://images.weserv.nl/?url='+item" alt="" @click="changeImg(item)">
-                </li>
-              </ul>
-              <span @click="changeRightPos">
-                <i class="iconfont">&#xe641;</i>
-              </span>
-            </div> -->
           </div>
           <div class="goods-info">
             <!-- 商品名称 -->
@@ -144,7 +130,6 @@
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
           </div>
         </div>
-        <!-- <img class="shop-details-img" src="../../assets/images/shop/pic_Details Page.png" alt=""> -->
         <img class="shop-details-img" :src="goodsInfo.longImage" alt="" v-if="goodsInfo.longImage != ''">
       </div>
       <!-- 店内推荐 -->
@@ -174,7 +159,7 @@
         num: 1,
         goodsInfo: {
           goodType: '0', //0:议价商品，1：普通商品
-          bigImgPath: require('../../assets/images/shop/pic_Commodity Details_ct.png'),
+          bigImgPath: '',
           name: '西门子双源大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信',
           lableList: ['西门子', '核磁', '大品牌'],
           price: '999.99',

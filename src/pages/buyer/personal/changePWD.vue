@@ -168,7 +168,7 @@
         });
       },
       isCellPhone(val) {
-        if (!/^1(3|4|5|6|7|8)\d{9}$/.test(val)) {
+        if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
           return false
         } else {
           return true
@@ -178,7 +178,12 @@
       getCode() {
         //axios请求
         sendPwdMsg().then(response => {
-          console.log(response.data.data)
+          // console.log(response)
+          if(response.code != 10000){
+            this.$message.error(response.message)
+          }else{
+            this.$message.success(response.data)
+          }
         })
         // 验证码倒计时
         if (!this.timer) {

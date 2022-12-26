@@ -3,7 +3,7 @@
     <div class="flex-column-around-center item-cart" v-for="(item,index) in recommendGoods" :key="item.goodsId"
       @click="jumpMore(item.goodsId)">
       <!-- <img :src="item.imgPath" alt="图片无法加载"> -->
-      <img :src="'https://images.weserv.nl/?url='+item.defaultImage" alt="图片无法加载">
+      <img :src="item.defaultImage" alt="图片无法加载">
       <p class="name">{{item.goodsName}}</p>
       <!-- <p class="remark">{{item.remark}}</p> -->
     </div>

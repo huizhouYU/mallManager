@@ -5,7 +5,7 @@
         <div class="img-name">
           <vue-hover-mask @click="toPersonalData">
             <template v-if="avatar !=''">
-              <img :src="'https://images.weserv.nl/?url='+avatar" alt="">
+              <img :src="avatar" alt="">
             </template>
             <template v-else>
               <img src="../../../assets/images/index/buyer/pic_Buyer_Default.png" alt="">

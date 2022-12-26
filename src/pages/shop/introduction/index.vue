@@ -40,7 +40,7 @@
     <!-- 公司简介 -->
     <div class="introduction">
       <template v-if="storeInfo.storeLogo != null && storeInfo.storeLogo != ''">
-        <img :src="'https://images.weserv.nl/?url='+storeInfo.storeLogo" alt="">
+        <img :src="storeInfo.storeLogo" alt="">
       </template>
       <template v-else>
         <img src="../../../assets/images/shop/pic_shoplogo_default.png" alt="">

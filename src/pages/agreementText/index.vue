@@ -1,13 +1,6 @@
 <template>
   <div class="flex-column-start-center agreementText-index">
     <!-- 顶部模块 购物车 -->
-   <!-- <div class="flex-center-center shop-box">
-      <header-title></header-title>
-    </div>
-    <div class="search-header">
-      <index-header class="index-header"></index-header>
-    </div>
-    <index-tab></index-tab> -->
     <div class="flex-column-start-start module-box">
       <div class="flex-start-center navigation-bar">首页 > {{current.name}}</div>
       <div class="flex-start-start module-main">
@@ -46,6 +39,10 @@
           {
             path: '/legalStatement',
             name: '法律声明'
+          },
+          {
+            path: '/registerProcess',
+            name: '注册流程'
           }
         ]
       }

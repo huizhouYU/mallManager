@@ -5,7 +5,7 @@
     <div class="item_content">
       <div class="item" v-for="(item,index) in productList" :key="index" @click="toDetail(item.goodsId)">
         <div class="product_img">
-          <img :src="'https://images.weserv.nl/?url='+item.defaultImage" alt="">
+          <img :src="item.defaultImage" alt="">
         </div>
         <div class="product_name">
           <div class="name">{{item.goodsName}}</div>

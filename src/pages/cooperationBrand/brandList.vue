@@ -11,7 +11,7 @@
       <div class="line"></div>
       <div class="brands-list">
         <div class="brands-item" v-for="(item,index) in brandList" :key="index" @click="toGoods(item.brandName)">
-          <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="">
+          <img :src="item.brandLogo" alt="">
           <span>{{item.brandName}}</span>
         </div>
       </div>
@@ -52,12 +52,13 @@
         //获取品牌列表
         getBrandsListPage(this.page).then(response => {
           this.brandList = response.data.list
+          var origin = window.location.origin+window.location.pathname
           // this.page.pageNo = response.data.pageNum
           // this.page.pageSize  = response.data.pageSize
           this.total = response.data.totalCount
           for (var index in this.brandList) {
             if (this.brandList[index].brandLogo.indexOf("http://") == -1) {
-              this.brandList[index].brandLogo = 'http://www.yijiequan.cn/' + this.brandList[index].brandLogo
+              this.brandList[index].brandLogo = origin + this.brandList[index].brandLogo
             }
           }
         })

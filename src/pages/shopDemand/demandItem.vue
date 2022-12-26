@@ -2,9 +2,8 @@
   <div :class="['goods-content',{'goods-content-grid5':grid5}]">
     <div class="item" v-for="(item,index) in demandDataList" :key="index" @click="getDetail(item.articleId)">
       <div class="item-img">
-        <!-- <img :src="'https://images.weserv.nl/?url='+item.imgPath" alt=""> -->
         <template v-if="item.imageList != null && item.imageList.length>0">
-          <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" >
+          <img :src="item.imageList[0]" alt="" >
         </template>
         <template v-else>
           <img src="../../assets/images/index/s_logo.jpg" alt="" >

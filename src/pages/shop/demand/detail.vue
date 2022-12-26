@@ -42,8 +42,6 @@
           </div>
           <div class="description">
             <span v-html="demandInfo.description"></span>
-            <!-- <img src="../../../assets/images/shop/pic_Commodity Details_ct.png" alt="">
-            <img src="../../../assets/images/index/demand/pic_gongqiu_tj.png" alt=""> -->
           </div>
         </div>
         <div class="remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
@@ -143,8 +141,8 @@
         }).then(response => {
           console.log("供求信息详情：", response)
           this.demandInfo = response.data
-          this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
-            "<img src=\"https://images.weserv.nl/?url=http://")
+          // this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
+          //   "<img src=\"https://images.weserv.nl/?url=http://")
           if (this.demandInfo.region != null && this.demandInfo.region != '') {
             console.log("this.demandInfo.region：", JSON.parse(this.demandInfo.region))
             if (JSON.parse(this.demandInfo.region) != '' && JSON.parse(this.demandInfo.region)[0] != '' && JSON

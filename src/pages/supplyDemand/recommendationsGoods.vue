@@ -6,7 +6,6 @@
     </div>
     <div v-for="(item,index) in recommendgoodsList" :key="index" class="recommendgoods-item">
       <div class="img-title">
-        <!-- <img :src="'https://images.weserv.nl/?url='+item.imgPath" alt=""> -->
         <img :src="item.imgPath" alt="">
         <div class="bg-title">{{item.title}}</div>
       </div>

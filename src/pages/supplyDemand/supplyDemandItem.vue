@@ -1,9 +1,8 @@
 <template>
   <div class="supply-demand-content">
     <div class="item-card" v-for="(item,index) in demandsList" :key="item.articleId">
-      <!-- <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" class="demand-img"> -->
       <template v-if="item.imageList != null && item.imageList.length>0">
-        <img :src="'https://images.weserv.nl/?url='+item.imageList[0]" alt="" class="demand-img">
+        <img :src="item.imageList[0]" alt="" class="demand-img">
       </template>
       <template v-else>
         <img src="../../assets/images/index/s_logo.jpg" alt="" class="demand-img">

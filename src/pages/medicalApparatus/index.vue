@@ -37,7 +37,7 @@
           <div class="title">品牌</div>
           <ul :class="[{'minImgHeight':!isBrandStow},'item']">
             <li v-for="(item,index) in selectItem.brand" :key="index" @click="changeBrandName(item.brandName)">
-              <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="">
+              <img :src="item.brandLogo" alt="" :title="item.brandName">
             </li>
           </ul>
           <template v-if="isBrandShow">
@@ -144,7 +144,6 @@
       }
     },
     mounted() {
-      console.log(window.location.host)
       document.documentElement.scrollTop = 0;
       this.getData()
     },
@@ -170,9 +169,10 @@
           limit: 999
         }).then(response => {
           this.selectItem.brand = response.data
+          var origin = window.location.origin+window.location.pathname
           for (var index in this.selectItem.brand) {
             if (this.selectItem.brand[index].brandLogo.indexOf("http://") == -1) {
-              this.selectItem.brand[index].brandLogo = 'http://www.yijiequan.cn/' + this.selectItem.brand[index]
+              this.selectItem.brand[index].brandLogo = origin + this.selectItem.brand[index]
                 .brandLogo
             }
           }

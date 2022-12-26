@@ -1,7 +1,7 @@
 <template>
   <div class="left_div">
     <div class="left">
-      <img :src="'https://images.weserv.nl/?url='+mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'>
+      <img :src="mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'>
     </div>
     <!-- <div class="img_wz">鼠标滚轮可控制图片缩放</div> -->
     <div>
@@ -10,7 +10,7 @@
       <ul class="Img_ul">
         <li v-for="(item,index) in imgUrlList" :key="index" class="Img_li" :style="imgStyle"
           @click="changeImg(item, index)">
-          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="'https://images.weserv.nl/?url='+item"
+          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="item"
             style="width:50px;height:50px">
         </li>
       </ul>
@@ -41,7 +41,7 @@
     },
     methods: {
       changeImg(item, index) {
-        this.mainImgUrl = item.url
+        this.mainImgUrl = item
         this.imgActiveIndex = index
         this.resetImg();
       },

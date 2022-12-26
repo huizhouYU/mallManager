@@ -52,7 +52,7 @@
                 </div>
                 <!-- 已登录样式 -->
                 <div class="logined-info" v-show="name">
-                  <img :src="'https://images.weserv.nl/?url='+avatar" alt="" @click="personCenter">
+                  <img :src="avatar" alt="" @click="personCenter">
                   <span @click="personCenter">{{name}}</span>
                 </div>
                 <!-- <el-button class="btn-demand">一键发布需求</el-button> -->
@@ -108,7 +108,7 @@
       </div>
       <ul class="brands">
         <li v-for="(item,index) in brandsList" :key="index">
-          <img :src="'https://images.weserv.nl/?url='+item.brandLogo" alt="图片加载失败">
+          <img :src="item.brandLogo" alt="图片加载失败">
           <div class="mask">
             <span>{{item.brandName}}</span>
             <div class=" flex-center-center btn-logo" @click="toGoods(item.brandName)">进入品牌</div>
@@ -130,7 +130,8 @@
     <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus">
     </product-show>
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices"></enterprise-services>
+    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices">
+    </enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>
     <!-- 模块六 两张大图 -->
@@ -211,9 +212,11 @@
           limit: 9
         }).then(response => {
           this.brandsList = response.data
+          var origin = window.location.origin + window.location.pathname
+          // console.log(origin)
           for (var index in this.brandsList) {
             if (this.brandsList[index].brandLogo.indexOf("http://") == -1) {
-              this.brandsList[index].brandLogo = 'http://www.yijiequan.cn/' + this.brandsList[index].brandLogo
+              this.brandsList[index].brandLogo = origin + this.brandsList[index].brandLogo
             }
           }
         })
@@ -260,13 +263,14 @@
           this.companyList = response.data
         })
       },
-      toGoods(brandName){
-        this.$router.push({
-          path:'/medicalApparatus',
-          query:{
+      toGoods(brandName) {
+        var newPath = this.$router.resolve({
+          path: '/medicalApparatus',
+          query: {
             brandName
           }
         })
+        window.open(newPath.href, '_blank')
       },
       personCenter() {
         this.$router.push({
@@ -278,7 +282,7 @@
       },
       jumpToGood(item, level) {
         this.getChosedLevel(item.cateName, item.parentId, level)
-        this.$router.push({
+        var newPath = this.$router.resolve({
           path: '/medicalApparatus',
           query: {
             cateId: item.cateId,
@@ -286,6 +290,7 @@
             chosedLevel: this.chosedLevel.join(' / ')
           }
         })
+        window.open(newPath.href, '_blank')
       },
       getChosedLevel(name, parerntId, level) {
         this.chosedLevel = []
@@ -309,12 +314,13 @@
         }
       },
       jumpAllGoods(id) {
-        this.$router.push({
+        var newPath = this.$router.resolve({
           path: '/goodDetail',
           query: {
             goodsId: id
           }
         })
+        window.open(newPath.href, '_blank')
       },
       enterClass(index) {
         //根据id去请求classDatas数据
@@ -337,9 +343,10 @@
         })
       },
       toMoreBrand() {
-        this.$router.push({
+        var newPath = this.$router.resolve({
           path: '/cooperationBrand'
         })
+        window.open(newPath.href, '_blank')
       },
       toDemandDetail(articleId) {
         this.$router.push({

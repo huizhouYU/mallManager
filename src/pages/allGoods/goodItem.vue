@@ -2,7 +2,7 @@
   <div :class="['goods-content',{'goods-content-grid5':grid5}]">
     <div class="item" v-for="(item,index) in goodsList" :key="index" @click="jumpShop(item.goodsId)">
       <div class="item-img">
-        <img :src="'https://images.weserv.nl/?url='+item.defaultImage" alt="">
+        <img :src="item.defaultImage" alt="">
       </div>
       <div class="info">
         <div class="name">{{item.goodsName}}</div>

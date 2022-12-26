@@ -6,7 +6,7 @@
       <div :class="['item','item'+index]" v-for="(item,index) in companyList">
         <!-- 第一个 -->
         <div class="flex-column-around-center first-item" v-if="index == 0" @click="toCopmany(item.storeId)">
-          <div class="flex-center-center img-div">             <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
+          <div class="flex-center-center img-div">             <img :src="item.storeLogo" alt="">
            <!-- <el-carousel indicator-position="outside">
               <el-carousel-item v-for="imgSrc in item.imgList" :key="imgSrc">
                 <img :src="imgSrc" alt="">
@@ -37,7 +37,7 @@
         </div>
         <!-- 其他 -->
         <div class="flex-start-start item-content" v-else>
-          <img :src="'https://images.weserv.nl/?url='+item.storeLogo" alt="">
+          <img :src="item.storeLogo" alt="">
           <div class="flex-column-between-start other-info">
             <div class="company-name">{{item.storeName}}</div>
             <!-- <div class="flex-start-start company-info-item">
