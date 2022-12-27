@@ -37,7 +37,7 @@
             <!-- 型号 -->
             <div class="info-item">
               <span class="title">商品编码</span>
-              <div class="grey-box">{{goodsInfo.goodsPn}}</div>
+              <div class="grey-box">{{goodsInfo.goodsPn||'-'}}</div>
             </div>
             <!-- 新旧程度 -->
             <div class="info-item">
@@ -110,7 +110,7 @@
         <!-- 产品介绍 -->
         <div class="product-introduction">产品介绍</div>
         <div class="product-info">
-          <div class="product-info-item">品牌：{{goodsInfo.brand}}</div>
+          <div class="product-info-item">品牌：{{goodsInfo.brand||'-'}}</div>
           <div class="product-info-item">新旧程度：
             <template v-if="goodsInfo.degree == 1">一成新</template>
             <template v-else-if="goodsInfo.degree == 2">二成新</template>
@@ -123,8 +123,8 @@
             <template v-else-if="goodsInfo.degree == 9">九成新</template>
             <template v-else-if="goodsInfo.degree == 10">十成新</template>
           </div>
-          <div class="product-info-item">所属类目：{{goodsInfo.cateName}}</div>
-          <div class="product-info-item">保质期：{{goodsInfo.qualityTime}}
+          <div class="product-info-item">所属类目：{{goodsInfo.cateName||'-'}}</div>
+          <div class="product-info-item">保质期：{{goodsInfo.qualityTime||'-'}}
             <template v-if="goodsInfo.qualityTimeUnit == 'day'">日</template>
             <template v-else-if="goodsInfo.qualityTimeUnit == 'month'">月</template>
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
@@ -228,13 +228,13 @@
         }
       },
       buyNow() {
-        alert("立即购买")
+        // alert("立即购买")
       },
       addToCart() {
-        alert("加入购物车")
+        // alert("加入购物车")
       },
       contactCustomer() {
-        alert("联系客服")
+        // alert("联系客服")
       }
     }
   }
@@ -591,6 +591,7 @@
 
         .shop-details-img {
           width: 946px;
+          box-sizing: border-box;
         }
 
       }

@@ -177,7 +177,7 @@
       //获取手机短信验证码
       getCode() {
         //axios请求
-        sendPwdMsg().then(response => {
+        sendPwdMsg({}).then(response => {
           // console.log(response)
           if(response.code != 10000){
             this.$message.error(response.message)

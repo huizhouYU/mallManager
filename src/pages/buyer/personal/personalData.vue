@@ -127,7 +127,7 @@
         getInfo().then(response => {
           console.log("获取用户信息：", response)
           this.form = response.data.user
-          this.showImgUrl = this.form.portrait
+          this.showImgUrl = this.form.portrait!=null?this.form.portrait:''
         })
       },
       //获取手机短信验证码

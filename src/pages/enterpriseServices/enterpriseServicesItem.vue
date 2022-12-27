@@ -6,11 +6,11 @@
         <div class="company-name">{{item.storeName}}</div>
         <div class="flex-start-start info-item">
           <div class="key">公司简介</div>
-          <div class="value limit3">{{item.serviceContent}}</div>
+          <div class="value limit3">{{item.serviceContent||'-'}}</div>
         </div>
         <div class="flex-start-start info-item">
           <div class="key">店铺分类</div>
-          <div class="value">待补充</div>
+          <div class="value">{{item.categoryName}}</div>
         </div>
         <div class="flex-start-start info-item">
           <div class="key">所在地区</div>
