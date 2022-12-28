@@ -38,22 +38,27 @@
       </div>
     </div>
     <!-- 证书 -->
-      <ul class="qualifications" v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
-        <li v-for="(item,index) in storeInfo.certificationList">
-          <div class="img-div">
+    <ul class="qualifications" v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
+      <li v-for="(item,index) in storeInfo.certificationList">
+        <div class="img-div">
+         <div class="img-main-div">
+           <img :src="item" alt="">
+         </div>
+        </div>
+
+        <!-- <span>营业执照</span> -->
+      </li>
+    </ul>
+    <ul class="qualifications" v-else>
+      <li v-for="(item,index) in defaultCertificationList">
+        <div class="img-div">
+          <div class="img-main-div">
             <img :src="item" alt="">
           </div>
-          <!-- <span>营业执照</span> -->
-        </li>
-      </ul>
-      <ul class="qualifications" v-else>
-        <li v-for="(item,index) in defaultCertificationList">
-          <div class="img-div">
-            <img :src="item" alt="">
-          </div>
-          <!-- <span>营业执照</span> -->
-        </li>
-      </ul>
+        </div>
+        <!-- <span>营业执照</span> -->
+      </li>
+    </ul>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
@@ -64,60 +69,61 @@
 
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
- import {
-   goodsList
- } from '@/api/goods'
- import {
-   storeDetail
- } from '@/api/store'
- export default {
-   components: {
-     goodItem
-   },
-   data() {
-     return {
-       storeId:'',
-       storeInfo: '',
-       goodsDataList: [],
-       defaultCertificationList:[
-         require('../../../assets/images/shop/pic_businessCertificate_default.png'),
-         require('../../../assets/images/shop/pic_businessLicense_default.png'),
-         require('../../../assets/images/shop/pic_productionLicense_default.png'),
-       ]
-     }
-   },
-   mounted() {
-     document.documentElement.scrollTop = 0;
-     this.storeId = this.$route.query.storeId
-     this.getData()
-   },
-   methods: {
-     getData() {
-       storeDetail({
-         storeId: this.storeId
-       }).then(response => {
-         console.log("获取店铺详情：", response)
-         this.storeInfo = response.data
-       })
-       var page = {
-         pageNo: 1,
-         pageSize: 10,
-         storeId: this.storeId
-       }
-       goodsList(page).then(response => {
-         console.log("获取店铺内商品列表:", response)
-         this.goodsDataList = response.data.list
-       })
-     },
+  import {
+    goodsList
+  } from '@/api/goods'
+  import {
+    storeDetail
+  } from '@/api/store'
+  export default {
+    components: {
+      goodItem
+    },
+    data() {
+      return {
+        storeId: '',
+        storeInfo: '',
+        goodsDataList: [],
+        defaultCertificationList: [
+          require('../../../assets/images/shop/pic_businessCertificate_default.png'),
+          require('../../../assets/images/shop/pic_businessLicense_default.png'),
+          require('../../../assets/images/shop/pic_productionLicense_default.png'),
+        ]
+      }
+    },
+    mounted() {
+      document.documentElement.scrollTop = 0;
+      this.storeId = this.$route.query.storeId
+      this.getData()
+    },
+    methods: {
+      getData() {
+        storeDetail({
+          storeId: this.storeId
+        }).then(response => {
+          console.log("获取店铺详情：", response)
+          this.storeInfo = response.data
+        })
+        var page = {
+          pageNo: 1,
+          pageSize: 10,
+          storeId: this.storeId
+        }
+        goodsList(page).then(response => {
+          console.log("获取店铺内商品列表:", response)
+          this.goodsDataList = response.data.list
+        })
+      },
 
-   }
- }
+    }
+  }
 </script>
 
 <style lang="less" scoped>
-  .introduction-box{
+  .introduction-box {
     width: 1200px;
   }
+
   .company {
     margin-top: 20px;
     width: 1200px;
@@ -210,7 +216,8 @@
       }
     }
   }
-// 证书
+
+  // 证书
   .qualifications {
     margin-top: 20px;
     width: 1200px;
@@ -222,17 +229,19 @@
     display: flex;
     justify-content: space-around;
     align-self: center;
-  li{
-    width: 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-  }
-    .img-div{
+
+    li {
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .img-div {
       width: 280px;
       height: 280px;
-      background: #FFFFFF;
+      background: #fff;
       padding: 10px 0;
       margin-bottom: 20px;
       box-sizing: border-box;
@@ -241,21 +250,36 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      img{
-        width: 178px;
+
+      .img-main-div {
+        width: 260px;
         height: 260px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          // width: 178px;
+          // height: 260px;
+          max-width: 100%;
+          max-height: 100%;
+          box-sizing: border-box;
+        }
       }
     }
 
-    span{
+    span {
       font-size: 14px;
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #333333;
     }
   }
+
   // 店内推荐
-  .shop-recommend{
+  .shop-recommend {
     margin-top: 20px;
     width: 1200px;
     // height: 260px;
