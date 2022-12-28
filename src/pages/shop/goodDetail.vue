@@ -124,7 +124,7 @@
             <template v-else-if="goodsInfo.degree == 10">十成新</template>
           </div>
           <div class="product-info-item">所属类目：{{goodsInfo.cateName||'-'}}</div>
-          <div class="product-info-item">保质期：{{goodsInfo.qualityTime||'-'}}
+          <div class="product-info-item">质保期：{{goodsInfo.qualityTime||'-'}}
             <template v-if="goodsInfo.qualityTimeUnit == 'day'">日</template>
             <template v-else-if="goodsInfo.qualityTimeUnit == 'month'">月</template>
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
