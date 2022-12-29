@@ -5,7 +5,7 @@
       <div class="shop-detail-content">
         <div class="shop-detail-img-info">
           <div class="img-list">
-            <look-img :imgUrlList="goodsInfo.imageList" :mainImgUrl="goodsInfo.imageList[0]"></look-img>
+            <look-img :imgUrlList="goodsInfo.imageList" :mainImgUrl="bigImgPath"></look-img>
           </div>
           <div class="goods-info">
             <!-- 商品名称 -->
@@ -130,7 +130,12 @@
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
           </div>
         </div>
-        <img class="shop-details-img" :src="goodsInfo.longImage" alt="" v-if="goodsInfo.longImage != ''">
+       <!-- <div v-for="(item,index) in goodsInfo.longImage"  :key="index">
+          {{item}}
+        </div> -->
+        <div v-html="goodsInfo.content"></div>
+        <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in goodsInfo.longImages"
+          :key="index">
       </div>
       <!-- 店内推荐 -->
       <store-recommendation class="store-recommendation"></store-recommendation>
@@ -146,7 +151,8 @@
   } from '@/api/goods'
   export default {
     components: {
-      storeRecommendation,lookImg
+      storeRecommendation,
+      lookImg
     },
     data() {
       return {
@@ -177,10 +183,11 @@
       goodsDetail({
         goodsId: this.goodsId
       }).then(response => {
-        console.log("获取商品详情：", response)
+        // console.log("获取商品详情：", response)
         this.goodsInfo = response.data
 
         this.bigImgPath = this.goodsInfo.imageList[0]
+        // this.goodsInfo.longImages = ['https://image.yijiequan.cn/yijiequan/attach/waterMark.jpg/waterMark','https://image.yijiequan.cn/yijiequan/attach/waterMark (1).jpg/waterMark']
         this.categoryStr = ''
         if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
           this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
@@ -590,7 +597,7 @@
         }
 
         .shop-details-img {
-          width: 946px;
+          width: 100%;
           box-sizing: border-box;
         }
 

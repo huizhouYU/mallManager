@@ -94,14 +94,18 @@
         <div class="module-title">
           <div class="module-title-left">
             <img src="../../assets/images/shop/icon_Qualifications.png" alt="">
-            <span>荣誉证书</span>
+            <span>资质证书</span>
           </div>
         </div>
-        <ul>
+        <ul v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
           <li v-for="(item,index) in storeInfo.certificationList" :key="index">
-            <img :src="item">
+            <el-image class="my-img" @click="putLookSrc(item)" :src="item" :preview-src-list="lookSrcList">
+            </el-image>
           </li>
         </ul>
+        <div class="flex-center-center no-data-font" v-else>
+          资质证书暂未上传~
+        </div>
       </div>
     </div>
   </div>
@@ -130,12 +134,13 @@
     },
     data() {
       return {
-        storeId:'',
+        storeId: '',
         storeInfo: '',
         goodsDataList: [],
         demandDataList: [],
         isShowTitleImg: false,
-        grid5: true
+        grid5: true,
+        lookSrcList: []
       }
     },
     mounted() {
@@ -144,6 +149,10 @@
       this.getData()
     },
     methods: {
+      putLookSrc(item) {
+        this.lookSrcList = []
+        this.lookSrcList.push(item)
+      },
       getData() {
         storeDetail({
           storeId: this.storeId
@@ -366,15 +375,16 @@
 
       .certificate {
         ul {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(5, auto);
           justify-content: flex-start;
-          align-items: center;
-          flex-wrap: wrap;
+          gap: 25px;
 
           li {
-            margin-right: 30px;
+            // margin-right: 30px;
+            // margin-bottom: 20px;
 
-            img {
+            .my-img {
               width: 160px;
               height: 160px;
             }
@@ -383,6 +393,12 @@
           li:last-child {
             margin-right: 0px
           }
+        }
+
+        .no-data-font {
+          width: 100%;
+          font-size: 14px;
+          color: #666;
         }
       }
     }

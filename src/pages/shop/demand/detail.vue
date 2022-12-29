@@ -42,9 +42,11 @@
           </div>
           <div class="description">
             <span v-html="demandInfo.description"></span>
+            <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in demandInfo.imageList" :key="index">
           </div>
         </div>
         <div class="remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
+
       </div>
       <div class="right-box">
         <div class="contact">
@@ -303,10 +305,13 @@
           font-weight: 400;
           color: #666666;
 
-          img {
-            width: 910px;
-            height: 512px;
-            margin: 15px 0px;
+          span {
+            margin-bottom: 10px;
+          }
+
+          .shop-details-img {
+            width: 100%;
+            box-sizing: border-box;
           }
         }
       }

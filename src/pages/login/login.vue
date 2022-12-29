@@ -52,7 +52,7 @@
           <el-form class="my-el-form" :model="vCodeForm" ref="vCodeRuleForm" :label-position="labelPosition"
             :rules="vCodeFormRules" v-show="loginWay== 2">
             <el-form-item label="手机号" prop="mobile">
-              <el-input type="text" v-model="vCodeForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
+              <el-input type="text" v-model="vCodeForm.mobile" autocomplete="off" placeholder="电话号码" :disabled="countDown > 0"></el-input>
             </el-form-item>
             <el-form-item label="验证码" prop="vCode" class="get-v-code-form-item">
               <el-input v-model="vCodeForm.vCode" :disabled="vCodeForm.mobile == ''">

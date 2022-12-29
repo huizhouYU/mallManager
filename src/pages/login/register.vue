@@ -2,7 +2,7 @@
   <div class="flex-column-start-center register-content">
     <div class="flex-center-center  register-top">
       <div class="flex-between-center  register-top-main">
-        <img src="../../assets/images/logo.png" alt=""  @click="toIndex">
+        <img src="../../assets/images/logo.png" alt="" @click="toIndex">
         <ul class="flex-center-center">
           <li class="to-index" @click="toIndex">医界商城首页</li>
           <!-- <li>服务热线：400-8888-888</li> -->
@@ -15,7 +15,7 @@
         <el-form class="my-el-form" :model="registerForm" ref="registerRuleForm" :label-position="labelPosition"
           :rules="registerFormRules">
           <el-form-item label="" prop="mobile">
-            <el-input type="text" v-model="registerForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
+            <el-input type="text" v-model="registerForm.mobile" autocomplete="off" placeholder="电话号码" :disabled="countDown>0"></el-input>
           </el-form-item>
           <el-form-item label="" prop="captcha" class="get-v-code-form-item">
             <el-input v-model="registerForm.captcha" :disabled="registerForm.mobile == ''">
@@ -28,9 +28,10 @@
           <div class="agree-item">
             <el-checkbox v-model="agree">
             </el-checkbox>
-            <span>阅读并同意<font class="cus-point bule-font" @click="toRZ">《服务条款》</font>和<font class="cus-point bule-font" @click="toFL">《法律声明和隐私政策》</font></span>
+            <span>阅读并同意<font class="cus-point bule-font" @click="toRZ">《服务条款》</font>和<font class="cus-point bule-font"
+                @click="toFL">《法律声明和隐私政策》</font></span>
           </div>
-          <el-button type="primary" @click="onSubmit('registerRuleForm')">注册</el-button>
+          <el-button type="primary" :class="[{greyBtn:!agree}]" @click="onSubmit('registerRuleForm')">注册</el-button>
         </el-form>
         <span class="span-login" @click="login"> 已有账号？<font class="bule-font">登录</font> </span>
       </div>
@@ -59,9 +60,9 @@
         labelPosition: 'top',
         countDown: 0,
         registerForm: {
-          mobile:'',
-          captcha:'',
-          activation:''
+          mobile: '',
+          captcha: '',
+          activation: ''
         },
         registerFormRules: {
           mobile: [{
@@ -85,13 +86,13 @@
           return true
         }
       },
-      toRZ(){
+      toRZ() {
         this.$router.push({
           path: '/residencyAgreement',
           replace: true
         })
       },
-      toFL(){
+      toFL() {
         this.$router.push({
           path: '/legalStatement',
           replace: true
@@ -108,10 +109,9 @@
           mobile: this.registerForm.mobile
         }
         registerMsg(data).then(response => {
-          console.log(response)
-          if(response.code != 10000){
+          if (response.code != 10000) {
             this.$message.error(response.message)
-          }else{
+          } else {
             this.$message.success(response.data)
           }
         })
@@ -131,44 +131,30 @@
 
       },
       onSubmit(ruleForm) {
-        this.$refs[ruleForm].validate((valid) => {
-          if (valid) {
-            this.$store.dispatch('user/register', this.registerForm)
-              .then((response) => {
-                if (response.code == 10000) {
-                  this.$router.replace({
-                    path: this.redirect || '/',
-                    query: this.otherQuery
-                  })
-                } else {
-                  this.$message.error(response.message)
-                }
-                this.loading = false
-              }).catch(() => {
-                this.loading = false
-                console.log("失败")
-              })
-
-            // this.$store.dispatch('user/login', this.loginForm)
-            //   .then(() => {
-            //     console.log("登录成功！")
-            //     this.$router.replace({
-            //       path: this.redirect || '/',
-            //       query: this.otherQuery
-            //     })
-            //     this.loading = false
-            //     console.log("成功")
-            //   }).catch(() => {
-            //     this.loading = false
-            //     console.log("失败")
-            //   })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+        if (this.agree) {
+          this.$refs[ruleForm].validate((valid) => {
+            if (valid) {
+              this.$store.dispatch('user/register', this.registerForm)
+                .then((response) => {
+                  if (response.code == 10000) {
+                    this.$router.replace({
+                      path: this.redirect || '/',
+                      query: this.otherQuery
+                    })
+                  } else {
+                    this.$message.error(response.message)
+                  }
+                  this.loading = false
+                }).catch(() => {
+                  this.loading = false
+                })
+            } else {
+              return false;
+            }
+          });
+        }
       },
-      toIndex(){
+      toIndex() {
         this.$router.push({
           path: '/',
         })
@@ -195,7 +181,8 @@
     .bule-font {
       color: #1890FF !important;
     }
-    .cus-point{
+
+    .cus-point {
       cursor: pointer;
     }
 
@@ -208,9 +195,11 @@
       .register-top-main {
         width: 1200px;
         height: 100%;
-.to-index {
+
+        .to-index {
           cursor: pointer;
         }
+
         img {
           width: 145px;
           height: 49px;
@@ -306,13 +295,17 @@
 
           .agree-item {
             margin-bottom: 15px;
-            span{
+
+            span {
               font-size: 14px;
               color: #515A6E;
             }
           }
 
-
+          .greyBtn {
+            background: #bbbbbb !important;
+            border-color: #bbbbbb !important;
+          }
 
           //改el-form中样式
           /deep/.el-form-item__label {

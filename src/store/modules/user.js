@@ -20,7 +20,7 @@ import {
 const state = {
   token: getToken(),
   name: '',
-  userid:'',
+  userid: '',
   avatar: '',
   introduction: '',
   mobile: '',
@@ -64,7 +64,9 @@ const mutations = {
 }
 
 const actions = {
-  setStoreId({ commit }, storeId) {
+  setStoreId({
+    commit
+  }, storeId) {
 
     return new Promise((resolve, reject) => {
       commit('SET_STOREID', storeId)
@@ -90,7 +92,6 @@ const actions = {
           const {
             data
           } = response
-          console.log("setToken:", data)
           commit('SET_TOKEN', data)
           setToken(data)
         }
@@ -141,11 +142,13 @@ const actions = {
         captcha: captcha.trim(),
         activation: activation.trim()
       }).then(response => {
-        const {
-          data
-        } = response.data
-        commit('SET_TOKEN', data)
-        setToken(data)
+        if (response.code == 10000) {
+          const {
+            data
+          } = response
+          commit('SET_TOKEN', data)
+          setToken(data)
+        }
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -168,8 +171,8 @@ const actions = {
           } = response
           console.log(data)
           commit('SET_NAME', data.user.username)
-          commit('SET_USERID',  data.user.userid)
-          commit('SET_AVATAR',data.user.portrait)
+          commit('SET_USERID', data.user.userid)
+          commit('SET_AVATAR', data.user.portrait)
           commit('SET_INTRODUCTION', "固定无")
           // var mobile = ''
           // if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){

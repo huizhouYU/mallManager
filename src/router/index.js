@@ -149,7 +149,7 @@ export default new Router({
         },
         {
           path: '/qualificationsIndex',
-          name: 'qualificationsIndex', //公司资质
+          name: 'qualificationsIndex', //资质证书
           component: () => import('../../src/pages/shop/qualifications/index.vue')
         },
         {

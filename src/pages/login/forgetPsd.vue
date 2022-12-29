@@ -15,7 +15,7 @@
         <el-form class="my-el-form" :model="forgetForm" ref="forgetRuleForm" :label-position="labelPosition"
           :rules="forgetFormRules">
           <el-form-item label="" prop="mobile">
-            <el-input type="text" v-model="forgetForm.mobile" autocomplete="off" placeholder="电话号码"></el-input>
+            <el-input type="text" v-model="forgetForm.mobile" autocomplete="off" placeholder="电话号码" :disabled="countDown>0"></el-input>
           </el-form-item>
           <el-form-item label="" prop="password">
             <el-input type="password" v-model="forgetForm.password" autocomplete="off" placeholder="设置新密码"></el-input>
@@ -24,7 +24,7 @@
             <el-input type="password" v-model="forgetForm.newPassword" autocomplete="off" placeholder="请重新输入新密码"></el-input>
           </el-form-item>
           <el-form-item label="" prop="captcha" class="get-v-code-form-item">
-            <el-input v-model="forgetForm.captcha" :disabled="countDown == 0">
+            <el-input v-model="forgetForm.captcha" :disabled="forgetForm.mobile == 0">
               <template slot="append">
                 <span class="flex-center-center get-v-code" @click="getCode" v-show="countDown==0">获取验证码</span>
                 <span class="flex-center-center count-down" v-show="countDown>0">{{countDown}}s</span>
@@ -107,7 +107,13 @@
           mobile: this.forgetForm.mobile
         }
         sendForgetPwd(data).then(response => {
-          console.log(response.data.data)
+          if(response.code){
+            if (response.code != 10000) {
+              this.$message.error(response.message)
+            } else {
+              this.$message.success(response.data)
+            }
+          }
         })
         // 验证码倒计时
         if (!this.timer) {

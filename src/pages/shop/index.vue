@@ -83,7 +83,7 @@
             path: '/introductionIndex'
           },
           {
-            name: '公司资质',
+            name: '资质证书',
             path: '/qualificationsIndex'
           },
           {

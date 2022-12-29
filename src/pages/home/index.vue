@@ -127,7 +127,7 @@
     <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory">
     </accessories-area>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus">
+    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" v-show="productList.length>0">
     </product-show>
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices">

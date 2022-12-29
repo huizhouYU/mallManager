@@ -213,6 +213,12 @@
                 console.log(response)
                 if(response.code == 10000){
                   this.$message.success("密码修改成功！")
+                  this.$router.push({
+                    path:'/personal',
+                    replace:true
+                  })
+                }else{
+                  this.$message.error(response.message)
                 }
               })
             }

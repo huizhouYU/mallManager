@@ -13,10 +13,13 @@ NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
 //白名单
-const whiteList = ['/login', '/home', '/register', '/residencyAgreement', '/tradingRules', '/aboutUs', '/legalStatement' ] // 无重定向白名单
+const whiteList = ['/login', '/home', '/register', '/residencyAgreement', '/tradingRules', '/aboutUs',
+  '/legalStatement'
+] // 无重定向白名单
 //需要登录才能看见的名单
 const loginList = ['/buyer', '/personal', '/personalData', '/receiptAddress', '/changePWD', '/allOrders',
-  '/supplyDemandInfo', '/orderDetail', '/orderPayment', '/personDemandDetail','/shoppingCart' ]
+  '/supplyDemandInfo', '/orderDetail', '/orderPayment', '/personDemandDetail', '/shoppingCart'
+]
 
 
 router.beforeEach(async (to, from, next) => {

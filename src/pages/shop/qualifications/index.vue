@@ -42,23 +42,16 @@
       <li v-for="(item,index) in storeInfo.certificationList">
         <div class="img-div">
          <div class="img-main-div">
-           <img :src="item" alt="">
+           <!-- <img :src="item" alt=""> -->
+           <el-image class="my-img" @click="putLookSrc(item)" :src="item" :preview-src-list="lookSrcList">
+            </el-image>
          </div>
         </div>
-
-        <!-- <span>营业执照</span> -->
       </li>
     </ul>
-    <ul class="qualifications" v-else>
-      <li v-for="(item,index) in defaultCertificationList">
-        <div class="img-div">
-          <div class="img-main-div">
-            <img :src="item" alt="">
-          </div>
-        </div>
-        <!-- <span>营业执照</span> -->
-      </li>
-    </ul>
+    <div class="flex-center-center no-data-font" v-else>
+      资质证书暂未上传~
+    </div>
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
@@ -88,7 +81,8 @@
           require('../../../assets/images/shop/pic_businessCertificate_default.png'),
           require('../../../assets/images/shop/pic_businessLicense_default.png'),
           require('../../../assets/images/shop/pic_productionLicense_default.png'),
-        ]
+        ],
+        lookSrcList: []
       }
     },
     mounted() {
@@ -97,6 +91,10 @@
       this.getData()
     },
     methods: {
+      putLookSrc(item) {
+        this.lookSrcList = []
+        this.lookSrcList.push(item)
+      },
       getData() {
         storeDetail({
           storeId: this.storeId
@@ -226,9 +224,9 @@
     border-top: 2px solid #40A9FF;
     padding: 100px 120px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: space-around;
-    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 25px;
 
     li {
       width: 260px;
@@ -260,7 +258,7 @@
         justify-content: center;
         align-items: center;
 
-        img {
+        .my-img {
           // width: 178px;
           // height: 260px;
           max-width: 100%;
@@ -276,6 +274,17 @@
       font-weight: 400;
       color: #333333;
     }
+  }
+  .no-data-font{
+    width: 100%;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+    width: 1200px;
+    background: #FFFFFF;
+    border-top: 2px solid #40A9FF;
+    padding: 100px 120px;
+    box-sizing: border-box;
   }
 
   // 店内推荐

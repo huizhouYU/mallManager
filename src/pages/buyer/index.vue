@@ -121,7 +121,15 @@
     },
     mounted() {
       document.documentElement.scrollTop = 0;
-      this.chosedNav = this.$route.path.replace("/", "") + this.$route.query.id
+      this.chosedNav = this.$route.fullPath.replace("/", "")
+    },
+    watch: {
+      $route(to, from) {
+        if (to.fullPath != from.fullPath) {
+          this.chosedNav = to.fullPath.replace("/", "")
+          console.log("this.chosedNav:",this.chosedNav)
+        }
+      }
     },
     methods: {
       selectNav(id, path, params) {
