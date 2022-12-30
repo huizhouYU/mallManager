@@ -16,6 +16,11 @@ li {
   list-style: none;
 }
 
+.no-data-font {
+  width: 100% !important;
+  font-size: 14px !important;
+  color: #666 !important;
+}
 
 /* 核心宽度 */
 @core-weight: 1200px;

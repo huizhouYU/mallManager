@@ -44,8 +44,14 @@ export default new Router({
         },
         {
           path: '/enterpriseServices',
-          name: 'EnterpriseServices', //企业服务
-          component: () => import('../pages/enterpriseServices/index.vue')
+          name: 'EnterpriseServices', //企业服务，个人工程师
+          redirect: '/enterpriseServicesItem',
+          component: () => import('../pages/enterpriseServices/index.vue'),
+          children: [{
+            path: '/enterpriseServicesItem',
+            name: 'EnterpriseServicesItem', //企业服务，个人工程师列表
+            component: () => import('../pages/enterpriseServices/enterpriseServicesItem.vue'),
+          }]
         },
         {
           path: '/allGoods',
@@ -94,37 +100,36 @@ export default new Router({
           ]
         },
         {
-         name:'AgreementText' ,
-         path:'/agreementText',
-         redirect: '/aboutUs',
-         component:() => import('../../src/pages/agreementText/index.vue'),
-         children: [
-           {
-             name: 'ResidencyAgreement',
-             path: '/residencyAgreement', //入驻协议
-             component: () => import('../../src/pages/agreementText/residencyAgreement.vue')
-           },
-           {
-             name: 'TradingRules',
-             path: '/tradingRules', //交易规则
-             component: () => import('../../src/pages/agreementText/tradingRules.vue')
-           },
-           {
-             name: 'AboutUs',
-             path: '/aboutUs', //关于我们
-             component: () => import('../../src/pages/agreementText/aboutUs.vue')
-           },
-           {
-             name: 'LegalStatement',
-             path: '/legalStatement', //法律声明
-             component: () => import('../../src/pages/agreementText/legalStatement.vue')
-           },
-           {
-             name: 'registerProcess',
-             path: '/RegisterProcess', //注册流程
-             component: () => import('../../src/pages/agreementText/registerProcess.vue')
-           }
-         ]
+          name: 'AgreementText',
+          path: '/agreementText',
+          redirect: '/aboutUs',
+          component: () => import('../../src/pages/agreementText/index.vue'),
+          children: [{
+              name: 'ResidencyAgreement',
+              path: '/residencyAgreement', //入驻协议
+              component: () => import('../../src/pages/agreementText/residencyAgreement.vue')
+            },
+            {
+              name: 'TradingRules',
+              path: '/tradingRules', //交易规则
+              component: () => import('../../src/pages/agreementText/tradingRules.vue')
+            },
+            {
+              name: 'AboutUs',
+              path: '/aboutUs', //关于我们
+              component: () => import('../../src/pages/agreementText/aboutUs.vue')
+            },
+            {
+              name: 'LegalStatement',
+              path: '/legalStatement', //法律声明
+              component: () => import('../../src/pages/agreementText/legalStatement.vue')
+            },
+            {
+              name: 'registerProcess',
+              path: '/RegisterProcess', //注册流程
+              component: () => import('../../src/pages/agreementText/registerProcess.vue')
+            }
+          ]
         },
       ]
     },
@@ -186,8 +191,8 @@ export default new Router({
     },
     {
       name: 'login',
-      path: '/login',//登录
-      component:  () => import('../pages/login/login.vue')
+      path: '/login', //登录
+      component: () => import('../pages/login/login.vue')
     },
     {
       path: '/register',

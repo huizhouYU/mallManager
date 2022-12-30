@@ -57,7 +57,10 @@
           </div>
 
         </div>
-        <div v-html="storeInfo.description">
+        <div v-html="storeInfo.description" v-if="storeInfo.description != null && storeInfo.description !=''">
+        </div>
+        <div v-else class="flex-center-center no-data-font">
+          暂无上传相关介绍~
         </div>
       </div>
 
@@ -157,7 +160,6 @@
         storeDetail({
           storeId: this.storeId
         }).then(response => {
-          console.log("获取店铺详情：", response)
           this.storeInfo = response.data
         })
         var page = {
@@ -166,11 +168,9 @@
           storeId: this.storeId
         }
         goodsList(page).then(response => {
-          console.log("获取店铺内商品列表:", response)
           this.goodsDataList = response.data.list
         })
         articleList(page).then(response => {
-          console.log("获取店铺内需求列表:", response)
           this.demandDataList = response.data.list
         })
       },
@@ -395,11 +395,11 @@
           }
         }
 
-        .no-data-font {
-          width: 100%;
-          font-size: 14px;
-          color: #666;
-        }
+        // .no-data-font {
+        //   width: 100%;
+        //   font-size: 14px;
+        //   color: #666;
+        // }
       }
     }
   }

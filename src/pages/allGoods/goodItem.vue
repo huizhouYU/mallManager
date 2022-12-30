@@ -1,22 +1,30 @@
 <template>
-  <div :class="['goods-content',{'goods-content-grid5':grid5}]">
-    <div class="item" v-for="(item,index) in goodsList" :key="index" @click="jumpShop(item.goodsId)">
-      <div class="item-img">
-        <img :src="item.defaultImage" alt="">
-      </div>
-      <div class="info">
-        <div class="name">{{item.goodsName}}</div>
-        <div class="brand">{{item.brand}}</div>
-        <div class="price-shop">
-          <div class="price">
-            <template v-if="item.saleType==1">￥{{item.price}}</template>
-            <template v-else>￥议价</template>
+  <div>
+    <template v-if="goodsList != null && goodsList.length >0">
+      <div :class="['goods-content',{'goods-content-grid5':grid5}]">
+        <div class="item" v-for="(item,index) in goodsList" :key="index" @click="jumpShop(item.goodsId)">
+          <div class="item-img">
+            <img :src="item.defaultImage" alt="">
           </div>
-          <i class="iconfont">&#xe73d;</i>
+          <div class="info">
+            <div class="name">{{item.goodsName}}</div>
+            <div class="brand">{{item.brand}}</div>
+            <div class="price-shop">
+              <div class="price">
+                <template v-if="item.saleType==1">￥{{item.price}}</template>
+                <template v-else>￥议价</template>
+              </div>
+              <i class="iconfont">&#xe73d;</i>
+            </div>
+          </div>
         </div>
       </div>
+    </template>
+    <div v-else class="flex-center-center no-data-font">
+      暂未查询到商品~
     </div>
   </div>
+
 </template>
 
 <script>
@@ -28,19 +36,20 @@
           return false
         }
       },
-      'goodsList':{
-        type:Array
+      'goodsList': {
+        type: Array
       }
     },
     data() {
-      return {
-      }
+      return {}
     },
     methods: {
       jumpShop(goodsId) {
         this.$router.push({
           path: '/goodDetail',
-          query:{goodsId}
+          query: {
+            goodsId
+          }
         })
         this.$emit('selectOnlyTab', '-1')
       }
@@ -49,15 +58,24 @@
 </script>
 
 <style lang="less" scoped>
+  .no-data-font {
+    margin-top: 20px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+  }
+
   .goods-content {
     display: grid;
     grid-template-columns: repeat(6, auto);
-    justify-content: space-between;
+    justify-content: flex-start;
+    grid-column-gap: 14px;
   }
 
   .goods-content-grid5 {
     grid-template-columns: repeat(5, auto);
+    grid-column-gap: 5px;
   }
+
 
   .goods-content .item {
     margin-top: 15px;

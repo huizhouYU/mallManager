@@ -14,7 +14,8 @@
       enterpriseServicesItem
     },
     data() {
-      return {}
+      return {
+      }
     },
     mounted() {
       document.documentElement.scrollTop = 0;

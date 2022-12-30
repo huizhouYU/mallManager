@@ -5,7 +5,7 @@
       <div class="flex-column-between-start services-item-info">
         <div class="company-name">{{item.storeName}}</div>
         <div class="flex-start-start info-item">
-          <div class="key">公司简介</div>
+          <div class="key">服务内容</div>
           <div class="value limit3">{{item.serviceContent||'-'}}</div>
         </div>
         <div class="flex-start-start info-item">
@@ -17,8 +17,9 @@
           <div class="value limit1">{{item.regionName || item.address}}</div>
         </div>
       </div>
-      <ul class="flex-between-center">
-        <li v-for="(goods,i) in item.goodsList" :key="i" v-show="i<4" @click="toGoodsDetail(goods.goodsId)" class="myli">
+      <ul class="flex-start-center">
+        <li v-for="(goods,i) in item.goodsList" :key="i" v-show="i<4" @click="toGoodsDetail(goods.goodsId)"
+          class="myli">
           <img :src="goods.defaultImage" alt="">
           <div class="mask"><span>{{goods.goodsName}}</span></div>
         </li>
@@ -42,12 +43,14 @@
         page: {
           pageNo: 1,
           pageSize: 10,
-          storeName: ''
+          storeName: '',
+          stype:''
         },
         list: []
       }
     },
     mounted() {
+      this.page.stype = this.$route.query.stype
       this.getData()
     },
     methods: {
@@ -81,7 +84,9 @@
       toGoodsDetail(goodsId) {
         this.$router.push({
           path: '/goodDetail',
-          query:{goodsId}
+          query: {
+            goodsId
+          }
         })
       }
     },
@@ -156,6 +161,10 @@
       flex: 1;
       padding: 5px 0px 5px 25px;
 
+      .myli+.myli {
+        margin-left: 25px;
+      }
+
       .myli {
         position: relative;
         width: 170px;
@@ -174,8 +183,7 @@
           left: -100%;
           width: 100%;
           height: 100%;
-          background: #000000;
-          opacity: 0.4;
+          background: rgba(0, 0, 0, 0.4);
           border-radius: 10px;
           box-sizing: border-box;
           padding: 25px 15px 25px 15px;

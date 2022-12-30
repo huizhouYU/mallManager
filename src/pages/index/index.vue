@@ -128,19 +128,19 @@
             title: '企业服务',
             isHot: false,
             isNew: true,
-            path: '/enterpriseServices'
+            path: '/enterpriseServicesItem?stype=company'
           },
           // {
           //   title: '学习园地',
           //   isHot: false,
           //   path: ''
           // },
-          // {
-          //   title: '工程师服务',
-          //   isHot: false,
-          //   isNew: false,
-          //   path: ''
-          // },
+          {
+            title: '工程师服务',
+            isHot: false,
+            isNew: false,
+            path: '/enterpriseServicesItem?stype=personal'
+          },
           {
             title: '合作品牌',
             isHot: false,

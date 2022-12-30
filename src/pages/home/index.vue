@@ -103,8 +103,8 @@
     </div>
     <!--各大品牌 -->
     <div class="adv_brand-adv">
-      <div class="advertisement_left">
-        <img src="../../assets/images/index/pic_left.png" alt="">
+      <div class="advertisement_left"  @click="toAd('135')">
+        <img src="../../assets/images/index/pic_left.jpg" alt="">
       </div>
       <ul class="brands">
         <li v-for="(item,index) in brandsList" :key="index">
@@ -119,8 +119,8 @@
           <img src="../../assets/images/index/brands/icon_double-right.png" alt="">
         </li>
       </ul>
-      <div class="advertisement_right">
-        <img src="../../assets/images/index/pic_right.png" alt="">
+      <div class="advertisement_right" @click="toAd('139')">
+        <img src="../../assets/images/index/pic_right.jpg" alt="">
       </div>
     </div>
     <!-- 配件专区 -->
@@ -262,6 +262,15 @@
         }).then(response => {
           this.companyList = response.data
         })
+      },
+      toAd(id){
+        var newPath = this.$router.resolve({
+          path: '/shopHome',
+          query: {
+            storeId: id
+          }
+        })
+        window.open(newPath.href, '_blank')
       },
       toGoods(brandName) {
         var newPath = this.$router.resolve({

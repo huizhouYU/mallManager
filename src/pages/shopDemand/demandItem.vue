@@ -1,17 +1,24 @@
 <template>
-  <div :class="['goods-content',{'goods-content-grid5':grid5}]">
-    <div class="item" v-for="(item,index) in demandDataList" :key="index" @click="getDetail(item.articleId)">
-      <div class="item-img">
-        <template v-if="item.imageList != null && item.imageList.length>0">
-          <img :src="item.imageList[0]" alt="" >
-        </template>
-        <template v-else>
-          <img src="../../assets/images/index/s_logo.jpg" alt="" >
-        </template>
+  <div>
+    <template v-if="demandDataList != null && demandDataList.length >0">
+      <div :class="['goods-content',{'goods-content-grid5':grid5}]">
+        <div class="item" v-for="(item,index) in demandDataList" :key="index" @click="getDetail(item.articleId)">
+          <div class="item-img">
+            <template v-if="item.imageList != null && item.imageList.length>0">
+              <img :src="item.imageList[0]" alt="">
+            </template>
+            <template v-else>
+              <img src="../../assets/images/index/s_logo.jpg" alt="">
+            </template>
+          </div>
+          <div class="info">
+            {{item.title}}
+          </div>
+        </div>
       </div>
-      <div class="info">
-        {{item.title}}
-      </div>
+    </template>
+    <div v-else class="flex-center-center no-data-font">
+      暂未发布供求信息~
     </div>
   </div>
 </template>
@@ -25,19 +32,20 @@
           return false
         }
       },
-      'demandDataList':{
-        type:Array
+      'demandDataList': {
+        type: Array
       }
     },
     data() {
-      return {
-      }
+      return {}
     },
     methods: {
       getDetail(articleId) {
         this.$router.push({
           path: '/demandDetail',
-          query:{articleId}
+          query: {
+            articleId
+          }
         })
         this.$emit('selectOnlyTab', '-1')
       }
@@ -47,13 +55,17 @@
 
 <style lang="less" scoped>
   .goods-content {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(6, auto);
-    justify-content: space-between;
+    justify-content: flex-start;
+    grid-column-gap: 12px;
   }
 
   .goods-content-grid5 {
     grid-template-columns: repeat(5, auto);
+    justify-content: flex-start;
+    grid-column-gap: 6px;
   }
 
   .goods-content .item:hover {
