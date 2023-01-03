@@ -31,34 +31,27 @@ const state = {
 
 const mutations = {
   SET_TOKEN: (state, token) => {
-    // console.log("保存token")
     state.token = token
   },
   SET_INTRODUCTION: (state, introduction) => {
-    // console.log("保存introduction")
     state.introduction = introduction
   },
   SET_MOBILE: (state, mobile) => {
-    // console.log("保存mobile")
     state.mobile = mobile
   },
   SET_NAME: (state, name) => {
-    // console.log("保存name")
     state.name = name
   },
   SET_USERID: (state, userid) => {
     state.userid = userid
   },
   SET_AVATAR: (state, avatar) => {
-    // console.log("保存avatar")
     state.avatar = avatar
   },
   SET_ROLES: (state, roles) => {
-    // console.log("保存roles")
     state.roles = roles
   },
   SET_STOREID: (state, storeID) => {
-    // console.log("保存roles")
     state.currentLookStoreId = storeID
   }
 }
@@ -78,7 +71,6 @@ const actions = {
   login({
     commit
   }, userInfo) {
-    console.log("请求登录接口")
     const {
       username,
       password
@@ -169,10 +161,15 @@ const actions = {
           const {
             data
           } = response
-          console.log(data)
+          var portrait = 'https://image.yijiequan.cn/yijiequan/attach/default-logo.jpg'
+          if (data.user.portrait != undefined && data.user.portrait != null && data.user.portrait != '') {
+            if (data.user.portrait.indexOf("https://") != -1 || data.user.portrait.indexOf("http://") != -1) {
+              portrait = data.user.portrait
+            }
+          }
           commit('SET_NAME', data.user.username)
           commit('SET_USERID', data.user.userid)
-          commit('SET_AVATAR', data.user.portrait)
+          commit('SET_AVATAR', portrait)
           commit('SET_INTRODUCTION', "固定无")
           // var mobile = ''
           // if(data.user.mobile == undefined || data.user.mobile == ''|| data.user.mobile== null){

@@ -66,7 +66,6 @@
         storeDetail({
           storeId: this.storeId
         }).then(response => {
-          console.log("获取店铺详情：", response)
           this.storeInfo = response.data
         })
         var page = {
@@ -75,7 +74,6 @@
           storeId: this.storeId
         }
         goodsList(page).then(response => {
-          console.log("获取店铺内商品列表:", response)
           this.goodsDataList = response.data.list
         })
       },

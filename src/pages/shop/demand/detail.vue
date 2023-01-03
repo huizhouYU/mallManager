@@ -63,7 +63,9 @@
           <div class="item">
             <div class="key spacing">地区:</div>
             <div class="value" v-if="token ==null || token ==''">*****</div>
-            <div class="value" v-else>{{demandInfo.region}}</div>
+            <div class="value" v-else>
+              <span v-for="(item,index) in demandInfo.regionList" :key="index" class="span-div">{{item}}</span>
+            </div>
           </div>
           <div class="btn-login" v-if="token ==null || token ==''" @click="toLogin">
             登录查看联系方式
@@ -143,13 +145,17 @@
         }).then(response => {
           console.log("供求信息详情：", response)
           this.demandInfo = response.data
+          this.demandInfo.regionList = []
           // this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
           //   "<img src=\"https://images.weserv.nl/?url=http://")
           if (this.demandInfo.region != null && this.demandInfo.region != '') {
-            console.log("this.demandInfo.region：", JSON.parse(this.demandInfo.region))
-            if (JSON.parse(this.demandInfo.region) != '' && JSON.parse(this.demandInfo.region)[0] != '' && JSON
-              .parse(this.demandInfo.region)[0].name != undefined) {
-              this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
+            var region = JSON.parse(this.demandInfo.region)
+            console.log("this.demandInfo.region：", region)
+            if (region != '') {
+              for(var i in region){
+                this.demandInfo.regionList.push(region[i].name.join('/'))
+              }
+              // this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
             }
           }
           this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
@@ -354,7 +360,7 @@
         .item {
           display: flex;
           justify-content: flex-start;
-          align-items: center;
+          align-items: flex-start;
 
           .key {
             width: 50px;
@@ -365,6 +371,9 @@
 
           .value {
             flex: 1;
+            .span-div{
+              display: block;
+            }
           }
 
           .spacing {

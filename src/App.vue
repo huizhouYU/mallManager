@@ -3,19 +3,17 @@
     <!-- 侧边固定部分 -->
     <ul class="flex-column-between-center side-fixing">
       <!-- 购物车 -->
-      <li class="shoppingcart" @click="toShoppingcart">
+    <!-- <li class="shoppingcart" @click="toShoppingcart">
         <i class="iconfont">&#xe60f;</i>
       </li>
-      <div class="line"></div>
+      <div class="line"></div> -->
       <!-- 客服 -->
       <li class="service">
-        <!-- <el-popover placement="left" trigger="hover" popper-class="service-tips-con" style="left: 1420px;"> -->
         <div class="flex-column-center-center service-content">
           <img src="../src/assets/images/index/buyer/pic_erweima.png" alt="">
           <span>扫一扫 联系客服</span>
         </div>
         <i class="iconfont">&#xe61e;</i>
-        <!-- </el-popover> -->
       </li>
       <div class="line"></div>
       <!-- 回到顶部 -->
@@ -54,7 +52,7 @@
   .side-fixing {
     position: fixed;
     width: 48px;
-    height: 146px;
+    // height: 146px;
     background: #FFFFFF;
     box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.1);
     border-radius: 24px;
@@ -67,6 +65,7 @@
     .line {
       width: 20px;
       border-top: 1px solid #EDEDEC;
+      margin: 4px 0px;
     }
     .shoppingcart{
       i{

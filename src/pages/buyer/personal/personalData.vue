@@ -93,8 +93,6 @@
 
     mounted() {
       document.documentElement.scrollTop = 0;
-      // this.form.username = this.name
-      // this.form.avatar = this.avatar
       this.getData()
     },
     data() {
@@ -125,9 +123,13 @@
       },
       getData() {
         getInfo().then(response => {
-          console.log("获取用户信息：", response)
           this.form = response.data.user
-          this.showImgUrl = this.form.portrait!=null?this.form.portrait:''
+          this.showImgUrl = 'https://image.yijiequan.cn/yijiequan/attach/default-logo.jpg'
+          if (this.form.portrait != undefined && this.form.portrait != null && this.form.portrait != '') {
+            if (this.form.portrait.indexOf("https://") != -1 || this.form.portrait.indexOf("http://") != -1) {
+              this.showImgUrl = this.form.portrait
+            }
+          }
         })
       },
       //获取手机短信验证码
@@ -202,16 +204,13 @@
           let param = new FormData(); //创建form对象
           param.append('file', this.imgFile); //通过append向form对象添加数据
           //上传图片
-          console.log("this.imgFile :", this.imgFile)
           if (this.imgFile != '') {
             await uploadImage(param).then(response => {
               this.form.portrait = response.data
             })
           }
-          console.log("this.form:", this.form)
           //信息提交
           await updateInfo(this.form).then(response => {
-            console.log(response)
             if (response.code == 10000) {
               this.$message.success("信息修改成功！")
               this.$router.push({
