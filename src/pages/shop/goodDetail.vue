@@ -23,10 +23,10 @@
 
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
-                  <span>议价</span>
+                  <span>询价</span>
                   <!-- <div class="remark">
                     <img src="../../assets/images/shop/icon_remark_warning.png" alt="">
-                    议价订单提交申请后可在全部订单中查看该订单是否审核通过
+                    询价订单提交申请后可在全部订单中查看该订单是否审核通过
                   </div> -->
                 </template>
                 <template v-else>
@@ -55,52 +55,22 @@
                 <template v-else-if="goodsInfo.degree == 10">十成新</template>
               </div>
             </div>
-            <!-- 数量 -->
-            <div class="info-item">
-              <span class="title letterSpacing">数量</span>
-              <div class="goods-num">
-                <div class="grey-box btn-num" @click="decNum">-</div>
-                <span class="num">{{num}}</span>
-                <div class="grey-box btn-num" @click="addNum">+</div>
-              </div>
-            </div>
-            <!-- 立即购买+ 加入购物车 -->
-            <div class="info-item">
-              <span class="title letterSpacing"></span>
-              <div class="btns">
-                <template v-if="goodsInfo.saleType == 2">
-                  <div class="buy-now">
-                    联系客服
-                  </div>
-                </template>
-                <template v-else>
-                  <div class="buy-now" @click="buyNow">
-                    立即购买
-                  </div>
-                </template>
-                <div class="add-to-cart" @click="addToCart" v-if="goodsInfo.saleType != 2">
-                  <img src="../../assets/images/shop/icon_shoppingcart_add.png" alt="">
-                  加入购物车
-                </div>
-              </div>
-            </div>
-            <!-- 支付方式 -->
-            <div class="info-item">
-              <span class="title">支付方式</span>
-              <ul class="pay-way">
-                <li>支付宝</li>
-                <li>微信</li>
-                <li>对公转账</li>
-              </ul>
-            </div>
             <!-- 联系客服 -->
             <div class="info-item">
               <span class="title letterSpacing">服务</span>
-              <div class="service" @click="contactCustomer">
-                <img src="../../assets/images/shop/icon_service.png" alt="">联系客服
+              <div class="service">
+                <div class="flex-around-center content-service">
+                  <img src="../../assets/images/shop/icon_service.png" alt="" class="my-icon-img">联系客服
+                </div>
                 <!-- 二维码 -->
-                <div class="QR-code">
-                  <img src="../../assets/images/index/pic_erweima_black.png" alt="">
+                <div class="flex-center-center QR-code">
+                  <template
+                    v-if="goodsInfo.customerServiceQR != undefined && goodsInfo.customerServiceQR != null&& goodsInfo.customerServiceQR != ''">
+                    <img :src="goodsInfo.customerServiceQR" alt="">
+                  </template>
+                  <template v-else>
+                    <div class="flex-center-center no-data-font">该店铺暂未上传客服二维码</div>
+                  </template>
                   <div class="triangle"></div>
                 </div>
               </div>
@@ -130,12 +100,10 @@
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
           </div>
         </div>
-       <!-- <div v-for="(item,index) in goodsInfo.longImage"  :key="index">
-          {{item}}
-        </div> -->
-        <div v-html="goodsInfo.content"></div>
-        <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in goodsInfo.longImages"
-          :key="index">
+        <div class="flex-start-center content-div" v-html="goodsInfo.content"></div>
+        <div class="flex-column-start-center long-img-div">
+          <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in goodsInfo.longImages" :key="index">
+        </div>
       </div>
       <!-- 店内推荐 -->
       <store-recommendation class="store-recommendation"></store-recommendation>
@@ -162,18 +130,17 @@
         goodsId: '',
         categoryStr: '',
         bigImgPath: '',
-        num: 1,
         goodsInfo: {
-          goodType: '0', //0:议价商品，1：普通商品
+          goodType: '0', //0:询价商品，1：普通商品
           bigImgPath: '',
-          name: '西门子双源大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信赖大品牌可信',
-          lableList: ['西门子', '核磁', '大品牌'],
-          price: '999.99',
-          model: 'Force双源ct',
-          oldNewDegree: '十成新',
-          brand: '西门子',
-          category: '联影 > PET CT/ PET MRI > uEXPLORER',
-          qualityGuaranteePeriod: '586天'
+          name: '',
+          lableList: [''],
+          price: '',
+          model: '',
+          oldNewDegree: '',
+          brand: '',
+          category: '',
+          qualityGuaranteePeriod: ''
         }
       }
     },
@@ -183,11 +150,8 @@
       goodsDetail({
         goodsId: this.goodsId
       }).then(response => {
-        // console.log("获取商品详情：", response)
         this.goodsInfo = response.data
-
         this.bigImgPath = this.goodsInfo.imageList[0]
-        // this.goodsInfo.longImages = ['https://image.yijiequan.cn/yijiequan/attach/waterMark.jpg/waterMark','https://image.yijiequan.cn/yijiequan/attach/waterMark (1).jpg/waterMark']
         this.categoryStr = ''
         if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
           this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
@@ -207,46 +171,12 @@
           }).catch(() => {
             console.log("保存当前浏览的店铺ID失败")
           })
-
         this.$emit("saveStoreId", this.goodsInfo.storeId)
       })
     },
-    methods: {
-      initPos() {
-
-      },
-      changeLeftPos() {
-
-      },
-      changeRightPos() {
-
-      },
-      // ...mapActions(["setStoreId"])
-
-      changeImg(imgPath) {
-        this.bigImgPath = imgPath
-      },
-      addNum() {
-        this.num += 1;
-      },
-      decNum() {
-        if (this.num > 1) {
-          this.num -= 1
-        }
-      },
-      buyNow() {
-        // alert("立即购买")
-      },
-      addToCart() {
-        // alert("加入购物车")
-      },
-      contactCustomer() {
-        // alert("联系客服")
-      }
-    }
+    methods: {}
   }
 </script>
-
 <style lang="less" scoped>
   .shop-detail-box {
     display: flex;
@@ -277,6 +207,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .shop-detail-img-info {
           display: flex;
@@ -339,6 +270,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            margin-bottom: 16px;
 
             li {
               line-height: 14px;
@@ -360,11 +292,10 @@
           }
 
           .info-item {
-            height: 40px;
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            margin: 6px 0px;
+            margin-bottom: 25px;
 
             .title {
               width: 70px;
@@ -448,58 +379,7 @@
               }
             }
 
-            //立即购买+ 加入购物车
-            .btns {
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
 
-              //立即购买
-              .buy-now {
-                width: 120px;
-                height: 40px;
-                background: #E60000;
-                border: 1px solid #E60000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 16px;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: #FFFFFF;
-                margin-right: 27px;
-                box-sizing: border-box;
-              }
-
-              //加入购物车
-              .add-to-cart {
-                box-sizing: border-box;
-                width: 166px;
-                height: 40px;
-                background: #40A9FF;
-                font-size: 16px;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: #FFFFFF;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                img {
-                  width: 16px;
-                  height: 18px;
-                  margin-right: 5px;
-                }
-              }
-            }
-
-            .pay-way {
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-
-              li+li {}
-            }
 
             //联系客服
             .service {
@@ -513,25 +393,49 @@
               color: #0065CB;
               position: relative;
 
-              img {
+              .my-icon-img {
                 width: 14px;
                 height: 15px;
-                margin-right: 4px;
+                margin-right: 8px;
+              }
+
+              //联系客服
+              .content-service {
+                position: relative;
+                width: 120px;
+                height: 40px;
+                background: #40A9FF;
+                border: 1px solid #40A9FF;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 16px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #FFFFFF;
+                margin-right: 27px;
+                box-sizing: border-box;
               }
 
               .QR-code {
                 display: none;
                 position: absolute;
                 top: -25px;
-                right: -134%;
-                width: 70px;
-                height: 70px;
+                right: -90px;
+                width: 100px;
+                height: 100px;
                 border: 1px solid #40A9FF;
                 box-sizing: border-box;
 
                 img {
+                  width: 80px;
+                  height: 80px;
+                }
+
+                .no-data-font {
                   width: 100%;
                   height: 100%;
+                  text-align: center;
                 }
               }
 
@@ -544,7 +448,7 @@
                 border-color: transparent transparent transparent #40A9FF;
                 transform: rotate(-45deg);
                 position: absolute;
-                top: 22px;
+                top: 35px;
                 left: -6px;
               }
 
@@ -562,7 +466,7 @@
 
             .service:hover {
               .QR-code {
-                display: block;
+                display: flex;
               }
             }
           }
@@ -580,6 +484,7 @@
           padding-left: 10px;
           display: flex;
           align-items: center;
+          box-sizing: border-box;
         }
 
         .product-info {
@@ -594,6 +499,12 @@
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #666666;
+        }
+
+
+        .long-img-div, .content-div {
+          width: 750px;
+          box-sizing: border-box;
         }
 
         .shop-details-img {

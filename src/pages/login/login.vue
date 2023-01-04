@@ -203,7 +203,6 @@
           if (valid) {
             this.login()
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -229,7 +228,6 @@
               this.loading = false
             }).catch(() => {
               this.loading = false
-              console.log("失败")
             })
         } else if (this.loginWay == 2) { //短信验证码登录
           this.$store.dispatch('user/msgLogin', this.vCodeForm)
@@ -245,10 +243,8 @@
               this.loading = false
             }).catch(() => {
               this.loading = false
-              console.log("失败")
             })
         }
-
       },
       forget() {
         this.$router.push({

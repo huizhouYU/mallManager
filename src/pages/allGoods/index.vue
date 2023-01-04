@@ -116,7 +116,6 @@
     methods: {
       getData() {
         goodsList(this.page).then(response => {
-          console.log("获取商品列表:", response)
           this.total = response.data.totalCount
           this.page.pageNo = response.data.pageNum
           this.page.pageSize = response.data.pageSize
@@ -134,12 +133,10 @@
         this.getData()
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getData()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getData()
       }

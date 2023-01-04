@@ -7,7 +7,7 @@
           <div class="name">{{demandInfo.title}}
             <img src="../../../assets/images/index/icon_new_red.png" alt="">
           </div>
-          <span class="publish-time">发布时间：{{demandInfo.updatedAt}}</span>
+          <span class="publish-time">发布时间：{{demandInfo.updatedAt || demandInfo.createdAt}}</span>
         </div>
         <!-- 基本信息 -->
         <div class="basic-information" v-if="demandInfo.articleType != 3">
@@ -41,8 +41,11 @@
             <span>详细描述</span>
           </div>
           <div class="description">
-            <span v-html="demandInfo.description"></span>
-            <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in demandInfo.imageList" :key="index">
+            <div class="description-div" v-html="demandInfo.description"></div>
+            <div class="flex-column-start-center detail-img-div">
+              <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in demandInfo.imageList"
+                :key="index">
+            </div>
           </div>
         </div>
         <div class="remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
@@ -52,23 +55,17 @@
         <div class="contact">
           <div class="item">
             <div class="key">联系人:</div>
-            <div class="value" v-if="token ==null || token ==''">***</div>
-            <div class="value" v-else>{{demandInfo.linkMan}}</div>
+            <div class="value">{{demandInfo.linkMan}}</div>
           </div>
           <div class="item">
             <div class="key spacing">电话:</div>
-            <div class="value" v-if="token ==null || token ==''">188*****888</div>
-            <div class="value" v-else>{{demandInfo.linkTel}}</div>
+            <div class="value">{{demandInfo.linkTel}}</div>
           </div>
           <div class="item">
             <div class="key spacing">地区:</div>
-            <div class="value" v-if="token ==null || token ==''">*****</div>
-            <div class="value" v-else>
+            <div class="value">
               <span v-for="(item,index) in demandInfo.regionList" :key="index" class="span-div">{{item}}</span>
             </div>
-          </div>
-          <div class="btn-login" v-if="token ==null || token ==''" @click="toLogin">
-            登录查看联系方式
           </div>
         </div>
         <!-- 店内相关求购 -->
@@ -134,28 +131,18 @@
       this.getData()
     },
     methods: {
-      toLogin() {
-        this.$router.push({
-          path: '/login'
-        })
-      },
       getData() {
         articleDetail({
           id: this.id
         }).then(response => {
-          console.log("供求信息详情：", response)
           this.demandInfo = response.data
           this.demandInfo.regionList = []
-          // this.demandInfo.description = this.demandInfo.description.replaceAll("<img src=\"http://",
-          //   "<img src=\"https://images.weserv.nl/?url=http://")
           if (this.demandInfo.region != null && this.demandInfo.region != '') {
             var region = JSON.parse(this.demandInfo.region)
-            console.log("this.demandInfo.region：", region)
             if (region != '') {
-              for(var i in region){
+              for (var i in region) {
                 this.demandInfo.regionList.push(region[i].name.join('/'))
               }
-              // this.demandInfo.region = JSON.parse(this.demandInfo.region)[0].name.join('/')
             }
           }
           this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
@@ -304,21 +291,28 @@
         .description {
           display: flex;
           justify-content: flex-start;
-          align-items: flex-start;
+          align-items: center;
           flex-direction: column;
           font-size: 14px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #666666;
 
-          span {
+          .description-div {
+            width: 800px;
             margin-bottom: 10px;
           }
 
-          .shop-details-img {
-            width: 100%;
+          .detail-img-div {
+            width: 800px;
             box-sizing: border-box;
+
+            .shop-details-img {
+              width: 100%;
+              box-sizing: border-box;
+            }
           }
+
         }
       }
 
@@ -371,7 +365,8 @@
 
           .value {
             flex: 1;
-            .span-div{
+
+            .span-div {
               display: block;
             }
           }

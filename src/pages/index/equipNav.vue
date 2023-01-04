@@ -51,7 +51,6 @@
     },
     methods:{
       chooseClick(key){
-        console.log('key',key);
         this.selectIndex=key;
       }
     }

@@ -25,13 +25,11 @@
       longitude(val){
         if(val != undefined && val != null && val !=''){
           this.center[0] = val
-          console.log("this.center[0]:",this.center[0])
         }
       },
       latitude(val){
         if(val != undefined && val != null && val !=''){
           this.center[1] = val
-          console.log("this.center[1]:",this.center[1])
         }
       }
     },

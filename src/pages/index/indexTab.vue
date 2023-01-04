@@ -112,7 +112,6 @@
     },
     mounted() {
       var path = this.$route.fullPath
-      console.log("this.$route:", this.$route)
       this.chooseTab = path
       if (this.chooseTab != '/home') {
         this.isShowContent = true

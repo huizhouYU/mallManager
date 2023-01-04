@@ -102,7 +102,8 @@
         </div>
         <ul v-if="storeInfo.certificationList != null && storeInfo.certificationList.length>0">
           <li v-for="(item,index) in storeInfo.certificationList" :key="index">
-            <el-image class="my-img" @click="putLookSrc(item)" :src="item" :preview-src-list="lookSrcList">
+            <el-image class="flex-center-center my-img" @click="putLookSrc(item)" :src="item"
+              :preview-src-list="lookSrcList">
             </el-image>
           </li>
         </ul>
@@ -387,6 +388,15 @@
             .my-img {
               width: 160px;
               height: 160px;
+              border: 1px solid #f5f5f5;
+              border-radius: 6px;
+
+              /deep/.el-image__inner {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+              }
             }
           }
 

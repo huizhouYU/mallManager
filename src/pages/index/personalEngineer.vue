@@ -12,7 +12,7 @@
           <div class="name_shoppingCart">
             <ul>
               <li class="red" v-if="item.price">￥{{item.price}}</li>
-              <li class="red" v-else>可议价</li>
+              <li class="red" v-else>可询价</li>
               <li class="bule">联系咨询</li>
               <!-- <li v-for="(x,i) in item.label" :key="i">{{x}}</li> -->
             </ul>

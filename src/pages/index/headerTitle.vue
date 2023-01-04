@@ -76,21 +76,10 @@
       logout() {
         this.$store.dispatch('user/logout')
           .then(() => {
-            console.log("退出成功！")
             this.toIndex()
-            // this.$router.push({
-            //   path: '/redirect',
-            //   query: {
-            //     // path: encodeURI("/home"),
-            //     path:'"/home"'
-            //   },
-            //   replace: true
-            // })
             this.loading = false
-            console.log("成功")
           }).catch(() => {
             this.loading = false
-            console.log("失败")
           })
       },
 

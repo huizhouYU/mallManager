@@ -40,7 +40,6 @@
     methods:{
       getData(){
         articleList(this.page).then(response=>{
-          console.log("获取店铺内的需求列表：",response)
           this.demandDataList = response.data.list
           this.total = response.data.totalCount
           this.page.pageNo = response.data.pageNum
@@ -48,12 +47,10 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getData()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getData()
       },

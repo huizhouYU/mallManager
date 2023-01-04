@@ -309,7 +309,6 @@
       //获取地区
       this.cities = city
       this.refreshShowAddress()
-      console.log("选中的商品：", this.$route.query.chosedGood)
       this.refreshShowGoods(JSON.parse(this.$route.query.chosedGood))
     },
     methods: {

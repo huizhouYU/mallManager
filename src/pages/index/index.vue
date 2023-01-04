@@ -229,7 +229,6 @@
           }
         })
         this.chooseTab = '-1'
-        console.log("hhh")
         window.open(newPath.href,'_blank')
       },
       getChosedLevel(name, parerntId, level) {

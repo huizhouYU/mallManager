@@ -12,7 +12,7 @@
             <div class="price-shop">
               <div class="price">
                 <template v-if="item.saleType==1">￥{{item.price}}</template>
-                <template v-else>￥议价</template>
+                <template v-else>￥询价</template>
               </div>
               <i class="iconfont">&#xe73d;</i>
             </div>

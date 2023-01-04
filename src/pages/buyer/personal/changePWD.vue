@@ -178,7 +178,6 @@
       getCode() {
         //axios请求
         sendPwdMsg({}).then(response => {
-          // console.log(response)
           if(response.code != 10000){
             this.$message.error(response.message)
           }else{
@@ -204,7 +203,6 @@
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
             this.form.captcha = this.aCheckCodeInput.join('')
-            console.log("this.form:",this.form)
             if(this.form.captcha == ''){
               this.$message.error("请填写短信验证码！")
               return false
@@ -227,9 +225,6 @@
             return false;
           }
         });
-
-
-
       }
     }
   }

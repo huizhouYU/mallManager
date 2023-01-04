@@ -4,10 +4,10 @@
       @click="toCompany(item.storeId)">
       <div class="flex-column-between-start services-item-info">
         <div class="company-name">{{item.storeName}}</div>
-        <div class="flex-start-start info-item">
+    <!--    <div class="flex-start-start info-item">
           <div class="key">服务内容</div>
           <div class="value limit3">{{item.serviceContent||'-'}}</div>
-        </div>
+        </div> -->
         <div class="flex-start-start info-item">
           <div class="key">店铺分类</div>
           <div class="value">{{item.categoryName}}</div>
@@ -56,7 +56,6 @@
     methods: {
       getData() {
         storeList(this.page).then(response => {
-          console.log("获取企业列表：", response)
           this.list = response.data.list
           this.page.pageNo = response.data.pageNum
           this.page.pageSize = response.data.pageSize
@@ -64,12 +63,10 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getData()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getData()
       },

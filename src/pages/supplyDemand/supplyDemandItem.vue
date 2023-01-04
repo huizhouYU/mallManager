@@ -36,6 +36,7 @@
           <img src="../../assets/images/index/icon_qi.png" alt="" v-if="item.stype =='company'">
           <img src="../../assets/images/index/icon_ge.png" alt="" v-else-if="item.stype =='personal'">
           <span class="company-name">{{item.storeName}}</span>
+          <span class="update-time">{{item.updatedAt || item.createdAt}}</span>
         </div>
       </div>
       <div class="contact" @click="toDetail(item.articleId)">
@@ -83,7 +84,6 @@
       getData() {
         this.page.keyword = this.$route.query.keyword
         articleList(this.page).then(response => {
-          console.log('供求信息-需求列表：', response)
           this.page.pageNo = response.data.pageNum
           this.page.pageSize = response.data.pageSize
           this.totalCount = response.data.totalCount
@@ -91,12 +91,10 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getData()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getData()
       },
@@ -240,11 +238,14 @@
           margin-right: 8px;
         }
 
-        .company-name {
+        .company-name,.update-time {
           font-size: 12px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #333333;
+        }
+        .update-time{
+          margin-left: 12px;
         }
       }
     }

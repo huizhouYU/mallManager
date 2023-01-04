@@ -72,18 +72,13 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getData()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getData()
       },
-      toBrand(url){
-        console.log("跳转到对应的公司地址")
-      }
     },
   }
 </script>

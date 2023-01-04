@@ -112,7 +112,7 @@
               <img src="../../../assets/images/index/buyer/pic_personal_recommend.png" alt="">
             </div>
             <span class="name">飞利浦核磁共振 CT线圈</span>
-            <span class="price"><span class="money">￥</span>议价</span>
+            <span class="price"><span class="money">￥</span>询价</span>
           </div>
           <div class="guess-main-right">
             <div class="goods-item">
@@ -120,7 +120,7 @@
               <div class="info">
                 <span>飞利浦核磁线圈核磁共振 CT线圈</span>
                 <div class="price">
-                  <font class="money">￥</font>议价
+                  <font class="money">￥</font>询价
                 </div>
               </div>
             </div>
@@ -129,7 +129,7 @@
               <div class="info">
                 <span>飞利浦核磁线圈核磁共振 CT线圈</span>
                 <div class="price">
-                  <font class="money">￥</font>议价
+                  <font class="money">￥</font>询价
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@
               <div class="info">
                 <span>飞利浦核磁线圈核磁共振 CT线圈</span>
                 <div class="price">
-                  <font class="money">￥</font>议价
+                  <font class="money">￥</font>询价
                 </div>
               </div>
             </div>
@@ -147,7 +147,7 @@
               <div class="info">
                 <span>飞利浦核磁线圈核磁共振 CT线圈</span>
                 <div class="price">
-                  <font class="money">￥</font>议价
+                  <font class="money">￥</font>询价
                 </div>
               </div>
             </div>
@@ -257,12 +257,9 @@
       document.documentElement.scrollTop = 0;
       // showOrderList
       for (var item in this.orderList) {
-        // console.log("item:",item)
         for (var order of this.orderList[item]) {
-          // console.log(order)
           if (this.showOrderList.length < this.limitNum) {
             this.showOrderList.push(order)
-            // console.log("this.showOrderList:",this.showOrderList)
           } else {
             return
           }

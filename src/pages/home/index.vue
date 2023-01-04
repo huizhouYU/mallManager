@@ -126,6 +126,9 @@
     <!-- 配件专区 -->
     <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory">
     </accessories-area>
+    <div class="long-adv">
+      <img src="../../assets/images/index/ad-long.jpg" alt="">
+    </div>
     <!-- 医疗器械 -->
     <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" v-show="productList.length>0">
     </product-show>
@@ -213,7 +216,6 @@
         }).then(response => {
           this.brandsList = response.data
           var origin = window.location.origin + window.location.pathname
-          // console.log(origin)
           for (var index in this.brandsList) {
             if (this.brandsList[index].brandLogo.indexOf("http://") == -1) {
               this.brandsList[index].brandLogo = origin + this.brandsList[index].brandLogo
@@ -233,10 +235,6 @@
         }).then(response => {
           this.equipmentList = response.data
         })
-        // // 查询配件分类
-        // listByGroup({limit:99}).then(response=>{
-        //   console.log("查询配件分类：",response)
-        // })
         //商品类型 material-配件  equipment-设备器械
         equipmentList({
           goodsType: 'equipment',
@@ -248,12 +246,6 @@
             this.productList = []
           }
         })
-        // equipmentList({
-        //   goodsType: 'material',
-        //   limit: 10
-        // }).then(response => {
-        //   console.log('配件专区：', response)
-        // })
         //获取企业服务-个人工程师
         // 店铺类型 personal-个人 company-企业
         storeList({
@@ -371,6 +363,12 @@
 </script>
 
 <style scoped lang="less">
+  .long-adv{
+    margin-top: 25px;
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
+  }
   // 模块二
   .index-content {
     width: 1200px;
