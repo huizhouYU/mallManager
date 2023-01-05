@@ -151,6 +151,7 @@
   .body {
     background-color: #f5f5f5;
     height: 100%;
+    min-width: 1200px;
   }
 
   .header-top {
@@ -185,7 +186,7 @@
 
       img {
         position: absolute;
-        width: 100%;
+        // width: 100%;
         height: 90px;
       }
 

@@ -65,8 +65,8 @@
                 <!-- 二维码 -->
                 <div class="flex-center-center QR-code">
                   <template
-                    v-if="goodsInfo.customerServiceQR != undefined && goodsInfo.customerServiceQR != null&& goodsInfo.customerServiceQR != ''">
-                    <img :src="goodsInfo.customerServiceQR" alt="">
+                    v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
+                    <img :src="goodsInfo.domain" alt="">
                   </template>
                   <template v-else>
                     <div class="flex-center-center no-data-font">该店铺暂未上传客服二维码</div>

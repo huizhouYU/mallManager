@@ -27,7 +27,7 @@
         <div class="select-item">
           <div class="title">类型</div>
           <ul :class="['item']">
-            <li @click="changeGoodsType('')"><span>全部</span></li>
+            <li @click="changeGoodsType('')"><span :class="{'bule':'' == page.goodsType}">全部</span></li>
             <li v-for="(item,index) in selectItem.goodsType" :key="index" @click="changeGoodsType(item.id)">
               <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
             </li>
@@ -37,7 +37,7 @@
           <div class="title">品牌</div>
           <ul :class="[{'minImgHeight':!isBrandStow},'item']">
             <li v-for="(item,index) in selectItem.brand" :key="index" @click="changeBrandName(item.brandName)">
-              <img :src="item.brandLogo" alt="" :title="item.brandName">
+              <img :src="item.brandLogo" alt="" :title="item.brandName"  :class="{'bule-img':item.brandName == page.brandName}">
             </li>
           </ul>
           <template v-if="isBrandShow">
@@ -50,7 +50,7 @@
         <div class="select-item">
           <div class="title">新旧程度</div>
           <ul :class="[{'minHeight':!isDegreeStow},'item']">
-            <li @click="changeDegree('','')"><span>全部</span></li>
+            <li @click="changeDegree('','')"><span :class="{'bule':'' == page.degree}">全部</span></li>
             <li v-for="(item,index) in selectItem.degree" :key="index" @click="changeDegree(item.degree,item.name)">
               <span :class="{'bule':item.degree == page.degree}">{{item.name}}</span>
             </li>
@@ -321,6 +321,9 @@
 
       .bule {
         color: #40A9FF;
+      }
+      .bule-img{
+        border: 1px solid #40A9FF;
       }
     }
 
