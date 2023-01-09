@@ -67,12 +67,13 @@
         </div>
       </div>
     </div>
-    <router-view class="each-module" :brandList='brandList' @topImg="topImg"></router-view>
+    <router-view class="each-module" :brandList='brandList' @topImg="topImg" v-if="isRouterAlive"></router-view>
     <index-bottom></index-bottom>
   </div>
 </template>
 
 <script>
+  import Bus from '../../utils/Bus.js'
   import indexHeader from '../../pages/index/indexHeader.vue'
   import headerTitle from '../../pages/index/headerTitle.vue'
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
@@ -97,6 +98,7 @@
     },
     data() {
       return {
+        isRouterAlive: true,
         // hiddenTopImg: false,
         chooseTab: 0,
         //顶部导航栏
@@ -155,10 +157,17 @@
       }
     },
     mounted() {
+      Bus.$on("reloadPage", data => {
+        this.reload()
+      })
       this.goTop()
       var path = this.$route.fullPath
       this.chooseTab = path
       this.getData()
+    },
+    beforeDestroy() {
+      // 取消监听
+      Bus.$off("reloadPage")
     },
     watch: {
       $route(to, from) {
@@ -173,6 +182,10 @@
       }
     },
     methods: {
+      reload() {
+        this.isRouterAlive = false
+        this.$nextTick(() => (this.isRouterAlive = true))
+      },
       getData() {
         if (this.chooseTab != '/home') {
           this.isShowContent = true
@@ -210,17 +223,17 @@
             goodsType: 'equipment'
           }
         }
-        var newPath =  this.$router.resolve({
+        var newPath = this.$router.resolve({
           path: path,
           query: params,
           replace: true
         })
-        window.open(newPath.href,'_blank')
+        window.open(newPath.href, '_blank')
 
       },
       jumpToGood(item, level) {
         this.getChosedLevel(item.cateName, item.parentId, level)
-        var newPath =  this.$router.resolve({
+        var newPath = this.$router.resolve({
           path: '/medicalApparatus',
           query: {
             cateId: item.cateId,
@@ -229,7 +242,7 @@
           }
         })
         this.chooseTab = '-1'
-        window.open(newPath.href,'_blank')
+        window.open(newPath.href, '_blank')
       },
       getChosedLevel(name, parerntId, level) {
         this.chosedLevel = []
@@ -256,7 +269,7 @@
       goTop() {
         document.documentElement.scrollTop = 0;
       },
-      topImg(val){
+      topImg(val) {
         this.hiddenTopImg = val
       }
     }

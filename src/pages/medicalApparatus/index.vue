@@ -171,7 +171,7 @@
           this.selectItem.brand = response.data
           var origin = window.location.origin+window.location.pathname
           for (var index in this.selectItem.brand) {
-            if (this.selectItem.brand[index].brandLogo.indexOf("http://") == -1) {
+            if (this.selectItem.brand[index].brandLogo != null && this.selectItem.brand[index].brandLogo.indexOf("http://") == -1) {
               this.selectItem.brand[index].brandLogo = origin + this.selectItem.brand[index]
                 .brandLogo
             }
@@ -218,12 +218,10 @@
         this.getDataList()
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.page.pageSize = val
         this.getDataList()
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.page.pageNo = val
         this.getDataList()
       }

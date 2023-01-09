@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import Bus from "../../utils/Bus.js"
   import {
     searchKeys
   } from '@/api/index'
@@ -93,17 +94,21 @@
         }
         if (this.searchData.typeId == 1) {
           params.goodsType = 'material'
+          Bus.$emit("reloadPage", "")
         } else if (this.searchData.typeId == 3) {
           params.goodsType = 'equipment'
+          Bus.$emit("reloadPage", "")
         }
         for (var index in this.options) {
           if (this.options[index].value == this.searchData.typeId) {
             this.searchData.path = this.options[index].path
           }
         }
+         // Bus.$emit("reloadPage", "")
         this.$router.push({
           path: this.searchData.path,
-          query: params
+          query: params,
+          replace:true
         })
       },
       publishDemand() {

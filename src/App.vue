@@ -3,7 +3,7 @@
     <!-- 侧边固定部分 -->
     <ul class="flex-column-between-center side-fixing">
       <!-- 购物车 -->
-    <!-- <li class="shoppingcart" @click="toShoppingcart">
+      <!-- <li class="shoppingcart" @click="toShoppingcart">
         <i class="iconfont">&#xe60f;</i>
       </li>
       <div class="line"></div> -->
@@ -67,8 +67,9 @@
       border-top: 1px solid #EDEDEC;
       margin: 4px 0px;
     }
-    .shoppingcart{
-      i{
+
+    .shoppingcart {
+      i {
         font-size: 22px;
       }
     }

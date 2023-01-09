@@ -19,7 +19,7 @@ import VueAMap from 'vue-amap'
 Vue.use(VueAMap)
 VueAMap.initAMapApiLoader({
   key: 'xxxxxx', //申请的key码需要填写的地方，格式为长串字符数字
-  plugin: [//按照你的需要，引入地图的哪些功能，不需要下面这么多
+  plugin: [ //按照你的需要，引入地图的哪些功能，不需要下面这么多
     'AMap.Autocomplete', //输入提示插件
     'AMap.PlaceSearch', //POI搜索插件
     'AMap.Scale', //右下角缩略图插件 比例尺
@@ -46,8 +46,12 @@ Vue.use(MyServerHttp)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  data: {
+    Bus: new Vue()   },
   router,
   store,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })
