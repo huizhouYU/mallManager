@@ -134,6 +134,11 @@ export default new Router({
       ]
     },
     {
+      name: 'uploadImg',
+      path: '/uploadImg',
+      component: () => import('../../src/pages/upload/uploadImg.vue'),
+    },
+    {
       name: 'shop',
       path: '/shop',
       component: () => import('../../src/pages/shop/index.vue'),

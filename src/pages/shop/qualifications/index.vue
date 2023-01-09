@@ -278,6 +278,11 @@
           max-width: 100%;
           max-height: 100%;
           box-sizing: border-box;
+          /deep/ .el-image__inner{
+            max-width: 260px;
+            max-height: 260px;
+          }
+
         }
       }
     }

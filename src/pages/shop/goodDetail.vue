@@ -64,8 +64,7 @@
                 </div>
                 <!-- 二维码 -->
                 <div class="flex-center-center QR-code">
-                  <template
-                    v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
+                  <template v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
                     <img :src="goodsInfo.domain" alt="">
                   </template>
                   <template v-else>
@@ -100,7 +99,7 @@
             <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
           </div>
         </div>
-        <div class="flex-start-center content-div" v-html="goodsInfo.content"></div>
+        <div class="ql-editor content-div" v-html="goodsInfo.content"></div>
         <div class="flex-column-start-center long-img-div">
           <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in goodsInfo.longImages" :key="index">
         </div>
@@ -117,6 +116,9 @@
   import {
     goodsDetail
   } from '@/api/goods'
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
   export default {
     components: {
       storeRecommendation,
@@ -151,27 +153,33 @@
         goodsId: this.goodsId
       }).then(response => {
         this.goodsInfo = response.data
-        this.bigImgPath = this.goodsInfo.imageList[0]
-        this.categoryStr = ''
-        if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
-          this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
-          for (var index in this.goodsInfo.category) {
-            if (index == 0) {
-              this.categoryStr += this.goodsInfo.category[index].label
-            } else {
-              this.categoryStr += '>' + this.goodsInfo.category[index].label
+        try {
+          this.bigImgPath = this.goodsInfo.imageList[0]
+          this.categoryStr = ''
+          if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
+            this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
+            for (var index in this.goodsInfo.category) {
+              if (index == 0) {
+                this.categoryStr += this.goodsInfo.category[index].label
+              } else {
+                this.categoryStr += '>' + this.goodsInfo.category[index].label
+              }
             }
+          } else {
+            this.categoryStr = this.goodsInfo.cateName
           }
-        } else {
-          this.categoryStr = this.goodsInfo.cateName
+        } catch (e) {
+          console.log("获取商品详情报错：", e)
+        } finally {
+          this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
+            .then((response) => {
+              console.log("保存当前浏览的店铺ID：", response)
+            }).catch(() => {
+              console.log("保存当前浏览的店铺ID失败")
+            })
+          this.$emit("saveStoreId", this.goodsInfo.storeId)
         }
-        this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
-          .then((response) => {
-            console.log("保存当前浏览的店铺ID：", response)
-          }).catch(() => {
-            console.log("保存当前浏览的店铺ID失败")
-          })
-        this.$emit("saveStoreId", this.goodsInfo.storeId)
+
       })
     },
     methods: {}
@@ -502,7 +510,9 @@
         }
 
 
-        .long-img-div, .content-div {
+        .long-img-div,
+        .content-div {
+          height: auto;
           width: 750px;
           box-sizing: border-box;
         }

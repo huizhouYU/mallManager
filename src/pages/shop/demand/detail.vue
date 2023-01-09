@@ -41,7 +41,7 @@
             <span>详细描述</span>
           </div>
           <div class="description">
-            <div class="description-div" v-html="demandInfo.description"></div>
+            <div class=" ql-editor description-div" v-html="demandInfo.description"></div>
             <div class="flex-column-start-center detail-img-div">
               <img class="shop-details-img" :src="item" alt="" v-for="(item,index) in demandInfo.imageList"
                 :key="index">
@@ -100,6 +100,9 @@
 </template>
 
 <script>
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
   import {
     articleDetail
   } from '@/api/supplyDemand'
@@ -136,23 +139,29 @@
           id: this.id
         }).then(response => {
           this.demandInfo = response.data
-          this.demandInfo.regionList = []
-          if (this.demandInfo.region != null && this.demandInfo.region != '') {
-            var region = JSON.parse(this.demandInfo.region)
-            if (region != '') {
-              for (var i in region) {
-                this.demandInfo.regionList.push(region[i].name.join('/'))
+          try {
+            this.demandInfo.regionList = []
+            if (this.demandInfo.region != null && this.demandInfo.region != '') {
+              var region = JSON.parse(this.demandInfo.region)
+              if (region != '') {
+                for (var i in region) {
+                  this.demandInfo.regionList.push(region[i].name.join('/'))
+                }
               }
             }
+          } catch (e) {
+            console.log("获取需求详情-梳理地区报错：", e)
+          } finally {
+            this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
+              .then((response) => {
+                console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺ID失败")
+              })
+            this.$emit("saveStoreId", this.demandInfo.storeId)
           }
-          this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
-            .then((response) => {
-              console.log("保存当前浏览的店铺ID：", response)
-            }).catch(() => {
-              console.log("保存当前浏览的店铺ID失败")
-            })
 
-          this.$emit("saveStoreId", this.demandInfo.storeId)
+
         })
       }
     }
@@ -300,6 +309,7 @@
 
           .description-div {
             width: 800px;
+            height: auto;
             margin-bottom: 10px;
           }
 
