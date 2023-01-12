@@ -64,7 +64,7 @@
     data() {
       return {
         morePath: '/accessory',
-        title: "配件专区",
+        title: "设备配件",
         currentPage4: 4,
         accessoriesList: [],
         chosedLevel:[]

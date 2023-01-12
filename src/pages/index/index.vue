@@ -109,7 +109,7 @@
             path: '/home'
           },
           {
-            title: '配件专区',
+            title: '设备配件',
             isHot: true,
             isNew: false,
             path: '/accessory'
