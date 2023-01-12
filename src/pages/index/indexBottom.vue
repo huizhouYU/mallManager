@@ -48,8 +48,12 @@
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34019102001080">皖公网备案 34019102001080</a>
       </p>
       <p class="item3">
-        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/qualification.jpg">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a> |
-        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/vualeAdd.png">增值电信业务经营许可证：皖B2-20220523</a>
+        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/20230107190205875_00(1)(1).png">企业营业执照</a> |
+        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-医疗器械备案凭证.png">医疗器械网络交易服务第三方平台备案凭证</a>
+      </p>
+      <p class="item3">
+        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-服务资格证书.png">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a> |
+        <a target="_blank" href="https://image.yijiequan.cn/yijiequan-client/attach/20230107190205875_01(1)(1)(1).png">增值电信业务经营许可证：皖B2-20220523</a>
       </p>
       <!-- <p class="item3">公司名称：医界网络科技（安徽）有限公司 | 社会统一信用代码：91110105336460203N</p> -->
     </div>

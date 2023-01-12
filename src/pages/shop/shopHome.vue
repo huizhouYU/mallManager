@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <store-recommendation class="store-recommendation" :isShowTitleImg="isShowTitleImg"></store-recommendation>
+      <store-recommendation class="store-recommendation" :isShowTitleImg="isShowTitleImg" :adsList="adsList"></store-recommendation>
     </div>
     <div class="shop-home-box-right">
       <!-- 简要介绍 -->
@@ -144,7 +144,27 @@
         demandDataList: [],
         isShowTitleImg: false,
         grid5: true,
-        lookSrcList: []
+        lookSrcList: [],
+        adsList: [{
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090148.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
+          }
+        
+        ]
       }
     },
     mounted() {

@@ -7,55 +7,35 @@
     <div v-for="(item,index) in recommendgoodsList" :key="index" class="recommendgoods-item">
       <div class="img-title">
         <img :src="item.imgPath" alt="">
-        <div class="bg-title">{{item.title}}</div>
       </div>
-      <ul>
-        <li v-for="(lab,ind) in item.laber" :key="ind">{{lab}}</li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script>
-  import {
-    recommendList
-  } from '@/api/supplyDemand'
   export default {
     data() {
       return {
         recommendgoodsList: [{
-          title: '没开学什么事农村食品昆明绯闻漫天飞',
-          imgPath: require('../../assets/images/index/demand/pic_gongqiu_tj.png'),
-          laber: ['飞利浦', '核磁配件']
-        },
-        {
-          title: '没开学什么事农村食品昆明绯闻漫天飞',
-          imgPath: require('../../assets/images/index/demand/pic_gongqiu_tj.png'),
-          laber: ['飞利浦', '核磁配件']
-        },
-        {
-          title: '没开学什么事农村食品昆明绯闻漫天飞',
-          imgPath: require('../../assets/images/index/demand/pic_gongqiu_tj.png'),
-          laber: ['飞利浦', '核磁配件']
-        },
-        {
-          title: '没开学什么事农村食品昆明绯闻漫天飞',
-          imgPath: require('../../assets/images/index/demand/pic_gongqiu_tj.png'),
-          laber: ['飞利浦', '核磁配件']
-        }
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090148.jpg',
+          }
         ]
       }
     },
-    mounted() {
-      this.getData()
-    },
-    methods:{
-      getData(){
-        recommendList().then(response=>{
-          console.log('供求信息-精品推荐：',response)
-        })
-      }
-    }
+    mounted() {},
+    methods: {}
   }
 </script>
 
@@ -95,49 +75,15 @@
     justify-content: flex-start;
     padding: 20px 0px 10px 0px;
     border-bottom: 1px dashed #EEEEEE;
+
     .img-title {
       width: 214px;
-      height: 117px;
       position: relative;
 
       img {
         width: 100%;
-        height: 100%;
       }
 
-      .bg-title {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        // height: 22px;
-        background: rgba(0, 0, 0, 0.6);
-        font-size: 14px;
-        font-family: Microsoft YaHei;
-        font-weight: 400;
-        color: #FFFFFF;
-        padding: 5px 18px 4px 6px;
-        box-sizing: border-box;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
     }
-    ul{
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 10px;
-      li{
-        background: #F6F6F6;
-        border-radius: 2px;
-        margin-right: 15px;
-        font-size: 12px;
-        font-family: Microsoft YaHei;
-        font-weight: 400;
-        color: #666666;
-        padding: 5px 6px;
-      }
-    }
-
   }
 </style>

@@ -94,9 +94,9 @@
           </div>
           <div class="product-info-item">所属类目：{{goodsInfo.cateName||'-'}}</div>
           <div class="product-info-item">质保期：{{goodsInfo.qualityTime||'-'}}
-            <template v-if="goodsInfo.qualityTimeUnit == 'day'">日</template>
-            <template v-else-if="goodsInfo.qualityTimeUnit == 'month'">月</template>
-            <template v-else-if="goodsInfo.qualityTimeUnit == 'year'">年</template>
+            <template v-if="goodsInfo.qualityTimeUnit == 'day'|| goodsInfo.qualityTimeUnit == '日'">日</template>
+            <template v-else-if="goodsInfo.qualityTimeUnit == 'month'|| goodsInfo.qualityTimeUnit == '月'">月</template>
+            <template v-else-if="goodsInfo.qualityTimeUnit == 'year'|| goodsInfo.qualityTimeUnit == '年'">年</template>
           </div>
         </div>
         <div class="ql-editor content-div" v-html="goodsInfo.content"></div>
@@ -105,7 +105,7 @@
         </div>
       </div>
       <!-- 店内推荐 -->
-      <store-recommendation class="store-recommendation"></store-recommendation>
+      <store-recommendation class="store-recommendation" :adsList="adsList"></store-recommendation>
     </div>
   </div>
 </template>
@@ -143,7 +143,23 @@
           brand: '',
           category: '',
           qualityGuaranteePeriod: ''
-        }
+        },
+        adsList: [{
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
+          },
+          {
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
+          }
+        ]
       }
     },
     mounted() {
