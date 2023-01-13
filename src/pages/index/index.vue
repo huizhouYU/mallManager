@@ -3,7 +3,8 @@
 
     <!-- 首页banner图 -->
     <div class="top-banner" v-show="!hiddenTopImg">
-      <img src="../../assets/images/index/banner_top.png" alt="">
+      <!-- <img src="../../assets/images/index/banner_top.png" alt=""> -->
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg" alt="">
       <div class="del-icon-div" @click="hiddenTopImg=true">
         <i class="iconfont">&#xe8e7;</i>
       </div>
