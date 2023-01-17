@@ -132,6 +132,9 @@
     <!-- 医疗器械 -->
     <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" v-show="productList.length>0">
     </product-show>
+    <div class="long-adv">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
+    </div>
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices">
     </enterprise-services>
