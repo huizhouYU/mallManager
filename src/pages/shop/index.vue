@@ -78,14 +78,14 @@
             name: '店铺首页',
             path: '/shopHome'
           },
-          {
-            name: '简要介绍',
-            path: '/introductionIndex'
-          },
-          {
-            name: '资质证书',
-            path: '/qualificationsIndex'
-          },
+          // {
+          //   name: '简要介绍',
+          //   path: '/introductionIndex'
+          // },
+          // {
+          //   name: '资质证书',
+          //   path: '/qualificationsIndex'
+          // },
           {
             name: '店铺商品',
             path: '/shopAllGoods'
@@ -93,11 +93,12 @@
           {
             name: '供求信息',
             path: '/demandIndex'
-          },
-          {
-            name: '联系方式',
-            path: '/contactIndex'
           }
+          // ,
+          // {
+          //   name: '联系方式',
+          //   path: '/contactIndex'
+          // }
         ]
       }
     },
