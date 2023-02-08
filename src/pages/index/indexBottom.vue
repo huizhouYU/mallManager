@@ -7,28 +7,28 @@
           <img src="../../assets/images/index/pic_word_shi.png" alt="">
           <div class="title">
             <p class="name">商家实名</p>
-            <p class="remark">官方把关，服务商100%实名认证</p>
+            <!-- <p class="remark">官方把关，服务商100%实名认证</p> -->
           </div>
         </div>
         <div class="item">
           <img src="../../assets/images/index/pic_word_gui.png" alt="">
           <div class="title">
             <p class="name">交易合规</p>
-            <p class="remark">所有交易均采用电子合同签署</p>
+            <!-- <p class="remark">所有交易均采用电子合同签署</p> -->
           </div>
         </div>
         <div class="item">
           <img src="../../assets/images/index/pic_word_an.png" alt="">
           <div class="title">
             <p class="name">资金安全</p>
-            <p class="remark">付款后，验收合格后卖家方可提款</p>
+            <!-- <p class="remark">付款后，验收合格后卖家方可提款</p> -->
           </div>
         </div>
         <div class="item">
           <img src="../../assets/images/index/pic_word_bao.png" alt="">
           <div class="title">
             <p class="name">全程保障</p>
-            <p class="remark">企业服务交易全流程线上保障</p>
+            <!-- <p class="remark">企业服务交易全流程线上保障</p> -->
           </div>
         </div>
 
