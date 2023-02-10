@@ -5,6 +5,10 @@ body {
   padding: 0;
 }
 
+div {
+  box-sizing: border-box;
+}
+
 p,
 ul,
 li {
@@ -142,17 +146,12 @@ li {
   align-items: flex-end;
 }
 
-
 .flex-column-center-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
-
-
-
 
 /* 公共的样式：横向+水平居中+垂直居中 */
 .flex-horizontal-centent-centent {
@@ -188,4 +187,180 @@ li {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+/* 分类 */
+.brand-nav-box {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+}
+
+.brand-nav-box .brand-nav-box-ul {
+  /* overflow-y: auto; */
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand-nav-box .one-li {
+  /* height: calc((100%)/10); */
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.brand-nav-box .one-li .one-cate-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* height: 44px; */
+}
+
+.brand-nav-box .one-li .one-cate-box .one-cate-img-box {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.brand-nav-box .one-li .one-cate-box .one-cate-img-box .one-cate-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.brand-nav-box .one-cate-select {
+  background-color: #E6F7FF;
+}
+
+.brand-nav-box .one-li:hover {
+  background-color: #E6F7FF;
+}
+
+.brand-nav-box .one-title:hover {
+  color: #ffa135;
+}
+
+/* //更改每个模块滚动条样式 */
+.brand-nav-box::-webkit-scrollbar,
+.brand-nav-box-ul::-webkit-scrollbar,
+.brand-nav-box .more-classification::-webkit-scrollbar {
+  width: 6px;
+}
+
+.brand-nav-box::-webkit-scrollbar-thumb,
+.brand-nav-box-ul::-webkit-scrollbar-thumb,
+.brand-nav-box .more-classification::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.brand-nav-box::-webkit-scrollbar-trackr,
+.brand-nav-box-ul::-webkit-scrollbar-thumb,
+.brand-nav-box .more-classification::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.brand-nav-box .more-classification {
+  display: none;
+  width: 730px;
+  height: 600px;
+  background-color: #fff;
+  position: absolute;
+  top: 0px;
+  left: 240px;
+  z-index: 88;
+  overflow-y: auto;
+  padding: 35px 20px 40px 30px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px 5px #eee;
+}
+
+.brand-nav-box .more-classification .yijie-title {
+  position: relative;
+  padding: 0px 0px 0px 10px;
+  line-height: 20px;
+  font-weight: bold;
+  color: #40A9FF;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.brand-nav-box .more-classification .yijie-title:before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 4px;
+  height: 100%;
+  background: #40A9FF;
+  border-radius: 2px;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+
+.brand-nav-box .more-classification .item:last-child {
+  padding-bottom: 0;
+  border-bottom: 1px solid #eee;
+}
+
+.brand-nav-box .more-classification .item {
+  padding: 10px 0px;
+  border-top: 1px solid #eee;
+}
+
+.brand-nav-box .more-classification .item .title {
+  width: 140px;
+  padding: 2px 0px 2px 0px;
+  font-size: 12px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+.brand-nav-box .more-classification .item .more-classification-ul {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+
+.brand-nav-box .more-classification .item .more-classification-ul .more-classification-li {
+  margin: 5px 0px;
+  font-size: 12px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #555555;
+  cursor: pointer;
+  border-right: 1px solid #bbb;
+  padding: 0px 10px;
+}
+
+.brand-nav-box .more-classification .item .more-classification-ul .more-classification-li:hover {
+  color: #40A9FF;
+}
+
+.brand-nav-box .more-classification .item:hover .title {
+  color: #40A9FF;
+}
+
+.brand-nav-box:hover .more-classification {
+  display: block;
 }

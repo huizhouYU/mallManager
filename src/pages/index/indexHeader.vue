@@ -171,6 +171,7 @@
             border: none;
             display: flex;
             align-items: center;
+            height: 100%;
           }
 
           /deep/.el-popper[x-placement^=bottom] {
@@ -180,6 +181,7 @@
           .search-select /deep/ .el-input,
           .search-select /deep/ .el-input__inner {
             border: none; // 去掉边框
+            height: 100%;
           }
 
 

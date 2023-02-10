@@ -7,21 +7,31 @@
 
         <!-- 左侧导航 -->
         <div width="240px" class="main-aside">
-          <ul class="brand-nav-box">
-            <li v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">{{item.cateName}}
-              <i class="iconfont">&#xe63c;</i>
-            </li>
+          <div class="brand-nav-box">
+            <ul class="brand-nav-box-ul">
+              <li :class="['one-li',{'one-cate-select':item.cateId == oneCate.cateId}]" v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">
+                <div class="one-cate-box">
+                  <div class="one-cate-img-box">
+                    <img src="../../assets/images/icon_cate.png" alt="" class="one-cate-img">
+                  </div>
+                  <div class="one-title">{{item.cateName}}</div>
+                </div>
+                <i class="iconfont">&#xe63c;</i>
+              </li>
+            </ul>
+
             <!-- 左侧导航条悬浮显示的内容 -->
             <div class="more-classification">
-              <div class="item" v-for="(item,index) in classDatas" :key="index">
+              <div class="yijie-title">{{oneCate.cateName}}</div>
+              <div class="flex-start-start item" v-for="(item,index) in classDatas" :key="index">
                 <div class="title" @click="jumpToGood(item,'2')">{{item.cateName}}</div>
-                <ul>
-                  <li v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">{{child.cateName}}
+                <ul class="more-classification-ul">
+                  <li class="more-classification-li" v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">{{child.cateName}}
                   </li>
                 </ul>
               </div>
             </div>
-          </ul>
+          </div>
         </div>
         <!-- 右边内容-->
         <div>
@@ -103,7 +113,7 @@
     </div>
     <!--各大品牌 -->
     <div class="adv_brand-adv">
-      <div class="advertisement_left"  @click="toAd('135')">
+      <div class="advertisement_left" @click="toAd('135')">
         <img src="../../assets/images/index/pic_left.jpg" alt="">
       </div>
       <ul class="brands">
@@ -130,7 +140,8 @@
       <img src="../../assets/images/index/ad-long.jpg" alt="">
     </div>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus" v-show="productList.length>0">
+    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus"
+      v-show="productList.length>0">
     </product-show>
     <div class="long-adv">
       <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
@@ -187,6 +198,7 @@
     props: ['brandList'],
     data() {
       return {
+        oneCate: '',
         accessory: '/accessory',
         medicalApparatus: '/medicalApparatus?goodsType=equipment',
         enterpriseServices: '/enterpriseServices',
@@ -258,7 +270,7 @@
           this.companyList = response.data
         })
       },
-      toAd(id){
+      toAd(id) {
         var newPath = this.$router.resolve({
           path: '/shopHome',
           query: {
@@ -328,6 +340,11 @@
       },
       enterClass(index) {
         //根据id去请求classDatas数据
+        // console.log("this.brandList[index]:",this.brandList[index])
+        this.oneCate ={
+          'cateId':this.brandList[index].cateId,
+          'cateName':this.brandList[index].cateName
+        }
         if (this.brandList[index].children != undefined && this.brandList[index].children.length > 0) {
           this.classDatas = this.brandList[index].children
         } else {
@@ -366,12 +383,13 @@
 </script>
 
 <style scoped lang="less">
-  .long-adv{
+  .long-adv {
     margin-top: 25px;
     width: 100%;
     height: 100px;
     box-sizing: border-box;
   }
+
   // 模块二
   .index-content {
     width: 1200px;
@@ -396,109 +414,6 @@
         width: 100%;
         height: 60px;
       }
-
-      .brand-nav-box {
-        position: relative;
-        width: 100%;
-        // height: 530px;
-        height: 600px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        li {
-          height: calc((100%)/10);
-          box-sizing: border-box;
-          background-color: #fff;
-          padding: 0px 15px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 14px;
-          color: #333;
-          cursor: pointer;
-        }
-
-        li:hover {
-          background-color: #E6F7FF;
-          color: #40A9FF;
-        }
-
-        //更改每个模块滚动条样式
-        .more-classification::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .more-classification::-webkit-scrollbar-thumb {
-          border-radius: 10px;
-          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
-          background: rgba(0, 0, 0, 0.2);
-        }
-
-        .more-classification::-webkit-scrollbar-track {
-          box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.2);
-          border-radius: 0;
-          background: rgba(0, 0, 0, 0);
-        }
-
-        .more-classification {
-          display: none;
-          width: 730px;
-          height: 600px;
-          background-color: #fff;
-          position: absolute;
-          top: 0px;
-          left: 240px;
-          z-index: 88;
-          overflow-y: auto;
-          padding: 35px 20px 40px 30px;
-          box-sizing: border-box;
-          box-shadow: 0px 0px 10px 5px #eee;
-
-          .item:last-child {
-            padding-bottom: 0;
-          }
-
-          .item {
-            padding-bottom: 30px;
-
-            .title {
-              padding: 2px 0px 2px 10px;
-              border-left: 1px solid #40A9FF;
-              font-size: 14px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #333333;
-            }
-
-            ul {
-              display: flex;
-              flex-wrap: wrap;
-              margin-top: 10px;
-
-              li {
-                margin: 5px 10px 5px 0px;
-                font-size: 12px;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: #555555;
-                cursor: pointer;
-              }
-
-              li:hover {
-                color: #40A9FF;
-              }
-            }
-          }
-
-        }
-
-      }
-
-      ul:hover .more-classification {
-        display: block;
-      }
-
 
       .more-brands {
         height: 60px;
