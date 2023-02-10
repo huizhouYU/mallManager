@@ -1,7 +1,8 @@
 <template>
   <div class="left_div">
     <div class="left">
-      <img :src="mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'>
+      <!-- <img :src="mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'> -->
+      <img :src="mainImgUrl" class="img" >
     </div>
     <!-- <div class="img_wz">鼠标滚轮可控制图片缩放</div> -->
     <div>
@@ -43,7 +44,7 @@
       changeImg(item, index) {
         this.mainImgUrl = item
         this.imgActiveIndex = index
-        this.resetImg();
+        // this.resetImg();
       },
       resetImg() {
         this.$refs.imgDiv.style.zoom = '100%'
@@ -73,7 +74,7 @@
             }
           }, 10)
         }
-        this.resetImg();
+        // this.resetImg();
       },
       imgRight() {
         if (this.imgActiveIndex < this.imgUrlList.length - 1) {
@@ -110,7 +111,7 @@
             }
           }, 1)
         }
-        this.resetImg();
+        // this.resetImg();
       },
       // 滚轮滑动
       gunlun(event) {
@@ -211,8 +212,10 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    max-width: 923px;
-    max-height: 460px;
+  /*  max-width: 923px;
+    max-height: 460px; */
+    width: 100%;
+    height: 100%;
     cursor: move;
   }
 </style>
