@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://web-api.yijiequan.cn/', // url = base url + request url
+  baseURL: 'https://web-api.yijiequan.cn/', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests  允许跨域携带cookie
   timeout: 5000 // request timeout
 })

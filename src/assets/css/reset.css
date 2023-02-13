@@ -211,7 +211,7 @@ li {
   /* height: calc((100%)/10); */
   box-sizing: border-box;
   background-color: #fff;
-  padding: 0px 15px;
+  padding: 0px 20px 0px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -228,9 +228,12 @@ li {
 }
 
 .brand-nav-box .one-li .one-cate-box .one-cate-img-box {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .brand-nav-box .one-li .one-cate-box .one-cate-img-box .one-cate-img {

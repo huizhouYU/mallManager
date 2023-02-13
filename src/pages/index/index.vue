@@ -34,28 +34,30 @@
           <div class="brand-classification">
             <div width="240px" class="main-aside">
               <div class="brand-nav-box">
-                 <ul class="brand-nav-box-ul">
-               <!-- <li v-for="(item,index) in brandList" :key="item.cateId" class="flex-between-center"
+                <ul class="brand-nav-box-ul">
+                  <!-- <li v-for="(item,index) in brandList" :key="item.cateId" class="flex-between-center"
                   @mouseenter="enterClass(index)">{{item.cateName}}
                   <i class="iconfont">&#xe63c;</i>
                 </li> -->
-                <li :class="['one-li',{'one-cate-select':item.cateId == oneCate.cateId}]" v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">
-                  <div class="one-cate-box">
-                    <div class="one-cate-img-box">
-                      <img src="../../assets/images/icon_cate.png" alt="" class="one-cate-img">
+                  <li :class="['one-li',{'one-cate-select':item.cateId == oneCate.cateId}]"
+                    v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">
+                    <div class="one-cate-box">
+                      <div class="one-cate-img-box">
+                        <img :src="item.image" alt="" class="one-cate-img">
+                      </div>
+                      <div class="one-title">{{item.cateName}}</div>
                     </div>
-                    <div class="one-title">{{item.cateName}}</div>
-                  </div>
-                  <i class="iconfont">&#xe63c;</i>
-                </li>
-                 </ul>
+                    <i class="iconfont">&#xe63c;</i>
+                  </li>
+                </ul>
                 <!-- 左侧导航条悬浮显示的内容 -->
                 <div class="more-classification">
                   <div class="yijie-title">{{oneCate.cateName}}</div>
                   <div class="flex-start-start item" v-for="(item,index) in classDatas" :key="index">
                     <div class="title" @click="jumpToGood(item,'2')">{{item.cateName}}</div>
                     <ul class="more-classification-ul">
-                      <li class="more-classification-li" v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">
+                      <li class="more-classification-li" v-for="(child,ind) in item.children" :key="ind"
+                        @click="jumpToGood(child,'3')">
                         {{child.cateName}}
                       </li>
                     </ul>
@@ -82,6 +84,10 @@
     </div>
     <router-view class="each-module" :brandList='brandList' @topImg="topImg" v-if="isRouterAlive"></router-view>
     <index-bottom></index-bottom>
+    <el-dialog title="为您找货" :visible.sync="centerDialogVisible" width="50%" left>
+      <div class="flex-start-center dialog-remark">填写您的咨询内容，我们将尽快给您答复。</div>
+      <product-consult :cancelShow="cancelShow" @closeVisible="closeVisible" class="product-consult-dialog"></product-consult>
+    </el-dialog>
   </div>
 </template>
 
@@ -92,6 +98,7 @@
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
   import indexBottom from '../../pages/index/indexBottom.vue'
+  import productConsult from "../../pages/index/productConsult.vue"
   import {
     categoryList
   } from '@/api/index'
@@ -101,7 +108,8 @@
       headerTitle,
       serviceItem4Page,
       serviceItem5Page,
-      indexBottom
+      indexBottom,
+      productConsult
     },
     props: {
       hiddenTopImg: {
@@ -111,6 +119,8 @@
     },
     data() {
       return {
+        cancelShow: true,
+        centerDialogVisible: false,
         oneCate: '',
         isRouterAlive: true,
         // hiddenTopImg: false,
@@ -174,6 +184,9 @@
       Bus.$on("reloadPage", data => {
         this.reload()
       })
+      Bus.$on("openVisible", data => {
+        this.openVisible()
+      })
       this.goTop()
       var path = this.$route.fullPath
       this.chooseTab = path
@@ -182,6 +195,7 @@
     beforeDestroy() {
       // 取消监听
       Bus.$off("reloadPage")
+      Bus.$off("openVisible")
     },
     watch: {
       $route(to, from) {
@@ -196,6 +210,13 @@
       }
     },
     methods: {
+      openVisible() {
+        console.log("打开")
+        this.centerDialogVisible = true
+      },
+      closeVisible() {
+        this.centerDialogVisible = false
+      },
       reload() {
         this.isRouterAlive = false
         this.$nextTick(() => (this.isRouterAlive = true))
@@ -217,9 +238,9 @@
         })
       },
       enterClass(index) {
-        this.oneCate ={
-          'cateId':this.brandList[index].cateId,
-          'cateName':this.brandList[index].cateName
+        this.oneCate = {
+          'cateId': this.brandList[index].cateId,
+          'cateName': this.brandList[index].cateName
         }
         //根据id去请求classDatas数据
         if (this.brandList[index].children != undefined && this.brandList[index].children.length > 0) {
@@ -538,7 +559,30 @@
         }
       }
     }
+  }
 
+  /deep/ .el-dialog__body {
+    padding: 0px;
+  }
 
+  /deep/ .el-dialog__header {
+    padding: 10px 20px;
+  }
+
+  /deep/ .el-dialog__headerbtn {
+    top: 15px;
+  }
+
+  /deep/ .el-dialog {
+    box-shadow: none;
+  }
+
+  .dialog-remark {
+    padding-left: 20px;
+    width: 100%;
+    background-color: rgba(64, 169, 255, 0.5);
+    height: 40px;
+    color: #fff;
+    font-size: 14px;
   }
 </style>

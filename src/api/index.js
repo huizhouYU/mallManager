@@ -86,3 +86,12 @@ export function searchKeys(query) {
     params: query
   })
 }
+
+//客户留言提交
+export function guestMessage(data) {
+  return request({
+    url: '/guestMessage/submit',
+    method: 'post',
+    data: data
+  })
+}

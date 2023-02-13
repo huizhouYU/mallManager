@@ -4,7 +4,7 @@
       <img src="../../assets/images/logo.png" class="herder-logo" />
     </div>
     <div class="search-box">
-      <div class="flex-between-center search-box-top">
+      <div class="flex-start-center search-box-top">
         <div class="search">
           <el-select :popper-append-to-body="false" v-model="searchData.typeId" placeholder="请选择" class="search-select"
             @change="changeType">
@@ -16,6 +16,10 @@
             <i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span>
           </el-button>
         </div>
+        <button class="flex-center-center find-good-btn" @click="openVisible">
+          <img src="../../assets/images/icon_zhaohuo_sel.png" alt="">
+          <span>为您找货</span>
+        </button>
         <!-- <span class="font-6">或</span> -->
         <button class="btn-demand" @click="publishDemand">快速发布需求</button>
       </div>
@@ -26,17 +30,27 @@
         </ul>
       </div>
     </div>
+   <!-- <el-dialog title="为您找货" :visible.sync="centerDialogVisible" width="50%" left>
+      <div class="flex-start-center dialog-remark">填写您的咨询内容，我们将尽快给您答复。</div>
+      <product-consult :cancelShow="cancelShow" @closeVisible="closeVisible"></product-consult>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
   import Bus from "../../utils/Bus.js"
+  import productConsult from "../../pages/index/productConsult.vue"
   import {
     searchKeys
   } from '@/api/index'
   export default {
+    components: {
+      productConsult
+    },
     data() {
       return {
+        // cancelShow:true,
+        // centerDialogVisible: false,
         options: [{
             value: '1',
             path: '/medicalApparatus',
@@ -65,6 +79,12 @@
       this.getData()
     },
     methods: {
+      openVisible(){
+        Bus.$emit('openVisible',{})
+      },
+      // closeVisible(){
+      //   this.centerDialogVisible = false
+      // },
       getData() {
         searchKeys({
           typeId: this.searchData.typeId
@@ -104,11 +124,11 @@
             this.searchData.path = this.options[index].path
           }
         }
-         // Bus.$emit("reloadPage", "")
+        // Bus.$emit("reloadPage", "")
         this.$router.push({
           path: this.searchData.path,
           query: params,
-          replace:true
+          replace: true
         })
       },
       publishDemand() {
@@ -271,4 +291,28 @@
     color: #FFFFFF;
     border: none;
   }
+
+  // 为您找货
+  .find-good-btn {
+    margin-left: 50px;
+    width: 157px;
+    height: 40px;
+    background: #48AFF9;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: Microsoft YaHei;
+    font-weight: 400;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+
+    img {
+      width: 17px;
+      height: 17px;
+      margin-right: 12px;
+      box-sizing: border-box;
+    }
+  }
+ 
 </style>

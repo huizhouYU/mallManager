@@ -4,15 +4,15 @@
     <div class="module1-content index-content">
       <!-- 主体内容 -->
       <div class="flex-between-start index-main">
-
         <!-- 左侧导航 -->
         <div width="240px" class="main-aside">
           <div class="brand-nav-box">
             <ul class="brand-nav-box-ul">
-              <li :class="['one-li',{'one-cate-select':item.cateId == oneCate.cateId}]" v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">
+              <li :class="['one-li',{'one-cate-select':item.cateId == oneCate.cateId}]"
+                v-for="(item,index) in brandList" :key="item.cateId" @mouseenter="enterClass(index)">
                 <div class="one-cate-box">
                   <div class="one-cate-img-box">
-                    <img src="../../assets/images/icon_cate.png" alt="" class="one-cate-img">
+                    <img :src="item.image" alt="" class="one-cate-img">
                   </div>
                   <div class="one-title">{{item.cateName}}</div>
                 </div>
@@ -26,7 +26,8 @@
               <div class="flex-start-start item" v-for="(item,index) in classDatas" :key="index">
                 <div class="title" @click="jumpToGood(item,'2')">{{item.cateName}}</div>
                 <ul class="more-classification-ul">
-                  <li class="more-classification-li" v-for="(child,ind) in item.children" :key="ind" @click="jumpToGood(child,'3')">{{child.cateName}}
+                  <li class="more-classification-li" v-for="(child,ind) in item.children" :key="ind"
+                    @click="jumpToGood(child,'3')">{{child.cateName}}
                   </li>
                 </ul>
               </div>
@@ -151,10 +152,65 @@
     </enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>
-    <!-- 模块六 两张大图 -->
-    <div class="modle6-pic">
-      <img src="../../assets/images/index/pic_jineng.png" alt="">
-      <img src="../../assets/images/index/pic_xuqiu.png" alt="">
+    <!-- 为您找货 + 手机医界圈 + 资质证书 -->
+    <div class="flex-between-center modle6-pic">
+      <!-- 为您找货 -->
+      <div class="flex-column-start-start  find-goods-module">
+        <div class="flex-start-center module-title">
+          <span class="title">产品咨询</span>
+          <div class="spot"></div>
+          <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
+        </div>
+        <product-consult class="product-consult"></product-consult>
+
+      </div>
+      <!-- 手机医界圈 + 资质证书 -->
+      <div class="flex-column-between-start phone-certificate">
+        <!-- 手机医界圈 -->
+        <div class="flex-column-start-start phone-yijiequan">
+          <div class="flex-start-center module-title">
+            <span class="title">手机医界圈</span>
+            <div class="spot"></div>
+            <span class="remark">手机扫码，随时随地查看采购。</span>
+          </div>
+          <div class="flex-center-center various-code">
+            <div class="flex-center-center xiaochengxu">
+              <span>医界圈小程序：</span>
+              <img src="https://image.yijiequan.cn/yijiequan-client/attach/pic_xiaochengxu.jpg" alt="">
+            </div>
+            <div class="flex-center-center customer-service">
+              <span>医界圈客服：</span>
+              <img src="https://image.yijiequan.cn/yijiequan-client/attach/pic_erweima.png" alt="">
+            </div>
+          </div>
+        </div>
+        <!-- 资质证书 -->
+        <div class="flex-column-start-start qualification-certificate">
+          <div class="flex-start-center module-title">
+            <span class="title">资质证书</span>
+            <div class="spot"></div>
+            <span class="remark">证书认证，有保障</span>
+          </div>
+          <ul class="flex-column-between-start certificate-ul">
+            <li>
+              <a target="_blank"
+                href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-医疗器械备案凭证.png">医疗器械网络交易服务第三方平台备案凭证</a>
+            </li>
+            <li>
+              <a target="_blank"
+                href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-服务资格证书.png">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a>
+            </li>
+            <li>
+              <a target="_blank"
+                href="https://image.yijiequan.cn/yijiequan-client/attach/20230107190205875_00(1)(1).png">企业营业执照：91340111MA8P9K0G9N(1-1)</a>
+            </li>
+            <li>
+              <a target="_blank"
+                href="https://image.yijiequan.cn/yijiequan-client/attach/20230107190205875_01(1)(1)(1).png">增值电信业务经营许可证：皖B2-20220523</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -168,6 +224,7 @@
   import productShow from '../../pages/index/productShow.vue' //医疗器械
   import enterpriseServices from '../../pages/index/enterpriseServices.vue' //企业服务
   import personalEngineer from '../../pages/index/personalEngineer.vue' //个人工程师
+  import productConsult from '../../pages/index/productConsult.vue'
   import {
     recommendGoods,
     getBrandsList,
@@ -182,7 +239,8 @@
       accessoriesArea,
       productShow,
       enterpriseServices,
-      personalEngineer
+      personalEngineer,
+      productConsult
     },
     computed: {
       ...mapGetters([
@@ -198,6 +256,7 @@
     props: ['brandList'],
     data() {
       return {
+
         oneCate: '',
         accessory: '/accessory',
         medicalApparatus: '/medicalApparatus?goodsType=equipment',
@@ -341,9 +400,9 @@
       enterClass(index) {
         //根据id去请求classDatas数据
         // console.log("this.brandList[index]:",this.brandList[index])
-        this.oneCate ={
-          'cateId':this.brandList[index].cateId,
-          'cateName':this.brandList[index].cateName
+        this.oneCate = {
+          'cateId': this.brandList[index].cateId,
+          'cateName': this.brandList[index].cateName
         }
         if (this.brandList[index].children != undefined && this.brandList[index].children.length > 0) {
           this.classDatas = this.brandList[index].children
@@ -961,19 +1020,108 @@
     margin-top: 25px;
   }
 
-  // 模块六 两张大图
+  // 模块六 为您找货 + 手机医界圈 + 资质证书
   .modle6-pic {
     width: 1200px;
-    height: 270px;
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    margin: auto;
+    height: 350px;
     margin-top: 25px;
+    box-sizing: border-box;
 
-    img {
-      width: 600px;
+    .module-title {
+      .title {
+        line-height: 18px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        color: #333333;
+      }
+
+      .spot {
+        width: 5px;
+        height: 5px;
+        font-weight: 400;
+        background: #999999;
+        border-radius: 50%;
+        margin: 0px 10px;
+      }
+
+      .remark {
+        font-size: 14px;
+        font-family: Source Han Sans SC;
+        font-weight: 400;
+        color: #40A9FF;
+      }
+    }
+
+    // 为您找货
+    .find-goods-module {
       height: 100%;
+      width: 595px;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 20px;
+
+      .product-consult {
+        flex: 1;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+    }
+
+    // 手机医界圈 + 资质证书
+    .phone-certificate {
+      width: 595px;
+      height: 100%;
+      box-sizing: border-box;
+
+      .phone-yijiequan,
+      .qualification-certificate {
+        width: 100%;
+        height: 170px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+
+      .certificate-ul {
+        flex: 1;
+        padding-top: 15px;
+
+        li {
+          font-size: 14px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #333333;
+
+          a {
+            color: #333333;
+            text-decoration: none;
+          }
+        }
+      }
+
+      .various-code {
+        flex: 1;
+        width: 100%;
+        font-size: 14px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #333333;
+
+        .xiaochengxu,
+        .customer-service {
+          flex: 1;
+          height: 100%;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+        }
+      }
     }
   }
 </style>
