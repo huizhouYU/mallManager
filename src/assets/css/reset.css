@@ -218,6 +218,7 @@ li {
   font-size: 14px;
   color: #333;
   cursor: pointer;
+  flex: 1;
 }
 
 .brand-nav-box .one-li .one-cate-box {
@@ -251,7 +252,7 @@ li {
 }
 
 .brand-nav-box .one-title:hover {
-  color: #ffa135;
+  color: #40A9FF;
 }
 
 /* //更改每个模块滚动条样式 */
