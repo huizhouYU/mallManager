@@ -134,21 +134,25 @@
         <img src="../../assets/images/index/pic_right.jpg" alt="">
       </div>
     </div>
+    <!-- 医疗器械 -->
+    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="medicalApparatus" title="医疗器械" groupId="2">
+    </accessories-area>
+    <div class="long-adv">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
+    </div>
     <!-- 配件专区 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :tabIndex="accessory">
+    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="配件专区"  groupId="1">
     </accessories-area>
     <div class="long-adv">
       <img src="../../assets/images/index/ad-long.jpg" alt="">
     </div>
     <!-- 医疗器械 -->
-    <product-show class="product-show" :productList="productList" :tabIndex="medicalApparatus"
+   <!-- <product-show class="product-show" :productList="productList" :morePath="medicalApparatus"
       v-show="productList.length>0">
-    </product-show>
-    <div class="long-adv">
-      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
-    </div>
+    </product-show> -->
+
     <!-- 企业服务 -->
-    <enterprise-services class="enterprise-services" :companyList="companyList" :tabIndex="enterpriseServices">
+    <enterprise-services class="enterprise-services" :companyList="companyList" :morePath="enterpriseServices">
     </enterprise-services>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>

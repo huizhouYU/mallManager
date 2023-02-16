@@ -1,7 +1,7 @@
 <!-- 配件专区 -->
 <template>
   <div class="accessories_area">
-    <titleMore :title="title" class="title_more" v-if="showTitle" :morePath="morePath" :tabIndex="tabIndex"></titleMore>
+    <titleMore :title="title" class="title_more" v-if="showTitle" :morePath="morePath" ></titleMore>
     <div class="item_content">
       <div class="item" v-for="(item,index) in accessoriesList" :key="index">
         <div class="flex-between-center item_top">
@@ -54,8 +54,10 @@
       titleMore
     },
     props: {
+      title:String,
+      groupId:[String,Number],
       showTitle: Boolean,
-      tabIndex: String,
+      morePath: String,
       showPage:{
         type:Boolean,
         default:false
@@ -63,8 +65,8 @@
     },
     data() {
       return {
-        morePath: '/accessory',
-        title: "设备配件",
+        // morePath: '/accessory',
+        // title: "设备配件",
         currentPage4: 4,
         accessoriesList: [],
         chosedLevel:[]
@@ -76,7 +78,8 @@
     methods: {
       getData() {
         var params = {
-          limit: 6
+          limit: 6,
+          groupId:this.groupId
         }
         if (!this.showTitle) {
           params.limit = 99

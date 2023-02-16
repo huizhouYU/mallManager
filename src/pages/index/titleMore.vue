@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    props: ['title','morePath',"tabIndex"],
+    props: ['title','morePath'],
     data() {
       return {}
     },
