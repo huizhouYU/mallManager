@@ -203,7 +203,7 @@
   .introduction {
     margin-top: 20px;
     width: 1200px;
-    height: 260px;
+    min-height: 260px;
     background: #FFFFFF;
     border-top: 2px solid #40A9FF;
     padding: 30px 50px;
