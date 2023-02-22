@@ -125,7 +125,7 @@
       return {
         id: '',
         demandInfo: '',
-        currentChosed: ['供求信息', '店铺供求', 'Philips MR维修及配件供应']
+        currentChosed: ['供求信息', '店铺供求', '']
       }
     },
     mounted() {
@@ -139,6 +139,7 @@
           id: this.id
         }).then(response => {
           this.demandInfo = response.data
+          this.currentChosed[2] = this.demandInfo.title
           try {
             this.demandInfo.regionList = []
             if (this.demandInfo.region != null && this.demandInfo.region != '') {

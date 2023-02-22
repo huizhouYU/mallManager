@@ -9,7 +9,7 @@
     </div>
     <div class="shop-main">
       <div class="shop-logo">
-        <img src="../../assets/images/shop/pic_shop_bg.png" alt="">
+        <img src="../../assets/images/shop/pic_shop_bg.png" alt="" class="my-shop-logo-bg">
         <div class="shop-info">
           <div class="shop-info-name">
             <img src="../../assets/images/shop/icon_shop.png" alt="">
@@ -185,9 +185,9 @@
       align-items: center;
       z-index: 999;
 
-      img {
+      .my-shop-logo-bg {
         position: absolute;
-        // width: 100%;
+        width: 100%;
         height: 90px;
       }
 
