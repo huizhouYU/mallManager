@@ -92,11 +92,17 @@
         })
       },
       toGoods(item) {
+        var goodsType = ''
+        if(this.groupId == 1){
+          goodsType = 'material'
+        }else if (this.groupId == '2'){
+          goodsType = 'equipment'
+        }
         this.getChosedLevel(item.cateName,item.parentId,'2')
         this.$router.push({
           path: '/medicalApparatus',
           query: {
-            goodsType: 'material',
+            goodsType,
             cateId:item.cateId,
             chosedLevel: this.chosedLevel.join(' / ')
           }
