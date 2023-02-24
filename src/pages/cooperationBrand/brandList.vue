@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="pagination">
+    <div class="pagination" v-if="false">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
         :page-sizes="[16, 32, 48, 64]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
         :total="total">
@@ -35,7 +35,7 @@
         total: 0, //总条数
         page: {
           pageNo: 1,
-          pageSize: 16
+          pageSize: 999999
         },
         selectedKey: '全部',
         zmList: ['全部', 'A ', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',

@@ -11,7 +11,7 @@
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-          <el-input v-model="searchData.key" class="search-input" placeholder="输入相关产品名或企业名"></el-input>
+          <el-input v-model="searchData.key" class="search-input" placeholder="输入相关产品名或企业名" @keyup.enter.native="toSearch"></el-input>
           <el-button class="flex-around-center search-btn" @click="toSearch">
             <i class="iconfont search-iconfont">&#xe633;</i><span>搜索</span>
           </el-button>
@@ -314,5 +314,5 @@
       box-sizing: border-box;
     }
   }
- 
+
 </style>
