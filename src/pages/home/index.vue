@@ -140,8 +140,8 @@
     <div class="long-adv">
       <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
     </div>
-    <!-- 配件专区 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="配件专区"  groupId="1">
+    <!-- 设备配件 -->
+    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="设备配件"  groupId="1">
     </accessories-area>
     <div class="long-adv">
       <img src="../../assets/images/index/ad-long.jpg" alt="">
