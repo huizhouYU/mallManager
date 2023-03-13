@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" label-width="95px" :rules="rules">
       <!-- 填写的表单内容 -->
 
-      <el-form-item label="商品名称：" prop="goodsName">
+      <el-form-item label="商品名称：" prop="goodsName" v-if="!goodsName">
         <el-input v-model="form.goodsName" placeholder="请输入您想找的商品名称"></el-input>
       </el-form-item>
       <el-form-item label="您想了解：" prop="typeName">
@@ -41,6 +41,9 @@
         default: () => {
           return false
         }
+      },
+      'goodsName': {
+        type: String
       }
     },
     data() {
@@ -89,6 +92,14 @@
             }
           ]
         }
+      }
+    },
+    mounted() {
+      this.form.goodsName = this.goodsName
+    },
+    watch:{
+      goodsName(newVal){
+        this.form.goodsName = newVal
       }
     },
     methods: {

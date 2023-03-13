@@ -15,7 +15,7 @@
             style="width:50px;height:50px">
         </li>
       </ul>
-      <i style="font-size: 30px;display: inline-block;position: relative;left: 325px;top: -70px;cursor: pointer;color:#999"
+      <i style="font-size: 30px;display: inline-block;position: relative;left: 325px;top: -48px;cursor: pointer;color:#999"
         class="el-icon-arrow-right" @click="imgRight()"></i>
     </div>
   </div>
@@ -174,7 +174,6 @@
     display: flex;
     left: 24px;
     width: 300px;
-    height: 80px;
     box-sizing: border-box;
     overflow: hidden;
     list-style: none;

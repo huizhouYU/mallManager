@@ -1,7 +1,7 @@
 'use strict'
-const path = require('path')
+const path = require('path')// 引入nodejs路径模块
 const utils = require('./utils')
-const config = require('../config')
+const config = require('../config')// 引入config目录下的index.js配置文件，主要用来定义一些开发和生产环境的属性
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {

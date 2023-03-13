@@ -5,15 +5,19 @@
   "author": "ZH",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --env=test --config build/webpack.dev.conf.js",
+    "dev_test": "webpack-dev-server --inline --progress --env=test --config build/webpack.dev.conf.js",
+    "dev_prod": "webpack-dev-server --inline --progress --env=prod --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "lintfix": "eslint --ext .js,.vue src --fix",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "axios": "^0.27.2",
+    "cross-env": "^7.0.3",
     "element-ui": "^2.15.9",
     "js-cookie": "2.2.0",
     "less": "^3.9.0",

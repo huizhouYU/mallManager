@@ -41,6 +41,7 @@ VueAMap.initAMapApiLoader({
 })
 
 Vue.config.productionTip = false
+// Vue.prototype.$baseUrl = process.env.baseUrl
 Vue.use(ElementUI)
 Vue.use(MyServerHttp)
 /* eslint-disable no-new */
