@@ -81,6 +81,7 @@
     methods: {
       openVisible(){
         Bus.$emit('openVisible',{})
+        // this.$root.openVisible()
       },
       // closeVisible(){
       //   this.centerDialogVisible = false

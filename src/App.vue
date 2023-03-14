@@ -17,7 +17,7 @@
           <span>联系客服</span>
         </div>
       </li>
-      <li class="flex-column-center-center select-item" @click="findGoods">
+      <li class="flex-column-center-center select-item" @click="openVisible">
         <div class="flex-center-center img-box">
           <img src="../src/assets/images/icon_zhaohuo_def.png" alt="" class="def-img">
           <img src="../src/assets/images/icon_zhaohuo_sel.png" alt="" class="sel-img">
@@ -48,33 +48,38 @@
           <span>回到顶部</span>
         </div>
       </li>
-      <!-- <li class="service">
-        <div class="flex-column-center-center select-item service-content">
-          <img src="../src/assets/images/index/buyer/pic_erweima.png" alt="">
-          <span>扫一扫 联系客服</span>
-        </div>
-        <i class="iconfont">&#xe61e;</i>
-      </li>-->
-      <!-- 找货 -->
-      <!-- <li class="service">
-        <div class="flex-column-center-center select-item find-goods">
-          <img src="../src/assets/images/icon_cate.png" alt="">
-          <span>找货</span>
-        </div>
-        <i class="iconfont">&#xe61e;</i>
-      </li> -->
-      <!-- 回到顶部 -->
-      <!--    <li class="top" @click="goTop">
-        <i class="iconfont">&#xe780;</i>
-      </li> -->
     </ul>
     <router-view ref="child" />
+    <el-dialog title="为您找货" :visible.sync="centerDialogVisible" width="50%" left>
+      <div class="flex-start-center dialog-remark">填写您的咨询内容，我们将尽快给您答复。</div>
+      <product-consult :cancelShow="cancelShow" @closeVisible="closeVisible" class="product-consult-dialog"></product-consult>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+  import productConsult from "@/pages/index/productConsult.vue"
+   import Bus from "@/utils/Bus.js"
   export default {
     name: 'App',
+    components: {
+      productConsult
+    },
+    data(){
+      return{
+       centerDialogVisible: false,
+        cancelShow: true,
+      }
+    },
+    mounted() {
+      Bus.$on("openVisible", data => {
+        this.openVisible()
+      })
+    },
+    beforeDestroy() {
+      // 取消监听
+      Bus.$off("openVisible")
+    },
     methods: {
       toShoppingcart() {
         this.$router.push({
@@ -86,9 +91,12 @@
         document.documentElement.scrollTop = 0;
       },
       // 找货
-      findGoods() {
-        this.$refs.child.openVisible();
-      }
+      openVisible() {
+        this.centerDialogVisible = true
+      },
+      closeVisible() {
+        this.centerDialogVisible = false
+      },
     }
   }
 </script>
@@ -171,8 +179,9 @@
       }
 
       .only-font-hidden-part {
-        left: -44px;
+        left: -50px;
         transform: translate(-50%, -50%);
+        padding: 20px 17px;
       }
 
       .hidden-part::after {
@@ -222,95 +231,28 @@
   }
 
 
-  // .side-fixing {
-  //   position: fixed;
-  //   width: 48px;
-  //   // height: 146px;
-  //   background: #FFFFFF;
-  //   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.1);
-  //   border-radius: 24px;
-  //   right: 10px;
-  //   top: 50%;
-  //   padding: 10px;
-  //   box-sizing: border-box;
-  //   z-index: 999;
+ /deep/ .el-dialog__body {
+   padding: 0px;
+ }
 
+ /deep/ .el-dialog__header {
+   padding: 10px 20px;
+ }
 
+ /deep/ .el-dialog__headerbtn {
+   top: 15px;
+ }
 
-  //   .shoppingcart {
-  //     i {
-  //       font-size: 22px;
-  //     }
-  //   }
+ /deep/ .el-dialog {
+   box-shadow: none;
+ }
 
-  //   .service:hover {
-  //     .service-content {
-  //       display: flex;
-  //     }
-  //   }
-
-  //   .service {
-  //     position: relative;
-
-
-  //     .service-content {
-  //       display: none;
-  //       position: absolute;
-  //       background: #FFFFFF;
-  //       padding-bottom: 10px;
-  //       box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-  //       width: 116px;
-  //       box-sizing: border-box;
-  //       left: -135px;
-  //       top: -44px;
-  //       font-size: 12px;
-
-  //       img {
-  //         width: 96px;
-  //         height: 96px;
-  //         box-sizing: border-box;
-  //         margin: 10px;
-  //       }
-  //     }
-
-  //     .service-content::after {
-  //       display: block;
-  //       position: absolute;
-  //       content: '';
-  //       top: 50%;
-  //       right: -16px;
-  //       transform: translateY(-50%);
-  //       width: 0;
-  //       height: 0;
-  //       border: 10px solid;
-  //       border-color: transparent transparent transparent #FFFFFF;
-  //     }
-  //   }
-
-  //   li {
-  //     width: 36px;
-  //     height: 36px;
-  //     background: #FFFFFF;
-  //     border-radius: 50%;
-  //     cursor: pointer;
-  //     box-sizing: border-box;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-
-  //     i {
-  //       font-size: 20px;
-  //     }
-  //   }
-
-  //   li:hover {
-  //     // background: #F9F9F9;
-
-  //     i {
-  //       transform: scale(1.3);
-  //       color: #40A9FF;
-  //     }
-  //   }
-
-  // }
+ .dialog-remark {
+   padding-left: 20px;
+   width: 100%;
+   background-color: #e5f5ff;
+   height: 40px;
+   color: #666;
+   font-size: 14px;
+ }
 </style>

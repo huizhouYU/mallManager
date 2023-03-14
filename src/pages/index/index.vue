@@ -84,10 +84,6 @@
     </div>
     <router-view class="each-module" :brandList='brandList' @topImg="topImg" v-if="isRouterAlive"></router-view>
     <index-bottom></index-bottom>
-    <el-dialog title="为您找货" :visible.sync="centerDialogVisible" width="50%" left>
-      <div class="flex-start-center dialog-remark">填写您的咨询内容，我们将尽快给您答复。</div>
-      <product-consult :cancelShow="cancelShow" @closeVisible="closeVisible" class="product-consult-dialog"></product-consult>
-    </el-dialog>
   </div>
 </template>
 
@@ -98,7 +94,6 @@
   import serviceItem4Page from '../../pages/index/serviceItem4Page.vue'
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
   import indexBottom from '../../pages/index/indexBottom.vue'
-  import productConsult from "../../pages/index/productConsult.vue"
   import {
     categoryList
   } from '@/api/index'
@@ -108,8 +103,7 @@
       headerTitle,
       serviceItem4Page,
       serviceItem5Page,
-      indexBottom,
-      productConsult
+      indexBottom
     },
     props: {
       hiddenTopImg: {
@@ -119,11 +113,8 @@
     },
     data() {
       return {
-        cancelShow: true,
-        centerDialogVisible: false,
         oneCate: '',
         isRouterAlive: true,
-        // hiddenTopImg: false,
         chooseTab: 0,
         //顶部导航栏
         tabList: [{
@@ -184,9 +175,6 @@
       Bus.$on("reloadPage", data => {
         this.reload()
       })
-      Bus.$on("openVisible", data => {
-        this.openVisible()
-      })
       this.goTop()
       var path = this.$route.fullPath
       this.chooseTab = path
@@ -195,7 +183,6 @@
     beforeDestroy() {
       // 取消监听
       Bus.$off("reloadPage")
-      Bus.$off("openVisible")
     },
     watch: {
       $route(to, from) {
@@ -210,13 +197,6 @@
       }
     },
     methods: {
-      openVisible() {
-        console.log("打开")
-        this.centerDialogVisible = true
-      },
-      closeVisible() {
-        this.centerDialogVisible = false
-      },
       reload() {
         this.isRouterAlive = false
         this.$nextTick(() => (this.isRouterAlive = true))
@@ -268,7 +248,6 @@
           replace: true
         })
         window.open(newPath.href, '_blank')
-
       },
       jumpToGood(item, level) {
         this.getChosedLevel(item.cateName, item.parentId, level)
@@ -561,28 +540,4 @@
     }
   }
 
-  /deep/ .el-dialog__body {
-    padding: 0px;
-  }
-
-  /deep/ .el-dialog__header {
-    padding: 10px 20px;
-  }
-
-  /deep/ .el-dialog__headerbtn {
-    top: 15px;
-  }
-
-  /deep/ .el-dialog {
-    box-shadow: none;
-  }
-
-  .dialog-remark {
-    padding-left: 20px;
-    width: 100%;
-    background-color: rgba(64, 169, 255, 0.5);
-    height: 40px;
-    color: #fff;
-    font-size: 14px;
-  }
 </style>

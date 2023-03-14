@@ -22,7 +22,7 @@
             </ul> -->
             <!-- 价格 -->
             <div class="info-item">
-              <span class="title letterSpacing">价格：</span>
+              <span class="title">价格：</span>
 
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
@@ -45,22 +45,17 @@
 
             <!-- 联系客服 -->
             <div class="info-item">
-              <span class="title ">服务客服：</span>
-              <div class="service">
-                <div class="flex-around-center content-service">
-                  <img src="../../assets/images/shop/icon_service.png" alt="" class="my-icon-img">联系客服
-                </div>
-                <!-- 二维码 -->
-                <div class="flex-center-center QR-code">
-                  <template v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
-                    <img :src="goodsInfo.domain" alt="">
-                  </template>
-                  <template v-else>
-                    <div class="flex-center-center no-data-font">该店铺暂未上传客服二维码</div>
-                  </template>
-                  <div class="triangle"></div>
-                </div>
+              <span class="title ">联系客服：</span>
+              <div class="flex-center-center QR-code"
+                v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
+                <img :src="goodsInfo.domain" alt="">
               </div>
+              <div class="no-service-font" v-else>-</div>
+                <!--  <div class="flex-around-center content-service">
+                  <img src="../../assets/images/shop/icon_service.png" alt="" class="my-icon-img">联系客服
+                </div> -->
+                <!-- 二维码 -->
+
             </div>
           </div>
         </div>
@@ -89,7 +84,6 @@
                 </div>
               </template>
             </el-table-column>
-
             <el-table-column prop="name" width="160" fixed="right" label="市场价">
               <template slot-scope="scope">
                 <div class="font-center">{{scope.row.name}}</div>
@@ -439,95 +433,28 @@
               }
             }
 
-
-
             //联系客服
-            .service {
-              cursor: pointer;
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-              font-size: 12px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #0065CB;
-              position: relative;
+            .QR-code {
+              width: 80px;
+              height: 80px;
+              box-sizing: border-box;
 
-              .my-icon-img {
-                width: 14px;
-                height: 15px;
-                margin-right: 8px;
-              }
-
-              //联系客服
-              .content-service {
-                position: relative;
-                width: 120px;
-                height: 40px;
-                background: #40A9FF;
-                border: 1px solid #40A9FF;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 16px;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: #FFFFFF;
-                margin-right: 27px;
-                box-sizing: border-box;
-              }
-
-              .QR-code {
-                display: none;
-                position: absolute;
-                top: -25px;
-                right: -90px;
-                width: 100px;
-                height: 100px;
-                border: 1px solid #40A9FF;
-                box-sizing: border-box;
-
-                img {
-                  width: 80px;
-                  height: 80px;
-                }
-
-                .no-data-font {
-                  width: 100%;
-                  height: 100%;
-                  text-align: center;
-                }
-              }
-
-              //三角形
-              .triangle {
-                width: 0;
-                height: 0;
-                border-style: solid;
-                border-width: 0 10px 10px;
-                border-color: transparent transparent transparent #40A9FF;
-                transform: rotate(-45deg);
-                position: absolute;
-                top: 35px;
-                left: -6px;
-              }
-
-              .triangle::after {
-                content: '';
-                border-style: solid;
-                border-width: 0 9px 9px;
-                border-color: transparent transparent transparent #fff;
-                position: absolute;
-                top: 1px;
-                left: -9px;
+              img {
+                width: 80px;
+                height: 80px;
               }
 
             }
-
-            .service:hover {
-              .QR-code {
-                display: flex;
-              }
+            .no-service-font {
+              height: 34px;
+              font-size: 14px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #666666;
+              padding: 0px 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
           }
         }
