@@ -175,7 +175,6 @@
       Bus.$on("reloadPage", data => {
         this.reload()
       })
-      this.goTop()
       var path = this.$route.fullPath
       this.chooseTab = path
       this.getData()
@@ -282,10 +281,6 @@
             }
           }
         }
-      },
-      //回到顶部
-      goTop() {
-        document.documentElement.scrollTop = 0;
       },
       topImg(val) {
         this.hiddenTopImg = val

@@ -23,9 +23,6 @@
     components: {
       supplyDemandItem,recommendationsGoods
     },
-    mounted() {
-      document.documentElement.scrollTop = 0;
-    },
     data(){
       return{
       }

@@ -254,8 +254,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
-      // showOrderList
       for (var item in this.orderList) {
         for (var order of this.orderList[item]) {
           if (this.showOrderList.length < this.limitNum) {

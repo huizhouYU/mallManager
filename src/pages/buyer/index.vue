@@ -120,7 +120,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.chosedNav = this.$route.fullPath.replace("/", "")
     },
     watch: {

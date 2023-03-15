@@ -109,7 +109,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.page.storeId = this.$route.query.storeId
       this.getData()
     },

@@ -103,7 +103,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.selectedTab = this.$route.path
       var storeIdStr = this.$route.query.storeId
       if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {

@@ -304,7 +304,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       var i = this.orderDetail.orderStatue
       for (var index in this.statusProgressList) {
         if (index < i) {

@@ -14,9 +14,6 @@
     components: {
       accessoriesArea
     },
-    mounted() {
-      document.documentElement.scrollTop = 0;
-    },
     data(){
       return{
         showTitle:false,

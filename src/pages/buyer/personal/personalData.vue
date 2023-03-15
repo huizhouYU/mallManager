@@ -92,7 +92,6 @@
     },
 
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.getData()
     },
     data() {

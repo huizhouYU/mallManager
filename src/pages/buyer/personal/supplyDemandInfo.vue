@@ -99,9 +99,6 @@
         ]
       }
     },
-    mounted() {
-      document.documentElement.scrollTop = 0;
-    },
     methods: {
       handleSizeChange(val) {
       },

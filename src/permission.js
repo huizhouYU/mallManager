@@ -25,7 +25,12 @@ const loginList = ['/buyer', '/personal', '/personalData', '/receiptAddress', '/
 router.beforeEach(async (to, from, next) => {
   // 启动进度条
   NProgress.start()
-
+  // chrome
+  document.body.scrollTop = 0
+  // firefox
+  document.documentElement.scrollTop = 0
+  // safari
+  window.pageYOffset = 0
   // 确定用户是否已登录  从Cookies中获取token
   const hasToken = getToken()
   if (hasToken) {

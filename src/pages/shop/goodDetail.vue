@@ -16,10 +16,6 @@
             <div class="goods-tag" v-if="goodsInfo.tagList">
               {{goodsInfo.tagList[0]}}
             </div>
-            <!-- <ul>
-              <li>{{goodsInfo.brand}}</li>
-              <li v-for="(item,index) in goodsInfo.tagList" v-show=" goodsInfo.tagList.length>0">{{item}}</li>
-            </ul> -->
             <!-- 价格 -->
             <div class="info-item">
               <span class="title">价格：</span>
@@ -27,10 +23,6 @@
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
                   <span>询价</span>
-                  <!-- <div class="remark">
-                    <img src="../../assets/images/shop/icon_remark_warning.png" alt="">
-                    询价订单提交申请后可在全部订单中查看该订单是否审核通过
-                  </div> -->
                 </template>
                 <template v-else>
                   <span>{{goodsInfo.price}}</span>
@@ -42,7 +34,6 @@
               <span class="title">商品编码：</span>
               <div class="grey-box">{{goodsInfo.goodsPn||'-'}}</div>
             </div>
-
             <!-- 联系客服 -->
             <div class="info-item">
               <span class="title ">联系客服：</span>
@@ -51,11 +42,6 @@
                 <img :src="goodsInfo.domain" alt="">
               </div>
               <div class="no-service-font" v-else>-</div>
-                <!--  <div class="flex-around-center content-service">
-                  <img src="../../assets/images/shop/icon_service.png" alt="" class="my-icon-img">联系客服
-                </div> -->
-                <!-- 二维码 -->
-
             </div>
           </div>
         </div>
@@ -122,26 +108,29 @@
           <product-consult class="product-consult" :goodsName="goodsInfo.goodsName"></product-consult>
         </div>
       </div>
-      <!-- 店内推荐 -->
-      <store-recommendation class="store-recommendation" :adsList="adsList"></store-recommendation>
+      <!-- 相关商品推荐 -->
+      <related-recommendation class="store-recommendation" :reGoodList="reGoodList"></related-recommendation>
     </div>
   </div>
 </template>
 
 <script>
   import lookImg from '../../../src/components/lookImg.vue'
-  import storeRecommendation from '../../pages/shop/storeRecommendation.vue'
+  import relatedRecommendation from '../../pages/shop/relatedRecommendation.vue'//相关商品推荐
   import productConsult from '../../pages/index/productConsult.vue'
   import {
     goodsDetail
   } from '@/api/goods'
+  import {
+    recommendGoods
+  } from '@/api/index'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
   export default {
     components: {
       productConsult,
-      storeRecommendation,
+      relatedRecommendation,
       lookImg
     },
     data() {
@@ -164,12 +153,13 @@
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }],
-        imgActiveIndex: 0, // 当前移动图片的索引值
-        imgDistance: 0, // 移动的距离
-        allDistance: 0, // 总移动距离
+        // imgActiveIndex: 0, // 当前移动图片的索引值
+        // imgDistance: 0, // 移动的距离
+        // allDistance: 0, // 总移动距离
         goodsId: '',
         categoryStr: '',
         bigImgPath: '',
+        reGoodList:[],
         goodsInfo: {
           goodType: '0', //0:询价商品，1：普通商品
           bigImgPath: '',
@@ -182,61 +172,73 @@
           category: '',
           qualityGuaranteePeriod: ''
         },
-        adsList: [{
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
-          },
-          {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
-          },
-          {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
-          },
-          {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
-          },
-          {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
-          }
-        ]
+        // adsList: [{
+        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
+        //   },
+        //   {
+        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
+        //   },
+        //   {
+        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
+        //   },
+        //   {
+        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
+        //   },
+        //   {
+        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
+        //   }
+        // ]
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.goodsId = this.$route.query.goodsId
-      goodsDetail({
-        goodsId: this.goodsId
-      }).then(response => {
-        this.goodsInfo = response.data
-        try {
-          this.bigImgPath = this.goodsInfo.imageList[0]
-          this.categoryStr = ''
-          if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
-            this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
-            for (var index in this.goodsInfo.category) {
-              if (index == 0) {
-                this.categoryStr += this.goodsInfo.category[index].label
-              } else {
-                this.categoryStr += '>' + this.goodsInfo.category[index].label
-              }
-            }
-          } else {
-            this.categoryStr = this.goodsInfo.cateName
-          }
-        } catch (e) {
-          console.log("获取商品详情报错：", e)
-        } finally {
-          this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
-            .then((response) => {
-              console.log("保存当前浏览的店铺ID：", response)
-            }).catch(() => {
-              console.log("保存当前浏览的店铺ID失败")
-            })
-          this.$emit("saveStoreId", this.goodsInfo.storeId)
-        }
-
-      })
+      this.getGoodsInfo()
+      this.getRecommendGoods()
     },
-    methods: {}
+    methods: {
+      getGoodsInfo(){
+        goodsDetail({
+          goodsId: this.goodsId
+        }).then(response => {
+          this.goodsInfo = response.data
+          try {
+            this.bigImgPath = this.goodsInfo.imageList[0]
+            this.categoryStr = ''
+            if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
+              this.goodsInfo.category = JSON.parse(this.goodsInfo.category).chosedData
+              for (var index in this.goodsInfo.category) {
+                if (index == 0) {
+                  this.categoryStr += this.goodsInfo.category[index].label
+                } else {
+                  this.categoryStr += '>' + this.goodsInfo.category[index].label
+                }
+              }
+            } else {
+              this.categoryStr = this.goodsInfo.cateName
+            }
+          } catch (e) {
+            console.log("获取商品详情报错：", e)
+          } finally {
+            this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
+              .then((response) => {
+                console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺ID失败")
+              })
+            this.$emit("saveStoreId", this.goodsInfo.storeId)
+          }
+
+        })
+      },
+      getRecommendGoods(){
+        //获取推荐商品
+        recommendGoods({
+          limit: 6
+        }).then(response => {
+          this.reGoodList = response.data
+        })
+      }
+    }
   }
 </script>
 <style lang="less" scoped>
@@ -344,7 +346,6 @@
             margin-bottom: 22px;
           }
 
-
           .info-item {
             display: flex;
             justify-content: flex-start;
@@ -387,8 +388,6 @@
                   height: 10px;
                   margin-right: 4px;
                 }
-
-
               }
             }
 
@@ -443,8 +442,8 @@
                 width: 80px;
                 height: 80px;
               }
-
             }
+
             .no-service-font {
               height: 34px;
               font-size: 14px;
@@ -654,14 +653,12 @@
             }
           }
         }
-
-
-
       }
 
       // 店内推荐
       .store-recommendation {
         width: 295px;
+        height: fit-content;
         margin-left: 20px;
         box-sizing: border-box;
         background-color: #fff;

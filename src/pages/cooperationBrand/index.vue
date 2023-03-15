@@ -20,9 +20,6 @@
       return{
       }
     },
-    mounted() {
-      document.documentElement.scrollTop = 0;
-    }
   }
 </script>
 

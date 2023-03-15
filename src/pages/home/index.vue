@@ -254,7 +254,6 @@
       ])
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.getData()
     },
     props: ['brandList'],
@@ -403,7 +402,6 @@
       },
       enterClass(index) {
         //根据id去请求classDatas数据
-        // console.log("this.brandList[index]:",this.brandList[index])
         this.oneCate = {
           'cateId': this.brandList[index].cateId,
           'cateName': this.brandList[index].cateName

@@ -129,7 +129,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.id = this.$route.query.articleId
       this.getData()
     },

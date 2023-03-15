@@ -65,7 +65,6 @@
       }
     },
     mounted() {
-      document.documentElement.scrollTop = 0;
       this.form.username = this.name
     },
     data() {
