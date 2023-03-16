@@ -15,3 +15,11 @@ export function goodsDetail(query) {
     params:query
   })
 }
+//相关商品推荐
+export function relatedRecommendGoods(data) {
+  return request({
+    url: 'goods/recommend',
+    method: 'post',
+    data
+  })
+}

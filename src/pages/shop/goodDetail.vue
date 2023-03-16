@@ -19,24 +19,45 @@
             <!-- 价格 -->
             <div class="info-item">
               <span class="title">价格：</span>
-
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
                   <span>询价</span>
                 </template>
                 <template v-else>
-                  <span>{{goodsInfo.price}}</span>
+                  <span>{{goodsInfo.pirce}}</span>
                 </template>
               </div>
             </div>
             <!-- 型号 -->
             <div class="info-item">
-              <span class="title">商品编码：</span>
-              <div class="grey-box">{{goodsInfo.goodsPn||'-'}}</div>
+              <span class="title box-title">型号：</span>
+              <div class="grey-box">{{goodsInfo.goodsModel}}
+              </div>
+            </div>
+            <!-- 规格 -->
+            <div class="info-item">
+              <span class="title box-title">{{spList[0].name}}：</span>
+              <div class="whole-spec-box">
+                <div v-for="(item,index) in spList" :key="index" @click="changeSpec(index)"
+                  :class="['spec-item',{'current-Spec':index == currentSpec}]">
+                  <img :src="item.attrList[0].img" alt="">
+                  <span class="spec-value">{{item.value}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- 属性 -->
+            <div class="info-item">
+              <span class="title box-title">属性：</span>
+              <div class="whole-spec-box">
+                <div v-for="(item,index) in attList" :key="index"
+                  :class="['spec-item',{'current-Spec':index == currentAttr}]" @click="changeAttr(index)">
+                  <span class="spec-value">{{item.attrStr}}</span>
+                </div>
+              </div>
             </div>
             <!-- 联系客服 -->
             <div class="info-item">
-              <span class="title ">联系客服：</span>
+              <span class="title">联系客服：</span>
               <div class="flex-center-center QR-code"
                 v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
                 <img :src="goodsInfo.domain" alt="">
@@ -52,20 +73,29 @@
             style="width: 100%">
             <el-table-column prop="date" label="型号" fixed width="214">
             </el-table-column>
-            <el-table-column prop="address" label="200">
+            <el-table-column prop="name" label="200">
               <template slot="header">
                 <div class="spec-attr-title">
                   <span class="attr-item">
-                    地址
+                    地方
                   </span>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="address" label="200">
+            <el-table-column prop="name" label="200">
               <template slot="header">
                 <div class="spec-attr-title">
                   <span class="attr-item">
-                    地址
+                    屏幕
+                  </span>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="name" label="200">
+              <template slot="header">
+                <div class="spec-attr-title">
+                  <span class="attr-item">
+                    通道
                   </span>
                 </div>
               </template>
@@ -116,14 +146,12 @@
 
 <script>
   import lookImg from '../../../src/components/lookImg.vue'
-  import relatedRecommendation from '../../pages/shop/relatedRecommendation.vue'//相关商品推荐
+  import relatedRecommendation from '../../pages/shop/relatedRecommendation.vue' //相关商品推荐
   import productConsult from '../../pages/index/productConsult.vue'
   import {
-    goodsDetail
+    goodsDetail,
+    relatedRecommendGoods
   } from '@/api/goods'
-  import {
-    recommendGoods
-  } from '@/api/index'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
@@ -135,6 +163,10 @@
     },
     data() {
       return {
+        spList: [],
+        currentSpec: 0,
+        currentAttr: 0,
+        attList: [],
         activeName: 'first',
         tableData: [{
           date: '2016-05-02',
@@ -159,7 +191,7 @@
         goodsId: '',
         categoryStr: '',
         bigImgPath: '',
-        reGoodList:[],
+        reGoodList: [],
         goodsInfo: {
           goodType: '0', //0:询价商品，1：普通商品
           bigImgPath: '',
@@ -196,7 +228,7 @@
       this.getRecommendGoods()
     },
     methods: {
-      getGoodsInfo(){
+      getGoodsInfo() {
         goodsDetail({
           goodsId: this.goodsId
         }).then(response => {
@@ -216,6 +248,7 @@
             } else {
               this.categoryStr = this.goodsInfo.cateName
             }
+            this.sortSpecAttr()
           } catch (e) {
             console.log("获取商品详情报错：", e)
           } finally {
@@ -230,9 +263,65 @@
 
         })
       },
-      getRecommendGoods(){
+      searchIndex(name, value) {
+        var result = -1
+        for (var i = 0; i < this.spList.length; i++) {
+          if (this.spList[i].name == name && this.spList[i].value == value) {
+            result = i
+            return result
+          }
+        }
+        return result
+      },
+      sortSpecAttr() {
+        var entity = this.goodsInfo.goodsEntities
+        for (var i = 0; i < entity.length; i++) {
+          var item = JSON.parse(entity[i].specText)
+          var str = ''
+          for (var y = 0; y < item.length; y++) {
+            if (y == 0 && item[y].specTypeId == 1) {
+              if (this.searchIndex(item[y].specName, item[y].specValue) < 0) {
+                var param = {
+                  name: item[y].specName,
+                  value: item[y].specValue,
+                  attrList: []
+                }
+                this.spList.push(param)
+              }
+            } else {
+              if (str != '') {
+                str = str + "/" + item[y].specValue
+              } else {
+                str = item[y].specValue
+              }
+            }
+          }
+          var attrItem = {
+            attrStr: str,
+            price: entity[i].entityPrice,
+            img: entity[i].entityImage,
+            stock: entity[i].entityStock,
+          }
+          var x = this.searchIndex(item[0].specName, item[0].specValue)
+          this.spList[x].attrList.push(attrItem)
+        }
+        console.log("this.spList:", this.spList)
+        this.attList = this.spList[0].attrList
+        this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
+      },
+      changeSpec(index) {
+        this.currentSpec = index
+        this.currentAttr = 0
+        this.attList = this.spList[index].attrList
+      },
+      changeAttr(index) {
+        this.currentAttr = index
+        this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
+      },
+
+      getRecommendGoods() {
         //获取推荐商品
-        recommendGoods({
+        relatedRecommendGoods({
           limit: 6
         }).then(response => {
           this.reGoodList = response.data
@@ -349,8 +438,9 @@
           .info-item {
             display: flex;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 25px;
+            width: 100%;
 
             .title {
               width: 70px;
@@ -360,6 +450,13 @@
               font-weight: 400;
               color: #666666;
               margin-right: 4px;
+
+            }
+            .box-title{
+              height: 42px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
             }
 
             .price {
@@ -391,8 +488,59 @@
               }
             }
 
+            .whole-spec-box {
+              flex: 1;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              flex-wrap: wrap;
+
+              .spec-item {
+                cursor: pointer;
+                width: max-content;
+                height: 42px;
+                background: #F0F0F0;
+                border: 1px solid #F0F0F0;
+                border-radius: 4px;
+                box-sizing: border-box;
+                padding: 4px;
+                padding-right: 20px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-right: 10px;
+                margin-bottom: 10px;
+
+                img {
+                  width: 34px;
+                  height: 34px;
+                  border-radius: 4px;
+                }
+
+                .spec-value {
+                  flex: 1;
+                  box-sizing: border-box;
+                  padding-left: 12px;
+                  font-size: 14px;
+                  font-family: Microsoft YaHei;
+                  font-weight: 400;
+                  color: #333333;
+                }
+              }
+
+              .current-Spec {
+                background: #F3FBFF;
+                border: 1px solid #40A9FF;
+
+                .spec-value {
+                  color: #40A9FF;
+                }
+              }
+            }
+
+
             .grey-box {
-              height: 34px;
+              height: 42px;
               font-size: 14px;
               font-family: Microsoft YaHei;
               font-weight: 400;
