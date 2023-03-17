@@ -17,25 +17,25 @@
               {{goodsInfo.tagList[0]}}
             </div>
             <!-- 价格 -->
-            <div class="info-item">
+            <div class="info-item item-bottom">
               <span class="title">价格：</span>
               <div class="price">￥
                 <template v-if="goodsInfo.saleType == 2">
                   <span>询价</span>
                 </template>
                 <template v-else>
-                  <span>{{goodsInfo.pirce}}</span>
+                  <span>{{currentObj.entityPrice || goodsInfo.pirce}}</span>
                 </template>
               </div>
             </div>
             <!-- 型号 -->
-            <div class="info-item">
+            <div class="info-item item-bottom">
               <span class="title box-title">型号：</span>
-              <div class="grey-box">{{goodsInfo.goodsModel}}
+              <div class="grey-box">{{goodsInfo.goodsModel||'-'}}
               </div>
             </div>
             <!-- 规格 -->
-            <div class="info-item">
+            <!-- <div class="info-item">
               <span class="title box-title">{{spList[0].name}}：</span>
               <div class="whole-spec-box">
                 <div v-for="(item,index) in spList" :key="index" @click="changeSpec(index)"
@@ -44,9 +44,9 @@
                   <span class="spec-value">{{item.value}}</span>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- 属性 -->
-            <div class="info-item">
+            <!-- <div class="info-item">
               <span class="title box-title">属性：</span>
               <div class="whole-spec-box">
                 <div v-for="(item,index) in attList" :key="index"
@@ -54,10 +54,31 @@
                   <span class="spec-value">{{item.attrStr}}</span>
                 </div>
               </div>
+            </div> -->
+            <!-- 规格+属性 合并 -->
+            <div class="info-item">
+              <span class="title box-title">属性：</span>
+              <template v-if="goodsInfo.goodsEntities">
+                <div class="whole-spec-box">
+                  <div v-for="(item,index) in goodsInfo.goodsEntities" :key="index" @click="changeSpec(index)"
+                    :class="['spec-item',{'current-Spec':index == currentSpec}]">
+                    <img :src="item.entityImage" alt="">
+                    <span class="spec-value">{{item.str}}</span>
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <div class="whole-spec-box">
+                  <div class="spec-item">
+                    <span class="spec-value">-</span>
+                  </div>
+                </div>
+              </template>
+
             </div>
             <!-- 联系客服 -->
-            <div class="info-item">
-              <span class="title">联系客服：</span>
+            <div class="info-item item-center">
+              <span class="title ">联系客服：</span>
               <div class="flex-center-center QR-code"
                 v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
                 <img :src="goodsInfo.domain" alt="">
@@ -67,42 +88,34 @@
           </div>
         </div>
         <!-- 选型对比 -->
-        <div class="product-spec">
+        <div class="product-spec" v-if="goodsInfo.goodsEntities">
           <span class="title">选型对比</span>
-          <el-table :data="tableData" :header-cell-style="{background:'#F5F7FA',color: '#333333',textAlign:'center'}"
-            style="width: 100%">
-            <el-table-column prop="date" label="型号" fixed width="214">
-            </el-table-column>
-            <el-table-column prop="name" label="200">
-              <template slot="header">
-                <div class="spec-attr-title">
-                  <span class="attr-item">
-                    地方
-                  </span>
+          <el-table :data="goodsInfo.goodsEntities" :cell-style="{'text-align':'center'}"
+            :header-cell-style="{background:'#F5F7FA',color: '#333333',textAlign:'center'}" style="width: 100%">
+            <el-table-column label="型号" fixed width="214">
+              <template slot-scope="scope">
+                <div class="my-tab-module">
+                  <img :src="scope.row.entityImage" alt="">
+                  {{goodsInfo.goodsModel}}
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="name" label="200">
+            <el-table-column label="200" v-for="(item,index) in goodsInfo.goodsSpecs" :key="index">
               <template slot="header">
-                <div class="spec-attr-title">
-                  <span class="attr-item">
-                    屏幕
-                  </span>
-                </div>
+                {{item.specName}}
               </template>
-            </el-table-column>
-            <el-table-column prop="name" label="200">
-              <template slot="header">
-                <div class="spec-attr-title">
-                  <span class="attr-item">
-                    通道
-                  </span>
-                </div>
+              <template slot-scope="scope">
+                {{scope.row.specText[index].specValue}}
               </template>
             </el-table-column>
             <el-table-column prop="name" width="160" fixed="right" label="市场价">
               <template slot-scope="scope">
-                <div class="font-center">{{scope.row.name}}</div>
+                <template v-if="goodsInfo.saleType == 2">
+                  询价
+                </template>
+                <template v-else>
+                  {{scope.row.entityPrice}}
+                </template>
               </template>
             </el-table-column>
           </el-table>
@@ -166,28 +179,9 @@
         spList: [],
         currentSpec: 0,
         currentAttr: 0,
+        currentObj:'',
         attList: [],
         activeName: 'first',
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
-        // imgActiveIndex: 0, // 当前移动图片的索引值
-        // imgDistance: 0, // 移动的距离
-        // allDistance: 0, // 总移动距离
         goodsId: '',
         categoryStr: '',
         bigImgPath: '',
@@ -274,9 +268,11 @@
         return result
       },
       sortSpecAttr() {
+        this.changeGoodsEntity()
         var entity = this.goodsInfo.goodsEntities
         for (var i = 0; i < entity.length; i++) {
-          var item = JSON.parse(entity[i].specText)
+          // var item = JSON.parse(entity[i].specText)
+          var item = entity[i].specText
           var str = ''
           for (var y = 0; y < item.length; y++) {
             if (y == 0 && item[y].specTypeId == 1) {
@@ -305,18 +301,32 @@
           var x = this.searchIndex(item[0].specName, item[0].specValue)
           this.spList[x].attrList.push(attrItem)
         }
-        console.log("this.spList:", this.spList)
         this.attList = this.spList[0].attrList
-        this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
+        this.currentObj = this.goodsInfo.goodsEntities[this.currentSpec]
+        // this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
       },
       changeSpec(index) {
         this.currentSpec = index
-        this.currentAttr = 0
-        this.attList = this.spList[index].attrList
+        // this.currentAttr = 0
+        // this.attList = this.spList[index].attrList
+        this.currentObj = this.goodsInfo.goodsEntities[index]
+        this.bigImgPath = this.goodsInfo.goodsEntities[index].entityImage
       },
       changeAttr(index) {
         this.currentAttr = index
-        this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
+        // this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
+      },
+      changeGoodsEntity() {
+        this.goodsInfo.goodsSpecs = JSON.parse(this.goodsInfo.goodsSpecs)
+        this.goodsInfo.goodsEntities.forEach((item) => {
+          item.specText = JSON.parse(item.specText)
+        })
+        this.goodsInfo.goodsEntities.forEach((item) => {
+          var str = item.specText.map(function(elem) {
+            return elem.specValue;
+          }).join("/");
+          item.str = str
+        })
       },
 
       getRecommendGoods() {
@@ -364,7 +374,7 @@
         .shop-detail-img-info {
           width: 100%;
           display: flex;
-          padding: 20px;
+          padding: 20px 20px 50px;
           background-color: #fff;
           box-sizing: border-box;
         }
@@ -414,7 +424,7 @@
           flex-direction: column;
           justify-content: flex-start;
           align-items: flex-start;
-          padding: 12px 74px 0px 20px;
+          padding: 12px 44px 0px 20px;
           box-sizing: border-box;
 
           .goods-title {
@@ -439,7 +449,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             width: 100%;
 
             .title {
@@ -452,7 +462,8 @@
               margin-right: 4px;
 
             }
-            .box-title{
+
+            .box-title {
               height: 42px;
               display: flex;
               align-items: center;
@@ -546,8 +557,9 @@
               font-weight: 400;
               color: #666666;
               padding: 0px 10px;
-              background: #F5F5F5;
-              border: 1px solid #EEEEEE;
+              background: #F0F0F0;
+              border: 1px solid #F0F0F0;
+              border-radius: 4px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -604,6 +616,14 @@
               align-items: center;
             }
           }
+
+          .item-center {
+            align-items: center;
+          }
+
+          .item-bottom {
+            margin-bottom: 25px;
+          }
         }
 
         // 选型对比
@@ -631,22 +651,16 @@
             margin: 10px 0px;
           }
 
-          .font-center {
+          .my-tab-module {
             display: flex;
-            align-items: center;
             justify-content: center;
-          }
-
-          .spec-attr-title {
-            display: flex;
-            justify-content: flex-start;
             align-items: center;
 
-            .attr-item {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              min-width: 100px;
+            img {
+              width: 34px;
+              height: 34px;
+              box-sizing: border-box;
+              margin-right: 10px;
             }
           }
 

@@ -2,28 +2,25 @@
   <div class="left_div">
     <div class="left">
       <!-- <img :src="mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'> -->
-      <img :src="mainImgUrl" class="img" >
+      <img :src="mainImgUrl" class="img">
     </div>
     <!-- <div class="img_wz">鼠标滚轮可控制图片缩放</div> -->
-    <div>
-      <i style="font-size: 30px;display: inline-block;position: relative;top: 40px;cursor: pointer;color:#999"
-        class="el-icon-arrow-left" @click="imgLeft()"></i>
+    <div class="bottom-carousel">
+      <i class="my-icon el-icon-arrow-left" @click="imgLeft()"></i>
       <ul class="Img_ul">
         <li v-for="(item,index) in imgUrlList" :key="index" class="Img_li" :style="imgStyle"
           @click="changeImg(item, index)">
-          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="item"
-            style="width:50px;height:50px">
+          <img :class="index === imgActiveIndex ? 'img_activeBorder' : ''" :src="item">
         </li>
       </ul>
-      <i style="font-size: 30px;display: inline-block;position: relative;left: 325px;top: -48px;cursor: pointer;color:#999"
-        class="el-icon-arrow-right" @click="imgRight()"></i>
+      <i class="my-icon el-icon-arrow-right" @click="imgRight()"></i>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    props:['imgUrlList','mainImgUrl'],
+    props: ['imgUrlList', 'mainImgUrl'],
     data() {
       return {
         // mainImgUrl: '',
@@ -159,34 +156,52 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .left_div {
     float: left;
     width: 100%;
     box-sizing: border-box;
-    /* width: 560px; */
-    /* margin-left: 20px;
-    margin-top: 15px; */
   }
 
-  .Img_ul {
-    position: relative;
-    display: flex;
-    left: 24px;
-    width: 300px;
+  .bottom-carousel {
+    margin-top: 10px;
+    height: 50px;
     box-sizing: border-box;
-    overflow: hidden;
-    list-style: none;
-  }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .Img_li {
-    float: left;
-    margin: 0 8px;
-    cursor: pointer;
+    .my-icon {
+      font-size: 30px;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .Img_ul {
+      height: 100%;
+      flex: 1;
+      display: flex;
+      box-sizing: border-box;
+      overflow: hidden;
+      list-style: none;
+
+      .Img_li {
+        height: 100%;
+        float: left;
+        margin: 0 8px;
+        cursor: pointer;
+
+        img {
+          box-sizing: border-box;
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
   }
 
   .img_activeBorder {
-    border: 2px solid #40A9ff;
+    border: 1px solid #40A9ff;
   }
 
   .left {
@@ -211,7 +226,7 @@
     position: absolute;
     top: 0px;
     left: 0px;
-  /*  max-width: 923px;
+    /*  max-width: 923px;
     max-height: 460px; */
     width: 100%;
     height: 100%;
