@@ -16,7 +16,7 @@
               <i class="iconfont icon-bianji-copy">编辑资料</i>
             </template>
           </vue-hover-mask>
-          <span>用户昵称啊</span>
+          <span>{{name||'用户昵称'}}</span>
         </div>
         <ul class="address-myinfo">
           <!-- <li @click="toReceiptAddress">我的收货地址</li> -->
