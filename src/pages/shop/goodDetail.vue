@@ -31,7 +31,11 @@
             <!-- 型号 -->
             <div class="info-item item-bottom">
               <span class="title box-title">型号：</span>
-              <div class="grey-box">{{goodsInfo.goodsModel||'-'}}
+              <div class="whole-spec-box">
+                <div :class="['model-item',{'current-item':item.goodsId == goodsInfo.goodsId}]"
+                  v-for="(item,index) in goodsInfo.goodsModelList" :key="index" @click="jumpOtherModel(item.goodsId)">
+                  {{item.goodsModel}}
+                </div>
               </div>
             </div>
             <!-- 规格 -->
@@ -88,26 +92,36 @@
           </div>
         </div>
         <!-- 选型对比 -->
-        <div class="product-spec" v-if="goodsInfo.goodsEntities">
+        <!-- <div class="product-spec" v-if="goodsInfo.goodsEntities"> -->
+        <div class="product-spec" v-if="newGoodsEntities">
           <span class="title">选型对比</span>
-          <el-table :data="goodsInfo.goodsEntities" :cell-style="{'text-align':'center'}"
+          <!-- 所有商品的goodsEntities拼一起的新的goodsEntities -->
+          <el-table :data="newGoodsEntities" :cell-style="{'text-align':'center'}"
             :header-cell-style="{background:'#F5F7FA',color: '#333333',textAlign:'center'}" style="width: 100%">
             <el-table-column label="型号" fixed width="214">
               <template slot-scope="scope">
                 <div class="my-tab-module">
                   <img :src="scope.row.entityImage" alt="">
-                  {{goodsInfo.goodsModel}}
+                  {{scope.row.goodsModel}}
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="200" v-for="(item,index) in goodsInfo.goodsSpecs" :key="index">
+            <!-- 规格+属性 -->
+            <!-- 采用所以商品goodsSpecs拼接一起的数据后，并去重 -->
+            <el-table-column label="200" v-for="(item,index) in newGoodsSpecs" :key="index">
               <template slot="header">
                 {{item.specName}}
               </template>
               <template slot-scope="scope">
-                {{scope.row.specText[index].specValue}}
+                <div v-for="(spec,index) in scope.row.specText" :key="index">
+                  <template v-if="spec.specId == item.specId">
+                    {{spec.specValue}}
+                  </template>
+                  <!-- <template v-else>-</template> -->
+                </div>
               </template>
             </el-table-column>
+
             <el-table-column prop="name" width="160" fixed="right" label="市场价">
               <template slot-scope="scope">
                 <template v-if="goodsInfo.saleType == 2">
@@ -176,10 +190,12 @@
     },
     data() {
       return {
+        newGoodsEntities: [],
+        newGoodsSpecs: [],
         spList: [],
         currentSpec: 0,
         currentAttr: 0,
-        currentObj:'',
+        currentObj: '',
         attList: [],
         activeName: 'first',
         goodsId: '',
@@ -198,33 +214,17 @@
           category: '',
           qualityGuaranteePeriod: ''
         },
-        // adsList: [{
-        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
-        //   },
-        //   {
-        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
-        //   },
-        //   {
-        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
-        //   },
-        //   {
-        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
-        //   },
-        //   {
-        //     imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
-        //   }
-        // ]
       }
     },
     mounted() {
       this.goodsId = this.$route.query.goodsId
-      this.getGoodsInfo()
+      this.getGoodsInfo(this.goodsId)
       this.getRecommendGoods()
     },
     methods: {
-      getGoodsInfo() {
+      getGoodsInfo(goodsId) {
         goodsDetail({
-          goodsId: this.goodsId
+          goodsId
         }).then(response => {
           this.goodsInfo = response.data
           try {
@@ -243,12 +243,14 @@
               this.categoryStr = this.goodsInfo.cateName
             }
             this.sortSpecAttr()
+            //合并所有型号商品的goodsEntities和goodsSpecs
+            this.mergeData()
           } catch (e) {
             console.log("获取商品详情报错：", e)
           } finally {
             this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
               .then((response) => {
-                console.log("保存当前浏览的店铺ID：", response)
+                // console.log("保存当前浏览的店铺ID：", response)
               }).catch(() => {
                 console.log("保存当前浏览的店铺ID失败")
               })
@@ -256,6 +258,37 @@
           }
 
         })
+      },
+      //合并所有型号商品的goodsEntities和goodsSpecs
+      mergeData() {
+        for (var item of this.goodsInfo.goodsModelList) {
+          var param = this.cloneObj(item.goodsEntities)
+          for (var paramItem of param) {
+            paramItem.goodsModel = item.goodsModel
+          }
+          this.newGoodsEntities.push(...param)
+          this.newGoodsSpecs.push(...JSON.parse(item.goodsSpecs))
+        }
+        for (let entity of this.newGoodsEntities) {
+          entity.specText = JSON.parse(entity.specText)
+        }
+        console.log("合并的数据newGoodsEntities：", this.newGoodsEntities)
+        //newGoodsSpecs去重
+        var specsList = []
+        for (var specs of this.newGoodsSpecs) {
+          if (specsList.length == 0) {
+            specsList.push(specs)
+          } else {
+            var flag = specsList.findIndex(item => {
+              return item.specId == specs.specId
+            })
+            if (flag < 0) {
+              specsList.push(specs)
+            }
+          }
+        }
+        this.newGoodsSpecs = specsList
+        console.log("合并的数据newGoodsSpecs：", this.newGoodsSpecs)
       },
       searchIndex(name, value) {
         var result = -1
@@ -328,15 +361,32 @@
           item.str = str
         })
       },
-
+      //查看其他型号的商品详情
+      jumpOtherModel(goodsId) {
+        this.getGoodsInfo(goodsId)
+      },
       getRecommendGoods() {
+        console.log("获取推荐商品")
         //获取推荐商品
         relatedRecommendGoods({
+          goodsId: parseInt(this.goodsId),
           limit: 6
         }).then(response => {
           this.reGoodList = response.data
         })
-      }
+      },
+      //深复制对象方法
+      cloneObj(obj) {
+        var newObj = {};
+        if (obj instanceof Array) {
+          newObj = [];
+        }
+        for (var key in obj) {
+          var val = obj[key];
+          newObj[key] = typeof val === 'object' ? this.cloneObj(val) : val;
+        }
+        return newObj;
+      },
     }
   }
 </script>
@@ -505,6 +555,30 @@
               justify-content: flex-start;
               align-items: center;
               flex-wrap: wrap;
+
+              .model-item {
+                cursor: pointer;
+                height: 42px;
+                background: #F0F0F0;
+                border-radius: 4px;
+                padding: 15px;
+                font-size: 14px;
+                line-height: 14px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #333333;
+                margin-right: 10px;
+                margin-bottom: 10px;
+              }
+
+              .current-item {
+                background: #F3FBFF;
+                color: #40A9FF;
+                border: 1px solid #40A9FF;
+              }
 
               .spec-item {
                 cursor: pointer;
