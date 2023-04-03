@@ -261,6 +261,8 @@
       },
       //合并所有型号商品的goodsEntities和goodsSpecs
       mergeData() {
+        this.newGoodsEntities = []
+        this.newGoodsSpecs = []
         for (var item of this.goodsInfo.goodsModelList) {
           var param = this.cloneObj(item.goodsEntities)
           for (var paramItem of param) {
