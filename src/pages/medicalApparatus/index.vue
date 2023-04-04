@@ -3,23 +3,16 @@
     <div class="content">
       <div class="select-content">
         <div class="current-selected"
-          v-show="(page.brandName != '' && page.brandName != undefined)||(page.degreeName != ''&& page.degreeName != undefined)">
+          v-show="page.brandName != '' && page.brandName != undefined">
           <div class="title">当前筛选结果</div>
           <div class="value">
             <template v-if="page.brandName != '' && page.brandName != undefined">
               {{page.brandName}}
             </template>
-            <template
-              v-if="(page.brandName != '' && page.brandName != undefined)&&(page.degreeName != ''&& page.degreeName != undefined)">
-              /
-            </template>
-            <template v-if="page.degreeName != ''&& page.degreeName != undefined">
-              {{page.degreeName}}
-            </template>
           </div>
         </div>
         <div class="current-selected"
-          v-show="(chosedLevel != '' && chosedLevel != undefined)&&(page.brandName == '' || page.brandName == undefined)&&(page.degreeName == ''|| page.degreeName == undefined)">
+          v-show="(chosedLevel != '' && chosedLevel != undefined)&&(page.brandName == '' || page.brandName == undefined)">
           <div class="title">当前筛选结果</div>
           <div class="value">{{chosedLevel}}</div>
         </div>
@@ -44,21 +37,6 @@
             <span v-show="isBrandStow" class="isStow" @click="isBrandStow= false">收起<i
                 class="iconfont">&#xe733;</i></span>
             <span v-show="!isBrandStow" class="isStow" @click="isBrandStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
-        </div>
-        <div class="select-item">
-          <div class="title">新旧程度</div>
-          <ul :class="[{'minHeight':!isDegreeStow},'item']">
-            <li @click="changeDegree('','')"><span :class="{'bule':'' == page.degree}">全部</span></li>
-            <li v-for="(item,index) in selectItem.degree" :key="index" @click="changeDegree(item.degree,item.name)">
-              <span :class="{'bule':item.degree == page.degree}">{{item.name}}</span>
-            </li>
-          </ul>
-          <template v-if="isDegreeShow">
-            <span v-show="isDegreeStow" class="isStow" @click="isDegreeStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isDegreeStow" class="isStow" @click="isDegreeStow= true">展开<i
                 class="iconfont">&#xe601;</i></span>
           </template>
         </div>
@@ -97,8 +75,6 @@
           pageSize: 30,
           goodsType: '', //商品类型 material-配件 equipment-设备器械
           brandName: '', //品牌
-          degree: '', //新旧程度
-          degreeName: '', //新旧程度
           categoryId: '', //分类ID
           cateName: '', //分类名称
           keyType: 1,
@@ -106,8 +82,6 @@
         },
         isBrandStow: true,
         isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
-        isDegreeStow: true,
-        isDegreeShow: false, //【新旧程度】是否显示‘收起’、‘展开’
         selectItem: {
           // 商品类型 material-配件 equipment-设备器械
           goodsType: [{
@@ -121,24 +95,6 @@
           ],
           //品牌
           brand: [],
-          //新旧程度
-          degree: [{
-              degree: 7,
-              name: '七成新'
-            },
-            {
-              degree: 8,
-              name: '八成新'
-            },
-            {
-              degree: 9,
-              name: '九成新'
-            },
-            {
-              degree: 10,
-              name: '十成新'
-            }
-          ],
         },
         goodsDataList: []
       }
@@ -207,12 +163,6 @@
       },
       changeBrandName(brandName) {
         this.page.brandName = brandName
-        this.page.categoryId = ''
-        this.getDataList()
-      },
-      changeDegree(degree, name) {
-        this.page.degree = degree
-        this.page.degreeName = name
         this.page.categoryId = ''
         this.getDataList()
       },

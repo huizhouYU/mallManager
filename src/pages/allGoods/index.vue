@@ -2,17 +2,11 @@
   <div class="whole">
     <div class="content">
       <div class="select-content">
-        <div class="current-selected" v-show="page.goodsTypeName != ''||page.degreeName != ''">
+        <div class="current-selected" v-show="page.goodsTypeName != ''">
           <div class="title">当前筛选结果</div>
           <div class="value">
             <template v-if="page.goodsTypeName != ''">
               {{page.goodsTypeName}}
-            </template>
-            <template v-if="page.goodsTypeName != ''&&page.degreeName != ''">
-              /
-            </template>
-            <template v-if="page.degreeName != ''">
-              {{page.degreeName}}
             </template>
           </div>
         </div>
@@ -24,21 +18,6 @@
               <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
             </li>
           </ul>
-        </div>
-        <div class="select-item">
-          <div class="title">新旧程度</div>
-          <ul :class="[{'minHeight':!isDegreeStow},'item']">
-            <li @click="changeDegree('','')"><span>全部</span></li>
-            <li v-for="(item,index) in selectItem.degree" :key="index" @click="changeDegree(item.degree,item.name)">
-              <span :class="{'bule':item.degree == page.degree}">{{item.name}}</span>
-            </li>
-          </ul>
-          <template v-if="isDegreeShow">
-            <span v-show="isDegreeStow" class="isStow" @click="isDegreeStow= false">收起<i
-                class="iconfont">&#xe733;</i></span>
-            <span v-show="!isDegreeStow" class="isStow" @click="isDegreeStow= true">展开<i
-                class="iconfont">&#xe601;</i></span>
-          </template>
         </div>
       </div>
       <good-item :goodsList="goodsDataList"></good-item>
@@ -71,8 +50,6 @@
           goodsType: '',
           goodsTypeName: '',
           storeId: '',
-          degree: '', //新旧程度
-          degreeName: '', //新旧程度
         },
         goodsDataList: [],
         selectItem: {
@@ -86,25 +63,6 @@
               name: '医疗器械'
             }
           ],
-          //新旧程度
-          degree: [{
-              degree: 7,
-              name: '七成新'
-            },
-            {
-              degree: 8,
-              name: '八成新'
-            },
-            {
-              degree: 9,
-              name: '九成新'
-            },
-            {
-              degree: 10,
-              name: '十成新'
-            }
-          ],
-
         }
       }
     },
@@ -124,11 +82,6 @@
       changeGoodsType(goodsType, goodsTypeName) {
         this.page.goodsType = goodsType
         this.page.goodsTypeName = goodsTypeName
-        this.getData()
-      },
-      changeDegree(degree, name) {
-        this.page.degree = degree
-        this.page.degreeName = name
         this.getData()
       },
       handleSizeChange(val) {
