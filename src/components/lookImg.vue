@@ -2,7 +2,7 @@
   <div class="left_div">
     <div class="left">
       <!-- <img :src="mainImgUrl" class="img" ref="imgDiv" @mousedown.prevent="dropImage" @mousewheel.prevent='gunlun'> -->
-      <img :src="mainImgUrl" class="img">
+      <img :src="lookMainImgUrl" class="img">
     </div>
     <!-- <div class="img_wz">鼠标滚轮可控制图片缩放</div> -->
     <div class="bottom-carousel">
@@ -24,6 +24,7 @@
     data() {
       return {
         // mainImgUrl: '',
+        lookMainImgUrl: '',
         imgActiveIndex: 0, // 当前移动图片的索引值
         imgDistance: 0, // 移动的距离
         allDistance: 0, // 总移动距离
@@ -37,9 +38,14 @@
       },
 
     },
+    watch: {
+      mainImgUrl(newVal, oldVal) {
+        this.lookMainImgUrl = newVal
+      }
+    },
     methods: {
       changeImg(item, index) {
-        this.mainImgUrl = item
+        this.lookMainImgUrl = item
         this.imgActiveIndex = index
         // this.resetImg();
       },
@@ -55,7 +61,7 @@
           this.imgActiveIndex-- // 索引值-1
           this.imgUrlList.forEach((item, index) => { // 循环小图,通过判断索引值赋值给大图
             if (this.imgActiveIndex === index) {
-              this.mainImgUrl = item
+              this.lookMainImgUrl = item
             }
           })
         }
@@ -78,7 +84,7 @@
           this.imgActiveIndex++
           this.imgUrlList.forEach((item, index) => {
             if (this.imgActiveIndex === index) {
-              this.mainImgUrl = item
+              this.lookMainImgUrl = item
             }
           })
           if (this.imgActiveIndex >= 4) {
@@ -96,7 +102,7 @@
           }
         } else if (this.imgActiveIndex === this.imgUrlList.length - 1) { // 到达最后一张图片，再点击跳转回第一张
           this.imgActiveIndex = 0;
-          this.mainImgUrl = this.imgUrlList[0]
+          this.lookMainImgUrl = this.imgUrlList[0]
           var index = 0
           const temp = window.setInterval(() => { // 利用定时器实现图片左右移动的动画效果
             if (index < Math.abs(this.allDistance / 2)) { // 取绝对值再除
