@@ -4,7 +4,7 @@
     <!-- 首页banner图 -->
     <div class="top-banner" v-show="!hiddenTopImg">
       <!-- <img src="../../assets/images/index/banner_top.png" alt=""> -->
-      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg" alt="">
+      <img :src="topBannerImg" alt="">
       <div class="del-icon-div" @click="hiddenTopImg=true">
         <i class="iconfont">&#xe8e7;</i>
       </div>
@@ -95,7 +95,7 @@
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
   import indexBottom from '../../pages/index/indexBottom.vue'
   import {
-    categoryList
+    categoryList,advertByCode
   } from '@/api/index'
   export default {
     components: {
@@ -116,6 +116,7 @@
         oneCate: '',
         isRouterAlive: true,
         chooseTab: 0,
+        topBannerImg:'',
         //顶部导航栏
         tabList: [{
             title: '首页',
@@ -177,6 +178,7 @@
       })
       var path = this.$route.fullPath
       this.chooseTab = path
+      this.getAdvertByCode()
       this.getData()
     },
     beforeDestroy() {
@@ -199,6 +201,15 @@
       reload() {
         this.isRouterAlive = false
         this.$nextTick(() => (this.isRouterAlive = true))
+      },
+      getAdvertByCode(){
+        const param = {
+          advertCode:'indexBanner',
+          limit:1
+        }
+        advertByCode(param).then(res=>{
+          this.topBannerImg= 'https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg'
+        })
       },
       getData() {
         if (this.chooseTab != '/home') {

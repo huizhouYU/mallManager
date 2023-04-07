@@ -1,4 +1,11 @@
 import request from '../../src/utils/request.js'
+//根据广告位code获取广告
+export function advertByCode() {
+  return request({
+    url: '/advert/queryByCode',
+    method: 'get'
+  })
+}
 //分类列表(树形)
 export function categoryList() {
   return request({
