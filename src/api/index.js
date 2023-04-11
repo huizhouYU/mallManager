@@ -1,9 +1,10 @@
 import request from '../../src/utils/request.js'
 //根据广告位code获取广告
-export function advertByCode() {
+export function advertByCode(query) {
   return request({
     url: '/advert/queryByCode',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 //分类列表(树形)
