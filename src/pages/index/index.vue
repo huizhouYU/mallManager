@@ -95,7 +95,8 @@
   import serviceItem5Page from '../../pages/index/serviceItem5Page.vue'
   import indexBottom from '../../pages/index/indexBottom.vue'
   import {
-    categoryList,advertByCode
+    categoryList,
+    advertByCode
   } from '@/api/index'
   export default {
     components: {
@@ -116,7 +117,7 @@
         oneCate: '',
         isRouterAlive: true,
         chooseTab: 0,
-        topBannerImg:'',
+        topBannerImg: '',
         //顶部导航栏
         tabList: [{
             title: '首页',
@@ -202,13 +203,17 @@
         this.isRouterAlive = false
         this.$nextTick(() => (this.isRouterAlive = true))
       },
-      getAdvertByCode(){
+      getAdvertByCode() {
         const param = {
-          advertCode:'indexBanner',
-          limit:1
+          advertCode: 'indexBanner',
+          limit: 1
         }
-        advertByCode(param).then(res=>{
-          this.topBannerImg= 'https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg'
+        advertByCode(param).then(res => {
+          if (res.code == 10000) {
+            this.topBannerImg = res.data[0].content
+          } else {
+            this.topBannerImg = 'https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg'
+          }
         })
       },
       getData() {
@@ -545,5 +550,4 @@
       }
     }
   }
-
 </style>
