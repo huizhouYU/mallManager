@@ -60,14 +60,14 @@
               </div>
             </div> -->
             <!-- 规格+属性 合并 -->
-            <div class="info-item">
+            <div class="info-item" v-show="goodsInfo.openSpecs">
               <span class="title box-title">属性：</span>
               <template v-if="goodsInfo.goodsEntities">
                 <div class="whole-spec-box">
                   <div v-for="(item,index) in goodsInfo.goodsEntities" :key="index" @click="changeSpec(index)"
                     :class="['spec-item',{'current-Spec':index == currentSpec}]">
-                    <img :src="item.entityImage" alt="">
-                    <span class="spec-value">{{item.str}}</span>
+                    <img :src="item.entityImage" alt="" v-if="item.entityImage">
+                    <span class="spec-value">{{item.str||"-"}}</span>
                   </div>
                 </div>
               </template>
@@ -117,7 +117,6 @@
                   <template v-if="spec.specId == item.specId">
                     {{spec.specValue}}
                   </template>
-                  <!-- <template v-else>-</template> -->
                 </div>
               </template>
             </el-table-column>
@@ -242,7 +241,11 @@
             } else {
               this.categoryStr = this.goodsInfo.cateName
             }
-            this.sortSpecAttr()
+            if (this.goodsInfo.openSpecs) {
+              this.sortSpecAttr()
+            } else {
+              this.currentObj = this.goodsInfo.goodsEntities[0]
+            }
             //合并所有型号商品的goodsEntities和goodsSpecs
             this.mergeData()
           } catch (e) {
@@ -274,7 +277,6 @@
         for (let entity of this.newGoodsEntities) {
           entity.specText = JSON.parse(entity.specText)
         }
-        console.log("合并的数据newGoodsEntities：", this.newGoodsEntities)
         //newGoodsSpecs去重
         var specsList = []
         for (var specs of this.newGoodsSpecs) {
@@ -368,7 +370,6 @@
         this.getGoodsInfo(goodsId)
       },
       getRecommendGoods() {
-        console.log("获取推荐商品")
         //获取推荐商品
         relatedRecommendGoods({
           goodsId: parseInt(this.goodsId),
