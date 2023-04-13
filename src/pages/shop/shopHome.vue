@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <store-recommendation class="store-recommendation" :isShowTitleImg="isShowTitleImg" :adsList="adsList"></store-recommendation>
+      <!-- <store-recommendation class="store-recommendation" :isShowTitleImg="isShowTitleImg" :adsList="adsList"></store-recommendation> -->
     </div>
     <div class="shop-home-box-right">
       <!-- 简要介绍 -->
@@ -143,6 +143,7 @@
         goodsDataList: [],
         demandDataList: [],
         isShowTitleImg: false,
+        grid3: true,
         grid5: true,
         lookSrcList: [],
         adsList: [{
@@ -163,7 +164,7 @@
           {
             imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090158.jpg',
           }
-        
+
         ]
       }
     },

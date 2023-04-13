@@ -20,7 +20,8 @@
           </ul>
         </div>
       </div>
-      <good-item :goodsList="goodsDataList"></good-item>
+      <!-- <good-item :goodsList="goodsDataList"></good-item> -->
+      <good-item-type :goodsList="goodsDataList"></good-item-type>
     </div>
 
     <div class="pagination">
@@ -34,12 +35,14 @@
 
 <script>
   import goodItem from '../../pages/allGoods/goodItem.vue'
+  import goodItemType from '../../pages/allGoods/goodItemType.vue'
   import {
     goodsList
   } from '@/api/goods'
   export default {
     components: {
-      goodItem
+      goodItem,
+      goodItemType
     },
     data() {
       return {
@@ -100,16 +103,19 @@
 <style lang="less" scoped>
   .whole {
     box-sizing: border-box;
-    margin-top: 25px;
+    margin-top: 25px !important;
     width: 1200px;
   }
 
   .content {
-    background-color: #fff;
-    padding: 20px 30px 30px 20px;
+    // background-color: #fff;
+    // padding: 20px 30px 30px 20px;
   }
 
   .select-content {
+    background-color: #fff;
+    padding: 10px 30px 10px 20px;
+    margin-bottom: 15px;
     .title {
       width: 100px;
       font-size: 12px;

@@ -34,7 +34,7 @@
               <div class="whole-spec-box">
                 <div :class="['model-item',{'current-item':item.goodsId == goodsInfo.goodsId}]"
                   v-for="(item,index) in goodsInfo.goodsModelList" :key="index" @click="jumpOtherModel(item.goodsId)">
-                  {{item.goodsModel}}
+                  {{item.goodsModel||'-'}}
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@
         </div>
         <!-- 选型对比 -->
         <!-- <div class="product-spec" v-if="goodsInfo.goodsEntities"> -->
-        <div class="product-spec" v-if="newGoodsEntities">
+        <div class="product-spec" v-if="newGoodsEntities && newGoodsEntities.length>0">
           <span class="title">选型对比</span>
           <!-- 所有商品的goodsEntities拼一起的新的goodsEntities -->
           <el-table :data="newGoodsEntities" :cell-style="{'text-align':'center'}"
@@ -108,7 +108,7 @@
             </el-table-column>
             <!-- 规格+属性 -->
             <!-- 采用所以商品goodsSpecs拼接一起的数据后，并去重 -->
-            <el-table-column label="200" v-for="(item,index) in newGoodsSpecs" :key="index">
+            <el-table-column width="200" v-for="(item,index) in newGoodsSpecs" :key="index">
               <template slot="header">
                 {{item.specName}}
               </template>
@@ -266,6 +266,14 @@
       mergeData() {
         this.newGoodsEntities = []
         this.newGoodsSpecs = []
+        //自己本身商品都没有型号
+        if (!this.goodsInfo.goodsModel ) {
+          return
+        }
+        //只有它自己一个商品没有关联其他商品 && 本身是单规格商品
+        if(this.goodsInfo.goodsModelList.length==1 && !this.goodsInfo.openSpecs ){
+          return
+        }
         for (var item of this.goodsInfo.goodsModelList) {
           var param = this.cloneObj(item.goodsEntities)
           for (var paramItem of param) {
@@ -306,40 +314,43 @@
       },
       sortSpecAttr() {
         this.changeGoodsEntity()
-        var entity = this.goodsInfo.goodsEntities
-        for (var i = 0; i < entity.length; i++) {
-          // var item = JSON.parse(entity[i].specText)
-          var item = entity[i].specText
-          var str = ''
-          for (var y = 0; y < item.length; y++) {
-            if (y == 0 && item[y].specTypeId == 1) {
-              if (this.searchIndex(item[y].specName, item[y].specValue) < 0) {
-                var param = {
-                  name: item[y].specName,
-                  value: item[y].specValue,
-                  attrList: []
+        if(this.goodsInfo.goodsEntities && this.goodsInfo.goodsEntities.length>0){
+          var entity = this.goodsInfo.goodsEntities
+          for (var i = 0; i < entity.length; i++) {
+            // var item = JSON.parse(entity[i].specText)
+            var item = entity[i].specText
+            var str = ''
+            for (var y = 0; y < item.length; y++) {
+              if (y == 0 && item[y].specTypeId == 1) {
+                if (this.searchIndex(item[y].specName, item[y].specValue) < 0) {
+                  var param = {
+                    name: item[y].specName,
+                    value: item[y].specValue,
+                    attrList: []
+                  }
+                  this.spList.push(param)
                 }
-                this.spList.push(param)
-              }
-            } else {
-              if (str != '') {
-                str = str + "/" + item[y].specValue
               } else {
-                str = item[y].specValue
+                if (str != '') {
+                  str = str + "/" + item[y].specValue
+                } else {
+                  str = item[y].specValue
+                }
               }
             }
+            var attrItem = {
+              attrStr: str,
+              price: entity[i].entityPrice,
+              img: entity[i].entityImage,
+              stock: entity[i].entityStock,
+            }
+            var x = this.searchIndex(item[0].specName, item[0].specValue)
+            this.spList[x].attrList.push(attrItem)
           }
-          var attrItem = {
-            attrStr: str,
-            price: entity[i].entityPrice,
-            img: entity[i].entityImage,
-            stock: entity[i].entityStock,
-          }
-          var x = this.searchIndex(item[0].specName, item[0].specValue)
-          this.spList[x].attrList.push(attrItem)
+          this.attList = this.spList[0].attrList
+          this.currentObj = this.goodsInfo.goodsEntities[this.currentSpec]
         }
-        this.attList = this.spList[0].attrList
-        this.currentObj = this.goodsInfo.goodsEntities[this.currentSpec]
+
         // this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
       },
       changeSpec(index) {
@@ -354,16 +365,18 @@
         // this.currentObj = this.spList[this.currentSpec].attrList[this.currentAttr]
       },
       changeGoodsEntity() {
-        this.goodsInfo.goodsSpecs = JSON.parse(this.goodsInfo.goodsSpecs)
-        this.goodsInfo.goodsEntities.forEach((item) => {
-          item.specText = JSON.parse(item.specText)
-        })
-        this.goodsInfo.goodsEntities.forEach((item) => {
-          var str = item.specText.map(function(elem) {
-            return elem.specValue;
-          }).join("/");
-          item.str = str
-        })
+        if (this.goodsInfo.goodsSpecs) {
+          this.goodsInfo.goodsSpecs = JSON.parse(this.goodsInfo.goodsSpecs)
+          this.goodsInfo.goodsEntities.forEach((item) => {
+            item.specText = JSON.parse(item.specText)
+          })
+          this.goodsInfo.goodsEntities.forEach((item) => {
+            var str = item.specText.map(function(elem) {
+              return elem.specValue;
+            }).join("/");
+            item.str = str
+          })
+        }
       },
       //查看其他型号的商品详情
       jumpOtherModel(goodsId) {

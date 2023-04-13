@@ -55,13 +55,15 @@
     <!-- 店内推荐 -->
     <div class="shop-recommend">
       <div>店内推荐</div>
-      <good-item :goodsList="goodsDataList"></good-item>
+      <!-- <good-item :goodsList="goodsDataList"></good-item> -->
+      <good-item-type :goodsList="goodsDataList"></good-item-type>
     </div>
   </div>
 </template>
 
 <script>
   import goodItem from '../../../pages/allGoods/goodItem.vue'
+  import goodItemType from '../../../pages/allGoods/goodItemType.vue'
   import {
     goodsList
   } from '@/api/goods'
@@ -70,7 +72,7 @@
   } from '@/api/store'
   export default {
     components: {
-      goodItem
+      goodItem,goodItemType
     },
     data() {
       return {

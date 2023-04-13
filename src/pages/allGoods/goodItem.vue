@@ -8,14 +8,11 @@
           </div>
           <div class="info">
             <div class="name">{{item.goodsName}}</div>
-            <div class="brand">{{item.brand}}</div>
-            <div class="price-shop">
+            <div class="model">{{item.goodsModel}}</div>
               <div class="price">
                 <template v-if="item.saleType==1">￥{{item.price}}</template>
-                <template v-else>￥询价</template>
+                <template v-else>询价</template>
               </div>
-              <i class="iconfont">&#xe73d;</i>
-            </div>
           </div>
         </div>
       </div>
@@ -112,32 +109,33 @@
       font-size: 12px;
       font-family: Microsoft YaHei;
       font-weight: 400;
+      line-height: 12px;
 
       .name {
+        text-align: center;
         width: 100%;
         color: #333333;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        margin-bottom: 8px;
       }
 
-      .brand {
+      .model {
+        color: #B0B0B0;
+        text-align: center;
         width: 100%;
-        color: #666666;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
       }
 
-      .price-shop {
+      .price {
+        text-align: center;
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-
-        .price {
-          color: #E60000;
-        }
-
-        i {
-          color: #CACACA;
-        }
+        font-size: 14px;
+        color: #FF3300;
       }
 
     }

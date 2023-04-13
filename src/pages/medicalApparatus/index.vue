@@ -41,7 +41,7 @@
           </template>
         </div>
       </div>
-      <good-item :goodsList="goodsDataList"></good-item>
+      <good-item-type :goodsList="goodsDataList"></good-item-type>
     </div>
 
     <div class="pagination">
@@ -50,11 +50,23 @@
         :total="total">
       </el-pagination>
     </div>
+    <!-- 为您找货 -->
+    <div class="flex-column-start-start  find-goods-module">
+      <div class="flex-start-center module-title">
+        <span class="title">产品咨询</span>
+        <div class="spot"></div>
+        <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
+      </div>
+      <product-consult class="product-consult"></product-consult>
+
+    </div>
   </div>
 </template>
 
 <script>
   import goodItem from '../../pages/allGoods/goodItem.vue'
+  import goodItemType from '../../pages/allGoods/goodItemType.vue'
+  import productConsult from '../../pages/index/productConsult.vue'
   import {
     goodsList
   } from '@/api/goods'
@@ -64,7 +76,9 @@
   } from '@/api/index'
   export default {
     components: {
-      goodItem
+      goodItem,
+      goodItemType,
+      productConsult
     },
     data() {
       return {
@@ -80,7 +94,7 @@
           keyType: 1,
           keyword: ''
         },
-        isBrandStow: true,
+        isBrandStow: false,
         isBrandShow: false, //【品牌】是否显示‘收起’、‘展开’
         selectItem: {
           // 商品类型 material-配件 equipment-设备器械
@@ -180,17 +194,62 @@
 </script>
 
 <style lang="less" scoped>
+  // 为您找货
+  .find-goods-module {
+    margin-top: 30px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    .module-title {
+      .title {
+        line-height: 18px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        color: #333333;
+      }
+
+      .spot {
+        width: 5px;
+        height: 5px;
+        font-weight: 400;
+        background: #999999;
+        border-radius: 50%;
+        margin: 0px 10px;
+      }
+
+      .remark {
+        font-size: 14px;
+        font-family: Source Han Sans SC;
+        font-weight: 400;
+        color: #40A9FF;
+      }
+    }
+
+    .product-consult {
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+  }
   .whole {
     box-sizing: border-box;
     margin-top: 25px;
   }
 
   .content {
-    background-color: #fff;
-    padding: 20px 30px 30px 20px;
+    // background-color: #fff;
+    // padding: 20px 30px 30px 20px;
   }
 
   .select-content {
+    background-color: #fff;
+    padding: 20px 30px 0px 20px;
+    margin-bottom: 15px;
     .title {
       width: 100px;
       font-size: 12px;
