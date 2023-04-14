@@ -118,7 +118,7 @@
     margin-bottom: 15px;
     .title {
       width: 100px;
-      font-size: 12px;
+      font-size: 14px;
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #757575;
@@ -133,7 +133,7 @@
       border-bottom: 1px dashed #F6F6F6;
 
       .value {
-        font-size: 12px;
+        font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #40A9FF;
@@ -179,7 +179,7 @@
       }
 
       span {
-        font-size: 12px;
+        font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #333333;

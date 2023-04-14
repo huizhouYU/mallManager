@@ -70,7 +70,7 @@
     display: grid;
     grid-template-columns: repeat(4, auto);
     justify-content: space-between;
-    grid-gap: 12px;
+    grid-row-gap: 12px;
 
     .item-good:hover {
       border-color: #239BFF;
@@ -86,7 +86,7 @@
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      width: 290px;
+      max-width: 290px;
       height: 335px;
 
       .good-img {
@@ -102,9 +102,10 @@
       }
 
       .good-info {
-        height: 70px;
-        width: 100%;
-        padding-top: 10px;
+        margin-top: 4px;
+        // height: 75px;
+        width: 250px;
+        padding-top: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -120,7 +121,7 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin-bottom: 8px;
+          margin-bottom: 10px;
         }
 
         .model {
@@ -134,7 +135,7 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
         }
 
         .price {

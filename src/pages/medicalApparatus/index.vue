@@ -46,7 +46,7 @@
 
     <div class="pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
-        :page-sizes="[30, 60, 90, 120]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[16,32, 60, 92]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </div>
@@ -86,7 +86,7 @@
         total: 0, //总条数
         page: {
           pageNo: 1,
-          pageSize: 30,
+          pageSize: 32,
           goodsType: '', //商品类型 material-配件 equipment-设备器械
           brandName: '', //品牌
           categoryId: '', //分类ID
@@ -252,7 +252,7 @@
     margin-bottom: 15px;
     .title {
       width: 100px;
-      font-size: 12px;
+      font-size: 14px;
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #757575;
@@ -267,7 +267,7 @@
       border-bottom: 1px dashed #F6F6F6;
 
       .value {
-        font-size: 12px;
+        font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #40A9FF;
@@ -318,7 +318,7 @@
       }
 
       span {
-        font-size: 12px;
+        font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #333333;
@@ -336,7 +336,7 @@
     .isStow {
       display: flex;
       align-content: center;
-      font-size: 12px;
+      font-size: 14px;
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #999999;
