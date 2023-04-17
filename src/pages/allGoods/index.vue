@@ -26,7 +26,7 @@
 
     <div class="pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
-        :page-sizes="[30, 60, 90, 120]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+        :page-sizes="[16,32, 60, 92]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </div>
@@ -49,7 +49,7 @@
         total: 0, //总条数
         page: {
           pageNo: 1,
-          pageSize: 30,
+          pageSize: 32,
           goodsType: '',
           goodsTypeName: '',
           storeId: '',

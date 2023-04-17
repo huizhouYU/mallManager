@@ -28,7 +28,7 @@
         <el-popover placement="bottom-start" width="215" trigger="hover" v-show="isShowContent" :visible-arrow="false">
           <div slot="reference" class="main-tab-content-left">
             <img src="../../assets/images/index/icon_hamburger.png" alt="">
-            <span class="title">品牌分类</span>
+            <span class="title">产品分类</span>
           </div>
           <!-- 悬浮 品牌分类 展示内容 -->
           <div class="brand-classification">
@@ -69,7 +69,7 @@
         </el-popover>
         <div class="main-tab-content-left" v-show="!isShowContent">
           <img src="../../assets/images/index/icon_hamburger.png" alt="">
-          <span class="title">品牌分类</span>
+          <span class="title">产品分类</span>
         </div>
         <div class="main-tab-content-right">
           <ul class="flex-start-center">

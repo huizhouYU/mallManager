@@ -90,7 +90,7 @@
         })
         var page = {
           pageNo: 1,
-          pageSize: 10,
+          pageSize: 12,
           storeId: this.storeId
         }
         goodsList(page).then(response => {
