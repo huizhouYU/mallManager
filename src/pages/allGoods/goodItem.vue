@@ -65,17 +65,16 @@
     display: grid;
     grid-template-columns: repeat(6, auto);
     justify-content: flex-start;
-    grid-column-gap: 14px;
+    grid-gap: 14px;
   }
 
   .goods-content-grid5 {
     grid-template-columns: repeat(5, auto);
-    grid-column-gap: 5px;
+    grid-gap: 5px;
   }
 
 
   .goods-content .item {
-    margin-top: 15px;
     width: 180px;
     height: 230px;
     padding: 15px;

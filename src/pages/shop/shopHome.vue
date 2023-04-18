@@ -79,7 +79,7 @@
         <good-item :grid5="grid5" :goodsList="goodsDataList" @selectOnlyTab="selectOnlyTab"></good-item>
       </div>
       <!-- 供求信息 -->
-      <div class="module goods">
+      <div class="module demand">
         <div class="module-title">
           <div class="module-title-left">
             <img src="../../assets/images/shop/icon_supply and demand.png" alt="">

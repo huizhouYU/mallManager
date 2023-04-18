@@ -13,7 +13,6 @@
         <div class="select-item">
           <div class="title">类型</div>
           <ul :class="['item']">
-            <li @click="changeGoodsType('','')"><span>全部</span></li>
             <li v-for="(item,index) in selectItem.goodsType" :key="index" @click="changeGoodsType(item.id,item.name)">
               <span :class="{'bule':item.id == page.goodsType}">{{item.name}}</span>
             </li>
@@ -58,6 +57,9 @@
         selectItem: {
           // 商品类型 material-配件 equipment-设备器械
           goodsType: [{
+              id: '',
+              name: '全部'
+            }, {
               id: 'material',
               name: '配件专区'
             },
@@ -84,7 +86,11 @@
       },
       changeGoodsType(goodsType, goodsTypeName) {
         this.page.goodsType = goodsType
-        this.page.goodsTypeName = goodsTypeName
+        if (this.page.goodsType) {
+          this.page.goodsTypeName = goodsTypeName
+        } else {
+          this.page.goodsTypeName = ''
+        }
         this.getData()
       },
       handleSizeChange(val) {
@@ -116,6 +122,7 @@
     background-color: #fff;
     padding: 10px 30px 10px 20px;
     margin-bottom: 15px;
+
     .title {
       width: 100px;
       font-size: 14px;
@@ -143,7 +150,7 @@
 
   .select-item {
     padding: 13px 0px 0px 0px;
-    border-bottom: 1px dashed #F6F6F6;
+    // border-bottom: 1px dashed #F6F6F6;
     display: flex;
     justify-content: flex-start;
 
