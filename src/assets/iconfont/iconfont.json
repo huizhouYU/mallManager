@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1079658",
+      "name": "二维码",
+      "font_class": "erweima",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
       "icon_id": "5985624",
       "name": "客服耳机",
       "font_class": "kefuerji",

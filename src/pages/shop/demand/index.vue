@@ -100,6 +100,7 @@
     margin-top: 20px;
 
     .select-content {
+      border-radius: 6px;
       margin-bottom: 18px;
       background-color: #fff;
       padding: 10px 30px 10px 20px;

@@ -9,10 +9,11 @@
           <div class="info">
             <div class="name">{{item.goodsName}}</div>
             <div class="model">{{item.goodsModel}}</div>
-              <div class="price">
+            <div class="know-more">了解更多</div>
+              <!-- <div class="price">
                 <template v-if="item.saleType==1">￥{{item.price}}</template>
                 <template v-else>询价</template>
-              </div>
+              </div> -->
           </div>
         </div>
       </div>
@@ -104,7 +105,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       font-size: 12px;
       font-family: Microsoft YaHei;
       font-weight: 400;
@@ -128,6 +129,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 10px;
+      }
+      .know-more{
+        line-height: 12px;
+        font-size: 14px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color: #40A9FF;
       }
 
       .price {

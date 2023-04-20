@@ -57,7 +57,7 @@
         <div class="spot"></div>
         <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
       </div>
-      <product-consult class="product-consult"></product-consult>
+      <product-consult class="product-consult" :inputWidth="inputWidth"></product-consult>
 
     </div>
   </div>
@@ -82,6 +82,7 @@
     },
     data() {
       return {
+        inputWidth:true,
         chosedLevel: '',
         total: 0, //总条数
         page: {
@@ -247,6 +248,7 @@
   }
 
   .select-content {
+    border-radius: 6px;
     background-color: #fff;
     padding: 20px 30px 0px 20px;
     margin-bottom: 15px;

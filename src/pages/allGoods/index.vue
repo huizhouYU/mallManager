@@ -119,6 +119,7 @@
   }
 
   .select-content {
+    border-radius: 6px;
     background-color: #fff;
     padding: 10px 30px 10px 20px;
     margin-bottom: 15px;

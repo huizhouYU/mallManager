@@ -16,18 +16,28 @@
             <div class="goods-tag" v-if="goodsInfo.tagList">
               {{goodsInfo.tagList[0]}}
             </div>
-            <!-- 价格 -->
-            <div class="info-item item-bottom">
-              <span class="title">价格：</span>
-              <div class="price">￥
-                <template v-if="goodsInfo.saleType == 2">
-                  <span>询价</span>
-                </template>
-                <template v-else>
-                  <span>{{currentObj.entityPrice || goodsInfo.pirce}}</span>
-                </template>
+            <div class="know-more">
+              <div class="know-more-left">
+                <img src="../../assets/images/shop/icon_service_know_more.png" alt="">
+                如需价格、产品资料等信息请联系客服
+              </div>
+              <div class="know-more-right">
+                扫一扫咨询
+                <i class="iconfont my-icon-font-qr">&#xe635;</i>
+
+                <i class="iconfont my-icon-font-down">&#xe601;</i>
+                <i class="iconfont my-icon-font-up">&#xe733;</i>
+                <div class="flex-center-center QR-code"
+                  v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
+                  <img :src="goodsInfo.domain" alt="">
+                </div>
+                <div class=" QR-code no-service-font" v-else>
+                  暂未上传客服二维码
+                </div>
+
               </div>
             </div>
+            <div class="line"></div>
             <!-- 型号 -->
             <div class="info-item item-bottom">
               <span class="title box-title">型号：</span>
@@ -80,15 +90,6 @@
               </template>
 
             </div>
-            <!-- 联系客服 -->
-            <div class="info-item item-center">
-              <span class="title ">联系客服：</span>
-              <div class="flex-center-center QR-code"
-                v-if="goodsInfo.domain != undefined && goodsInfo.domain != null&& goodsInfo.domain != ''">
-                <img :src="goodsInfo.domain" alt="">
-              </div>
-              <div class="no-service-font" v-else>-</div>
-            </div>
           </div>
         </div>
         <!-- 选型对比 -->
@@ -96,7 +97,7 @@
         <div class="product-spec" v-if="newGoodsEntities && newGoodsEntities.length>0">
           <span class="title">选型对比</span>
           <!-- 所有商品的goodsEntities拼一起的新的goodsEntities -->
-          <el-table :data="newGoodsEntities" :cell-style="{'text-align':'center'}"
+          <el-table :data="newGoodsEntities" :cell-style="{'text-align':'left','padding':'5px 20px','min-height':'60px'}"
             :header-cell-style="{background:'#F5F7FA',color: '#333333',textAlign:'center'}" style="width: 100%">
             <el-table-column label="型号" fixed width="214">
               <template slot-scope="scope">
@@ -108,7 +109,7 @@
             </el-table-column>
             <!-- 规格+属性 -->
             <!-- 采用所以商品goodsSpecs拼接一起的数据后，并去重 -->
-            <el-table-column width="200" v-for="(item,index) in newGoodsSpecs" :key="index">
+            <el-table-column min-width="200" v-for="(item,index) in newGoodsSpecs" :key="index">
               <template slot="header">
                 {{item.specName}}
               </template>
@@ -121,7 +122,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="name" width="160" fixed="right" label="市场价">
+            <!-- <el-table-column prop="name" width="160" fixed="right" label="市场价">
               <template slot-scope="scope">
                 <template v-if="goodsInfo.saleType == 2">
                   询价
@@ -130,7 +131,7 @@
                   {{scope.row.entityPrice}}
                 </template>
               </template>
-            </el-table-column>
+            </el-table-column> -->
           </el-table>
         </div>
         <div class="product-info">
@@ -161,7 +162,7 @@
             <div class="spot"></div>
             <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
           </div>
-          <product-consult class="product-consult" :goodsName="goodsInfo.goodsName"></product-consult>
+          <product-consult class="product-consult" :goodsName="goodsInfo.goodsName" ></product-consult>
         </div>
       </div>
       <!-- 相关商品推荐 -->
@@ -267,11 +268,11 @@
         this.newGoodsEntities = []
         this.newGoodsSpecs = []
         //自己本身商品都没有型号
-        if (!this.goodsInfo.goodsModel ) {
+        if (!this.goodsInfo.goodsModel) {
           return
         }
         //只有它自己一个商品没有关联其他商品 && 本身是单规格商品
-        if(this.goodsInfo.goodsModelList.length==1 && !this.goodsInfo.openSpecs ){
+        if (this.goodsInfo.goodsModelList.length == 1 && !this.goodsInfo.openSpecs) {
           return
         }
         for (var item of this.goodsInfo.goodsModelList) {
@@ -314,7 +315,7 @@
       },
       sortSpecAttr() {
         this.changeGoodsEntity()
-        if(this.goodsInfo.goodsEntities && this.goodsInfo.goodsEntities.length>0){
+        if (this.goodsInfo.goodsEntities && this.goodsInfo.goodsEntities.length > 0) {
           var entity = this.goodsInfo.goodsEntities
           for (var i = 0; i < entity.length; i++) {
             // var item = JSON.parse(entity[i].specText)
@@ -494,7 +495,6 @@
           box-sizing: border-box;
 
           .goods-title {
-            margin-bottom: 10px;
             font-size: 18px;
             line-height: 18px;
             font-family: Microsoft YaHei;
@@ -508,7 +508,106 @@
             font-family: Microsoft YaHei;
             font-weight: 400;
             color: #999999;
-            margin-bottom: 22px;
+            margin-top: 10px;
+          }
+
+          .know-more {
+            margin-top: 15px;
+            height: 28px;
+            background: #FEF5EB;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 6px 10px 6px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+
+            .know-more-left {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #666666;
+
+              img {
+                width: 19px;
+                height: 16px;
+                margin-right: 5px;
+              }
+            }
+
+            .know-more-right {
+              cursor: pointer;
+              position: relative;
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #666666;
+
+              .my-icon-font-qr {
+                font-size: 16px;
+                margin: 0px 3px;
+              }
+
+              .my-icon-font-down {
+                display: block;
+              }
+
+              .my-icon-font-up {
+                display: none;
+              }
+
+              .QR-code {
+                display: none;
+                top: 20px;
+                right: -8px;
+                position: absolute;
+                height: 110px;
+                width: 115px;
+                background: #FFFFFF;
+                border: 1px solid #DDDDDD;
+                padding: 5px 7px;
+                box-sizing: border-box;
+
+                img {
+                  width: 100px;
+                  height: 100px;
+                }
+              }
+            }
+
+            .know-more-right:hover {
+              .my-icon-font-down {
+                display: none;
+              }
+
+              .my-icon-font-up {
+                display: block;
+              }
+
+              .QR-code {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+
+              .no-service-font {
+                font-size: 12px;
+              }
+            }
+          }
+
+          .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #EEEEEE;
+            margin-bottom: 15px;
           }
 
           .info-item {
@@ -534,35 +633,6 @@
               display: flex;
               align-items: center;
               justify-content: flex-start;
-            }
-
-            .price {
-              font-size: 12px;
-              line-height: 12px;
-              font-family: Microsoft YaHei;
-              font-weight: 700;
-              color: #E60000;
-
-              span {
-                font-size: 16px;
-                line-height: 16px;
-              }
-
-              .remark {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                font-size: 12px;
-                font-family: Microsoft YaHei;
-                font-weight: 400;
-                color: #999999;
-
-                img {
-                  width: 10px;
-                  height: 10px;
-                  margin-right: 4px;
-                }
-              }
             }
 
             .whole-spec-box {
@@ -681,30 +751,6 @@
                 box-sizing: border-box;
               }
             }
-
-            //联系客服
-            .QR-code {
-              width: 80px;
-              height: 80px;
-              box-sizing: border-box;
-
-              img {
-                width: 80px;
-                height: 80px;
-              }
-            }
-
-            .no-service-font {
-              height: 34px;
-              font-size: 14px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              color: #666666;
-              padding: 0px 10px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
           }
 
           .item-center {
@@ -712,7 +758,7 @@
           }
 
           .item-bottom {
-            margin-bottom: 25px;
+            margin-bottom: 10px;
           }
         }
 
@@ -743,7 +789,7 @@
 
           .my-tab-module {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
 
             img {

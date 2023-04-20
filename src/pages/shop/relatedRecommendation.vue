@@ -11,13 +11,14 @@
         <img :src="item.defaultImage" alt="">
         <div class="goods-info-right">
           <div class="title">{{item.goodsName}}</div>
-          <div class="key-value-item">
+          <div class="know-more">了解更多</div>
+      <!--    <div class="key-value-item">
             <div class="key">价格:</div>
             <div class="value">
               <template v-if="item.saleType == 1">{{item.price}}</template>
               <template v-else>可询价</template>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -119,6 +120,11 @@
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           margin-bottom: 12px;
+        }
+        .know-more{
+          font-size: 12px;
+          font-weight: 400;
+          color: #40A9FF;
         }
 
         .key-value-item {

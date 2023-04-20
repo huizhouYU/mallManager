@@ -13,11 +13,13 @@
             <div class="model">
               {{item.goodsModel}}
             </div>
-
-            <div class="price">
+            <div class="know-more">
+              了解更多
+            </div>
+            <!-- <div class="price">
               <template v-if="item.saleType==1">￥{{item.price}}</template>
               <template v-else>询价</template>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -74,6 +76,38 @@
 
     .item-good:hover {
       border-color: #239BFF;
+
+      .good-info {
+        .name {
+          color: #40A9FF;
+        }
+
+        .know-more {
+          width: 92px;
+          animation: mymove ease 0.6s;
+        }
+
+        /* Chrome, Safari, Opera */
+
+        @-webkit-keyframes mymove {
+          from {
+            width: 80px
+          }
+          to {
+            width: 92px
+          }
+        }
+
+        /* Standard syntax */
+        @keyframes mymove {
+          from {
+            width: 80px
+          }
+          to {
+            width: 92px
+          }
+        }
+      }
     }
 
     .item-good {
@@ -135,7 +169,22 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin-bottom: 20px;
+          margin-bottom: 18px;
+        }
+
+        .know-more {
+          width: 80px;
+          height: 24px;
+          background: #FFFFFF;
+          border: 1px solid #40A9FF;
+          border-radius: 12px;
+          font-size: 12px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #40A9FF;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .price {

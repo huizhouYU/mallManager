@@ -1,9 +1,9 @@
 <template>
   <div class="product-consult-content">
-    <el-form ref="form" :model="form" label-width="95px" :rules="rules">
+    <el-form ref="form" :model="form" label-width="95px" :rules="rules" :class="inputWidth?'limit-input-long-width':'limit-input-width'">
       <!-- 填写的表单内容 -->
 
-      <el-form-item label="商品名称：" prop="goodsName" v-if="!goodsName">
+      <el-form-item label="商品名称：" prop="goodsName" v-if="!goodsName" class="input-long">
         <el-input v-model="form.goodsName" placeholder="请输入您想找的商品名称"></el-input>
       </el-form-item>
       <el-form-item label="您想了解：" prop="typeName">
@@ -18,7 +18,7 @@
       <el-form-item label="手机号码：" prop="mobile">
         <el-input v-model="form.mobile" placeholder="请输入手机号码"></el-input>
       </el-form-item>
-      <el-form-item label="单位名称：" prop="companyName">
+      <el-form-item label="单位名称：" prop="companyName" class="input-long">
         <el-input v-model="form.companyName" placeholder="请输入单位名称"></el-input>
       </el-form-item>
       <el-form-item label="">
@@ -44,6 +44,12 @@
       },
       'goodsName': {
         type: String
+      },
+      'inputWidth':{
+        type: Boolean,
+        default: () => {
+          return false
+        }
       }
     },
     data() {
@@ -177,11 +183,27 @@
   }
 </style>
 <style lang="less" scoped>
+
   .product-consult-content {
     line-height: auto;
     padding: 20px 20px 10px 50px;
     width: 100%;
     box-sizing: border-box;
+    .limit-input-width{
+      /deep/ .el-input__inner{
+        width: 385px;
+      }
+    }
+    .limit-input-long-width{
+      /deep/ .el-input__inner{
+        width: 385px;
+      }
+      .input-long{
+        /deep/ .el-input__inner{
+          width: 650px !important;
+        }
+      }
+    }
 
     .ul-item {
       box-sizing: border-box;
