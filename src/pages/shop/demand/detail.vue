@@ -70,15 +70,17 @@
         </div>
         <!-- 店内相关求购 -->
         <!-- <div class="shop-demand" v-if="isShop"> -->
-        <div class="shop-demand" v-if="false">
+        <div class="shop-demand">
           <div class="title">店内相关求购</div>
           <ul>
-            <li>急需一个封魔盒，求</li>
-            <li>急需一个封魔盒，求</li>
-            <li>急需一个封魔盒，求</li>
-            <li>急需一个封魔盒，求</li>
-            <li>要碗牛肉面，只要牛肉，不要面，满满的牛肉</li>
-            <li>急需一个封魔盒，求</li>
+            <li v-for="(item,index) in otherRecommendDemand" class="flex-column-start-start" @click="toDemandsDetail(item)">
+              <div class="demand-title">
+                {{item.title}}
+              </div>
+              <div class="demand-time">
+                {{item.updatedAt || item.createdAt || '-'}}
+              </div>
+            </li>
           </ul>
         </div>
         <!-- 其他相关求购 -->
@@ -104,7 +106,8 @@
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
   import {
-    articleDetail
+    articleDetail,
+    articleList
   } from '@/api/supplyDemand'
   import {
     mapGetters
@@ -125,7 +128,8 @@
       return {
         id: '',
         demandInfo: '',
-        currentChosed: ['供求信息', '店铺供求', '']
+        currentChosed: ['供求信息', '店铺供求', ''],
+        otherRecommendDemand: []
       }
     },
     mounted() {
@@ -159,10 +163,33 @@
                 console.log("保存当前浏览的店铺ID失败")
               })
             this.$emit("saveStoreId", this.demandInfo.storeId)
+            this.getOtherRecommendDemand()
           }
 
 
         })
+      },
+      getOtherRecommendDemand() {
+        let param = {
+          pageNo: 1,
+          pageSize: 6,
+          ignoreId: this.id,
+          storeId: this.demandInfo.storeId
+        }
+        articleList(param).then(res => {
+          if (res.code == 10000) {
+            this.otherRecommendDemand = res.data.list
+          }
+        })
+      },
+      toDemandsDetail(item) {
+        var newPath = this.$router.resolve({
+          path: '/demandDetail',
+          query: {
+            articleId: item.articleId
+          }
+        })
+        window.open(newPath.href, '_blank')
       }
     }
   }
@@ -409,7 +436,8 @@
       }
 
       .shop-demand {
-        height: 294px;
+        // height: 294px;
+        padding-bottom: 20px;
         background: #FFFFFF;
         margin-bottom: 20px;
 
@@ -440,14 +468,37 @@
             width: 200px;
             padding-left: 15px;
             box-sizing: border-box;
-            font-size: 12px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            color: #333333;
-            cursor: pointer;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+
+            .demand-title {
+              text-align: left;
+              width: 100%;
+              font-size: 14px;
+              line-height: 14px;
+              margin-bottom: 9px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #333333;
+              text-overflow: -o-ellipsis-lastline;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+            }
+
+            .demand-time {
+              font-size: 12px;
+              font-family: Microsoft YaHei;
+              font-weight: 400;
+              color: #999999;
+              line-height: 12px;
+            }
+          }
+
+          li:hover {
+            .demand-title {
+              color: #40A9FF;
+            }
           }
         }
       }

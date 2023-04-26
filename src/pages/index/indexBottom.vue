@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 模块七 四大模块 -->
-    <div class="model7-box">
+    <div class="model7-box" v-if="false">
       <div class="flex-between-center content">
         <div class="item">
           <img src="../../assets/images/index/pic_word_shi.png" alt="">
@@ -42,7 +42,7 @@
     </div>
     <!-- 模块九 底部链接 -->
     <div class="flex-column-around-center modle9-bottom">
-      <p class="item1"> ©2022-至今 <a href="http://web.yijiequan.cn/">医界圈 yijiequan.cn版权所有 </a></p>
+      <p class="item1"> ©2022-至今 <a href="http://www.yijiequan.cn">医界圈 yijiequan.cn版权所有 </a></p>
       <p class="item2">
         <a target="_blank" href="https://beian.miit.gov.cn/">皖ICP备2022012747-6 </a> |
         <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34019102001080">皖公网备案 34019102001080</a>

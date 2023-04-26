@@ -3,40 +3,9 @@
   <div class="accessories_area">
     <titleMore :title="title" class="title_more" :morePath="morePath" :tabIndex="tabIndex"></titleMore>
     <div class="item_content">
-      <div :class="['item','item'+index]" v-for="(item,index) in companyList">
-        <!-- 第一个 -->
-        <div class="flex-column-around-center first-item" v-if="index == 0" @click="toCopmany(item.storeId)">
-          <div class="flex-center-center img-div">             <img :src="item.storeLogo" alt="">
-           <!-- <el-carousel indicator-position="outside">
-              <el-carousel-item v-for="imgSrc in item.imgList" :key="imgSrc">
-                <img :src="imgSrc" alt="">
-              </el-carousel-item>
-            </el-carousel> -->
-          </div>
-          <div class="flex-start-center company-name">{{item.storeName}}</div>
-          <div class="flex-start-start company-info-item">
-            <div class="key">联系人:</div>
-            <div class="value">{{item.ownerName}}</div>
-          </div>
-          <!-- <div class="flex-start-start company-info-item">
-            <div class="key">所属分类：</div>
-            <div class="value">{{item.cateName}}</div>
-          </div> -->
-          <div class="flex-start-start company-info-item">
-            <div class="key">公司地址：</div>
-            <div class="value address">
-              <span>{{item.region}}{{item.address}}</span>
-            </div>
-          </div>
-          <div class="flex-start-start company-info-item">
-            <div class="key ">公司简介：</div>
-            <div class="value describe">
-              <span>{{item.serviceContent}}</span>
-            </div>
-          </div>
-        </div>
+      <div class="item" v-for="(item,index) in companyList" :key="index">
         <!-- 其他 -->
-        <div class="flex-start-start item-content" v-else>
+        <div class="flex-start-start item-content">
           <img :src="item.storeLogo" alt="">
           <div class="flex-column-between-start other-info">
             <div class="company-name">{{item.storeName}}</div>
@@ -50,7 +19,7 @@
                 <span>{{item.region}}{{item.address}}</span>
               </div>
             </div>
-            <div class="flex-center-center go-company"  @click="toCopmany(item.storeId)">进入店铺</div>
+            <div class="flex-center-center go-company" @click="toCopmany(item.storeId)">进入店铺</div>
           </div>
         </div>
       </div>
@@ -65,18 +34,20 @@
     components: {
       titleMore
     },
-    props: ['companyList','tabIndex'],
+    props: ['companyList', 'tabIndex'],
     data() {
       return {
-        morePath:'/enterpriseServices',
+        morePath: '/enterpriseServices',
         title: "企业服务",
       }
     },
-    methods:{
-      toCopmany(storeId){
+    methods: {
+      toCopmany(storeId) {
         this.$router.push({
-          path:'/shopHome',
-          query:{storeId}
+          path: '/shopHome',
+          query: {
+            storeId
+          }
         })
       }
     }
@@ -88,65 +59,10 @@
     margin-bottom: 15px;
   }
 
-  .accessories_area .item_content .item0 {
-    grid-area: item0;
-    cursor: pointer;
-    width: 400px;
-    height: 360px;
-    background: #FFFFFF;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 30px 25px 22px 20px;
-
-    .first-item {
-      width: 100%;
-      height: 100%;
-
-      .img-div {
-        width: 100%;
-        height: 120px;
-        box-sizing: border-box;
-
-        /deep/ .el-carousel__container {
-          height: 120px;
-        }
-
-        /deep/ .el-carousel--horizontal {
-          width: 80%;
-        }
-
-        /deep/ .el-carousel__item.is-animating {
-          display: flex;
-          justify-content: center;
-        }
-
-        /deep/ .el-carousel__indicators--outside {
-          display: none;
-        }
-
-        img {
-          width: 120px;
-          // width: 100%;
-          height: 120px;
-        }
-      }
-
-      .company-name {
-        width: 100%;
-        font-size: 14px;
-        font-family: Microsoft YaHei;
-        font-weight: bold;
-        color: #444444;
-        margin-bottom: 5px;
-      }
-
-
-    }
-  }
-
   .item_content {
+    width: 100%;
     display: grid;
-    grid-template-areas: 'item0 item1 item2''item0 item3 item4';
+    grid-template-columns: repeat(3, auto);
     grid-gap: 10px;
 
     .item:hover {
@@ -158,10 +74,12 @@
     }
 
     .item {
-      width: 390px;
+      width: 400px;
       height: 175px;
       background: #FFFFFF;
+      box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
+      box-sizing: border-box;
 
       .company-info-item {
         width: 100%;
@@ -224,7 +142,7 @@
         .other-info {
           height: 100%;
           box-sizing: border-box;
-          flex:1;
+          flex: 1;
 
           .company-name {
             font-size: 14px;

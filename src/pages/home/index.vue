@@ -135,25 +135,29 @@
       </div>
     </div>
     <!-- 医疗器械 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="medicalApparatus" title="医疗器械" groupId="2">
+    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="medicalApparatus" title="医疗器械"
+      groupId="2">
+    </accessories-area>
+    <div class="long-adv">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230426140518.jpg" alt="">
+    </div>
+    <!-- 设备配件 -->
+    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="设备配件" groupId="1">
     </accessories-area>
     <div class="long-adv">
       <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
     </div>
-    <!-- 设备配件 -->
-    <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="设备配件"  groupId="1">
-    </accessories-area>
-    <div class="long-adv">
-      <img src="../../assets/images/index/ad-long.jpg" alt="">
-    </div>
     <!-- 医疗器械 -->
-   <!-- <product-show class="product-show" :productList="productList" :morePath="medicalApparatus"
+    <!-- <product-show class="product-show" :productList="productList" :morePath="medicalApparatus"
       v-show="productList.length>0">
     </product-show> -->
 
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services" :companyList="companyList" :morePath="enterpriseServices">
     </enterprise-services>
+    <div class="long-adv">
+      <img src="../../assets/images/index/ad-long.jpg" alt="">
+    </div>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>
     <!-- 为您找货 + 手机医界圈 + 资质证书 -->
@@ -195,11 +199,11 @@
             <div class="spot"></div>
             <span class="remark">证书认证，有保障</span>
           </div>
-          <ul class="flex-column-between-start certificate-ul">
-            <li>
+          <ul class="flex-column-start-start certificate-ul">
+          <!-- <li>
               <a target="_blank"
                 href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-医疗器械备案凭证.png">医疗器械网络交易服务第三方平台备案凭证</a>
-            </li>
+            </li> -->
             <li>
               <a target="_blank"
                 href="https://image.yijiequan.cn/yijiequan-client/attach/医界圈-服务资格证书.png">互联网药品信息服务资格证书：(皖)-经营性-2022-0047</a>
@@ -326,10 +330,16 @@
         //获取企业服务-个人工程师
         // 店铺类型 personal-个人 company-企业
         storeList({
-          limit: 5,
+          limit: 6,
           storeType: 'company'
         }).then(response => {
-          this.companyList = response.data
+          if(response.data.length <= 3){
+            this.companyList = response.data
+          }else if (response.data.length > 3 && response.data.length < 6) {
+            this.companyList = response.data.slice(0, 3)
+          } else {
+            this.companyList = response.data.slice(0, 6)
+          }
         })
       },
       toAd(id) {
@@ -1089,11 +1099,16 @@
       }
 
       .certificate-ul {
+        // border: 1px solid ;
         flex: 1;
         padding-top: 15px;
+        li+li{
+          margin-top: 12px;
+        }
 
         li {
           font-size: 14px;
+          line-height: 14px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #333333;
