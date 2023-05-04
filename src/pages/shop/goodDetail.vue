@@ -645,6 +645,7 @@
               .model-item {
                 cursor: pointer;
                 height: 42px;
+                border: 1px solid #F0F0F0;
                 background: #F0F0F0;
                 border-radius: 4px;
                 padding: 15px;
@@ -701,7 +702,8 @@
 
               .current-Spec {
                 background: #F3FBFF;
-                border: 1px solid #40A9FF;
+                border-color: #40A9FF;
+                box-sizing: border-box;
 
                 .spec-value {
                   color: #40A9FF;

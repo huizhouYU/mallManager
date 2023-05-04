@@ -77,7 +77,6 @@
       width: 400px;
       height: 175px;
       background: #FFFFFF;
-      box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       box-sizing: border-box;
 
