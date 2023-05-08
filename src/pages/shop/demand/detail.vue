@@ -48,8 +48,17 @@
             </div>
           </div>
         </div>
-        <div class="remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
-
+        <div class="detail-remark">请主动联系我，联系时请说明是在“医界圈”看到的，谢谢！</div>
+        <div class="blank-div"></div>
+        <!-- 为您找货 -->
+        <div class="flex-column-start-start  demand-find-goods">
+          <div class="flex-start-center module-title">
+            <span class="title">产品咨询</span>
+            <div class="spot"></div>
+            <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
+          </div>
+          <product-consult class="product-consult" :goodsName="demandInfo.title"></product-consult>
+        </div>
       </div>
       <div class="right-box">
         <div class="contact">
@@ -73,7 +82,8 @@
         <div class="shop-demand">
           <div class="title">店内相关求购</div>
           <ul>
-            <li v-for="(item,index) in otherRecommendDemand" class="flex-column-start-start" @click="toDemandsDetail(item)">
+            <li v-for="(item,index) in otherRecommendDemand" class="flex-column-start-start"
+              @click="toDemandsDetail(item)">
               <div class="demand-title">
                 {{item.title}}
               </div>
@@ -102,6 +112,7 @@
 </template>
 
 <script>
+  import productConsult from '../../../pages/index/productConsult.vue'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
@@ -113,6 +124,9 @@
     mapGetters
   } from 'vuex'
   export default {
+    components: {
+      productConsult
+    },
     computed: {
       ...mapGetters([
         'token'
@@ -218,7 +232,7 @@
       width: 950px;
       margin-right: 20px;
       background-color: #fff;
-      padding-bottom: 40px;
+      // padding-bottom: 40px;
 
       .title {
         width: 100%;
@@ -353,7 +367,7 @@
         }
       }
 
-      .remark {
+      .detail-remark {
         width: 100%;
         height: 90px;
         display: flex;
@@ -364,8 +378,61 @@
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #666666;
+        box-shadow: 0px 1px 0px 0px #EEEEEE, 0px -1px 0px 0px #EEEEEE;
       }
 
+      .blank-div {
+        height: 16px;
+        background-color: #F5F5F5;
+        width: 100%;
+        margin-top: 40px;
+      }
+
+      // 为您找货
+      .demand-find-goods {
+        // margin-top: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        background: #FFFFFF;
+        border-radius: 10px;
+        padding: 20px;
+
+        .product-consult {
+          flex: 1;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .module-title {
+          width: 100%;
+
+          .title {
+            width: auto;
+            height: auto;
+            line-height: 18px;
+            font-size: 18px;
+            font-family: Microsoft YaHei;
+            font-weight: bold;
+            color: #333333;
+          }
+
+          .spot {
+            width: 5px;
+            height: 5px;
+            font-weight: 400;
+            background: #999999;
+            border-radius: 50%;
+            margin: 0px 10px;
+          }
+
+          .remark {
+            font-size: 14px;
+            font-family: Source Han Sans SC;
+            font-weight: 400;
+            color: #40A9FF;
+          }
+        }
+      }
     }
 
     .right-box {
