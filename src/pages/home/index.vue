@@ -134,6 +134,9 @@
         <img src="../../assets/images/index/pic_right.jpg" alt="">
       </div>
     </div>
+    <div class="long-adv">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230512112116.jpg" alt="">
+    </div>
     <!-- 医疗器械 -->
     <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="medicalApparatus" title="医疗器械"
       groupId="2">
