@@ -145,8 +145,9 @@
             </el-tab-pane>
             <el-tab-pane label="注册证" name="second">
               <div class="register-cart-div">
-                <template v-if="goodsInfo.registerCard">
-                  <img :src="goodsInfo.registerCard" alt="">
+                <template v-if="goodsInfo.registerCards">
+                  <img :src="item" alt="" v-for="(item,index) in goodsInfo.registerCards"
+                    :key="index">
                 </template>
                 <span v-else class="no-register-cart">
                   暂未上传商品注册证
@@ -241,6 +242,11 @@
               }
             } else {
               this.categoryStr = this.goodsInfo.cateName
+            }
+            if(typeof this.goodsInfo.registerCards == 'string'){
+              var registerCards = this.goodsInfo.registerCards
+              this.goodsInfo.registerCards = []
+              this.goodsInfo.registerCards.push(registerCards)
             }
             if (this.goodsInfo.openSpecs) {
               this.sortSpecAttr()
@@ -895,6 +901,7 @@
 
           .register-cart-div {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
