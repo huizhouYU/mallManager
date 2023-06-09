@@ -97,7 +97,8 @@
         <div class="product-spec" v-if="newGoodsEntities && newGoodsEntities.length>0">
           <span class="title">选型对比</span>
           <!-- 所有商品的goodsEntities拼一起的新的goodsEntities -->
-          <el-table :data="newGoodsEntities" :cell-style="{'text-align':'left','padding':'5px 20px','min-height':'60px'}"
+          <el-table :data="newGoodsEntities"
+            :cell-style="{'text-align':'left','padding':'5px 20px','min-height':'60px'}"
             :header-cell-style="{background:'#F5F7FA',color: '#333333',textAlign:'center'}" style="width: 100%">
             <el-table-column label="型号" fixed width="214">
               <template slot-scope="scope">
@@ -146,8 +147,7 @@
             <el-tab-pane label="注册证" name="second">
               <div class="register-cart-div">
                 <template v-if="goodsInfo.registerCards">
-                  <img :src="item" alt="" v-for="(item,index) in goodsInfo.registerCards"
-                    :key="index">
+                  <img :src="item" alt="" v-for="(item,index) in goodsInfo.registerCards" :key="index">
                 </template>
                 <span v-else class="no-register-cart">
                   暂未上传商品注册证
@@ -163,7 +163,7 @@
             <div class="spot"></div>
             <span class="remark">填写您的咨询内容，我们将尽快给您答复。</span>
           </div>
-          <product-consult class="product-consult" :goodsName="goodsInfo.goodsName" ></product-consult>
+          <product-consult class="product-consult" :goodsName="goodsInfo.goodsName"></product-consult>
         </div>
       </div>
       <!-- 相关商品推荐 -->
@@ -243,7 +243,7 @@
             } else {
               this.categoryStr = this.goodsInfo.cateName
             }
-            if(typeof this.goodsInfo.registerCards == 'string'){
+            if (typeof this.goodsInfo.registerCards == 'string') {
               var registerCards = this.goodsInfo.registerCards
               this.goodsInfo.registerCards = []
               this.goodsInfo.registerCards.push(registerCards)
@@ -251,20 +251,29 @@
             if (this.goodsInfo.openSpecs) {
               this.sortSpecAttr()
             } else {
-              this.currentObj = this.goodsInfo.goodsEntities[0]
+              if(this.goodsInfo.goodsEntities) {
+                this.currentObj = this.goodsInfo.goodsEntities[0]
+              }
             }
             //合并所有型号商品的goodsEntities和goodsSpecs
             this.mergeData()
-          } catch (e) {
-            console.log("获取商品详情报错：", e)
-          } finally {
             this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
               .then((response) => {
                 // console.log("保存当前浏览的店铺ID：", response)
               }).catch(() => {
                 console.log("保存当前浏览的店铺ID失败")
               })
-            this.$emit("saveStoreId", this.goodsInfo.storeId)
+            this.$store.dispatch('user/setStoreName', this.goodsInfo.store.storeName)
+              .then((response) => {
+                // console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺名称失败")
+              })
+            // this.$emit("saveStoreId", this.goodsInfo.storeId)
+          } catch (e) {
+            console.log("获取商品详情报错：", e)
+          } finally {
+
           }
 
         })

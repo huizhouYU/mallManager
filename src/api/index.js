@@ -103,3 +103,20 @@ export function guestMessage(data) {
     data: data
   })
 }
+
+//医院列表
+export function hospitalList(data) {
+  return request({
+    url: '/hospital/list',
+    method: 'post',
+    data: data
+  })
+}
+//医院详情
+export function hospitalDetail(query) {
+  return request({
+    url: '/hospital/detail',
+    method: 'get',
+    params: query
+  })
+}

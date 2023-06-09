@@ -12,6 +12,7 @@ const getters = {
   mobile: state => state.user.mobile,
   roles: state => state.user.roles,
   currentLookStoreId:state => state.user.currentLookStoreId,
+  currentLookStoreName:state => state.user.currentLookStoreName,
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs
 }

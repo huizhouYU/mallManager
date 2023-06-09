@@ -172,11 +172,17 @@
           } finally {
             this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
               .then((response) => {
-                console.log("保存当前浏览的店铺ID：", response)
+                // console.log("保存当前浏览的店铺ID：", response)
               }).catch(() => {
                 console.log("保存当前浏览的店铺ID失败")
               })
-            this.$emit("saveStoreId", this.demandInfo.storeId)
+            this.$store.dispatch('user/setStoreName', this.demandInfo.store.storeName)
+              .then((response) => {
+                // console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺名称失败")
+              })
+            // this.$emit("saveStoreId", this.demandInfo.storeId)
             this.getOtherRecommendDemand()
           }
 

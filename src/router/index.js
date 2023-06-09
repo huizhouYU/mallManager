@@ -43,6 +43,48 @@ export default new Router({
           component: () => import('../pages/medicalApparatus/index.vue')
         },
         {
+          path: '/hospital',
+          name: 'Hospital', //合作医院
+          component: () => import('../pages/hospital/index.vue')
+        },
+        {
+          path: '/hospitalList',
+          name: 'HospitalList', //合作医院列表
+          component: () => import('../pages/hospital/hospitalList.vue')
+        },
+        {
+          path: '/hospitalDetail',
+          name: 'HospitalDetail', //医院详情
+          component: () => import('../pages/hospital/hospitalDetail.vue')
+        },
+        {
+          path: '/exhibit',
+          name: 'Exhibit', //展会频道
+          component: () => import('../pages/exhibit/index.vue'),
+          // children:[
+          //   {
+          //     path: '/exhibitDetail',
+          //     name: 'exhibitDetail', //展会详情页
+          //     component: () => import('../pages/exhibit/exhibitDetail.vue')
+          //   },
+          // ]
+        },
+        {
+          path: '/exhibitDetail',
+          name: 'ExhibitDetail', //展会详情页
+          component: () => import('../pages/exhibit/exhibitDetail.vue')
+        },
+        {
+          path: '/invitTenders',
+          name: 'InvitTenders', //招标频道
+          component: () => import('../pages/invitTenders/index.vue')
+        },
+        {
+          path: '/invitTendersDetail',
+          name: 'InvitTendersDetail', //招标详情页
+          component: () => import('../pages/invitTenders/invitTendersDetail.vue')
+        },
+        {
           path: '/enterpriseServices',
           name: 'EnterpriseServices', //企业服务，个人工程师
           redirect: '/enterpriseServicesItem',

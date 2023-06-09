@@ -25,7 +25,8 @@ const state = {
   introduction: '',
   mobile: '',
   roles: [],
-  currentLookStoreId: ''
+  currentLookStoreId: '',
+  currentLookStoreName:''
   // currentLookStoreId: getStoreId()
 }
 
@@ -53,6 +54,9 @@ const mutations = {
   },
   SET_STOREID: (state, storeID) => {
     state.currentLookStoreId = storeID
+  },
+  SET_STORENAME: (state, storeName) => {
+    state.currentLookStoreName = storeName
   }
 }
 
@@ -65,6 +69,15 @@ const actions = {
       commit('SET_STOREID', storeId)
       // setToken(storeId)
       resolve("保存当前浏览的店铺ID成功")
+    })
+  },
+  setStoreName({
+    commit
+  }, storeName) {
+  
+    return new Promise((resolve, reject) => {
+      commit('SET_STORENAME', storeName)
+      // setToken(storeId)
     })
   },
   // 用户名密码登录

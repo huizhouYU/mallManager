@@ -183,21 +183,37 @@
         }).then(response => {
           this.storeInfo = response.data
           //产品注册证
-          if(this.storeInfo.productCertificate != undefined && this.storeInfo.productCertificate != null && this.storeInfo.productCertificate != ''){
+          if (this.storeInfo.productCertificate != undefined && this.storeInfo.productCertificate != null && this
+            .storeInfo.productCertificate != '') {
             this.storeInfo.certificationList.unshift(this.storeInfo.productCertificate)
           }
           //生产许可证
-          if(this.storeInfo.productionLicense != undefined && this.storeInfo.productionLicense != null && this.storeInfo.productionLicense != ''){
+          if (this.storeInfo.productionLicense != undefined && this.storeInfo.productionLicense != null && this
+            .storeInfo.productionLicense != '') {
             this.storeInfo.certificationList.unshift(this.storeInfo.productionLicense)
           }
           //营业执照
-          if(this.storeInfo.businessLicense != undefined && this.storeInfo.businessLicense != null && this.storeInfo.businessLicense != ''){
+          if (this.storeInfo.businessLicense != undefined && this.storeInfo.businessLicense != null && this
+            .storeInfo.businessLicense != '') {
             this.storeInfo.certificationList.unshift(this.storeInfo.businessLicense)
           }
           //经营许可证
-          if(this.storeInfo.businessCertificate != undefined && this.storeInfo.businessCertificate != null && this.storeInfo.businessCertificate != ''){
+          if (this.storeInfo.businessCertificate != undefined && this.storeInfo.businessCertificate != null && this
+            .storeInfo.businessCertificate != '') {
             this.storeInfo.certificationList.unshift(this.storeInfo.businessCertificate)
           }
+          this.$store.dispatch('user/setStoreId', this.storeInfo.storeId)
+            .then((response) => {
+              // console.log("保存当前浏览的店铺ID：", response)
+            }).catch(() => {
+              console.log("保存当前浏览的店铺ID失败")
+            })
+          this.$store.dispatch('user/setStoreName', this.storeInfo.storeName)
+            .then((response) => {
+              // console.log("保存当前浏览的店铺ID：", response)
+            }).catch(() => {
+              console.log("保存当前浏览的店铺名称失败")
+            })
         })
         var page = {
           pageNo: 1,

@@ -13,7 +13,7 @@
         <div class="shop-info">
           <div class="shop-info-name">
             <img src="../../assets/images/shop/icon_shop.png" alt="">
-            <span>{{storeInfo.storeName||'-'}}</span>
+            <span>{{currentLookStoreName||'-'}}</span>
           </div>
           <div class="shop-info-right">
             <div class="item">
@@ -39,7 +39,8 @@
         </ul>
       </div>
       <div class="pages">
-        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @saveStoreId="saveStoreId">
+        <!-- <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @saveStoreId="saveStoreId"> -->
+         <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab">
         </router-view>
       </div>
       <index-bottom></index-bottom>
@@ -66,14 +67,14 @@
     },
     computed: {
       ...mapGetters([
-        'currentLookStoreId'
+        'currentLookStoreId', 'currentLookStoreName'
       ])
     },
     data() {
       return {
         storeId: '',
         selectedTab: '-1',
-        storeInfo: '',
+        // storeInfo: '',
         tabList: [{
             name: '店铺首页',
             path: '/shopHome'
@@ -104,31 +105,37 @@
     },
     mounted() {
       this.selectedTab = this.$route.path
-      var storeIdStr = this.$route.query.storeId
-      if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {
-        this.storeId = storeIdStr
-      } else {
-        this.storeId = this.currentLookStoreId
-      }
-      if (this.storeId != '') {
-        this.getStore()
-      }
+      // var storeIdStr = this.$route.query.storeId
+      // if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {
+      //   this.storeId = storeIdStr
+      // } else {
+      //   this.storeId = this.currentLookStoreId
+      // }
+      // if (this.storeId != '') {
+      //   // this.getStore()
+      // }
     },
     methods: {
-      saveStoreId(id) {
-        this.storeId = id
-        if (this.storeInfo == '') {
-          this.getStore()
-        }
-      },
-      getStore() {
-        storeDetail({
-          storeId: this.storeId
-        }).then(response => {
-          this.storeInfo = response.data
-        })
-      },
+      // saveStoreId(id) {
+      //   this.storeId = id
+      //   if (this.storeInfo == '') {
+      //     this.getStore()
+      //   }
+      // },
+      // getStore() {
+      //   storeDetail({
+      //     storeId: this.storeId
+      //   }).then(response => {
+      //     this.storeInfo = response.data
+      //   })
+      // },
       jumpTab(path, index) {
+        var storeIdStr = this.$route.query.storeId
+        if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {
+          this.storeId = storeIdStr
+        } else {
+          this.storeId = this.currentLookStoreId
+        }
         this.selectedTab = path
         this.$router.replace({
           path: path,

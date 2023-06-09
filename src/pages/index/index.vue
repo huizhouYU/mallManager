@@ -73,7 +73,8 @@
         </div>
         <div class="main-tab-content-right">
           <ul class="flex-start-center">
-            <li v-for="(item,index) in tabList" :key="index" :class="{'selected':chooseTab==item.path}"
+            <!-- chooseTab==item.path -->
+            <li v-for="(item,index) in tabList" :key="index" :class="{'selected':isContain(item)}"
               @click="jumpTab(item.path)">{{item.title}}
               <img src="../../assets/images/index/icon_hot.png" alt="" v-if="item.isHot">
               <img src="../../assets/images/index/icon_new_red.png" alt="" v-else-if="item.isNew">
@@ -139,9 +140,30 @@
           },
           {
             title: '医疗器械',
-            isHot: false,
+            isHot: true,
             isNew: false,
             path: '/medicalApparatus'
+          },
+          {
+            title: '招标频道',
+            isHot: false,
+            isNew: false,
+            path: '/invitTenders',
+            contain: ['/invitTenders', '/invitTendersDetail']
+          },
+          {
+            title: '展会频道',
+            isHot: false,
+            isNew: false,
+            path: '/exhibit',
+            contain: ['/exhibit', '/exhibitDetail']
+          },
+          {
+            title: '医院频道',
+            isHot: false,
+            isNew: false,
+            path: '/hospital',
+            contain: ['/hospital', '/hospitalList', '/hospitalDetail']
           },
           // {
           //   title: '企业服务',
@@ -189,7 +211,8 @@
     watch: {
       $route(to, from) {
         if (to.fullPath != from.fullPath) {
-          this.chooseTab = to.fullPath
+          // this.chooseTab = to.fullPath
+          this.chooseTab = to.path
           if (this.chooseTab != '/home') {
             this.isShowContent = true
           } else {
@@ -215,6 +238,21 @@
             this.topBannerImg = 'https://image.yijiequan.cn/yijiequan-client/attach/20230113163622.jpg'
           }
         })
+      },
+      isContain(item) {
+        if (this.chooseTab == item.path) {
+          return true
+        } else {
+          if (item.contain) {
+            if (item.contain.includes(this.chooseTab)) {
+              return true
+            } else {
+              return false
+            }
+          } else {
+            return false
+          }
+        }
       },
       getData() {
         if (this.chooseTab != '/home') {
