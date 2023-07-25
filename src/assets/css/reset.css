@@ -1,3 +1,10 @@
+/** 鼠标样式 开始**/
+/** 普通指针样式**/
+/* body {cursor: url("../cur/92489.gif"), default;} */
+/* cursor: url("custom.gif"), url("custom.cur"), default; */
+/** 链接指针样式**/
+/* a:hover{cursor:url('../cur/92489.gif'), pointer;} */
+/** 鼠标样式 结束**/
 html,
 body {
   height: 100vh;

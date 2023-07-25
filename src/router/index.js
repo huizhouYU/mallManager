@@ -85,6 +85,11 @@ export default new Router({
           component: () => import('../pages/invitTenders/invitTendersDetail.vue')
         },
         {
+          path: '/recruit',
+          name: 'Recruit', //招聘频道
+          component: () => import('../pages/recruit/index.vue')
+        },
+        {
           path: '/enterpriseServices',
           name: 'EnterpriseServices', //企业服务，个人工程师
           redirect: '/enterpriseServicesItem',
@@ -215,6 +220,11 @@ export default new Router({
           component: () => import('../../src/pages/shop/demand/index.vue')
         },
         {
+          path: '/recruitIndex',
+          name: 'RecruitIndex', //招聘信息
+          component: () => import('../../src/pages/shop/recruit/index.vue')
+        },
+        {
           path: '/contactIndex',
           name: 'contactIndex', //联系方式
           component: () => import('../../src/pages/shop/contact/index.vue')
@@ -223,6 +233,11 @@ export default new Router({
           path: '/demandDetail',
           name: 'demandDetail', //需求详情页
           component: () => import('../../src/pages/shop/demand/detail.vue')
+        },
+        {
+          path: '/recruitDetail',
+          name: 'RecruitDetail', //招聘详情页
+          component: () => import('../../src/pages/shop/recruit/recruitDetail.vue')
         },
       ]
     },

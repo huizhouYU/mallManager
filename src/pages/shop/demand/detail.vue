@@ -158,18 +158,6 @@
           this.demandInfo = response.data
           this.currentChosed[2] = this.demandInfo.title
           try {
-            this.demandInfo.regionList = []
-            if (this.demandInfo.region != null && this.demandInfo.region != '') {
-              var region = JSON.parse(this.demandInfo.region)
-              if (region != '') {
-                for (var i in region) {
-                  this.demandInfo.regionList.push(region[i].name.join('/'))
-                }
-              }
-            }
-          } catch (e) {
-            console.log("获取需求详情-梳理地区报错：", e)
-          } finally {
             this.$store.dispatch('user/setStoreId', this.demandInfo.storeId)
               .then((response) => {
                 // console.log("保存当前浏览的店铺ID：", response)
@@ -182,10 +170,20 @@
               }).catch(() => {
                 console.log("保存当前浏览的店铺名称失败")
               })
-            // this.$emit("saveStoreId", this.demandInfo.storeId)
+            this.demandInfo.regionList = []
+            if (this.demandInfo.region != null && this.demandInfo.region != '') {
+              var region = JSON.parse(this.demandInfo.region)
+              if (region != '') {
+                for (var i in region) {
+                  this.demandInfo.regionList.push(region[i].name.join('/'))
+                }
+              }
+            }
+          } catch (e) {
+            console.log("获取需求详情-梳理地区报错：", e)
+          } finally {
             this.getOtherRecommendDemand()
           }
-
 
         })
       },

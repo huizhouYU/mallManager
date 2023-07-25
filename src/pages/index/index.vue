@@ -183,11 +183,18 @@
           //   path: '/enterpriseServicesItem?stype=personal'
           // },
           {
-            title: '合作品牌',
+            title: '招聘频道',
             isHot: false,
             isNew: false,
-            path: '/cooperationBrand'
+            path: '/recruit',
+            contain: ['/recruit', '/recruitDetail']
           },
+          // {
+          //   title: '合作品牌',
+          //   isHot: false,
+          //   isNew: false,
+          //   path: '/cooperationBrand'
+          // },
         ],
         isShowContent: false,
         brandList: [],
@@ -200,7 +207,6 @@
         this.reload()
       })
       var path = this.$route.fullPath
-      this.chooseTab = path
       this.getAdvertByCode()
       this.getData()
     },
@@ -209,17 +215,17 @@
       Bus.$off("reloadPage")
     },
     watch: {
-      $route(to, from) {
-        if (to.fullPath != from.fullPath) {
-          // this.chooseTab = to.fullPath
-          this.chooseTab = to.path
-          if (this.chooseTab != '/home') {
+      '$route': {
+        immediate: true,
+        handler: function(newVal, oldVal) {
+          this.chooseTab = newVal.path
+          if (newVal.path != '/home') {
             this.isShowContent = true
           } else {
             this.isShowContent = false
           }
         }
-      }
+      },
     },
     methods: {
       reload() {
@@ -283,12 +289,6 @@
         }
       },
       jumpTab(path) {
-        this.chooseTab = path
-        if (this.chooseTab != '/home') {
-          this.isShowContent = true
-        } else {
-          this.isShowContent = false
-        }
         var params = {}
         if (path == '/medicalApparatus') {
           params = {

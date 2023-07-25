@@ -9,7 +9,7 @@
         </div>
         <div class="flex-column-start-start area-box">
           <div class="flex-start-start provice-box">
-            <span class="no-limit" @click="changeArea({'laber':'不限','childer':[]})">不限</span>
+            <span class="no-limit" @click="changeArea({'label':null,'childer':[]})">不限</span>
             <div class="flex-start-start item-option">
               <span :class="['item-option-name',{'selected-item':page.province == item.label}]"
                 v-for="(item,index) in areaOption" :key="index" @click="changeArea(item)">{{item.label}}</span>
@@ -38,7 +38,7 @@
           等级
         </div>
         <div class="flex-start-start item-option">
-          <span :class="['item-option-name',{'selected-item':page.level == item.title}]"
+          <span :class="['item-option-name',{'selected-item':page.level == item.id}]"
             v-for="(item,index) in levelOption" :key="index" @click="changeLevel(item)">{{item.title}}</span>
         </div>
       </div>
@@ -49,11 +49,19 @@
     </div>
 
     <div class="content-box">
-      <div class=" flex-column-around-center hospital-item" v-for="(item,index) in list" :key="index"
-        @click="toDetail(item.id)">
-        <img src="../../assets/images/index/announce_bg.png" alt="">
-        <div class="flex-center-center title">{{item.name}}</div>
-      </div>
+      <template v-if="list && list.length>0">
+        <div class=" flex-column-around-center hospital-item" v-for="(item,index) in list" :key="index"
+          @click="toDetail(item.id)">
+          <img src="../../assets/images/index/announce_bg.png" alt="">
+          <div class="flex-center-center title">{{item.name}}</div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="flex-center-center no-data-box">
+          暂无数据
+        </div>
+      </template>
+
 
     </div>
     <div class="pagination">
@@ -103,15 +111,15 @@
           },
           {
             title: '一级',
-            id: '1'
+            id: 1
           },
           {
             title: '二级',
-            id: '2'
+            id: 2
           },
           {
             title: '三级',
-            id: '3'
+            id: 3
           }
         ],
         areaOption: [], //省份
@@ -120,7 +128,7 @@
     },
     mounted() {
       this.areaOption = citys
-      if(this.$route.query.province){
+      if (this.$route.query.province) {
         this.page.province = this.$route.query.province
       }
       this.getData()
@@ -128,11 +136,11 @@
     methods: {
       getData() {
         hospitalList(this.page).then(response => {
-          if(response.code == 10000){
-            console.log("获取的医院列表：",response.data)
+          if (response.code == 10000) {
+            console.log("获取的医院列表：", response.data)
             this.list = response.data.list
             this.totalCount = response.data.totalCount
-          }else{
+          } else {
             this.message.error(response.message)
           }
           // console.log("获取的医院列表：", response)
@@ -159,7 +167,8 @@
         this.getData()
       },
       changeLevel(item) {
-        this.page.level = item.title
+        // this.page.level = item.title
+        this.page.level = item.id
         this.getData()
       },
       handleSizeChange(val) {
@@ -280,6 +289,14 @@
     grid-gap: 12px;
     justify-content: flex-start;
     grid-template-columns: repeat(4, auto);
+
+    .no-data-box {
+      width: 1200px;
+      height: 60px;
+      font-size: 14px;
+      color: #666666;
+
+    }
 
     .hospital-item:hover {
       .title {

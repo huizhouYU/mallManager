@@ -1,7 +1,7 @@
 <template>
-  <!-- <div>招标频道</div> -->
+  <!-- 招聘频道 -->
   <div>
-    <div class="index-tag">首页 > 招标频道</div>
+    <div class="index-tag">首页 > 招聘频道</div>
     <div class="filter-box">
       <div class="flex-start-start filter-item">
         <div class="item-title">
@@ -23,6 +23,31 @@
           </div>
         </div>
       </div>
+
+      <div class="flex-start-start filter-item">
+        <div class="item-title">
+          求职类型
+        </div>
+        <div class="flex-start-start item-option">
+          <span class="item-option-name" @click="changeTypeName({title:'',id:''})">不限</span>
+          <span :class="['item-option-name',{'selected-item':page.recruitType == item.title}]"
+            v-for="(item,index) in recruitTypeOption" :key="index" @click="changeTypeName(item)">{{item.title}}</span>
+        </div>
+      </div>
+      <div class="flex-start-start filter-item">
+        <div class="item-title">
+          职位类型
+        </div>
+        <div class="flex-start-start provice-box">
+          <span class="item-option-name" @click="changePosition({title:'',id:''})">不限</span>
+          <div class="flex-start-start item-option">
+            <span :class="['item-option-name',{'selected-item':page.positionType == item.title}]"
+              v-for="(item,index) in positionTypeOption" :key="index"
+              @click="changePosition(item)">{{item.title}}</span>
+          </div>
+        </div>
+
+      </div>
     </div>
     <!-- 长条广告位 -->
     <div class="long-adv">
@@ -30,32 +55,21 @@
     </div>
 
     <div class="content-box">
-      <template v-if="invitTendersList && invitTendersList.length>0">
-        <div class=" flex-start-center invit-tenders-item" v-for="(item,index) in invitTendersList" :key="index"
-          @click="toDetail(item.id)">
-          <div class="flex-between-center title-address">
-            <div class="flex-center-center title-box">
-              <div class="circle"></div>
-              <span>{{item.title}}</span>
-            </div>
-            <div class="flex-center-center address">
-              <i class="iconfont my-iconfont-address">&#xe61c;</i>
-              <span>{{item.city}}</span>
-            </div>
+      <!-- 左边列表 -->
+      <div class="list-box">
+        <template v-if="list && list.length>0">
+          <recruit-item v-for="(item,index) in list" :key="index"></recruit-item>
+        </template>
+        <template v-else>
+          <div class="flex-center-center no-data-box">
+            暂无数据
           </div>
-          <div class="line"></div>
-          <div class="flex-column-start-start time">
-            <div class="month-day">{{item.updatedAt.slice(5,10)}}</div>
-            <div class="year">{{item.updatedAt.slice(0,4)}}</div>
-          </div>
-        </div>
-      </template>
-      <template v-else>
-        <div class="flex-center-center no-data-box">
-          暂无数据
-        </div>
-      </template>
-
+        </template>
+      </div>
+      <!-- 右边入口+推荐 -->
+      <div class="right-box">
+        <RecruitEnter></RecruitEnter>
+      </div>
     </div>
     <div class="pagination">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.pageNo"
@@ -69,10 +83,16 @@
 
 <script>
   import {
-    exHibInvitList
+    hospitalList
   } from '@/api/index'
-  const city = require("../../assets/json/citys.json")
+  import RecruitItem from '../../pages/recruit/recruitItem.vue'
+  import RecruitEnter from '../../pages/recruit/recruitEnter.vue'
+  const citys = require("../../assets/json/citys.json")
   export default {
+    components: {
+      RecruitItem,
+      RecruitEnter
+    },
     data() {
       return {
         totalCount: 0,
@@ -80,50 +100,112 @@
           pageNo: 1,
           pageSize: 20,
           province: '',
-          typeId: 2,
-          city: ''
+          city: '',
+          recruitType: '',
+          positionType: ''
         },
-        invitTendersList: [{}],
+        list: [{}, {}],
+        recruitTypeOption: [{
+            title: '兼职招聘',
+            id: '1'
+          },
+          {
+            title: '社招',
+            id: '2'
+          },
+          {
+            title: '应届校园招聘',
+            id: '3'
+          },
+          {
+            title: '实习生招聘',
+            id: '4'
+          }
+        ],
+        positionTypeOption: [{
+            title: '临床',
+            id: 1
+          },
+          {
+            title: '生物',
+            id: 2
+          },
+          {
+            title: '辅助科室及护理',
+            id: 3
+          },
+          {
+            title: '互联网/电脑/软件',
+            id: 4
+          },
+          {
+            title: '医院',
+            id: 5
+          },
+          {
+            title: '生物化工',
+            id: 6
+          },
+          {
+            title: '医药研发/制药生产',
+            id: 7
+          },
+          {
+            title: '公关市场营销',
+            id: 8
+          }, {
+            title: '财务/人力',
+            id: 9
+          },
+          {
+            title: '客服/与技术支持',
+            id: 12
+          },
+          {
+            title: '销售人员及行政管理',
+            id: 13
+          }
+        ],
         areaOption: [], //省份
         cityOption: [], //市级
       }
     },
     mounted() {
-      this.areaOption = city
+      this.areaOption = citys
+      if (this.$route.query.province) {
+        this.page.province = this.$route.query.province
+      }
       this.getData()
     },
     methods: {
       getData() {
-        exHibInvitList(this.page).then(response => {
-          if (response.code == 10000) {
-            console.log("获取的招标列表：", response.data)
-            this.invitTendersList = response.data.list
-            this.totalCount = response.data.totalCount
-          } else {
-            this.message.error(response.message)
-          }
-          // console.log("获取的医院列表：", response)
-        })
-        // this.page.keyword = this.$route.query.keyword
-        // articleList(this.page).then(response => {
-        //   this.page.pageNo = response.data.pageNum
-        //   this.page.pageSize = response.data.pageSize
-        //   this.totalCount = response.data.totalCount
-        //   this.demandsList = response.data.list
+        // hospitalList(this.page).then(response => {
+        //   if (response.code == 10000) {
+        //     console.log("获取的招聘列表：", response.data)
+        //     this.list = response.data.list
+        //     this.totalCount = response.data.totalCount
+        //   } else {
+        //     this.message.error(response.message)
+        //   }
+        //   // console.log("获取的招聘列表：", response)
         // })
       },
       changeArea(item) {
         this.page.province = item.label
         this.cityOption = item.childer
-        if (this.cityOption && this.cityOption.length > 0) {
-          this.page.city = this.cityOption[0]
-        } else {
-          this.page.city = null
-        }
         this.getData()
       },
       changeCity(item) {
         this.page.city = item
+        this.getData()
+      },
+      changeTypeName(item) {
+        this.page.recruitType = item.title
+        this.getData()
+      },
+      changePosition(item) {
+        // this.page.level = item.title
+        this.page.positionType = item.title
         this.getData()
       },
       handleSizeChange(val) {
@@ -136,7 +218,7 @@
       },
       toDetail(id) {
         this.$router.push({
-          path: '/invitTendersDetail',
+          path: '/hospitalDetail',
           query: {
             id
           }
@@ -166,12 +248,12 @@
 
     .filter-item {
       .item-title {
+        width: 78px;
         margin-top: 10px;
         font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #757575;
-        padding-right: 50px;
       }
 
       .area-box {
@@ -199,6 +281,7 @@
         }
       }
 
+      .provice-box,
       .item-option {
         font-size: 14px;
         font-family: Microsoft YaHei;
@@ -224,7 +307,6 @@
     }
   }
 
-
   //长条广告位
   .long-adv {
     margin-bottom: 30px;
@@ -239,94 +321,27 @@
     }
   }
 
-  //展会列表
+  //招聘列表
   .content-box {
-    .no-data-box {
-      width: 1200px;
-      height: 60px;
-      font-size: 14px;
-      color: #666666;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 
-    }
+    .list-box {
+      width: 860px;
+      padding-right: 10px;
 
-    .invit-tenders-item:hover {
-      box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.1);
-
-      .title-address {
-        .title-box {
-          color: #40A9FF;
-        }
+      .no-data-box {
+        width: 100%;
+        height: 60px;
+        font-size: 14px;
+        color: #666666;
       }
     }
 
-    .invit-tenders-item {
-      margin-bottom: 20px;
-      cursor: pointer;
-      width: 100%;
-      height: 88px;
-      background: #FFFFFF;
-      border-radius: 10px;
-
-      .title-address {
-        width: 1084px;
-        padding: 0px 14px 0px 30px;
-
-        .title-box {
-          line-height: 16px;
-          font-size: 16px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #333333;
-
-          .circle {
-            margin-right: 10px;
-            width: 8px;
-            height: 8px;
-            background: #FFFFFF;
-            border: 1px solid #008CFF;
-            border-radius: 50%;
-          }
-        }
-
-        .address {
-          line-height: 16px;
-          font-size: 16px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #999999;
-
-          .my-iconfont-address {
-            line-height: 18px;
-            font-size: 18px;
-            color: #40A9FF;
-            margin-right: 8px;
-          }
-        }
-      }
-
-      .line {
-        width: 1px;
-        height: 30px;
-        border: 1px solid #E1E1E1;
-        margin-right: 18px;
-      }
-
-      .time {
-        .month-day {
-          font-size: 26px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #999999;
-        }
-
-        .year {
-          font-size: 16px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          color: #999999;
-        }
-      }
-
+    .right-box {
+      width: 340px;
+      padding-left: 10px;
     }
   }
 

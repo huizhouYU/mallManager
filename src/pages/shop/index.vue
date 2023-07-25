@@ -39,8 +39,7 @@
         </ul>
       </div>
       <div class="pages">
-        <!-- <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab" @saveStoreId="saveStoreId"> -->
-         <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab">
+        <router-view class="each-page" @selectOnlyTab="selectOnlyTab" @selectTab="selectTab">
         </router-view>
       </div>
       <index-bottom></index-bottom>
@@ -94,6 +93,10 @@
           {
             name: '供求信息',
             path: '/demandIndex'
+          },
+          {
+            name: '招聘信息',
+            path: '/recruitIndex'
           }
           // ,
           // {
@@ -115,20 +118,15 @@
       //   // this.getStore()
       // }
     },
+    watch: {
+      $route(to, from) {
+        if (to.fullPath != from.fullPath) {
+          // this.chooseTab = to.fullPath
+          this.selectedTab = to.path
+        }
+      }
+    },
     methods: {
-      // saveStoreId(id) {
-      //   this.storeId = id
-      //   if (this.storeInfo == '') {
-      //     this.getStore()
-      //   }
-      // },
-      // getStore() {
-      //   storeDetail({
-      //     storeId: this.storeId
-      //   }).then(response => {
-      //     this.storeInfo = response.data
-      //   })
-      // },
       jumpTab(path, index) {
         var storeIdStr = this.$route.query.storeId
         if (storeIdStr != undefined && storeIdStr != null && storeIdStr != '') {

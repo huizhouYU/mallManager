@@ -229,6 +229,20 @@
         }).then(response => {
           this.goodsInfo = response.data
           try {
+            //保存店铺ID
+            this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
+              .then((response) => {
+                // console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺ID失败")
+              })
+            //保存店铺名称
+            this.$store.dispatch('user/setStoreName', this.goodsInfo.store.storeName)
+              .then((response) => {
+                // console.log("保存当前浏览的店铺ID：", response)
+              }).catch(() => {
+                console.log("保存当前浏览的店铺名称失败")
+              })
             this.bigImgPath = this.goodsInfo.imageList[0]
             this.categoryStr = ''
             if (this.goodsInfo.category != null && this.goodsInfo.category != '') {
@@ -251,25 +265,13 @@
             if (this.goodsInfo.openSpecs) {
               this.sortSpecAttr()
             } else {
-              if(this.goodsInfo.goodsEntities) {
+              if (this.goodsInfo.goodsEntities) {
                 this.currentObj = this.goodsInfo.goodsEntities[0]
               }
             }
             //合并所有型号商品的goodsEntities和goodsSpecs
             this.mergeData()
-            this.$store.dispatch('user/setStoreId', this.goodsInfo.storeId)
-              .then((response) => {
-                // console.log("保存当前浏览的店铺ID：", response)
-              }).catch(() => {
-                console.log("保存当前浏览的店铺ID失败")
-              })
-            this.$store.dispatch('user/setStoreName', this.goodsInfo.store.storeName)
-              .then((response) => {
-                // console.log("保存当前浏览的店铺ID：", response)
-              }).catch(() => {
-                console.log("保存当前浏览的店铺名称失败")
-              })
-            // this.$emit("saveStoreId", this.goodsInfo.storeId)
+
           } catch (e) {
             console.log("获取商品详情报错：", e)
           } finally {

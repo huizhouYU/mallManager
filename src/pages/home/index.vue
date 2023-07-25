@@ -134,22 +134,23 @@
         <img src="../../assets/images/index/pic_right.jpg" alt="">
       </div>
     </div>
-    <div class="long-adv">
-      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230512112116.jpg" alt="">
-    </div>
+    <a class="long-adv" href="https://anke.com/cn" target="_blank">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/banner_anke.jpg" alt="">
+    </a>
     <!-- 医疗器械 -->
     <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="medicalApparatus" title="医疗器械"
       groupId="2">
     </accessories-area>
-    <div class="long-adv">
-      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230426140518.jpg" alt="">
-    </div>
+    <a class="long-adv" href=" https://www.haierbiomedical.com/cn?lang=zh_CN" target="_blank">
+       <img src="https://image.yijiequan.cn/yijiequan-client/attach/banner_haier.jpg" alt="">
+      <!-- <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230426140518.jpg" alt=""> -->
+    </a>
     <!-- 设备配件 -->
     <accessories-area class="accessories_area" :showTitle="showTitle" :morePath="accessory" title="设备配件" groupId="1">
     </accessories-area>
-    <div class="long-adv">
-      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230117171808.jpg" alt="">
-    </div>
+    <a class="long-adv" href="https://www.nbdavid.com/" target="_blank">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/banner_daiwei.jpg" alt="">
+    </a>
     <!-- 医疗器械 -->
     <!-- <product-show class="product-show" :productList="productList" :morePath="medicalApparatus"
       v-show="productList.length>0">
@@ -158,9 +159,9 @@
     <!-- 企业服务 -->
     <enterprise-services class="enterprise-services" :companyList="companyList" :morePath="enterpriseServices">
     </enterprise-services>
-    <div class="long-adv">
-      <img src="../../assets/images/index/ad-long.jpg" alt="">
-    </div>
+    <a class="long-adv" href="https://www.xzdw.cn/" target="_blank">
+      <img src="https://image.yijiequan.cn/yijiequan-client/attach/20230426140518.jpg" alt="">
+    </a>
     <!-- 个人工程师 -->
     <personal-engineer class="personal-engineer" v-if="false"></personal-engineer>
     <!-- 为您找货 + 手机医界圈 + 资质证书 -->

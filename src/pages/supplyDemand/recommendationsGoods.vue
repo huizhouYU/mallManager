@@ -6,7 +6,9 @@
     </div>
     <div v-for="(item,index) in recommendgoodsList" :key="index" class="recommendgoods-item">
       <div class="img-title">
+         <a :href="item.jpHref" target="blank">
         <img :src="item.imgPath" alt="">
+         </a>
       </div>
     </div>
   </div>
@@ -17,19 +19,20 @@
     data() {
       return {
         recommendgoodsList: [{
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090045.jpg',
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230630001.jpg',
+            jpHref:'https://www.scwwt.com/'
           },
           {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090056.jpg',
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230630002.jpg',
+            jpHref:'ttp://www.dgyx-star1.cn/ '
           },
           {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090123.png',
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230630003.jpg',
+            jpHref:'http://www.lifotronic.com/'
           },
           {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090140.jpg',
-          },
-          {
-            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230112090148.jpg',
+            imgPath: 'https://image.yijiequan.cn/yijiequan-client/attach/20230630004.jpg',
+            jpHref:'http://www.xinyuchen.com/'
           }
         ]
       }
@@ -85,5 +88,8 @@
       }
 
     }
+  }
+  .recommendgoods-item:last-child {
+    border-bottom: none;
   }
 </style>

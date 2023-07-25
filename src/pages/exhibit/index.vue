@@ -3,26 +3,26 @@
   <div>
     <div class="index-tag">首页 > 展会频道</div>
     <div class="filter-box">
-     <div class="flex-start-start filter-item">
-       <div class="item-title">
-         区域
-       </div>
-       <div class="flex-column-start-start area-box">
-         <div class="flex-start-start provice-box">
-           <span class="no-limit" @click="changeArea({'laber':'不限','childer':[]})">不限</span>
-           <div class="flex-start-start item-option">
-             <span :class="['item-option-name',{'selected-item':page.areaTitle == item.label}]"
-               v-for="(item,index) in areaOption" :key="index" @click="changeArea(item)">{{item.label}}</span>
-           </div>
-         </div>
-         <div class="city-box">
-           <div class="flex-start-start item-option" v-show="cityOption && cityOption.length>0">
-             <span :class="['item-option-name',{'selected-item':page.cityTitle == item}]"
-               v-for="(item,index) in cityOption" :key="index" @click="changeCity(item)">{{item}}</span>
-           </div>
-         </div>
-       </div>
-     </div>
+      <div class="flex-start-start filter-item">
+        <div class="item-title">
+          区域
+        </div>
+        <div class="flex-column-start-start area-box">
+          <div class="flex-start-start provice-box">
+            <span class="no-limit" @click="changeArea({'label':null,'childer':[]})">不限</span>
+            <div class="flex-start-start item-option">
+              <span :class="['item-option-name',{'selected-item':page.province == item.label}]"
+                v-for="(item,index) in areaOption" :key="index" @click="changeArea(item)">{{item.label}}</span>
+            </div>
+          </div>
+          <div class="city-box">
+            <div class="flex-start-start item-option" v-show="cityOption && cityOption.length>0">
+              <span :class="['item-option-name',{'selected-item':page.city == item}]" v-for="(item,index) in cityOption"
+                :key="index" @click="changeCity(item)">{{item}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 长条广告位 -->
     <div class="long-adv">
@@ -30,24 +30,31 @@
     </div>
 
     <div class="content-box">
-      <div class=" flex-start-start exhibit-item" v-for="(item,index) in exhibitList" :key="index"
-        @click="toDetail(item)">
-        <img src="../../assets/images/index/announce_bg.png" alt="" class="exhibit-img">
-        <div class="flex-column-start-start exhibit-item-right">
-          <img src="../../assets/images/pic_triangle.png" alt="">
-          <div class="flex-start-center exhibit-content">
-            <div class="content">
-              <div class="title">2023第七届广州国际医疗器械设计与制造技术展</div>
-              <div class="publish">发布者：官方</div>
-            </div>
-            <div class="line"></div>
-            <div class="content-time">
-              <div class="day">18</div>
-              <div class="year-month">2018-08</div>
+      <template v-if="exhibitList && exhibitList.length>0">
+        <div class=" flex-start-start exhibit-item" v-for="(item,index) in exhibitList" :key="index"
+          @click="toDetail(item.id)">
+          <img :src="item.pic || '../../assets/images/index/announce_bg.png'" alt="" class="exhibit-img">
+          <div class="flex-column-start-start exhibit-item-right">
+            <img src="../../assets/images/pic_triangle.png" alt="">
+            <div class="flex-start-center exhibit-content">
+              <div class="content">
+                <div class="title">{{item.title}}</div>
+                <div class="publish">发布者：{{item.author}}</div>
+              </div>
+              <div class="line"></div>
+              <div class="content-time">
+                <div class="day">{{item.updatedAt.slice(8,10)}}</div>
+                <div class="year-month">{{item.updatedAt.slice(0,7)}}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="flex-center-center no-data-box">
+          暂无数据
+        </div>
+      </template>
 
     </div>
     <div class="pagination">
@@ -61,7 +68,10 @@
 </template>
 
 <script>
-   const city = require("../../assets/json/citys.json")
+  import {
+    exHibInvitList
+  } from '@/api/index'
+  const city = require("../../assets/json/citys.json")
   export default {
     data() {
       return {
@@ -69,12 +79,11 @@
         page: {
           pageNo: 1,
           pageSize: 20,
-          keyType: 'title',
-          areaId: null,
-          areaTitle: '',
-          cityTitle: ''
+          province: '',
+          typeId: 1,
+          city: ''
         },
-        exhibitList: [{}, {}, {}, {}],
+        exhibitList: [],
         areaOption: [], //省份
         cityOption: [], //市级
       }
@@ -85,6 +94,16 @@
     },
     methods: {
       getData() {
+        exHibInvitList(this.page).then(response => {
+          if (response.code == 10000) {
+            console.log("获取的展会列表：", response.data)
+            this.exhibitList = response.data.list
+            this.totalCount = response.data.totalCount
+          } else {
+            this.message.error(response.message)
+          }
+          // console.log("获取的医院列表：", response)
+        })
         // this.page.keyword = this.$route.query.keyword
         // articleList(this.page).then(response => {
         //   this.page.pageNo = response.data.pageNum
@@ -94,12 +113,17 @@
         // })
       },
       changeArea(item) {
-        this.page.areaTitle = item.label
+        this.page.province = item.label
         this.cityOption = item.childer
+        if (this.cityOption && this.cityOption.length > 0) {
+          this.page.city = this.cityOption[0]
+        } else {
+          this.page.city = null
+        }
         this.getData()
       },
       changeCity(item) {
-        this.page.cityTitle = item
+        this.page.city = item
         this.getData()
       },
       handleSizeChange(val) {
@@ -110,11 +134,11 @@
         this.page.pageNo = val
         this.getData()
       },
-      toDetail(articleId) {
+      toDetail(id) {
         this.$router.push({
           path: '/exhibitDetail',
           query: {
-            articleId
+            id
           }
         })
       }
@@ -139,7 +163,7 @@
     background: #FFFFFF;
     border-radius: 10px;
     margin-bottom: 25px;
-  
+
     .filter-item {
       .item-title {
         margin-top: 10px;
@@ -149,32 +173,32 @@
         color: #757575;
         padding-right: 50px;
       }
-  
+
       .area-box {
         font-size: 14px;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #333333;
         flex: 1;
-  
+
         .no-limit {
           margin: 10px 22px 10px 0px;
           cursor: pointer;
         }
-  
+
         .city-box {
           width: 100%;
           padding-left: 50px;
           background: #F3F3F3;
           margin-bottom: 15px;
         }
-  
+
         .item-option {
           width: 100%;
-  
+
         }
       }
-  
+
       .item-option {
         font-size: 14px;
         font-family: Microsoft YaHei;
@@ -182,18 +206,18 @@
         color: #333333;
         flex: 1;
         flex-wrap: wrap;
-  
+
         .item-option-name {
           margin: 10px 22px 10px 0px;
           cursor: pointer;
         }
-  
+
         .selected-item {
           color: #40A9FF;
         }
       }
     }
-  
+
     .filter-item+.filter-item {
       padding-top: 5px;
       border-top: 1px solid #F6F6F6;
@@ -216,6 +240,14 @@
 
   //展会列表
   .content-box {
+    .no-data-box {
+      width: 1200px;
+      height: 60px;
+      font-size: 14px;
+      color: #666666;
+
+    }
+
     .exhibit-item:hover {
       .exhibit-item-right {
         .exhibit-content {

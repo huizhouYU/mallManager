@@ -71,8 +71,8 @@
   .goods-content {
     display: grid;
     grid-template-columns: repeat(4, auto);
-    justify-content: space-between;
-    grid-row-gap: 12px;
+    justify-content: flex-start;
+    grid-gap: 12px;
 
     .item-good:hover {
       border-color: #239BFF;
@@ -84,28 +84,7 @@
 
         .know-more {
           width: 92px;
-          animation: mymove ease 0.6s;
-        }
-
-        /* Chrome, Safari, Opera */
-
-        @-webkit-keyframes mymove {
-          from {
-            width: 80px
-          }
-          to {
-            width: 92px
-          }
-        }
-
-        /* Standard syntax */
-        @keyframes mymove {
-          from {
-            width: 80px
-          }
-          to {
-            width: 92px
-          }
+          transition: all 0.3s ease;
         }
       }
     }
@@ -173,6 +152,8 @@
         }
 
         .know-more {
+          // transform: translate();
+          transition: all 0.3s ease;
           width: 80px;
           height: 24px;
           background: #FFFFFF;

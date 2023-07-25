@@ -4,8 +4,9 @@
       <img src="../../assets/images/hospital/pic_bg_hospital.png" alt="">
     </div>
     <div class="flex-column-start-center detail-content-box">
-      <img src="http://yy.medcmz.cn/uploads/attach/2021/04/20210413/90ebb3989b5a6018a5545cf228660234.png" alt=""
-        class="log">
+      <!-- <img src="http://yy.medcmz.cn/uploads/attach/2021/04/20210413/90ebb3989b5a6018a5545cf228660234.png" alt=""
+        class="log"> -->
+      <img :src="hospitalInfo.logo" alt="" class="log">
       <div class="flex-between-center top-title-tag">
         <span>首页 > 医院频道 > {{hospitalInfo.name}}</span>
         <span>纠错</span>
@@ -22,7 +23,7 @@
           </template>
           <template v-else>无</template>
         </div>
-        <div class="acticle-directory"  @click="toNext(hospitalInfo.next)">下一篇：
+        <div class="acticle-directory" @click="toNext(hospitalInfo.next)">下一篇：
           <template v-if="hospitalInfo.next != null">
             {{hospitalInfo.next.name}}
           </template>
@@ -63,9 +64,9 @@
           console.log("获取的医院详情：", response)
         })
       },
-      toNext(info){
-        console.log("info:",info)
-        if(info!=null){
+      toNext(info) {
+        console.log("info:", info)
+        if (info != null) {
           this.getData(info.id)
           // this.$router.push({
           //   path: '/hospitalDetail',

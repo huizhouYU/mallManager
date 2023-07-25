@@ -120,3 +120,21 @@ export function hospitalDetail(query) {
     params: query
   })
 }
+
+//展会、招标列表
+export function exHibInvitList(data) {
+  return request({
+    url: '/info/list',
+    method: 'post',
+    data: data
+  })
+}
+//展会、招标信息详情
+export function exHibInvitDetail(query) {
+  return request({
+    url: '/info/detail',
+    method: 'get',
+    params: query
+  })
+}
+

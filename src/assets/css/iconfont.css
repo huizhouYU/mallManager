@@ -13,6 +13,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-weixin:before {
+  content: "\e620";
+}
 .icon-dizhi:before {
   content: "\e61c";
 }
